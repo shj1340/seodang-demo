@@ -2,103 +2,247 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>서당 동행 – 토스페이먼츠 결제 테스트 (HTML 단독)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F2F4F6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="서당 동행">
+<meta name="description" content="검증된 강사와 학원을 연결하고 30일 정착까지 돕는 서당 동행 샘플 화면">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>서당 동행 샘플</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
-:root{--page:#F2F4F6;--bg:#fff;--surface:#F3F4F6;--line:#E5E8EB;--ink:#191F28;--text:#191F28;--sub:#4E5968;--mute:#8B95A1;
- --accent:#2457E6;--accent-d:#1D46B8;--accent-soft:#EEF2FD;--ok:#0E9F6E;--ok-soft:#E6F6EF;--warn:#C27803;--warn-soft:#FDF3E1;--bad:#E02424;--bad-soft:#FDECEC;--info:#2457E6;--info-soft:#EEF2FD;
- --r-lg:24px;--r-md:16px;--r-sm:12px;--sb:248px}
-*{box-sizing:border-box}
+/* =====================================================================
+   디자인 토큰 — docs/05-design-system.md 와 같은 값 (Flutter ThemeData 로 옮길 기준)
+   ===================================================================== */
+:root{--page:#F2F4F6;--bg:#fff;--surface:#F3F4F6;--line:#E5E8EB;--ink:#191F28;--text:#191F28;--sub:#4E5968;--mute:#6B7684;--icon:#8B95A1;
+ --accent:#2457E6;--accent-d:#1D46B8;--accent-soft:#EEF2FD;--ok:#0E9F6E;--ok-soft:#E6F6EF;--warn:#C27803;--warn-soft:#FDF3E1;--bad:#E02424;--bad-soft:#FDECEC;--ok-text:#047857;--warn-text:#9A5B00;--bad-text:#C81E1E;--info:#2457E6;--info-soft:#EEF2FD;
+ --r-lg:24px;--r-md:16px;--r-sm:12px;--sb:248px;--appbar:56px;--bnav:64px;
+ --safe-t:env(safe-area-inset-top,0px);--safe-b:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
+html{-webkit-text-size-adjust:100%}
 body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:var(--page);color:var(--text);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
+button{touch-action:manipulation}
 a{color:var(--accent)}
 svg.lucide{width:18px;height:18px;stroke-width:2;flex:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.m-only{display:none!important}
 
 /* ---------- shell ---------- */
-.shell{display:flex;min-height:100vh}
-aside.sb{position:sticky;top:0;height:100vh;width:var(--sb);flex:none;background:var(--bg);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:24px;padding:28px 16px}
+.shell{display:flex;min-height:100vh;min-height:100dvh}
+aside.sb{position:sticky;top:0;height:100vh;height:100dvh;width:var(--sb);flex:none;background:var(--bg);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:24px;padding:28px 16px}
 .logo{display:flex;align-items:center;gap:10px;padding:0 8px}
-.logo .mk{width:32px;height:32px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px}
+.mk{width:32px;height:32px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
 .logo b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
 .logo small{display:block;font-size:11.5px;color:var(--mute)}
 .acct{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:var(--surface)}
-.acct .av{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.acct .av{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
 .acct b{display:block;font-size:14px;line-height:1.3}.acct span{font-size:12px;color:var(--sub)}
 nav.tabs{display:flex;flex-direction:column;gap:2px}
 nav.tabs button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-radius:12px;padding:11px 12px;color:var(--sub);font-weight:500;cursor:pointer;transition:background .15s}
-nav.tabs button svg{color:var(--mute)}
+nav.tabs button svg{color:var(--icon)}
 nav.tabs button:hover{background:var(--surface)}
 nav.tabs button.on{background:var(--accent-soft);color:var(--accent-d);font-weight:700}
 nav.tabs button.on svg{color:var(--accent)}
 .sb .grow{flex:1}
-.sb .sample{background:var(--warn-soft);color:#7A5A12;border-radius:14px;padding:14px;font-size:12px;line-height:1.5}
-.sb .sample b{display:block;color:var(--warn);font-size:12.5px;margin-bottom:4px}
-.sb .sample a{color:var(--warn);font-weight:600}
+.sample{background:var(--warn-soft);color:#7A5A12;border-radius:14px;padding:14px;font-size:12px;line-height:1.5}
+.sample b{display:block;color:var(--warn-text);font-size:12.5px;margin-bottom:4px}
+.sample a{color:var(--warn-text);font-weight:600}
 .sb .out{display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--sub);padding:8px 12px;cursor:pointer;font-size:14px;border-radius:10px}
 .sb .out:hover{background:var(--surface)}
 main{flex:1;min-width:0;max-width:1240px;padding:40px 48px 80px}
+.appbar,.bnav{display:none}
+.ib{width:40px;height:40px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;color:var(--sub);cursor:pointer;flex:none}
+.ib:hover{background:var(--surface)}
+
+/* 알림 */
+.bell{position:relative}
+.bell i{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:var(--bad);color:#fff;font-size:10.5px;font-weight:800;font-style:normal;display:grid;place-items:center;line-height:1;border:2px solid var(--bg)}
+.appbar .bell i{border-color:var(--page)}
+.noti-dim{position:fixed;inset:0;background:rgba(25,31,40,.28);z-index:40;animation:fade .2s}
+.noti-panel{position:fixed;z-index:41;top:24px;left:calc(var(--sb) + 12px);width:380px;max-height:calc(100vh - 48px);overflow:auto;background:var(--bg);border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(25,31,40,.2);animation:drop .2s ease-out}
+.noti-head{display:flex;align-items:center;gap:8px;padding:18px 12px 10px 22px;position:sticky;top:0;background:var(--bg)}
+.noti-head b{font-size:17px;font-weight:800}.noti-head .ib{margin-left:auto}
+.noti-panel ul{list-style:none;margin:0;padding:0 8px 10px}
+.noti-panel li button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:none;padding:12px 14px;border-radius:14px;cursor:pointer}
+.noti-panel li button:hover{background:var(--surface)}
+.noti-panel li button>svg:first-child{color:var(--accent);background:var(--accent-soft);padding:8px;width:36px;height:36px;border-radius:12px}
+.noti-panel li button>svg:last-child{color:var(--icon)}
+.noti-panel li div{flex:1;min-width:0}.noti-panel li b{display:block;font-size:14.5px}.noti-panel li span{display:block;font-size:13px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@keyframes fade{from{opacity:0}}
+.report{background:var(--ok-soft);border-radius:var(--r-md);padding:14px 16px;margin:0 0 14px}
+.report>.row b{display:inline-flex;gap:6px;align-items:center;color:var(--ok-text)}
+.report dl.kv{margin-top:10px;grid-template-columns:84px 1fr}
+.reqs{list-style:none;margin:0;padding:0}
+.reqs>li{padding:16px 0;border-top:1px solid var(--line)}.reqs>li:first-child{border-top:0;padding-top:0}
+.stage{list-style:none;display:flex;gap:4px;margin:0;padding:0}
+.stage li{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.stage li.done{background:#9DB5F3}.stage li.cur{background:var(--accent)}
+.stage-t{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline;margin:8px 0 0;font-size:13.5px}.stage-t b{color:var(--accent-d)}
+.q{width:100%;border:0;border-radius:var(--r-sm);padding:12px 14px;background:var(--bg);margin-bottom:10px;min-height:46px;font-size:15px}
+.q:focus{outline:2px solid var(--accent)}
+.chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.fchip{border:0;border-radius:999px;padding:7px 12px;background:var(--bg);color:var(--sub);font-size:13px;font-weight:600;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line)}
+.fchip span{color:var(--mute);margin-left:2px}.fchip.on{background:var(--ink);color:#fff;box-shadow:none}.fchip.on span{color:rgba(255,255,255,.7)}
+.linkbtn{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:0;cursor:pointer;text-align:left;color:inherit}
+.linkbtn svg{width:15px;height:15px;color:var(--icon)}
+.offline{display:none;position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:50;align-items:center;gap:8px;background:var(--ink);color:#fff;border-radius:999px;padding:10px 16px;font-size:13.5px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.2);white-space:nowrap}
+body.is-offline .offline{display:flex}
+.review dl.kv{grid-template-columns:108px 1fr}
+.review{flex-basis:100%;background:var(--surface);border-radius:var(--r-md);padding:14px 16px;margin-top:4px}
+.offer{background:var(--accent-soft);border-radius:var(--r-md);padding:16px 18px;margin:0 0 12px}
+.offer>b{display:block;color:var(--accent-d);margin-bottom:10px}
+.offer dl.kv{grid-template-columns:84px 1fr}
+.offer .btn.sec{background:#fff}
 
 /* ---------- type ---------- */
 h2{margin:0 0 8px;font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
-h3{margin:0 0 14px;font-size:18px;font-weight:800;letter-spacing:-.02em}
+h3{margin:0 0 14px;font-size:18px;font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+h4{margin:16px 0 6px;font-size:12.5px;color:var(--mute);font-weight:700}
 .lead{color:var(--sub);margin:0 0 28px;max-width:640px}
 .muted{color:var(--mute);font-size:13px}
 .total{font-size:20px;font-weight:800;color:var(--accent);letter-spacing:-.02em}
+.cnt{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--surface);color:var(--sub);font-size:12px;font-weight:700}
+.big{display:block;font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1.1}
+.big small{font-size:14px;color:var(--mute);font-weight:600;letter-spacing:0}
 
 /* ---------- surfaces ---------- */
 .card{background:var(--bg);border-radius:var(--r-lg);padding:28px;margin-bottom:16px}
+.card.dark{background:var(--ink);color:#fff}.card.dark h3{color:rgba(255,255,255,.7);font-size:15px;font-weight:600}.card.dark span{color:rgba(255,255,255,.6);font-size:14px}
 .grid{display:grid;gap:16px}
+.grid.tight{gap:0 12px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.stat{background:var(--bg);border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column-reverse;gap:10px}
+.narrow{max-width:720px}
+.stat{background:var(--bg);border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column-reverse;gap:10px;border:0;text-align:left;position:relative}
 .stat b{display:block;font-size:38px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink)}
 .stat span{color:var(--sub);font-size:14px;font-weight:600}
+.stat.link{cursor:pointer;transition:box-shadow .15s}.stat.link:hover{box-shadow:inset 0 0 0 1px var(--line)}
+.stat.link svg{position:absolute;top:22px;right:22px;color:var(--accent)}
 .split{display:grid;grid-template-columns:320px minmax(0,1fr);gap:16px;align-items:start}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:s}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .steps div{background:var(--surface);border-radius:var(--r-md);padding:18px;font-size:13.5px;color:var(--sub)}
 .steps div b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:48px 24px;color:var(--sub)}
+.empty svg{width:28px;height:28px;color:var(--mute);margin-bottom:6px}
+.empty b{font-size:16px;color:var(--ink)}.empty span{font-size:14px;color:var(--mute)}
+.todo{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:var(--accent);color:#fff;border-radius:var(--r-md);padding:16px 18px;margin-bottom:16px;cursor:pointer}
+.todo div{flex:1}.todo b{display:block;font-size:15px}.todo span{font-size:13px;opacity:.85}
+dl.kv{margin:0;display:grid;grid-template-columns:96px 1fr;gap:10px 12px;font-size:14px}
+dl.kv dt{color:var(--mute)}dl.kv dd{margin:0;font-weight:500}
+ul.plain{list-style:none;margin:0;padding:0}
+ul.plain li{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
+ul.plain li:last-child{border-bottom:0}
+ul.plain li>span:first-of-type{flex:1;min-width:140px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.sum{text-align:right;margin:16px 0 0;color:var(--sub)}
 
 /* ---------- form ---------- */
+fieldset{border:0;margin:0;padding:0;min-width:0}
+fieldset:disabled{opacity:.5}
 label{display:block;font-size:13.5px;font-weight:600;color:var(--sub);margin:16px 0 8px}
-input[type=text],input[type=password],input[type=number],input[type=date],select,textarea{width:100%;border:1.5px solid transparent;border-radius:var(--r-sm);padding:12px 14px;background:var(--surface);transition:border-color .15s,background .15s}
+input[type=text],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{width:100%;border:1.5px solid transparent;border-radius:var(--r-sm);padding:12px 14px;background:var(--surface);transition:border-color .15s,background .15s;min-height:46px}
 select{appearance:none;-webkit-appearance:none;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%238B95A1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}
 textarea{min-height:88px;resize:vertical}
 input:focus,select:focus,textarea:focus{outline:0;border-color:var(--accent);background:#fff}
 input[type=file]{width:100%;padding:14px;border:1.5px dashed #C9CFD6;border-radius:var(--r-sm);background:var(--surface);cursor:pointer}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:#fff;border:0;border-radius:var(--r-sm);padding:12px 18px;cursor:pointer;font-weight:700;transition:background .15s,transform .05s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:#fff;border:0;border-radius:var(--r-sm);padding:12px 18px;min-height:46px;cursor:pointer;font-weight:700;transition:background .15s,transform .05s;text-decoration:none;white-space:nowrap}
 .btn:hover{background:var(--accent-d)}.btn:active{transform:scale(.98)}
 .btn:disabled{background:#B9C6EE;cursor:not-allowed}
 .btn.sec{background:var(--bg);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
 .btn.sec:hover{background:var(--surface)}
-.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
-.btn.warn{background:var(--accent)}
+.btn.sm{padding:8px 12px;min-height:36px;font-size:13px;border-radius:10px}
 .btn.dark{background:var(--ink)}.btn.dark:hover{background:#000}
+.btn.block{width:100%;margin-top:14px;padding:16px;font-size:16px}
 .chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;font-weight:500;color:var(--text);margin:18px 0}
-.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent)}
-.filters select{width:auto;border-radius:999px;background-color:var(--bg);box-shadow:inset 0 0 0 1px var(--line);padding:10px 38px 10px 16px;font-weight:600;font-size:14px}
+.chk input{margin-top:3px;width:20px;height:20px;accent-color:var(--accent);flex:none}
+form.inline{display:flex;gap:8px;align-items:center}
+form.inline input{min-height:38px;padding:8px 12px}
+.filters{display:flex;gap:8px;align-items:center;margin:-8px 0 8px;flex-wrap:wrap}
+.filters select{width:auto;border-radius:999px;background-color:var(--bg);box-shadow:inset 0 0 0 1px var(--line);padding:10px 38px 10px 16px;min-height:42px;font-weight:600;font-size:14px}
 .filters select.on{background-color:var(--ink);color:#fff;box-shadow:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+.chip-reset{display:inline-flex;align-items:center;gap:4px;border:0;background:none;color:var(--sub);font-size:13px;font-weight:600;cursor:pointer;padding:8px}
+.chip-reset svg{width:15px;height:15px}
+.count{margin:0 0 20px}
+.scores{display:grid;gap:8px;background:var(--surface);border-radius:var(--r-md);padding:14px}
+.sc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0;font-size:14px;color:var(--text);font-weight:500}
+.sc-row em{font-style:normal;color:var(--mute);font-size:12.5px;margin-left:4px}
+.sc-row input{width:88px!important;text-align:right;background:#fff!important;min-height:40px}
+.sc-row.sum{border-top:1px solid var(--line);padding-top:10px;margin-top:4px}.sc-row.sum b{color:var(--accent);font-size:17px}
+
+/* 세그먼트 컨트롤 (앱의 SegmentedButton) */
+.seg{display:flex;gap:4px;padding:4px;border-radius:var(--r-sm);background:var(--surface)}
+.seg label{flex:1;margin:0;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:9px;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;transition:background .15s}
+.seg input:checked+span{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(25,31,40,.08)}
+.seg input:focus-visible+span{outline:2px solid var(--accent)}
+
+.seg.sm{padding:3px;flex:none;background:#E8EBEE}.seg.sm span{min-height:32px;padding:0 12px;font-size:13px;white-space:nowrap}
+.listbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 20px}
+.fitchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.fitchips span{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--accent-d);background:var(--accent-soft);border-radius:8px;padding:3px 8px}
+.fitchips svg{width:13px;height:13px}
 
 /* ---------- badges, tables, notices ---------- */
 .b{display:inline-flex;align-items:center;gap:4px;font-size:12px;border-radius:999px;padding:3px 10px;font-weight:700;white-space:nowrap;line-height:1.5}
 .b svg{width:13px;height:13px}
-.b.ok{background:var(--ok-soft);color:var(--ok)}.b.warn{background:var(--warn-soft);color:var(--warn)}.b.bad{background:var(--bad-soft);color:var(--bad)}.b.info{background:var(--info-soft);color:var(--accent-d)}.b.mute{background:var(--surface);color:var(--sub)}
+.b.ok{background:var(--ok-soft);color:var(--ok-text)}.b.warn{background:var(--warn-soft);color:var(--warn-text)}.b.bad{background:var(--bad-soft);color:var(--bad-text)}.b.info{background:var(--info-soft);color:var(--accent-d)}.b.mute{background:var(--surface);color:var(--sub)}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:0}
 th{font-size:12.5px;color:var(--mute);font-weight:600;padding-top:0}
-.tablewrap{overflow-x:auto}
-.flash{display:flex;gap:10px;align-items:center;background:var(--ok-soft);color:#05603A;border-radius:var(--r-md);padding:14px 18px;margin-bottom:20px;font-weight:600;font-size:14px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.flash{display:flex;gap:10px;align-items:center;background:var(--ok-soft);color:#05603A;border-radius:var(--r-md);padding:14px 18px;margin-bottom:20px;font-weight:600;font-size:14px;animation:drop .25s ease-out}
 .flash.err{background:var(--bad-soft);color:#9B1C1C}
-.note{background:var(--warn-soft);color:#7A5A12;border-radius:var(--r-md);padding:14px 18px;font-size:13.5px;margin-bottom:16px}
+@keyframes drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes toast-out{to{opacity:0;transform:translateY(-8px);visibility:hidden}}
+.note{display:flex;gap:8px;align-items:flex-start;background:var(--warn-soft);color:#7A5A12;border-radius:var(--r-md);padding:14px 18px;font-size:13.5px;margin-bottom:16px}
+.note svg{margin-top:1px}
 .disc{font-size:12.5px;color:var(--mute);margin:18px 0 0}
-.lock{display:inline-flex;align-items:center;gap:6px;color:var(--mute);background:var(--surface);border-radius:8px;padding:4px 10px;font-size:13px}
+.lock{display:inline-flex;align-items:center;gap:6px;color:var(--mute);background:var(--surface);border-radius:8px;padding:4px 10px;font-size:13px;vertical-align:middle}
 .lock i{display:inline-block;height:9px;border-radius:5px;background:#DDE1E6;width:var(--w,110px)}
+.lock-t{margin-left:6px;font-size:12px}
 .list button.item{display:block;width:100%;text-align:left;background:var(--bg);border:0;border-radius:var(--r-md);padding:14px 16px;margin-bottom:8px;cursor:pointer;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .15s}
 .list button.item:hover{box-shadow:inset 0 0 0 1px var(--line)}
 .list button.item.on{box-shadow:inset 0 0 0 2px var(--accent)}
 .list button.item .row{gap:6px;margin-top:6px}
+.list .sc{color:var(--accent);font-size:15px}
+ul.files,ul.checks,ul.logs{list-style:none;margin:14px 0 0;padding:0}
+ul.files li{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+ul.files li>svg{color:var(--accent)}
+ul.files li div{flex:1;min-width:0}ul.files li b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ul.checks li{padding:14px 0;border-top:1px solid var(--line)}
+ul.checks .reply{display:flex;gap:8px;align-items:flex-start;margin:8px 0 0;background:var(--surface);border-radius:12px;padding:10px 12px;font-size:14px}
+ul.checks .reply svg{color:var(--mute);margin-top:2px;width:16px;height:16px}
+ul.checks form{margin-top:10px}
+ul.logs li{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+ul.logs li:first-child{border-top:0}
+ul.logs .t{color:var(--mute);font-size:13px;width:44px;flex:none;padding-top:1px}
+ul.logs b{display:block;font-weight:600}
+.stepper{list-style:none;display:flex;margin:0 0 22px;padding:0;counter-reset:s}
+.stepper li{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;font-size:12.5px;color:var(--mute);font-weight:600;text-align:center}
+.stepper li:not(:first-child)::before{content:"";position:absolute;top:14px;right:50%;width:100%;height:2px;background:var(--line);z-index:0}
+.stepper li.done:not(:first-child)::before,.stepper li.cur:not(:first-child)::before{background:var(--accent)}
+.stepper i{width:28px;height:28px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-style:normal;z-index:1;font-size:12px}
+.stepper i svg{width:15px;height:15px}
+.stepper li.done i,.stepper li.cur i{background:var(--accent);color:#fff}
+.stepper li.cur,.stepper li.done{color:var(--ink)}
+.tl{list-style:none;display:flex;margin:0;padding:0}
+.tl li{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;font-size:12px;color:var(--mute)}
+.tl li:not(:first-child)::before{content:"";position:absolute;top:7px;right:50%;width:100%;height:2px;background:var(--line)}
+.tl li.done:not(:first-child)::before{background:var(--ok)}
+.tl i{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--line);z-index:1}
+.tl li.done i{background:var(--ok);border-color:var(--ok)}.tl li.cur i{border-color:var(--warn);background:var(--warn-soft)}
+.tl b{color:var(--ink);font-size:13px}
+.scorehead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.scorehead .big{color:var(--accent)}
 
 /* ---------- candidate card ---------- */
 .cands{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
@@ -107,7 +251,7 @@ th{font-size:12.5px;color:var(--mute);font-weight:600;padding-top:0}
 .cand .av{width:52px;height:52px;border-radius:50%;background:var(--surface);color:var(--mute);display:grid;place-items:center;font-size:20px;font-weight:800;flex:none}
 .cand.open .av{background:var(--accent-soft);color:var(--accent)}
 .cand .nm{flex:1;min-width:0}
-.cand .nm .row{gap:8px}
+.cand .nm .row{gap:6px 8px}
 .cand .nm b{font-size:19px;font-weight:800;letter-spacing:-.02em}
 .cand .nm p{margin:4px 0 0;color:var(--sub);font-size:14px}
 .cand .score{text-align:right;flex:none}
@@ -126,11 +270,13 @@ dl.fit dt{color:var(--mute)}dl.fit dd{margin:0;font-weight:500}
 .cand .foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px}
 .cand .foot .ct{flex:1;display:flex;gap:6px;align-items:center;color:var(--mute);font-size:13px;min-width:180px}
 .cand .foot .ct svg{width:14px;height:14px}
-.cand .foot select{width:auto;padding:9px 34px 9px 12px;font-size:13px;font-weight:600;border-radius:10px}
+.cand .foot .ct a{color:var(--ink);text-decoration:none}
+.cand .apply{display:flex;gap:8px;align-items:center}
+.cand .apply select{width:auto;padding:8px 34px 8px 12px;min-height:36px;font-size:13px;font-weight:600;border-radius:10px}
 .cand .disc{margin:0;padding-top:0}
 
 /* ---------- login ---------- */
-.login{display:grid;grid-template-columns:minmax(0,640px) 1fr;min-height:100vh;background:var(--bg)}
+.login{display:grid;grid-template-columns:minmax(0,640px) 1fr;min-height:100vh;min-height:100dvh;background:var(--bg)}
 .login .brand{background:var(--accent);color:#fff;padding:64px;display:flex;flex-direction:column;justify-content:space-between;gap:48px}
 .login .brand .logo{padding:0}.login .brand .mk{background:#fff;color:var(--accent);width:36px;height:36px;font-size:18px}
 .login .brand .logo b{font-size:20px}
@@ -141,38 +287,126 @@ dl.fit dt{color:var(--mute)}dl.fit dd{margin:0;font-weight:500}
 .login .form{display:flex;align-items:center;justify-content:center;padding:48px 24px}
 .login form{width:100%;max-width:420px}
 .login form h2{font-size:28px}
-.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px 0 8px}
-.roles input{position:absolute;opacity:0;pointer-events:none}
-.roles label{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;border-radius:var(--r-md);cursor:pointer;color:var(--sub);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);font-size:15px;transition:all .15s}
-.roles label svg{width:24px;height:24px;color:var(--mute)}
-.roles input:checked+label{box-shadow:inset 0 0 0 2px var(--accent);background:var(--accent-soft);color:var(--accent-d);font-weight:800}
-.roles input:checked+label svg{color:var(--accent)}
-.roles input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
 .login .btn{width:100%;padding:17px;font-size:17px;border-radius:14px;margin-top:24px}
 .login .foot{text-align:center;margin-top:16px}
+details.accts{margin-top:20px;background:var(--surface);border-radius:var(--r-md);padding:4px 16px}
+details.accts summary{display:flex;align-items:center;gap:8px;padding:12px 0;cursor:pointer;font-weight:600;font-size:14px;color:var(--sub);list-style:none}
+details.accts summary::-webkit-details-marker{display:none}
+details.accts summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg);transition:transform .15s}
+details.accts[open] summary::after{transform:rotate(-135deg)}
+details.accts ul{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:2px}
+details.accts li{display:flex;gap:10px;font-size:13px;padding:4px 0;color:var(--sub)}
+details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-width:72px}
 
 /* ---------- checkout ---------- */
 #payment-method,#agreement{min-height:20px}
 
-/* ---------- responsive ---------- */
-@media(max-width:1100px){.cands{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ---------- tablet ---------- */
+@media(max-width:1100px){.cands{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:32px 28px 72px}}
+
+/* =====================================================================
+   모바일 (앱과 같은 구조: 상단 앱바 + 하단 탭바 + 카드형 목록)
+   ===================================================================== */
 @media(max-width:820px){
- .shell{flex-direction:column}
- aside.sb{position:sticky;top:0;z-index:10;height:auto;width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
- .sb .acct,.sb .grow,.sb .sample{display:none}
- .sb .out{margin-left:auto;padding:6px 8px}
- nav.tabs{order:3;width:100%;flex-direction:row;overflow-x:auto;gap:6px;scrollbar-width:none}
- nav.tabs button{width:auto;white-space:nowrap;padding:8px 12px;border-radius:999px;font-size:14px}
- main{padding:24px 16px 60px}
- h2{font-size:24px}
- .g2,.g3,.g4,.split,.steps{grid-template-columns:1fr}
- .card{padding:20px}
- .login{grid-template-columns:1fr}.login .brand{padding:32px 24px;gap:28px}.login .brand h1{font-size:28px}
- .login .brand .steps{grid-template-columns:repeat(2,1fr)}
- .bar{grid-template-columns:80px 1fr 48px}
- .paybox{flex-direction:column;align-items:stretch}
- .lock+.muted{display:none}.lock i{max-width:110px}
+ .m-only{display:revert!important}.d-only{display:none!important}
+ body{background:var(--page)}
+ .shell{display:block}
+ aside.sb{display:none}
+ .appbar{display:flex;position:sticky;top:0;z-index:20;align-items:center;gap:10px;height:calc(var(--appbar) + var(--safe-t));padding:var(--safe-t) 8px 0 16px;background:rgba(242,244,246,.88);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px)}
+ .flow .appbar{padding-left:4px}
+ .appbar .ttl{flex:1;min-width:0;line-height:1.2}
+ .appbar .ttl b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em}
+ .appbar .ttl span{display:block;font-size:11.5px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .bnav{display:grid;grid-template-columns:repeat(var(--n),1fr);position:fixed;left:0;right:0;bottom:0;z-index:20;height:calc(var(--bnav) + var(--safe-b));padding:0 4px var(--safe-b);background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-top:1px solid var(--line)}
+ .flow .bnav{display:none}
+ .bnav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--mute);font-size:11px;font-weight:600;cursor:pointer;min-width:0}
+ .bnav button svg{width:22px;height:22px}
+ .bnav button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+ .bnav button.on{color:var(--ink)}.bnav button.on svg{color:var(--accent)}
+ main{padding:8px 16px calc(32px + var(--safe-b));max-width:none}
+ body.has-bnav main{padding-bottom:calc(var(--bnav) + 28px + var(--safe-b))}
+ .flow main{padding-bottom:calc(120px + var(--safe-b))}
+ main>h2:first-of-type,main>.flash+h2{display:none}
+ main>.lead{font-size:14px;margin:0 0 18px}
+ main>.sample{margin-top:24px}
+ /* 알림함: 바텀시트 */
+ .noti-panel{top:auto;left:0;right:0;bottom:0;width:auto;max-height:78vh;border-radius:24px 24px 0 0;padding-bottom:var(--safe-b);animation:sheet .25s ease-out}
+ body.has-bnav .offline{bottom:calc(var(--bnav) + 12px + var(--safe-b))}
+ .noti-panel::before{content:"";display:block;width:40px;height:4px;border-radius:2px;background:var(--line);margin:10px auto 0}
+ /* 알림: 화면 위에 잠깐 떴다 사라지는 토스트 */
+ main>.flash{position:fixed;top:calc(var(--appbar) + var(--safe-t) + 6px);left:12px;right:12px;z-index:30;margin:0;box-shadow:0 10px 30px rgba(25,31,40,.14);animation:drop .25s ease-out,toast-out .35s ease-in 3.4s forwards}
+ h3{font-size:17px}
+ .card{padding:20px;border-radius:20px;margin-bottom:12px}
+ .g2,.g3,.split,.steps,.cands{grid-template-columns:1fr}
+ .grid.tight{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .g3.tight{grid-template-columns:1fr 1fr}.g3.tight>div:last-child{grid-column:1/-1}
+ .g4,.stats.g3{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .stats.g3>:last-child{grid-column:1/-1}
+ .stat{padding:18px;border-radius:20px}.stat b{font-size:30px}.stat span{font-size:13px}
+ .stat.link svg{top:16px;right:16px}
+ .steps{gap:8px}.steps div{padding:14px 16px}
+ /* iOS 입력 확대 방지 */
+ input[type=text],input[type=password],input[type=number],input[type=date],input[type=tel],select,textarea{font-size:16px;min-height:50px}
+ .btn{min-height:50px}.btn.sm{min-height:40px;font-size:14px}
+ .block-m{width:100%}
+ .one-m{grid-template-columns:1fr!important}
+ /* 필터: 가로 스크롤 칩 */
+ .filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 6px;padding:2px 16px 6px;scrollbar-width:none}
+ .filters::-webkit-scrollbar{display:none}
+ .filters select{flex:none;font-size:14px;min-height:40px}
+ .chiprow{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 12px;padding:0 16px;scrollbar-width:none}.chiprow::-webkit-scrollbar{display:none}.fchip{flex:none;padding:8px 14px}
+ .q{font-size:16px}
+ .count{margin:0 0 14px}
+ /* 후보 카드 */
+ .cand{gap:18px}
+ .cand .top{align-items:flex-start}
+ .cand .av{width:44px;height:44px;font-size:17px}
+ .cand .nm b{font-size:17px}
+ .cand .score b{font-size:28px}
+ .bars{padding:14px}
+ .bar{grid-template-columns:80px 1fr 44px;gap:10px;font-size:12.5px}
+ dl.fit{grid-template-columns:68px 1fr;gap:10px;font-size:13.5px}
+ .lock-t{display:none}.lock i{max-width:110px}
+ .paybox{flex-direction:column;align-items:stretch;padding:16px}
+ .paybox .btn{width:100%}
+ .cand .foot{flex-direction:column;align-items:stretch}
+ .cand .foot .ct{min-width:0}
+ .cand .apply{width:100%}.cand .apply select{flex:1;min-height:44px}.cand .apply .btn{min-height:44px}
+ /* 표 → 카드 목록 */
+ table.rt,table.rt tbody,table.rt tr,table.rt td{display:block;width:100%}
+ table.rt tr:first-child{display:none}
+ table.rt tr{padding:14px 0;border-top:1px solid var(--line)}
+ table.rt tr:nth-child(2){border-top:0;padding-top:0}
+ table.rt td{border:0;padding:3px 0;display:grid;grid-template-columns:76px 1fr;gap:10px;font-size:14px}
+ table.rt td::before{content:attr(data-label);color:var(--mute);font-size:12.5px;padding-top:1px}
+ table.rt td .v{min-width:0}
+ table.rt td form.inline{flex-wrap:nowrap}
+ table.wide{min-width:640px}
+ .tablewrap:has(table.wide){margin:0 -20px;padding:0 20px}
+ dl.kv{grid-template-columns:84px 1fr}
+ /* 강사 검증: 목록 ↔ 상세 화면 전환 */
+ .split.has-sel .list{display:none}
+ .split:not(.has-sel) .detail{display:none}
+ .back{display:inline-flex!important;align-items:center;gap:4px;border:0;background:none;color:var(--sub);font-weight:600;padding:4px 0 12px;cursor:pointer}
+ /* 결제: 하단 고정 버튼 */
+ .sticky-cta{display:flex!important;position:fixed;left:0;right:0;bottom:0;z-index:20;gap:12px;align-items:center;padding:12px 16px calc(12px + var(--safe-b));background:#fff;border-top:1px solid var(--line)}
+ .sticky-cta div{flex:1;line-height:1.2}.sticky-cta b{display:block;font-size:18px;font-weight:800}
+ .sticky-cta .btn{flex:1.4;min-height:52px;font-size:16px}
+ .todo{padding:14px 16px}
+ /* 로그인 */
+ .login{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:100vh;min-height:100dvh}
+ .login .brand{padding:calc(22px + var(--safe-t)) 20px 22px;gap:16px}
+ .login .brand h1{font-size:22px;margin-bottom:6px}
+ .login .brand p{font-size:13.5px}
+ .login .brand .steps{display:flex;gap:6px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none}
+ .login .brand .steps::-webkit-scrollbar{display:none}
+ .login .brand .steps div{flex:none;padding:8px 12px;font-size:0;border-radius:999px}.login .brand .steps div b{font-size:12.5px;margin:0}.login .brand .steps div small{display:none}
+ .login form h2{font-size:22px}
+ .login .btn{margin-top:20px}
+ .login .form{padding:28px 20px calc(40px + var(--safe-b));align-items:flex-start}
 }
+@media(max-width:380px){.login .brand .steps{grid-template-columns:repeat(2,1fr)}.bar{grid-template-columns:72px 1fr 42px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="https://js.tosspayments.com/v2/standard"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -183,45 +417,170 @@ dl.fit dt{color:var(--mute)}dl.fit dd{margin:0;font-weight:500}
 
 <script>
 // ---------- 기본 데이터 ----------
+// =====================================================================
+// 서당 동행 HTML 샘플
+// 데이터 구조는 db/schema.sql 과 같은 개념을 따른다 (docs/04-db-design.md).
+//   academies ↔ academies · accounts ↔ profiles · teachers ↔ teachers+evaluations
+//   requests ↔ hiring_requests · matches ↔ recommendations+placements · checks ↔ settlement_checks
+//   purchases ↔ payments+profile_unlocks · complaints ↔ issues · logs ↔ audit_logs
+// 이후 Supabase를 붙일 때는 아래 "데이터 접근" 함수만 API 호출로 바꾸면 된다.
+// =====================================================================
 const SUBJ = ['국어','영어','수학','과학','사회'];
 const GRADE = ['초등','중등','고등'];
 const REGION = ['봉담','화성','수원','동탄'];
 const ITEMS = [['과목 이해도',25],['수업 전달력',25],['학생 수준별 대응',20],['소통·피드백 수용',15],['업무 수행 준비도',15]];
+const ITEM_SHORT = ['과목 이해도','수업 전달력','수준별 대응','소통·피드백','업무 준비도'];
+const PASS_SCORE = 75;
 const RESULTS = ['추천 검토','보완교육','보류'];
 const DOC_TYPES = ['졸업증명서','성적증명서','경력증명서','자격증·교원자격','신분·기타 서류'];
 const DOC_EXT = ['pdf','jpg','jpeg','png'];
 const DOC_MAX = 10*1024*1024;
 const fmtSize = n => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math.round(n/1024))+' KB';
-const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자'};
-const TABS = {
-  academy:[['home','홈'],['req','채용요청'],['find','후보 찾기'],['prog','진행 현황'],['pay','결제 내역']],
-  teacher:[['prof','내 프로필'],['ver','검증'],['prog','진행 상태']],
-  admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착 점검·민원'],['audit','권한·로그']]
-};
 
+// 역할: profiles.role 과 같은 값
+const FORM_FIELDS=[['pay','급여·산정 방식','예: 월 급여제 · 협의'],['payDay','급여 지급일','예: 매월 10일'],['hours','수업 시수·출퇴근','예: 주 15시간 · 평일 오후'],['extra','수업 외 업무','채점·상담·셔틀 등'],['classSize','반 규모','예: 8명 이하'],['handover','인수인계 담당자','예: 부원장']];
+const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자', matcher:'매칭 담당', evaluator:'평가위원'};
+const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-check', matcher:'handshake', evaluator:'clipboard-check'};
+// 운영진 역할은 관리자 화면을 쓰되, 탭으로 권한을 나눈다 (PRD §3)
+const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', matcher:'admin', evaluator:'admin'};
+const TABS = {
+  academy:[['home','홈'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역']],
+  teacher:[['home','홈'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태']],
+  admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['audit','권한·로그']],
+  matcher:[['dash','대시보드'],['match','매칭·상담'],['check','정착·민원']],
+  evaluator:[['eval','강사 검증']]
+};
 const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text'};
-const ROLE_ICON = {academy:'school',teacher:'graduation-cap',admin:'shield-check'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
-const SAMPLE_NOTE = `<b>샘플 화면</b>가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음 · 승인 API 미호출 데모) · <a href="#" id="reset">처음 상태로 초기화</a>`;
-const S = { loginErr:'', user:null, me:null, tab:null, flash:'', f:{subject:'',grade:'',region:''}, selT:null,
-  teachers:[], requests:[], matches:[], complaints:[], logs:[],
-  purchases:[], checkout:null, flashType:'', customerKey:'', cfg:{clientKey:'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm',price:5000} };
+const SAMPLE_NOTE = `<b>샘플 화면</b>가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음 · 승인 API 미호출 데모) · <a href="#" class="reset">처음 상태로 초기화</a>`;
+
+const S = { loginErr:'', user:null, tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
+  academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[],
+  checkout:null, customerKey:'', cfg:{clientKey:'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm',price:5000} };
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
-// ---------- 저장(결제창에서 돌아와도 화면 상태 유지) · API · 결제 ----------
-const STORE_KEY='sdh-toss-sample-v1';
-function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,me:S.me,tab:S.tab,f:S.f,customerKey:S.customerKey,
+// ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
+const STORE_KEY='sdh-toss-sample-v5';
+function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
+  academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases}))}catch(e){}}
 function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return false;Object.assign(S,JSON.parse(raw));return true}catch(e){return false}}
-async function api(path,body){
-  const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:undefined);
-  const j=await r.json().catch(()=>({}));
-  if(!r.ok) throw Object.assign(new Error(j.message||('요청 실패 ('+r.status+')')),{code:j.code});
-  return j;
-}
-const paid = tid => S.purchases.some(p=>p.tid===tid&&p.status==='DONE');
+
+// ---------- 유틸 ----------
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function today(){return new Date().toISOString().slice(0,10)}
+function addDays(d,n){const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)}
 const maskName = n => n[0]+'○'.repeat(Math.max(n.length-1,1));
 const won = n => Number(n).toLocaleString('ko-KR')+'원';
+const total = t => t.scores ? t.scores.reduce((a,b)=>a+b,0) : 0;
+function opts(list,sel,blank){return (blank?`<option value="">${blank}</option>`:'')+list.map(v=>`<option ${v===sel?'selected':''}>${esc(v)}</option>`).join('')}
+function log(actor,text){S.logs.unshift({t:new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}),actor,text})}
+// 상태 라벨 → 색. DB enum ↔ 라벨 대응은 docs/04-db-design.md §6
+const BADGE_TONE={'승인':'ok','제휴 승인':'ok','결제 완료':'ok','추천 검토':'ok','응답 완료':'ok','연장':'ok','처리 완료':'ok','채용 확정':'ok',
+  '종료':'mute','예정':'mute','미신청':'mute','등록':'mute',
+  '신청':'warn','검토 중':'warn','평가예정':'warn','응답 대기':'warn','보완교육':'warn','재추천':'warn','접수':'warn','검토 중':'warn',
+  '후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','강사 동의':'info','보류':'bad','강사 거절':'bad'};
+function badge(s){const tone=BADGE_TONE[s]||'mute';const I={ok:'circle-check',warn:'clock',bad:'circle-x',info:'loader',mute:''}[tone];return `<span class="b ${tone}">${I?ic(I):''}${esc(s)}</span>`}
+function badge2(s){return `<span class="b info">${esc(s)}</span>`}
+const empty = (icon,title,sub='') => `<div class="card empty">${ic(icon)}<b>${title}</b>${sub?`<span>${sub}</span>`:''}</div>`;
+
+// ---------- 데이터 접근 (Supabase 연결 시 이 부분만 교체) ----------
+const tOf = id => S.teachers.find(t=>t.id===id);
+const rOf = id => S.requests.find(r=>r.id===id);
+const aOf = id => S.academies.find(a=>a.id===id);
+const me = () => tOf(S.user && S.user.teacherId);
+const myAcademy = () => aOf(S.user && S.user.academyId);
+const myRequests = () => S.requests.filter(r=>r.academyId===S.user.academyId);
+// 연락처는 서당 상담이 시작된 뒤에만 학원에 공개 (recommendations.contact_revealed_at)
+const CONTACT_OPEN = ['상담 중','정착 점검 중','종료','연장','재추천'];
+const contactOpen = m => !!m && CONTACT_OPEN.includes(m.status);
+const myMatches = () => S.user.role==='teacher' ? S.matches.filter(m=>m.tid===S.user.teacherId)
+  : S.user.role==='academy' ? S.matches.filter(m=>rOf(m.rid).academyId===S.user.academyId) : S.matches;
+const myPurchases = () => S.purchases.filter(p=>p.academyId===S.user.academyId);
+const paid = tid => myPurchases().some(p=>p.tid===tid&&p.status==='DONE');
+const academyApproved = () => (myAcademy()||{}).status==='제휴 승인';
+const isStaff = () => ['admin','matcher','evaluator'].includes(S.user.role);
+const candidates = f => S.teachers.filter(t=>t.status==='승인'&&t.result==='추천 검토'&&(!f.subject||t.subject===f.subject)&&(!f.grade||t.grade===f.grade)&&(!f.region||t.region===f.region));
+// 적합성: 내 채용요청(과목·학년)·학원 생활권과 얼마나 맞는지 (PRD §4-4)
+function fitOf(t){
+  const reqs=S.user&&S.user.role==='academy'?myRequests():[], a=myAcademy();
+  const req=reqs.find(r=>r.subject===t.subject&&r.grade===t.grade);
+  const sameRegion=!!a&&a.region===t.region;
+  return {req,sameRegion,score:(req?2:0)+(sameRegion?1:0)};
+}
+function actor(){if(!S.user) return ''; return `${S.user.loginId}(${S.user.name})`}
+
+// ---------- 샘플 데이터 (db/seed.sql 과 같은 내용) ----------
+function seed(){
+  const ago = d => new Date(Date.now()-d*864e5).toISOString();
+  S.academies = [
+    {id:1,name:'봉담 샘플학원',region:'봉담',type:'종합',status:'제휴 승인',form:{version:1,pay:'월 급여제 · 협의',payDay:'매월 10일',hours:'주 15시간 · 평일 오후',extra:'채점·학부모 상담 일부',classSize:'8명 이하',handover:'부원장',agree:true}},
+    {id:2,name:'화성 수학전문학원',region:'화성',type:'단과',status:'제휴 승인',form:{version:1,pay:'시급제 · 4만 원',payDay:'매월 5일',hours:'주 12시간 · 평일 저녁',extra:'없음',classSize:'6명 이하',handover:'원장',agree:true}},
+    {id:3,name:'동탄 영어학원',region:'동탄',type:'단과',status:'검토 중',form:{version:2,pay:'월 급여제',payDay:'매월 15일',hours:'주 18시간',extra:'셔틀 동승 주 1회',classSize:'10명 이하',handover:'실장',agree:true},history:['v1 보류: 30일 정착 점검 참여 동의 없음']}];
+  const T = (id,name,subject,grade,region,career,strength,wish,status,scores,result,basis,unverified)=>
+    ({id,name,subject,grade,region,career,strength,wish,status,scores,result,basis,unverified:unverified||'',contact:'010-0000-'+String(id).padStart(4,'0'),corr:'',docs:[],agree:true});
+  S.teachers = [
+    T(1,'김하늘','수학','중등','봉담','학원 강사 6년 · 중등 수학 내신·개념 지도','개념 설명, 소규모 반 운영','평일 오후 · 주 15시간 내외','승인',[22,21,17,13,12],'추천 검토','시범강의에서 개념 설명 순서가 명확했고 질문 대응이 안정적이었음','학부모 직접 상담 경력은 추가 확인 필요'),
+    T(2,'이서준','영어','고등','화성','입시 영어 4년 · 수능 독해 지도','수능 독해 전략, 오답 분석','평일 저녁 · 주 12시간','승인',[21,19,15,12,11],'추천 검토','지문 분석 방식이 체계적이고 피드백 수용이 빠름','서술형 첨삭 방식은 추가 확인 필요'),
+    T(3,'박지우','수학','초등','봉담','초등 수학 3년','연산·사고력 지도','평일 오후','평가예정',null,null,''),
+    T(4,'최민아','국어','중등','수원','중등 국어 5년','서술형·논술 첨삭','주 3일 · 오후','신청',null,null,''),
+    T(5,'정도윤','수학','고등','화성','고등 수학 2년','기출 풀이','평일 저녁','승인',[18,15,12,10,9],'보완교육','풀이는 정확하나 학생 수준별 설명 보완 필요'),
+    T(6,'한소율','영어','중등','봉담','중등 영어 5년 · 내신·듣기평가 지도','문법 개념 정리, 서술형 대비','평일 오후 · 주 14시간','승인',[23,20,16,14,13],'추천 검토','문장 구조 설명이 명확하고 학생 참여를 잘 이끌었음','대형 반 운영 경험은 추가 확인 필요'),
+    T(7,'오지훈','과학','중등','화성','중등 과학 4년 · 실험 수업 병행','실험 활용 설명, 흥미 유도','주 3일 · 오후','승인',[21,22,15,12,12],'추천 검토','실험 사례를 활용한 설명이 이해하기 쉬웠음','고등 과학 지도 경험은 확인되지 않음'),
+    T(8,'윤채원','국어','고등','수원','고등 국어 7년 · 비문학·문학 분석','독해 전략, 논술 첨삭','평일 저녁 · 주 16시간','승인',[24,23,18,14,14],'추천 검토','지문 분석 틀이 체계적이고 피드백 수용이 빠름'),
+    T(9,'임도현','수학','고등','봉담','고등 수학 6년 · 수능·내신 병행','기출 분석, 취약 단원 진단','평일 저녁 · 주말 일부','승인',[24,21,17,13,14],'추천 검토','취약 유형 진단 후 맞춤 풀이를 제시함','학부모 상담 경력은 추가 확인 필요'),
+    T(10,'서예린','사회','중등','동탄','중등 사회 3년','개념 도식화, 암기 전략','평일 오후','승인',[19,18,15,12,11],'추천 검토','도식 중심 설명이 효과적이나 심화 질문 대응은 보완 여지 있음','서술형 첨삭 경험은 추가 확인 필요'),
+    T(11,'강민재','영어','초등','봉담','초등 영어 4년 · 파닉스·회화','파닉스, 놀이식 수업','평일 오후 · 주 12시간','승인',[20,24,16,13,12],'추천 검토','아이들과의 상호작용이 좋고 수업 진행이 안정적임'),
+    T(12,'배수아','수학','중등','화성','중등 수학 8년 · 영재·심화반 지도','심화 문제 풀이, 사고력 지도','평일 오후 · 주 18시간','승인',[25,22,18,14,13],'추천 검토','심화 유형의 풀이 설계가 뛰어나고 학생 수준별 대응이 좋음','소규모 반 운영 경험은 추가 확인 필요'),
+    T(13,'조현우','과학','고등','수원','고등 과학 2년','물리 개념','평일 저녁','승인',[17,14,11,10,9],'보완교육','개념은 정확하나 수업 전달 방식 보완 필요'),
+    T(14,'문가은','수학','초등','수원','초등 수학 3년','연산 습관 지도','주 3일 · 오후','평가예정',null,null,'')];
+  const D=(type,name,size,d)=>({type,name,size,url:'',date:addDays(today(),-d)});
+  tOf(1).facts='경력증명서로 학원 재직 6년 확인, 졸업·성적증명서 제출';tOf(1).statement='소규모 반(8명 이하) 운영을 선호';
+  tOf(9).facts='졸업·성적증명서 확인';tOf(9).statement='평일 저녁 위주, 주말 일부 가능';
+  tOf(1).docs=[D('졸업증명서','졸업증명서_김하늘.pdf',182000,9),D('성적증명서','성적증명서_김하늘.pdf',240000,9),D('경력증명서','경력증명서_학원재직.pdf',156000,9)];
+  tOf(2).docs=[D('졸업증명서','졸업증명서_이서준.pdf',171000,12)];
+  tOf(6).docs=[D('졸업증명서','졸업증명서_한소율.pdf',165000,8)];
+  tOf(9).docs=[D('졸업증명서','졸업증명서_임도현.pdf',174000,10),D('성적증명서','성적증명서_임도현.pdf',228000,10)];
+
+  // 계정: 역할 + 번호
+  S.accounts = [
+    {loginId:'관리자1',role:'admin',name:'서당 관리자'},
+    {loginId:'매칭담당1',role:'matcher',name:'서당 매칭담당'},
+    {loginId:'평가위원1',role:'evaluator',name:'서당 평가위원'},
+    {loginId:'원장1',role:'academy',name:'정봉담 원장',academyId:1},
+    {loginId:'원장2',role:'academy',name:'한화성 원장',academyId:2},
+    {loginId:'원장3',role:'academy',name:'오동탄 원장',academyId:3},
+    ...S.teachers.map(t=>({loginId:'강사'+t.id,role:'teacher',name:t.name,teacherId:t.id}))];
+
+  S.requests = [
+    {id:1,no:1,academyId:1,subject:'수학',grade:'중등',count:1,start:addDays(today(),25),pay:'월 급여제 · 협의',hours:'주 15시간',extra:'채점·학부모 상담 일부',status:'후보 제안 중'},
+    {id:2,no:2,academyId:2,subject:'수학',grade:'고등',count:1,start:addDays(today(),-20),pay:'시급제 · 4만 원',hours:'주 12시간 · 평일 저녁',extra:'없음',status:'채용 확정'},
+    {id:3,no:3,academyId:1,subject:'영어',grade:'중등',count:1,start:addDays(today(),40),pay:'월 급여제',hours:'주 14시간',extra:'단어 시험 채점',status:'등록'}];
+  const hire=addDays(today(),-20);
+  S.matches = [
+    {id:1,tid:1,rid:1,status:'신청',hire:'',checks:[]},
+    {id:2,tid:12,rid:1,status:'상담 중',hire:'',checks:[]},
+    {id:3,tid:9,rid:2,status:'정착 점검 중',hire,checks:[
+      {day:7,due:addDays(hire,7),status:'응답 완료',academyReply:'수업 적응 양호, 학생 반응 좋음',teacherReply:'업무량 안내와 동일',action:'이상 없음'},
+      {day:14,due:addDays(hire,14),status:'응답 대기',academyReply:'채점 업무가 조금 늘었음',teacherReply:'',action:''},
+      {day:30,due:addDays(hire,30),status:'예정',academyReply:'',teacherReply:'',action:''}]}];
+  const P=(n,academyId,tid,d)=>({orderId:'sdh_seed_'+String(n).padStart(2,'0')+'_'+tid,paymentKey:'seed_pk_'+n,academyId,tid,amount:5000,method:'카드(테스트)',approvedAt:ago(d),status:'DONE',orderName:'강사 프로필 열람권 - '+maskName(tOf(tid).name)});
+  S.purchases = [P(1,1,2,7),P(2,1,6,5),P(3,1,9,3),P(4,1,12,1),P(5,2,9,32)];
+  S.complaints = [{no:'C-001',by:'강사9(임도현)',byLogin:'강사9',text:'수업 외 채점 업무가 안내보다 많아졌습니다.',status:'접수'}];
+  // 건별 업무 시간·비용 (DB work_logs, PRD §2 원가 측정)
+  S.workLogs = [
+    {by:'매칭담당1',rid:1,task:'근무조건 확인 통화',min:30,cost:0,date:addDays(today(),-5)},
+    {by:'매칭담당1',rid:1,task:'후보 2명 적합성 카드 작성',min:90,cost:0,date:addDays(today(),-3)},
+    {by:'평가위원1',rid:null,task:'시범강의 평가 (강사12)',min:60,cost:50000,date:addDays(today(),-21)},
+    {by:'매칭담당1',rid:2,task:'7일 점검 통화',min:20,cost:0,date:addDays(today(),-13)},
+    {by:'매칭담당1',rid:2,task:'채용 확정·계약 확인',min:45,cost:0,date:addDays(today(),-21)},
+    {by:'평가위원1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
+    {by:'관리자1',rid:null,task:'동탄 영어학원 확인서 검토',min:25,cost:0,date:addDays(today(),-1)}];
+  S.logs = [];
+  log('시스템','샘플 데이터를 불러왔습니다 (계정 20개)');
+}
+
+// ---------- 결제 (토스페이먼츠 결제위젯) ----------
 function getCustomerKey(){ // 22~50자, -_=.@ 중 하나 포함, 추측 불가한 값
   if(!S.customerKey) S.customerKey='academy-'+Math.random().toString(36).slice(2,12)+Math.random().toString(36).slice(2,12)+'-sample';
   return S.customerKey;
@@ -233,7 +592,7 @@ async function initWidget(){
   const showErr=m=>{const e=document.getElementById('pay-err');if(e)e.innerHTML=`<div class="flash err">${esc(m)}</div>`;const b=document.getElementById('payment-method');if(b)b.innerHTML=''};
   try{
     if(typeof TossPayments==='undefined') throw new Error('토스페이먼츠 SDK(js.tosspayments.com)를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');
-    orderInfo={orderId:'sdh_'+crypto.randomUUID(),amount:S.cfg.price,orderName:'강사 프로필 열람권 - '+maskName(tOf(S.checkout.tid).name),tid:S.checkout.tid};
+    orderInfo={orderId:'sdh_'+crypto.randomUUID(),amount:S.cfg.price,orderName:'강사 프로필 열람권 - '+maskName(tOf(S.checkout.tid).name),tid:S.checkout.tid,academyId:S.user.academyId};
     try{sessionStorage.setItem('sdh-pending',JSON.stringify(orderInfo))}catch(e){}
     const tossPayments=TossPayments(S.cfg.clientKey);
     widgets=tossPayments.widgets({customerKey:getCustomerKey()});
@@ -241,99 +600,146 @@ async function initWidget(){
     await Promise.all([
       widgets.renderPaymentMethods({selector:'#payment-method',variantKey:'DEFAULT'}),
       widgets.renderAgreement({selector:'#agreement',variantKey:'AGREEMENT'})]);
-    const b=document.getElementById('pay-btn'); if(b) b.disabled=false;
+    document.querySelectorAll('[data-act="pay-go"]').forEach(b=>b.disabled=false);
   }catch(e){showErr(e.message||String(e))}
 }
 async function doPay(){
   if(!widgets||!orderInfo) return;
-  const b=document.getElementById('pay-btn'); b.disabled=true; save();
+  const bs=document.querySelectorAll('[data-act="pay-go"]'); bs.forEach(b=>b.disabled=true); save();
   try{
     await widgets.requestPayment({orderId:orderInfo.orderId,orderName:orderInfo.orderName,
       successUrl:BASE_URL+'?toss=success',failUrl:BASE_URL+'?toss=fail',
-      customerEmail:'sample@example.com',customerName:S.user.name});
-  }catch(e){document.getElementById('pay-err').innerHTML=`<div class="flash err">${esc(e.message||'결제가 취소되었습니다.')}</div>`;b.disabled=false}
+      customerEmail:'sample@example.com',customerName:(myAcademy()||{}).name||S.user.name});
+  }catch(e){document.getElementById('pay-err').innerHTML=`<div class="flash err">${esc(e.message||'결제가 취소되었습니다.')}</div>`;bs.forEach(b=>b.disabled=false)}
 }
 function checkoutView(){
   const t=tOf(S.checkout.tid);
   return `<h2>프로필 열람권 결제</h2><p class="lead">결제가 완료되면 ${esc(maskName(t.name))} 강사의 프로필 상세를 열람할 수 있습니다.</p>
   <div class="grid g2" style="align-items:start"><div class="card"><h3>주문 정보</h3>
-   <table><tr><th style="width:100px">상품</th><td>강사 프로필 열람권 (1명)</td></tr>
-   <tr><th>대상</th><td>${esc(maskName(t.name))} 강사 · ${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)}</td></tr>
-   <tr><th>결제 금액</th><td><b class="total">${won(S.cfg.price)}</b></td></tr></table>
-   <div class="note" style="margin-top:12px">토스페이먼츠 테스트 환경이라 실제 금액은 청구되지 않습니다. 이 HTML 단독 버전은 서버가 없어 결제 승인(confirm) API를 호출하지 않는 데모입니다. 가격은 샘플 값이며 확정된 정책이 아닙니다.</div>
-   <button class="btn sec" data-act="pay-cancel">${ic('arrow-left')}돌아가기</button></div>
+   <dl class="kv"><dt>상품</dt><dd>강사 프로필 열람권 (1명)</dd>
+   <dt>대상</dt><dd>${esc(maskName(t.name))} 강사 · ${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)}</dd>
+   <dt>구매 학원</dt><dd>${esc((myAcademy()||{}).name)}</dd>
+   <dt>결제 금액</dt><dd><b class="total">${won(S.cfg.price)}</b></dd></dl>
+   <div class="note" style="margin-top:16px">토스페이먼츠 테스트 환경이라 실제 금액은 청구되지 않습니다. 이 HTML 단독 버전은 서버가 없어 결제 승인(confirm) API를 호출하지 않는 데모입니다. 가격은 샘플 값이며 확정된 정책이 아닙니다.</div>
+   <button class="btn sec d-only" data-act="pay-cancel">${ic('arrow-left')}돌아가기</button></div>
   <div class="card"><h3>결제수단</h3><div id="pay-err"></div><div id="payment-method"><p class="muted">결제수단을 불러오는 중…</p></div><div id="agreement"></div>
-   <button class="btn" id="pay-btn" data-act="pay-go" disabled style="width:100%;margin-top:14px;padding:16px;font-size:16px">결제하기</button></div></div>`;
+   <button class="btn block d-only" data-act="pay-go" disabled>결제하기</button></div></div>
+  <div class="sticky-cta m-only"><div><span class="muted">결제 금액</span><b>${won(S.cfg.price)}</b></div><button class="btn" data-act="pay-go" disabled>결제하기</button></div>`;
 }
 
-function seed(){
-  S.teachers = [
-    {id:1,name:'김하늘',subject:'수학',grade:'중등',region:'봉담',career:'학원 강사 6년 · 중등 수학 내신·개념 지도',strength:'개념 설명, 소규모 반 운영',wish:'평일 오후 · 주 15시간 내외',contact:'010-0000-0001',status:'승인',scores:[22,21,17,13,12],result:'추천 검토',basis:'시범강의에서 개념 설명 순서가 명확했고 질문 대응이 안정적이었음',unverified:'학부모 직접 상담 경력은 추가 확인 필요',corr:''},
-    {id:2,name:'이서준',subject:'영어',grade:'고등',region:'화성',career:'입시 영어 4년 · 수능 독해 지도',strength:'수능 독해 전략, 오답 분석',wish:'평일 저녁 · 주 12시간',contact:'010-0000-0002',status:'승인',scores:[21,19,15,12,11],result:'추천 검토',basis:'지문 분석 방식이 체계적이고 피드백 수용이 빠름',unverified:'서술형 첨삭 방식은 추가 확인 필요',corr:''},
-    {id:3,name:'박지우',subject:'수학',grade:'초등',region:'봉담',career:'초등 수학 3년',strength:'연산·사고력 지도',wish:'평일 오후',contact:'010-0000-0003',status:'평가예정',scores:null,result:null,basis:'',unverified:'',corr:''},
-    {id:4,name:'최민아',subject:'국어',grade:'중등',region:'수원',career:'중등 국어 5년',strength:'서술형·논술 첨삭',wish:'주 3일 · 오후',contact:'010-0000-0004',status:'신청',scores:null,result:null,basis:'',unverified:'',corr:''},
-    {id:5,name:'정도윤',subject:'수학',grade:'고등',region:'화성',career:'고등 수학 2년',strength:'기출 풀이',wish:'평일 저녁',contact:'010-0000-0005',status:'승인',scores:[18,15,12,10,9],result:'보완교육',basis:'풀이는 정확하나 학생 수준별 설명 보완 필요',unverified:'',corr:''}
-  ];
-  S.teachers.forEach(t=>t.docs=[]);
-  S.teachers[0].docs=[{type:'졸업증명서',name:'졸업증명서_김하늘.pdf',size:182000,url:'',date:addDays(today(),-9)},{type:'성적증명서',name:'성적증명서_김하늘.pdf',size:240000,url:'',date:addDays(today(),-9)},{type:'경력증명서',name:'경력증명서_학원재직.pdf',size:156000,url:'',date:addDays(today(),-9)}];
-  S.teachers[1].docs=[{type:'졸업증명서',name:'졸업증명서_이서준.pdf',size:171000,url:'',date:addDays(today(),-12)}];
-  [
-    {id:6,name:'한소율',subject:'영어',grade:'중등',region:'봉담',career:'중등 영어 5년 · 내신·듣기평가 지도',strength:'문법 개념 정리, 서술형 대비',wish:'평일 오후 · 주 14시간',status:'승인',scores:[23,20,16,14,13],result:'추천 검토',basis:'문장 구조 설명이 명확하고 학생 참여를 잘 이끌었음',unverified:'대형 반 운영 경험은 추가 확인 필요'},
-    {id:7,name:'오지훈',subject:'과학',grade:'중등',region:'화성',career:'중등 과학 4년 · 실험 수업 병행',strength:'실험 활용 설명, 흥미 유도',wish:'주 3일 · 오후',status:'승인',scores:[21,22,15,12,12],result:'추천 검토',basis:'실험 사례를 활용한 설명이 이해하기 쉬웠음',unverified:'고등 과학 지도 경험은 확인되지 않음'},
-    {id:8,name:'윤채원',subject:'국어',grade:'고등',region:'수원',career:'고등 국어 7년 · 비문학·문학 분석',strength:'독해 전략, 논술 첨삭',wish:'평일 저녁 · 주 16시간',status:'승인',scores:[24,23,18,14,14],result:'추천 검토',basis:'지문 분석 틀이 체계적이고 피드백 수용이 빠름',unverified:''},
-    {id:9,name:'임도현',subject:'수학',grade:'고등',region:'봉담',career:'고등 수학 6년 · 수능·내신 병행',strength:'기출 분석, 취약 단원 진단',wish:'평일 저녁 · 주말 일부',status:'승인',scores:[24,21,17,13,14],result:'추천 검토',basis:'취약 유형 진단 후 맞춤 풀이를 제시함',unverified:'학부모 상담 경력은 추가 확인 필요'},
-    {id:10,name:'서예린',subject:'사회',grade:'중등',region:'동탄',career:'중등 사회 3년',strength:'개념 도식화, 암기 전략',wish:'평일 오후',status:'승인',scores:[19,18,14,12,11],result:'추천 검토',basis:'도식 중심 설명이 효과적이나 심화 질문 대응은 보완 여지 있음',unverified:'서술형 첨삭 경험은 추가 확인 필요'},
-    {id:11,name:'강민재',subject:'영어',grade:'초등',region:'봉담',career:'초등 영어 4년 · 파닉스·회화',strength:'파닉스, 놀이식 수업',wish:'평일 오후 · 주 12시간',status:'승인',scores:[20,24,16,13,12],result:'추천 검토',basis:'아이들과의 상호작용이 좋고 수업 진행이 안정적임',unverified:''},
-    {id:12,name:'배수아',subject:'수학',grade:'중등',region:'화성',career:'중등 수학 8년 · 영재·심화반 지도',strength:'심화 문제 풀이, 사고력 지도',wish:'평일 오후 · 주 18시간',status:'승인',scores:[25,22,18,14,13],result:'추천 검토',basis:'심화 유형의 풀이 설계가 뛰어나고 학생 수준별 대응이 좋음',unverified:'소규모 반 운영 경험은 추가 확인 필요'},
-    {id:13,name:'조현우',subject:'과학',grade:'고등',region:'수원',career:'고등 과학 2년',strength:'물리 개념',wish:'평일 저녁',status:'승인',scores:[17,14,11,10,9],result:'보완교육',basis:'개념은 정확하나 수업 전달 방식 보완 필요',unverified:''},
-    {id:14,name:'문가은',subject:'수학',grade:'초등',region:'수원',career:'초등 수학 3년',strength:'연산 습관 지도',wish:'주 3일 · 오후',status:'평가예정',scores:null,result:null,basis:'',unverified:''}
-  ].forEach(x=>S.teachers.push(Object.assign({contact:'010-0000-00'+String(x.id).padStart(2,'0'),corr:'',unverified:'',docs:[]},x)));
-  S.teachers[5].docs=[{type:'졸업증명서',name:'졸업증명서_한소율.pdf',size:165000,url:'',date:addDays(today(),-8)}];
-  S.teachers[8].docs=[{type:'졸업증명서',name:'졸업증명서_임도현.pdf',size:174000,url:'',date:addDays(today(),-10)},{type:'성적증명서',name:'성적증명서_임도현.pdf',size:228000,url:'',date:addDays(today(),-10)}];
-  // 이미 결제(열람)한 강사: 이서준 · 한소율 · 임도현 · 배수아
-  const ago = d => new Date(Date.now()-d*864e5).toISOString();
-  S.purchases = [[12,1],[9,3],[6,5],[2,7]].map(([tid,d],i)=>({orderId:'sdh_seed_'+String(i+1).padStart(2,'0')+'_'+tid,paymentKey:'seed_pk_'+tid,tid,amount:5000,method:'카드(테스트)',approvedAt:ago(d),status:'DONE',orderName:'강사 프로필 열람권 - '+tOf(tid).name[0]+'○'.repeat(Math.max(tOf(tid).name.length-1,1))}));
-  S.requests = [{id:1,subject:'수학',grade:'중등',count:1,start:addDays(today(),25),pay:'월 급여제 · 협의',hours:'주 15시간',extra:'채점·학부모 상담 일부',status:'후보 제안 중'}];
-  S.matches = []; S.complaints = []; S.logs = [];
-  log('시스템','샘플 데이터를 불러왔습니다');
+// ---------- 알림 (DB notifications 와 같은 역할: 제목·내용·이동 경로) ----------
+function notis(){
+  const u=S.user, L=[];
+  const add=(icon,title,sub,tab,sel)=>L.push({icon,title,sub,tab,sel});
+  if(u.role==='academy'){
+    myMatches().forEach(m=>{const t=tOf(m.tid);
+      m.checks.filter(c=>c.status==='응답 대기'&&!c.academyReply).forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답이 필요해요`,`${t.name} 강사 · ${c.due}까지`,'prog'));
+      if(m.status==='강사 동의') add('user-check','강사가 매칭에 동의했어요',`${maskName(t.name)} 강사 · 서당이 상담을 준비합니다`,'prog');
+      if(m.status==='상담 중') add('phone','연락처가 공개됐어요',`${t.name} 강사 · ${t.contact}`,'prog');
+      if(m.status==='강사 거절') add('user-x','강사가 매칭을 거절했어요',`${maskName(t.name)} 강사 · 다른 후보를 추천받으세요`,'find');});
+    const ac=myAcademy(); if(ac.status==='검토 중') add('hourglass','제휴 검토 중이에요','근무조건 확인서를 서당이 검토하고 있어요','req');
+    if(ac.status==='보류') add('circle-alert','제휴가 보류됐어요',ac.holdReason||'확인서를 고쳐 다시 제출해 주세요','req');
+  } else if(u.role==='teacher'){
+    myMatches().forEach(m=>{const a=aOf(rOf(m.rid).academyId);
+      if(m.status==='신청') add('handshake','학원이 매칭을 신청했어요',`${a.name} · 수락 또는 거절해 주세요`,'prog');
+      m.checks.filter(c=>c.status==='응답 대기'&&!c.teacherReply).forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답이 필요해요`,`${a.name} · ${c.due}까지`,'prog'));});
+    const t=me(); if(t.corr) add('message-square','정정 요청이 접수됐어요','재평가 결과를 기다리는 중','ver');
+  } else {
+    const can=k=>TABS[u.role].some(([x])=>x===k);
+    if(can('eval')) S.teachers.filter(t=>t.status==='신청'||t.status==='평가예정'||t.corr).forEach(t=>add('clipboard-check',t.corr?'정정 요청':t.status==='신청'?'검증 신청 접수':'시범강의 평가 예정',`${t.name} 강사(강사${t.id}) · ${t.grade} ${t.subject}`,'eval',t.id));
+    if(can('match')) S.academies.filter(a=>a.status==='검토 중').forEach(a=>add('building-2','근무조건 확인서 검토',`${a.name} · v${a.form.version}`,'dash'));
+    if(can('match')) S.matches.filter(m=>m.status==='강사 동의').forEach(m=>add('handshake','상담을 시작할 수 있어요',`${tOf(m.tid).name} 강사 ↔ ${aOf(rOf(m.rid).academyId).name}`,'match'));
+    if(can('check')){S.matches.forEach(m=>m.checks.filter(c=>c.status==='응답 대기').forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답 대기`,`${tOf(m.tid).name} 강사 · 학원 ${c.academyReply?'완료':'대기'} · 강사 ${c.teacherReply?'완료':'대기'}`,'check')));
+      S.complaints.filter(c=>c.status==='접수').forEach(c=>add('message-square-warning',`민원 ${c.no} 접수`,c.text,'check'));}
+  }
+  return L;
 }
-
-// ---------- 유틸 ----------
-const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function today(){return new Date().toISOString().slice(0,10)}
-function addDays(d,n){const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)}
-function log(actor,text){S.logs.unshift({t:new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}),actor,text})}
-function badge(s){const m={'승인':'ok','결제 완료':'ok','추천 검토':'ok','응답 완료':'ok','연장':'ok','처리 완료':'ok','종료':'mute','예정':'mute','미신청':'mute','신청':'warn','평가예정':'warn','응답 대기':'warn','보완교육':'warn','재추천':'warn','접수':'warn','후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','보류':'bad'};const I={ok:'circle-check',warn:'clock',bad:'circle-x',info:'loader',mute:''}[m[s]||'mute'];return `<span class="b ${m[s]||'mute'}">${I?ic(I):''}${esc(s)}</span>`}
-function opts(list,sel,blank){return (blank?`<option value="">${blank}</option>`:'')+list.map(v=>`<option ${v===sel?'selected':''}>${esc(v)}</option>`).join('')}
-const me = () => S.teachers.find(t=>t.id===S.me);
-const tOf = id => S.teachers.find(t=>t.id===id);
-const rOf = id => S.requests.find(r=>r.id===id);
-const total = t => t.scores ? t.scores.reduce((a,b)=>a+b,0) : 0;
-function actor(){return !S.user ? '' : S.user.role==='teacher' ? `강사(${S.user.name})` : ROLE_NAME[S.user.role]}
+function receiptSheet(){
+  const p=S.purchases.find(x=>x.orderId===S.receipt); if(!p) return '';
+  return `<div class="noti-dim" data-act="receipt-close"></div><section class="noti-panel sheet" role="dialog" aria-label="결제 영수증">
+   <div class="noti-head"><b>결제 영수증</b><button class="ib" data-act="receipt-close" aria-label="닫기">${ic('x')}</button></div>
+   <div style="padding:4px 22px 24px"><b class="big">${won(p.amount)}</b>${badge(p.status==='DONE'?'결제 완료':p.status)}
+   <dl class="kv" style="margin-top:18px"><dt>상품</dt><dd>${esc(p.orderName)}</dd><dt>구매 학원</dt><dd>${esc((aOf(p.academyId)||{}).name)}</dd><dt>승인 시각</dt><dd>${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</dd><dt>결제수단</dt><dd>${esc(p.method)}</dd><dt>주문번호</dt><dd style="word-break:break-all">${esc(p.orderId)}</dd><dt>결제 키</dt><dd style="word-break:break-all" class="muted">${esc(p.paymentKey)}</dd></dl>
+   <p class="muted" style="margin:16px 0 0">테스트 결제로 실제 청구되지 않았습니다. 세금계산서·현금영수증은 실결제 전환 후 발행됩니다.</p></div></section>`;
+}
+function notiPanel(){
+  const L=notis();
+  return `<div class="noti-dim" data-act="noti"></div><section class="noti-panel" role="dialog" aria-label="알림">
+   <div class="noti-head"><b>알림</b><span class="cnt">${L.length}</span><button class="ib" data-act="noti" aria-label="닫기">${ic('x')}</button></div>
+   ${L.length?`<ul>${L.map(n=>`<li><button data-act="noti-go" data-tab="${n.tab}" ${n.sel?`data-sel="${n.sel}"`:''}>${ic(n.icon)}<div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div>${ic('chevron-right')}</button></li>`).join('')}</ul>`:`<p class="muted" style="padding:24px;text-align:center">새 알림이 없어요.</p>`}
+  </section>`;
+}
+const bell = n => `<button class="ib bell" data-act="noti" aria-label="알림 ${n}개">${ic('bell')}${n?`<i>${n>9?'9+':n}</i>`:''}</button>`;
 
 // ---------- 화면 ----------
 function render(){
   const app=document.getElementById('app');
-  if(!S.user){app.innerHTML=loginView();save();icons();return}
+  if(!S.user){app.innerHTML=loginView();syncRoute();save();icons();return}
   const flash=S.flash?`<div class="flash ${S.flashType==='err'?'err':''}">${ic(S.flashType==='err'?'circle-alert':'circle-check')}${esc(S.flash)}</div>`:''; S.flash='';S.flashType='';
   const tabs=TABS[S.user.role];
-  const body=(S.user.role==='academy'&&S.checkout)?checkoutView():VIEWS[S.user.role+':'+S.tab]();
-  app.innerHTML=`<div class="shell">
+  if(!tabs.some(([k])=>k===S.tab)) S.tab=tabs[0][0];
+  const vr=VIEW_ROLE[S.user.role];
+  const inFlow=vr==='academy'&&S.checkout;
+  const body=inFlow?checkoutView():VIEWS[vr+':'+S.tab]();
+  const title=inFlow?'열람권 결제':(tabs.find(([k])=>k===S.tab)||[])[1];
+  const sub=S.user.role==='academy'?(myAcademy()||{}).name:S.user.name;
+  const nc=notis().length;
+  app.innerHTML=`<div class="shell ${inFlow?'flow':''}">
   <aside class="sb">
     <div class="logo"><div class="mk">서</div><div><b>서당 동행</b><small>검증된 강사 매칭</small></div></div>
-    <div class="acct"><div class="av">${ic(ROLE_ICON[S.user.role])}</div><div><b>${esc(S.user.name)}</b><span>${ROLE_NAME[S.user.role]}</span></div></div>
-    <nav class="tabs">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!S.checkout?'on':''}">${ic(TAB_ICON[k])}${n}</button>`).join('')}</nav>
+    <div class="acct"><div class="av">${ic(ROLE_ICON[S.user.role])}</div><div style="flex:1;min-width:0"><b>${esc(sub)}</b><span>${ROLE_NAME[S.user.role]} · ${esc(S.user.loginId)}</span></div>${bell(nc)}</div>
+    <nav class="tabs">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!inFlow?'on':''}" ${S.tab===k&&!inFlow?'aria-current="page"':''}>${ic(TAB_ICON[k])}${n}</button>`).join('')}</nav>
     <div class="grow"></div>
     <div class="sample">${SAMPLE_NOTE}</div>
     <button class="out" data-act="logout">${ic('log-out')}로그아웃</button>
   </aside>
-  <main>${flash}${body}</main></div>`;
-  save(); icons(); initWidget();
+  <header class="appbar">
+    ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk">서</div>`}
+    <div class="ttl"><b>${esc(title)}</b><span>${esc(sub)} · ${esc(S.user.loginId)}</span></div>
+    ${inFlow?'':bell(nc)}<button class="ib" data-act="logout" aria-label="로그아웃">${ic('log-out')}</button>
+  </header>
+  <main>${flash}${body}<div class="sample m-only">${SAMPLE_NOTE}</div></main>
+  ${tabs.length>1?`<nav class="bnav" style="--n:${tabs.length}">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k?'on':''}" ${S.tab===k?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`).join('')}</nav>`:''}
+  ${S.noti?notiPanel():''}${S.receipt?receiptSheet():''}
+  <div class="offline" role="status">${ic('wifi-off')}오프라인이에요 · 연결되면 다시 동작해요</div></div>`;
+  // 모바일에서 표를 카드처럼 보이게: 셀 내용을 한 덩어리로 감싼다 (td::before 에 라벨)
+  app.querySelectorAll('table.rt td').forEach(td=>{const v=document.createElement('div');v.className='v';while(td.firstChild)v.appendChild(td.firstChild);td.appendChild(v)});
+  document.body.classList.toggle('has-bnav',tabs.length>1&&!inFlow);
+  syncRoute(); save(); icons(); initWidget();
+  if(S.tab==='eval') applyEvalQ();
+  if(S.noti) (document.querySelector('.noti-panel li button')||document.querySelector('.noti-head .ib'))?.focus();
 }
-function icons(){try{window.lucide&&lucide.createIcons()}catch(e){}}
+function icons(){
+  document.querySelectorAll('form:not([data-form=login]) input[type=text]:not([enterkeyhint])').forEach(i=>i.setAttribute('enterkeyhint','next'));
+  try{window.lucide&&lucide.createIcons()}catch(e){}}
+
+// ---------- 주소(해시) 라우팅: 휴대폰 뒤로 가기 = 이전 화면. 앱(go_router) 경로와 같은 이름을 쓴다 ----------
+//   #/login · #/<탭> · #/find/checkout/<강사id> · #/eval/<강사id>
+let replaceNext=true;
+function currentRoute(){
+  if(!S.user) return '/login';
+  if(S.checkout) return '/find/checkout/'+S.checkout.tid;
+  if(S.tab==='eval'&&S.selT) return '/eval/'+S.selT;
+  return '/'+S.tab;
+}
+function syncRoute(){
+  const h='#'+currentRoute();
+  if(location.hash!==h) history[replaceNext?'replaceState':'pushState'](null,'',h);
+  replaceNext=false;
+}
+window.addEventListener('popstate',()=>{
+  const p=location.hash.replace(/^#\//,'').split('/');
+  if(!S.user){replaceNext=true;render();return}
+  const tabs=TABS[S.user.role].map(([k])=>k);
+  S.checkout=null;
+  if(tabs.includes(p[0])){S.tab=p[0];S.selT=p[0]==='eval'&&p[1]?+p[1]:null}
+  replaceNext=true;render();
+});
 
 function loginView(){
   const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:''; S.loginErr='';
+  const acc=S.accounts;
+  const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}</span></li>`;
   return `<div class="login">
    <section class="brand">
     <div class="logo"><div class="mk">서</div><div><b>서당 동행</b></div></div>
@@ -343,157 +749,263 @@ function loginView(){
      <div><small>03</small><b>적합성 매칭</b>조건 맞춤 추천</div><div><small>04</small><b>30일 정착</b>7·14·30일 점검</div></div>
    </section>
    <section class="form"><form data-form="login">
-    <h2>로그인</h2><p class="lead" style="margin:0 0 12px">아이디에 따라 해당 권한의 화면이 열려요.<br><b>원장</b> → 학원 · <b>강사</b> → 강사 · <b>관리자</b> → 관리자</p>
+    <h2>로그인</h2><p class="lead" style="margin:0 0 12px">아이디에 따라 해당 권한의 화면이 열려요.</p>
     ${err}
-    <label>아이디</label><input type="text" name="id" placeholder="원장 / 강사 / 관리자" autocomplete="off" autofocus>
-    <label>비밀번호</label><input type="password" name="pw" placeholder="아무 값이나 입력하세요">
+    <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 관리자1" autocomplete="username" autocapitalize="off" autofocus>
+    <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" placeholder="아무 값이나 입력하세요" autocomplete="current-password">
     <button class="btn">시작하기</button>
-    <p class="muted foot">샘플 화면 · 가상 데이터 · 테스트 결제(실제 청구 없음) · <a href="#" id="reset">처음 상태로 초기화</a></p>
+    <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
+     <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · 검토 중'))).join('')}</ul>
+     <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
+     <h4>운영</h4><ul>${acc.filter(a=>isStaffRole(a.role)).map(a=>row(a,ROLE_NAME[a.role])).join('')}</ul>
+    </details>
+    <p class="muted foot">샘플 화면 · 가상 데이터 · 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p>
    </form></section></div>`;
 }
+const isStaffRole = r => ['admin','matcher','evaluator'].includes(r);
 
 const VIEWS = {
 // ===== 학원 =====
 'academy:home':()=>{
-  const mine=S.matches;
-  return `<h2>${esc(S.user.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 검증된 정보로 만나 보세요.</p>
-  <div class="grid g3" style="margin-bottom:16px">
-    <div class="stat"><b>${S.requests.length}</b><span>등록한 채용요청</span></div>
-    <div class="stat"><b>${mine.length}</b><span>진행 중인 매칭</span></div>
-    <div class="stat"><b>${mine.filter(m=>m.status==='정착 점검 중').length}</b><span>정착 점검 중</span></div></div>
+  const ms=myMatches(), a=myAcademy();
+  const next=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기').map(c=>({m,c})));
+  return `<h2>${esc(a.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 검증된 정보로 만나 보세요.</p>
+  ${a.status==='검토 중'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--warn-soft);color:#7A5A12">${ic('hourglass')}<div><b>서당이 근무조건 확인서를 검토하고 있어요</b><span>제휴 승인 후 채용요청과 매칭 신청을 할 수 있습니다 · 확인서 보기</span></div>${ic('chevron-right')}</button>`:''}
+  ${a.status==='보류'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--bad-soft);color:var(--bad-text)">${ic('circle-alert')}<div><b>제휴가 보류됐어요</b><span>${esc(a.holdReason||'')} · 확인서를 고쳐 다시 제출해 주세요</span></div>${ic('chevron-right')}</button>`:''}
+  ${next.length?`<button class="todo" data-act="tab" data-tab="prog">${ic('bell-ring')}<div><b>정착 점검 응답이 필요해요</b><span>${next.map(x=>`${esc(tOf(x.m.tid).name)} 강사 · 입사 ${x.c.day}일`).join(', ')}</span></div>${ic('chevron-right')}</button>`:''}
+  <div class="grid g3 stats" style="margin-bottom:16px">
+    <div class="stat"><b>${myRequests().length}</b><span>등록한 채용요청</span></div>
+    <div class="stat"><b>${ms.filter(m=>!['종료','강사 거절'].includes(m.status)).length}</b><span>진행 중인 매칭</span></div>
+    <div class="stat"><b>${ms.filter(m=>m.status==='정착 점검 중').length}</b><span>정착 점검 중</span></div></div>
   <div class="card"><h3>서당 동행 이용 순서</h3><div class="steps">
     <div><b>1. 조건 확인</b>채용요청과 근무조건을 등록합니다</div>
     <div><b>2. 검증 후보</b>시범강의 평가를 통과한 후보만 보입니다</div>
     <div><b>3. 적합성 매칭</b>조건에 맞는 강사를 추천받아 상담합니다</div>
     <div><b>4. 30일 정착</b>입사 후 7·14·30일에 함께 점검합니다</div></div></div>`;
 },
-'academy:req':()=>`
-  <h2>채용요청</h2><p class="lead">근무조건 확인서를 겸해, 어떤 강사가 필요한지 적어 주세요.</p>
+'academy:req':()=>{
+  const ok=academyApproved(), a=myAcademy(), fm=a.form||{version:0};
+  const formCard=`<div class="card"><h3>근무조건 확인서 ${fm.version?`<span class="cnt">v${fm.version}</span>`:''}${badge(a.status)}</h3>
+   <p class="muted" style="margin-top:-6px">서당이 학원 조건도 함께 확인해요. 내용이 바뀌면 새 버전으로 남아 재추천·조정 판단 근거가 됩니다.</p>
+   ${a.holdReason?`<div class="note">${ic('circle-alert')} 보류 사유: ${esc(a.holdReason)}</div>`:''}
+   <form data-form="cond"><div class="grid g2 tight one-m">${FORM_FIELDS.map(([k,l,ph])=>`<div><label>${l}</label><input type="text" name="${k}" value="${esc(fm[k]||'')}" placeholder="${ph}"></div>`).join('')}</div>
+   <label class="chk"><input type="checkbox" name="agree" ${fm.agree?'checked':''} required> 입사 후 7·14·30일 정착 점검에 참여합니다</label>
+   <button class="btn sec block-m">${fm.version?`v${fm.version+1}로 다시 제출`:'제출'}</button></form></div>`;
+  return `<h2>채용요청</h2><p class="lead">근무조건 확인서를 겸해, 어떤 강사가 필요한지 적어 주세요.</p>
+  ${ok?'':formCard}
   <div class="split"><div class="card"><h3>새 채용요청</h3>
-  <form data-form="req">
-    <label>과목</label><select name="subject">${opts(SUBJ,'수학')}</select>
-    <label>학년</label><select name="grade">${opts(GRADE,'중등')}</select>
-    <label>채용 인원</label><input type="number" name="count" min="1" value="1">
-    <label>근무 시작일</label><input type="date" name="start" value="${addDays(today(),30)}">
+  ${ok?'':`<div class="note">제휴 승인 전이라 아직 등록할 수 없어요.</div>`}
+  <form data-form="req"><fieldset ${ok?'':'disabled'}>
+    <div class="grid g2 tight"><div><label>과목</label><select name="subject">${opts(SUBJ,'수학')}</select></div>
+    <div><label>학년</label><select name="grade">${opts(GRADE,'중등')}</select></div></div>
+    <div class="grid g2 tight"><div><label>채용 인원</label><input type="number" name="count" min="1" value="1" inputmode="numeric"></div>
+    <div><label>근무 시작일</label><input type="date" name="start" value="${addDays(today(),30)}"></div></div>
     <label>급여·산정 방식</label><input type="text" name="pay" placeholder="예: 월 급여제 · 협의">
     <label>수업 시수·출퇴근</label><input type="text" name="hours" placeholder="예: 주 15시간 · 평일 오후">
     <label>수업 외 업무</label><textarea name="extra" placeholder="채점·상담·행정 등"></textarea>
     <label class="chk"><input type="checkbox" name="agree" required> 서당의 30일 정착 점검 참여에 동의합니다</label>
-    <button class="btn">등록</button></form></div>
-  <div class="card"><h3>등록한 요청</h3><div class="tablewrap"><table>
-    <tr><th>과목·학년</th><th>인원</th><th>시작일</th><th>조건</th><th>상태</th></tr>
-    ${S.requests.map(r=>`<tr><td>${esc(r.subject)} · ${esc(r.grade)}</td><td>${r.count}</td><td>${esc(r.start)}</td><td>${esc(r.pay)}<br><span class="muted">${esc(r.hours)}${r.extra?' · '+esc(r.extra):''}</span></td><td>${badge(r.status)}</td></tr>`).join('')}
-  </table></div></div></div>`,
-'academy:find':()=>{
-  const f=S.f;
-  const list=S.teachers.filter(t=>t.status==='승인'&&t.result==='추천 검토'&&(!f.subject||t.subject===f.subject)&&(!f.grade||t.grade===f.grade)&&(!f.region||t.region===f.region));
-  return `<h2>후보 찾기</h2><p class="lead">시범강의 평가에서 <b>추천 검토</b>를 받은 강사만 보여드려요. 점수는 바로, 실명·경력 등 상세 프로필은 열람권으로 확인하세요. 연락처는 상담 단계 이후 공개됩니다.</p>
-  <div class="row filters" style="margin:-8px 0 24px">
-    <select data-filter="subject" class="${f.subject?'on':''}">${opts(SUBJ,f.subject,'과목 전체')}</select>
-    <select data-filter="grade" class="${f.grade?'on':''}">${opts(GRADE,f.grade,'학년 전체')}</select>
-    <select data-filter="region" class="${f.region?'on':''}">${opts(REGION,f.region,'지역 전체')}</select>
-    <span class="muted" style="margin-left:4px">검증 통과 ${list.length}명</span></div>
-  ${list.length?`<div class="cands">${list.map(candCard).join('')}</div>`:'<div class="card muted">조건에 맞는 검증 완료 후보가 없습니다.</div>'}`;
+    <button class="btn block-m">등록</button></fieldset></form></div>
+  <div class="card"><h3>등록한 요청 <span class="cnt">${myRequests().length}</span></h3>${myRequests().length?`<ul class="reqs">${myRequests().map(r=>{const st=reqStage(r);return `<li>
+     <div class="row" style="justify-content:space-between"><b>#${r.no} ${esc(r.subject)} · ${esc(r.grade)} <span class="muted">${r.count}명 · ${esc(r.start)} 시작</span></b>${badge(r.status)}</div>
+     <p class="muted" style="margin:4px 0 12px">${esc(r.pay)} · ${esc(r.hours)}${r.extra?' · '+esc(r.extra):''}</p>
+     <ol class="stage" aria-label="매칭 ${st}/8단계">${HIRING_STEPS.map((x,i)=>`<li class="${i<st-1?'done':i===st-1?'cur':''}" title="${x}"></li>`).join('')}</ol>
+     <p class="stage-t"><b>${st}/8 ${HIRING_STEPS[st-1]}</b><span class="muted">${STAGE_HINT[st-1]}</span></p></li>`}).join('')}</ul>`:'<p class="muted">아직 등록한 요청이 없습니다.</p>'}</div></div>
+  ${ok?formCard:''}`;
 },
-'academy:pay':()=>`<h2>결제 내역</h2><p class="lead">프로필 열람권 결제 내역입니다. 토스페이먼츠 테스트 결제이며 실제 청구는 없습니다.</p>
-  <div class="card">${S.purchases.length?`<div class="tablewrap"><table><tr><th>승인 시각</th><th>주문번호</th><th>상품</th><th>금액</th><th>결제수단</th><th>상태</th></tr>
-  ${S.purchases.map(p=>`<tr><td>${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</td><td class="muted" style="word-break:break-all">${esc(p.orderId)}</td><td>${esc(p.orderName)}</td><td>${won(p.amount)}</td><td>${esc(p.method)}</td><td>${badge(p.status==='DONE'?'결제 완료':p.status)}</td></tr>`).join('')}</table></div>`:'<p class="muted">결제 내역이 없습니다. 후보 찾기에서 강사 프로필 열람권을 결제해 보세요.</p>'}</div>`,
+'academy:find':()=>{
+  const f=S.f, sort=S.sort||'fit';
+  const list=candidates(f).sort((x,y)=>sort==='score'?total(y)-total(x):(fitOf(y).score-fitOf(x).score)||(total(y)-total(x)));
+  return `<h2>후보 찾기</h2><p class="lead">시범강의 평가에서 <b>추천 검토</b>를 받은 강사만 보여드려요. 점수는 바로, 실명·경력 등 상세 프로필은 열람권으로 확인하세요. 연락처는 상담 단계 이후 공개됩니다.</p>
+  <div class="filters">
+    <select data-filter="subject" class="${f.subject?'on':''}" aria-label="과목">${opts(SUBJ,f.subject,'과목 전체')}</select>
+    <select data-filter="grade" class="${f.grade?'on':''}" aria-label="학년">${opts(GRADE,f.grade,'학년 전체')}</select>
+    <select data-filter="region" class="${f.region?'on':''}" aria-label="지역">${opts(REGION,f.region,'지역 전체')}</select>
+    ${f.subject||f.grade||f.region?`<button class="chip-reset" data-act="filter-reset">${ic('rotate-ccw')}초기화</button>`:''}
+  </div>
+  <div class="listbar"><span class="muted">검증 통과 ${list.length}명</span>
+   <div class="seg sm" role="radiogroup" aria-label="정렬">${[['fit','조건 일치순'],['score','점수순']].map(([k,l])=>`<label><input type="radio" name="sort" value="${k}" data-sort ${sort===k?'checked':''}><span>${l}</span></label>`).join('')}</div></div>
+  ${list.length?`<div class="cands">${list.map(candCard).join('')}</div>`:empty('search-x','조건에 맞는 후보가 없어요','필터를 바꾸거나 초기화해 보세요.')}`;
+},
+'academy:pay':()=>{
+  const ps=myPurchases();
+  return `<h2>결제 내역</h2><p class="lead">프로필 열람권 결제 내역입니다. 토스페이먼츠 테스트 결제이며 실제 청구는 없습니다.</p>
+  ${ps.length?`<div class="card"><div class="tablewrap"><table class="rt"><tr><th>승인 시각</th><th>상품</th><th>금액</th><th>결제수단</th><th>상태</th><th>주문번호</th></tr>
+  ${ps.map(p=>`<tr><td data-label="승인 시각">${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</td><td data-label="상품"><button class="linkbtn" data-act="receipt" data-order="${esc(p.orderId)}"><b>${esc(p.orderName)}</b>${ic('chevron-right')}</button></td><td data-label="금액">${won(p.amount)}</td><td data-label="결제수단">${esc(p.method)}</td><td data-label="상태">${badge(p.status==='DONE'?'결제 완료':p.status)}</td><td data-label="주문번호" class="muted" style="word-break:break-all">${esc(p.orderId)}</td></tr>`).join('')}</table></div>
+  <p class="sum">합계 <b>${won(ps.reduce((a,p)=>a+p.amount,0))}</b> · ${ps.length}건</p></div>`
+  :empty('receipt','결제 내역이 없어요','후보 찾기에서 강사 프로필 열람권을 결제해 보세요.')}`;
+},
 'academy:prog':()=>`<h2>진행 현황</h2><p class="lead">매칭 상담과 입사 후 점검을 한곳에서 확인합니다.</p>${matchBlocks('academy')}${complaintForm()}`,
 
 // ===== 강사 =====
+'teacher:home':()=>{
+  const t=me(), ms=myMatches(), offers=ms.filter(m=>m.status==='신청');
+  const job=ms.find(m=>m.status==='정착 점검 중');
+  const pending=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기'&&!c.teacherReply));
+  const filled=['career','strength','wish','contact'].filter(k=>t[k]).length+(t.docs.length?1:0);
+  return `<h2>${esc(t.name)} 선생님</h2><p class="lead">검증 상태와 받은 매칭, 정착 점검을 한눈에 확인하세요.</p>
+  ${offers.length?`<button class="todo" data-act="tab" data-tab="prog">${ic('handshake')}<div><b>학원이 매칭을 신청했어요</b><span>${offers.map(m=>esc(aOf(rOf(m.rid).academyId).name)).join(', ')} · 수락 또는 거절해 주세요</span></div>${ic('chevron-right')}</button>`:''}
+  ${pending.length?`<button class="todo" data-act="tab" data-tab="prog">${ic('bell-ring')}<div><b>정착 점검 응답이 필요해요</b><span>${pending.map(c=>`입사 ${c.day}일`).join(', ')}</span></div>${ic('chevron-right')}</button>`:''}
+  <div class="grid g3 stats" style="margin-bottom:16px">
+   <button class="stat link" data-act="tab" data-tab="ver">${ic('badge-check')}<b>${t.scores?total(t):'-'}</b><span>${t.scores?'평가 점수 · '+esc(t.result):'검증 '+esc(t.status)}</span></button>
+   <button class="stat link" data-act="tab" data-tab="prog">${ic('handshake')}<b>${ms.filter(m=>m.status!=='강사 거절').length}</b><span>매칭</span></button>
+   <button class="stat link" data-act="tab" data-tab="prof">${ic('user-round')}<b>${filled}<small style="font-size:16px;color:var(--mute)">/5</small></b><span>프로필 완성도</span></button></div>
+  ${job?`<div class="card"><h3>근무 중 · ${esc(aOf(rOf(job.rid).academyId).name)}</h3><p class="muted" style="margin:-6px 0 14px">입사일 ${esc(job.hire)}</p>${timeline(job)}</div>`:''}
+  <div class="card"><h3>서당 동행 검증 순서</h3><div class="steps">
+    <div><b>1. 프로필·서류</b>경력과 희망 조건, 증빙을 올립니다</div>
+    <div><b>2. 시범강의</b>12분 시범강의와 상황 평가</div>
+    <div><b>3. 결과·정정</b>점수와 근거를 보고 정정을 요청할 수 있어요</div>
+    <div><b>4. 추천·정착</b>동의한 학원에만 정보가 공개됩니다</div></div></div>`;
+},
 'teacher:prof':()=>{const t=me();return `<h2>내 프로필</h2><p class="lead">학원에는 요약 정보만 보이고, 연락처는 상담 단계 이후에 공개됩니다.</p>
-  <div class="card" style="max-width:680px"><form data-form="prof">
-    <div class="grid g3"><div><label>과목</label><select name="subject">${opts(SUBJ,t.subject)}</select></div>
+  <div class="narrow"><div class="card"><form data-form="prof">
+    <div class="grid g3 tight"><div><label>과목</label><select name="subject">${opts(SUBJ,t.subject)}</select></div>
     <div><label>학년</label><select name="grade">${opts(GRADE,t.grade)}</select></div>
     <div><label>희망 지역</label><select name="region">${opts(REGION,t.region)}</select></div></div>
     <label>경력 요약</label><textarea name="career">${esc(t.career)}</textarea>
     <label>수업 강점</label><input type="text" name="strength" value="${esc(t.strength)}">
     <label>희망 조건 (급여·시간·수업 외 업무)</label><input type="text" name="wish" value="${esc(t.wish)}">
-    <label>연락처</label><input type="text" name="contact" value="${esc(t.contact)}" placeholder="010-0000-0000">
+    <label>연락처</label><input type="tel" name="contact" value="${esc(t.contact)}" placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" pattern="01[0-9]-?[0-9]{3,4}-?[0-9]{4}" title="010-0000-0000 형식으로 입력해 주세요" required>
     <label class="chk"><input type="checkbox" name="agree" ${t.agree?'checked':''} required> 개인정보 수집·이용 및 프로필 공개 범위에 동의합니다</label>
-    <button class="btn">저장</button></form></div>
-  ${docCard(t)}`},
+    <button class="btn block-m">저장</button></form></div>
+  ${docCard(t)}</div>`},
 'teacher:ver':()=>{
   const t=me();
+  const steps=['신청','평가예정','승인'], cur=t.status==='미신청'?-1:steps.indexOf(t.status);
   let body='';
-  if(t.status==='미신청') body=`<p>아직 검증을 신청하지 않았습니다. 프로필을 저장한 뒤 신청해 주세요.</p><button class="btn" data-act="verify-apply">검증 신청</button>`;
+  if(t.status==='미신청') body=`<p>아직 검증을 신청하지 않았습니다. 프로필을 저장한 뒤 신청해 주세요.</p><button class="btn block-m" data-act="verify-apply">검증 신청</button>`;
   else if(t.status==='신청') body=`<p>검증 신청이 접수되었습니다. 관리자가 시범강의 일정을 배정합니다.</p>`;
   else if(t.status==='평가예정') body=`<p>시범강의 평가 일정이 배정되었습니다. 평가 후 결과가 이곳에 표시됩니다.</p>`;
-  else body=`<div class="row" style="margin-bottom:10px">${badge(t.result)}<span class="total">${total(t)}점 / 100점</span></div>
-    <table><tr><th>항목</th><th>점수</th></tr>${ITEMS.map((it,i)=>`<tr><td>${it[0]}</td><td>${t.scores[i]} / ${it[1]}</td></tr>`).join('')}</table>
-    <p><b>평가 근거</b><br>${esc(t.basis)||'-'}</p><p><b>확인되지 않은 사항</b><br>${esc(t.unverified)||'-'}</p>
-    <h3 style="margin-top:18px">정정 요청</h3>
+  else body=`<div class="scorehead">${badge(t.result)}<b class="big">${total(t)}<small>/100</small></b><span class="muted">기준 ${PASS_SCORE}점</span></div>
+    ${scoreBars(t)}
+    <dl class="kv" style="margin-top:18px"><dt>확인 사실</dt><dd>${esc(t.facts)||'-'}</dd><dt>평가자 관찰</dt><dd>${esc(t.basis)||'-'}</dd><dt>당사자 설명</dt><dd>${esc(t.statement)||'-'}</dd><dt>미확인 사항</dt><dd>${esc(t.unverified)||'-'}</dd></dl>
+    <h3 style="margin-top:24px">정정 요청</h3>
     ${t.corr?`<div class="note">접수된 정정 요청: ${esc(t.corr)}</div>`:''}
-    <form data-form="corr"><textarea name="text" placeholder="평가 내용 중 사실과 다른 부분이 있다면 적어 주세요"></textarea><button class="btn sec" style="margin-top:8px">정정 요청 보내기</button></form>`;
+    <form data-form="corr"><textarea name="text" placeholder="평가 내용 중 사실과 다른 부분이 있다면 적어 주세요"></textarea><button class="btn sec block-m" style="margin-top:8px">정정 요청 보내기</button></form>`;
   return `<h2>검증</h2><p class="lead">서당은 수업 시연과 업무 준비도를 평가해 학원에 요약으로만 전달합니다.</p>
-  <div class="card" style="max-width:700px"><div class="row" style="margin-bottom:12px"><b>현재 상태</b>${badge(t.status)}</div>${body}
-  <p class="disc">법률상 별도 확인 주체가 있는 정보(범죄·아동학대 관련 상세 등)는 이 평가서에 기록하지 않습니다.</p></div>`;
+  <div class="narrow"><div class="card">
+  <ol class="stepper">${['검증 신청','시범강의 평가','결과 확정'].map((s,i)=>`<li class="${i<cur?'done':i===cur?'cur':''}"><i>${i<cur||(i===cur&&t.status==='승인')?ic('check'):i+1}</i><span>${s}</span></li>`).join('')}</ol>
+  <div class="row" style="margin-bottom:12px"><b>현재 상태</b>${badge(t.status)}</div>${body}
+  <p class="disc">법률상 별도 확인 주체가 있는 정보(범죄·아동학대 관련 상세 등)는 이 평가서에 기록하지 않습니다.</p></div></div>`;
 },
 'teacher:prog':()=>`<h2>진행 상태</h2><p class="lead">지원·매칭 단계와 입사 후 점검을 확인합니다.</p>${matchBlocks('teacher')}${complaintForm()}`,
 
-// ===== 관리자 =====
+// ===== 운영(관리자·매칭담당·평가위원) =====
 'admin:dash':()=>{
   const wait=S.teachers.filter(t=>t.status==='신청'||t.status==='평가예정').length;
-  const mp=S.matches.filter(m=>m.status==='신청'||m.status==='상담 중').length;
+  const mp=S.matches.filter(m=>['신청','강사 동의','상담 중'].includes(m.status)).length;
   const cw=S.matches.reduce((a,m)=>a+m.checks.filter(c=>c.status==='응답 대기').length,0);
   const cp=S.complaints.filter(c=>c.status==='접수').length;
-  return `<h2>대시보드</h2><p class="lead">오늘 처리할 일을 한눈에 확인합니다.</p>
-  <div class="grid g4" style="margin-bottom:16px">
-   <div class="stat"><b>${wait}</b><span>검증 대기 강사</span></div><div class="stat"><b>${mp}</b><span>진행 중 매칭</span></div>
-   <div class="stat"><b>${cw}</b><span>점검 응답 대기</span></div><div class="stat"><b>${cp}</b><span>미처리 민원</span></div></div>
-  <div class="card"><h3>프로필 열람권 결제</h3>${S.purchases.length?`<p style="margin:0"><b>${S.purchases.length}건</b> · 합계 <b>${won(S.purchases.reduce((a,p)=>a+p.amount,0))}</b> <span class="muted">(테스트 결제)</span></p>`:'<p class="muted" style="margin:0">결제 내역이 없습니다.</p>'}</div>
+  const K=(ic_,n,l,tab)=>`<button class="stat link" data-act="tab" data-tab="${tab}">${ic(ic_)}<b>${n}</b><span>${l}</span></button>`;
+  const canEval=TABS[S.user.role].some(([k])=>k==='eval');
+  return `<h2>오늘 처리할 일</h2><p class="lead">${new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'})} · ${esc(ROLE_NAME[S.user.role])} ${esc(S.user.loginId)}</p>
+  <div class="grid g4 stats" style="margin-bottom:16px">
+   ${K('user-check',wait,'검증 대기 강사',canEval?'eval':'dash')}${K('handshake',mp,'진행 중 매칭','match')}
+   ${K('bell-ring',cw,'점검 응답 대기','check')}${K('message-square-warning',cp,'미처리 민원','check')}</div>
+  <div class="grid g2" style="align-items:start">
+  <div class="card"><h3>학원 현황</h3><ul class="plain">${S.academies.map(a=>`<li><b>${esc(a.name)}</b><span class="muted">${esc(a.region)} · ${esc(a.type)} · 확인서 v${(a.form||{}).version||0} · 요청 ${S.requests.filter(r=>r.academyId===a.id).length}건</span>${badge(a.status)}
+   ${a.status==='검토 중'&&S.user.role!=='evaluator'?`<div class="review">${(a.history||[]).map(h=>`<p class="muted" style="margin:0 0 8px">${ic('history')} ${esc(h)}</p>`).join('')}<dl class="kv">${FORM_FIELDS.map(([k,l])=>`<dt>${l}</dt><dd>${esc(a.form[k]||'-')}</dd>`).join('')}<dt>30일 점검</dt><dd>${a.form.agree?'참여 동의':'<b style="color:var(--bad-text)">미동의</b>'}</dd></dl>
+    <div class="row" style="margin-top:12px"><button class="btn sm sec" data-act="ac-hold" data-id="${a.id}">보류</button><button class="btn sm" data-act="ac-approve" data-id="${a.id}" ${a.form.agree?'':'disabled'}>제휴 승인</button>${a.form.agree?'':'<span class="muted">30일 점검 동의가 있어야 승인할 수 있어요</span>'}</div></div>`:''}</li>`).join('')}</ul></div>
+  <div class="card dark"><h3>프로필 열람권 결제</h3><b class="big">${won(S.purchases.reduce((a,p)=>a+p.amount,0))}</b><span>${S.purchases.length}건 · 테스트 결제</span></div></div>
+  ${workLogCard()}
   <div class="card"><h3>최근 활동</h3>${logTable(6)}</div>`;
 },
 'admin:eval':()=>{
   const t=tOf(S.selT);
   return `<h2>강사 검증</h2><p class="lead">시범강의 평가를 입력하고 승인합니다. 학원에는 <b>추천 검토</b> 결과만 후보로 노출됩니다.</p>
-  <div class="split"><div class="list">${S.teachers.map(x=>`<button class="item ${x.id===S.selT?'on':''}" data-act="eval-open" data-id="${x.id}">
-    <b>${esc(x.name)}</b> <span class="muted">${esc(x.grade)} ${esc(x.subject)} · ${esc(x.region)}</span><br>${badge(x.status)} ${x.result?badge(x.result):''} ${x.corr?'<span class="b bad">정정 요청</span>':''}</button>`).join('')}</div>
-  <div>${t?evalForm(t):'<div class="card muted">왼쪽에서 강사를 선택하세요.</div>'}</div></div>`;
+  <div class="split ${t?'has-sel':''}"><div class="list">
+   <input type="search" class="q" placeholder="이름·과목·지역 검색" value="${esc(S.evalQ||'')}" data-evalq aria-label="강사 검색">
+   <div class="chiprow">${EVAL_FILTERS.map(([k,l])=>`<button class="fchip ${(S.evalF||'all')===k?'on':''}" data-act="evalf" data-k="${k}">${l} <span>${S.teachers.filter(EVAL_PRED[k]).length}</span></button>`).join('')}</div>
+   <p class="muted" id="evalEmpty" style="padding:12px 4px" ${evalList().length?'hidden':''}>조건에 맞는 강사가 없어요.</p>${evalList().map(x=>`<button class="item ${x.id===S.selT?'on':''}" data-act="eval-open" data-id="${x.id}" data-search="${esc([x.name,x.subject,x.grade,x.region,'강사'+x.id].join(' '))}">
+    <div class="row" style="justify-content:space-between;gap:6px"><b>${esc(x.name)} <span class="muted">강사${x.id}</span></b>${x.scores?`<b class="sc">${total(x)}</b>`:''}</div>
+    <span class="muted">${esc(x.grade)} ${esc(x.subject)} · ${esc(x.region)}</span><div class="row">${badge(x.status)}${x.result?badge(x.result):''}${x.corr?'<span class="b bad">정정 요청</span>':''}</div></button>`).join('')}</div>
+  <div class="detail">${t?`<button class="back m-only" data-act="eval-close">${ic('chevron-left')}강사 목록</button>${evalForm(t)}`:empty('mouse-pointer-click','강사를 선택하세요','목록에서 강사를 누르면 평가표가 열려요.')}</div></div>`;
 },
 'admin:match':()=>{
-  const rows=S.matches.map(m=>{const t=tOf(m.tid),r=rOf(m.rid);
+  const rows=S.matches.map(m=>{const t=tOf(m.tid),r=rOf(m.rid),a=aOf(r.academyId);
     let act='';
-    if(m.status==='신청') act=`<button class="btn sm" data-act="m-consult" data-id="${m.id}">상담 시작</button>`;
+    if(m.status==='신청') act=`<span class="muted">강사 동의 대기</span>`;
+    else if(m.status==='강사 동의') act=`<button class="btn sm" data-act="m-consult" data-id="${m.id}">상담 시작</button>`;
+    else if(m.status==='강사 거절'){const used=S.matches.filter(x=>x.rid===m.rid).map(x=>x.tid);
+      const busy=S.matches.filter(x=>x.status==='정착 점검 중').map(x=>x.tid);
+      const alt=candidates({subject:r.subject}).filter(c=>!used.includes(c.id)&&!busy.includes(c.id)).sort((x,y)=>(y.grade===r.grade)-(x.grade===r.grade)||total(y)-total(x));
+      act=alt.length?`<div class="row"><select id="alt-${m.id}" style="width:auto" aria-label="다른 후보">${alt.map(c=>`<option value="${c.id}">${esc(c.name)} · ${esc(c.grade)}${c.grade===r.grade?'':'(학년 다름)'} · ${total(c)}점</option>`).join('')}</select><button class="btn sm" data-act="m-rerec" data-id="${m.id}">다른 후보 추천</button></div>`:`<span class="muted">조건에 맞는 다른 후보가 없어요 · 강사 모집 필요</span>`}
     else if(m.status==='상담 중') act=`<div class="row"><input type="date" id="hire-${m.id}" value="${addDays(today(),14)}" style="width:auto"><button class="btn sm" data-act="m-hire" data-id="${m.id}">채용 확정</button></div>`;
-    return `<tr><td><b>${esc(t.name)}</b><br><span class="muted">${esc(t.grade)} ${esc(t.subject)}</span></td><td>${esc(r.subject)} ${esc(r.grade)} 요청</td><td>${badge(m.status)}</td><td>${esc(m.hire||'-')}</td><td>${act||'-'}</td></tr>`}).join('');
+    return `<tr><td data-label="강사"><b>${esc(t.name)}</b> <span class="muted">강사${t.id}</span><br><span class="muted">${esc(t.grade)} ${esc(t.subject)} · ${total(t)}점</span></td><td data-label="학원 요청">${esc(a.name)}<br><span class="muted">#${r.no} ${esc(r.subject)} ${esc(r.grade)}${r.reRecommend?` · 재추천 ${r.reRecommend}회`:''}</span></td><td data-label="상태">${badge(m.status)}</td><td data-label="입사일">${esc(m.hire||'-')}</td><td data-label="처리">${act||'-'}</td></tr>`}).join('');
   return `<h2>매칭·상담</h2><p class="lead">학원의 매칭 신청을 받아 상담을 진행하고 채용을 확정합니다.</p>
-  <div class="card">${S.matches.length?`<div class="tablewrap"><table><tr><th>강사</th><th>학원 요청</th><th>상태</th><th>입사일</th><th>처리</th></tr>${rows}</table></div>`:'<p class="muted">아직 매칭 신청이 없습니다. 학원 계정에서 후보를 선택해 신청하면 이곳에 나타납니다.</p>'}</div>`;
+  ${S.matches.length?`<div class="card"><div class="tablewrap"><table class="rt"><tr><th>강사</th><th>학원 요청</th><th>상태</th><th>입사일</th><th>처리</th></tr>${rows}</table></div></div>`:empty('handshake','아직 매칭 신청이 없어요','학원 계정에서 후보를 선택해 신청하면 이곳에 나타납니다.')}`;
 },
 'admin:check':()=>{
   const ms=S.matches.filter(m=>m.checks.length);
   return `<h2>정착 점검·민원</h2><p class="lead">입사 7·14·30일 점검을 발송하고 응답과 조치를 기록합니다.</p>
-  ${ms.length?ms.map(m=>{const t=tOf(m.tid);return `<div class="card"><div class="row" style="margin-bottom:8px"><b>${esc(t.name)}</b>${badge(m.status)}<span class="muted">입사일 ${esc(m.hire)}</span></div>
-   <div class="tablewrap"><table><tr><th>시점</th><th>상태</th><th>학원 응답</th><th>강사 응답</th><th>서당 조치 기록</th></tr>
-   ${m.checks.map((c,i)=>`<tr><td>입사 ${c.day}일<br><span class="muted">${esc(c.due)}</span></td><td>${badge(c.status)}${c.status==='예정'?`<br><button class="btn sm" style="margin-top:6px" data-act="c-send" data-id="${m.id}" data-idx="${i}">알림 발송</button>`:''}</td>
-   <td>${esc(c.academyReply)||'<span class="muted">-</span>'}</td><td>${esc(c.teacherReply)||'<span class="muted">-</span>'}</td>
-   <td><form data-form="action" data-id="${m.id}" data-idx="${i}"><input type="text" name="text" value="${esc(c.action)}" placeholder="조치 내용"><button class="btn sm sec" style="margin-top:6px">저장</button></form></td></tr>`).join('')}</table></div>
-   <form data-form="mresult" data-id="${m.id}" class="row" style="margin-top:12px"><span class="muted">30일 결과</span><select name="result" style="width:auto">${opts(['정착 점검 중','종료','연장','재추천'],m.status)}</select><button class="btn sm">결과 저장</button></form></div>`}).join(''):'<div class="card muted">채용이 확정된 매칭이 아직 없습니다.</div>'}
-  <div class="card"><h3>민원 접수 내역</h3>${S.complaints.length?`<table><tr><th>접수번호</th><th>접수자</th><th>내용</th><th>상태</th></tr>${S.complaints.map(c=>`<tr><td>${c.no}</td><td>${esc(c.by)}</td><td>${esc(c.text)}</td><td>${badge(c.status)}${c.status==='접수'?` <button class="btn sm" data-act="c-done" data-no="${c.no}">처리 완료</button>`:''}</td></tr>`).join('')}</table>`:'<p class="muted">접수된 민원이 없습니다.</p>'}</div>`;
+  ${ms.length?ms.map(m=>{const t=tOf(m.tid),a=aOf(rOf(m.rid).academyId);return `<div class="card"><div class="row" style="margin-bottom:12px"><b>${esc(t.name)} 강사 ↔ ${esc(a.name)}</b>${badge(m.status)}<span class="muted">입사일 ${esc(m.hire)}</span></div>
+   ${settleReport(m)}${timeline(m)}
+   <div class="tablewrap" style="margin-top:16px"><table class="rt"><tr><th>시점</th><th>상태</th><th>학원 응답</th><th>강사 응답</th><th>서당 조치 기록</th></tr>
+   ${m.checks.map((c,i)=>`<tr><td data-label="시점"><b>입사 ${c.day}일</b><br><span class="muted">${esc(c.due)}</span></td><td data-label="상태">${badge(c.status)}${c.status==='예정'?`<br><button class="btn sm" style="margin-top:6px" data-act="c-send" data-id="${m.id}" data-idx="${i}">${ic('send')}알림 발송</button>`:''}</td>
+   <td data-label="학원 응답">${esc(c.academyReply)||'<span class="muted">-</span>'}</td><td data-label="강사 응답">${esc(c.teacherReply)||'<span class="muted">-</span>'}</td>
+   <td data-label="서당 조치"><form data-form="action" data-id="${m.id}" data-idx="${i}" class="inline"><input type="text" name="text" value="${esc(c.action)}" placeholder="조치 내용"><button class="btn sm sec">저장</button></form></td></tr>`).join('')}</table></div>
+   <form data-form="mresult" data-id="${m.id}" class="row" style="margin-top:12px"><span class="muted">30일 결과</span><select name="result" style="width:auto">${opts(['정착 점검 중','종료','연장','재추천'],m.status)}</select><button class="btn sm">결과 저장</button></form></div>`}).join(''):empty('calendar-check','채용이 확정된 매칭이 아직 없어요')}
+  <div class="card"><h3>민원 접수 내역</h3>${S.complaints.length?`<div class="tablewrap"><table class="rt"><tr><th>접수번호</th><th>접수자</th><th>내용</th><th>상태</th></tr>${S.complaints.map(c=>`<tr><td data-label="접수번호"><b>${c.no}</b></td><td data-label="접수자">${esc(c.by)}</td><td data-label="내용">${esc(c.text)}</td><td data-label="상태">${badge(c.status)}${c.status==='접수'?` <button class="btn sm" data-act="c-done" data-no="${c.no}">처리 완료</button>`:''}</td></tr>`).join('')}</table></div>`:'<p class="muted">접수된 민원이 없습니다.</p>'}</div>`;
 },
 'admin:audit':()=>`<h2>권한·로그</h2><p class="lead">역할별 열람 범위와 활동 기록입니다. (연락처 공개 시점은 정책 확정 전이라 샘플로 표시)</p>
-  <div class="card"><h3>역할별 공개 범위</h3><div class="tablewrap"><table>
+  <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${['academy','teacher','admin','matcher','evaluator'].map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
+  <div class="card"><h3>역할별 공개 범위</h3><div class="tablewrap"><table class="wide">
    <tr><th>정보</th><th>방문자</th><th>강사(본인)</th><th>학원</th><th>관리자·평가자</th></tr>
    <tr><td>강사 프로필 요약</td><td>없음</td><td>열람·수정</td><td>요약 열람 (상세는 열람권 결제 후)</td><td>열람·수정</td></tr>
    <tr><td>강사 연락처</td><td>없음</td><td>열람·수정</td><td>조건부 (상담 단계 이후)</td><td>열람</td></tr>
    <tr><td>제출 서류 (졸업·성적증명서 등)</td><td>없음</td><td>업로드·삭제</td><td>없음</td><td>열람</td></tr>
    <tr><td>강사 상세 평가서</td><td>없음</td><td>본인 결과 열람·정정 요청</td><td>평가 점수·적합성 카드 열람 (근거 상세 제외)</td><td>열람·수정</td></tr>
+   <tr><td>다른 학원의 요청·매칭</td><td>없음</td><td>없음</td><td>없음 (소속 학원만)</td><td>열람·수정</td></tr>
    <tr><td>민원 내부 처리 내역</td><td>없음</td><td>없음</td><td>없음</td><td>열람·수정</td></tr></table></div></div>
   <div class="card"><h3>활동 로그</h3>${logTable(50)}</div>`
 };
 
 // ---------- 조각 ----------
+// 채용 매칭 8단계 (PRD §4-3)
+const HIRING_STEPS=['채용 요청 접수','학원 조건 확인','강사 등록·동의','강사 검증','후보 추천','면접·조건 재확인','직접 계약','30일 정착관리'];
+const STAGE_HINT=['서당이 요청을 확인하고 있어요','근무조건 확인서를 검토해요','조건에 맞는 강사를 찾고 있어요','시범강의 평가를 거친 강사만 추천해요','후보 찾기에서 후보를 보고 매칭을 신청하세요','서당이 상담을 진행하고 연락처가 공개됐어요','학원과 강사가 직접 계약합니다','7·14·30일 점검으로 정착을 함께 확인해요'];
+function reqStage(r){
+  const ms=S.matches.filter(m=>m.rid===r.id).map(m=>m.status);
+  if(ms.some(x=>['정착 점검 중','종료','연장','재추천'].includes(x))) return 8;
+  if(ms.includes('상담 중')) return 6;
+  if(ms.length||r.status==='후보 제안 중') return 5;
+  return academyApproved()?3:2;
+}
+// 30일 정착 보고서 (PRD §4-5 종결·연장·재추천)
+const RESULT_TEXT={'종료':'정착 완료로 관리를 마칩니다','연장':'추가 점검이 필요해 관리 기간을 연장합니다','재추천':'약정에 따라 다른 강사를 다시 추천합니다'};
+function settleReport(m){
+  if(!RESULT_TEXT[m.status]) return '';
+  const t=tOf(m.tid), done=m.checks.filter(c=>c.status==='응답 완료').length;
+  const iss=S.complaints.filter(c=>c.byLogin==='강사'+t.id||c.byAcademy===rOf(m.rid).academyId);
+  return `<div class="report"><div class="row" style="justify-content:space-between"><b>${ic('file-check')}30일 정착 보고서</b>${badge(m.status)}</div>
+   <dl class="kv"><dt>점검 응답</dt><dd>${done} / ${m.checks.length}회 완료</dd><dt>민원</dt><dd>${iss.length}건 (${iss.filter(c=>c.status==='처리 완료').length}건 처리)</dd>
+   <dt>서당 조치</dt><dd>${esc(m.checks.map(c=>c.action).filter(Boolean).join(' · ')||'-')}</dd><dt>결과</dt><dd>${RESULT_TEXT[m.status]}</dd></dl>${done<m.checks.length?`<p class="muted" style="margin:8px 0 0">${ic('circle-alert')} 아직 응답하지 않은 점검이 ${m.checks.length-done}건 있어요.</p>`:''}</div>`;
+}
+function workLogCard(){
+  const L=S.workLogs||[]; if(!L.length) return '';
+  const min=L.reduce((a,w)=>a+w.min,0), cost=L.reduce((a,w)=>a+w.cost,0);
+  return `<div class="card"><h3>업무 시간·비용 <span class="cnt">${L.length}</span></h3>
+   <div class="row" style="gap:28px;margin-bottom:6px"><div><span class="muted">누적 시간</span><b class="big" style="font-size:26px">${Math.floor(min/60)}시간 ${min%60}분</b></div><div><span class="muted">직접 비용</span><b class="big" style="font-size:26px">${won(cost)}</b></div></div>
+   <ul class="logs">${L.map(w=>`<li><span class="t">${esc(w.date.slice(5))}</span><div><b>${esc(w.task)} · ${w.min}분${w.cost?' · '+won(w.cost):''}</b><span class="muted">${esc(w.by)}${w.rid?` · 요청 #${rOf(w.rid).no} ${esc(aOf(rOf(w.rid).academyId).name)}`:''}</span></div></li>`).join('')}</ul>
+   <p class="muted" style="margin:12px 0 0">건별 원가(8시간·35만 원 가설) 대비 실측용 기록입니다.</p></div>`;
+}
+function scoreBars(t){
+  return `<div class="bars">${ITEMS.map((it,i)=>`<div class="bar"><span>${ITEM_SHORT[i]}</span><div class="tr"><i style="width:${Math.round(t.scores[i]/it[1]*100)}%"></i></div><em>${t.scores[i]} / ${it[1]}</em></div>`).join('')}</div>`;
+}
+function timeline(m){
+  return `<ol class="tl">${m.checks.map(c=>`<li class="${c.status==='응답 완료'?'done':c.status==='응답 대기'?'cur':''}"><i></i><b>${c.day}일</b><span>${esc(c.due.slice(5))}</span></li>`).join('')}</ol>`;
+}
 function candCard(t){
-  const mine=S.matches.find(m=>m.tid===t.id);
-  const open=paid(t.id);
-  const lock=w=>`<span class="lock">${ic('lock')}<i style="--w:${w}px"></i></span><span class="muted" style="margin-left:6px;font-size:12px">열람권 결제 후 공개</span>`;
-  const short=['과목 이해도','수업 전달력','수준별 대응','소통·피드백','업무 준비도'];
-  return `<div class="card cand ${open?'open':''}">
+  const mine=myMatches().find(m=>m.tid===t.id);
+  const open=paid(t.id), ok=academyApproved();
+  const lock=w=>`<span class="lock">${ic('lock')}<i style="--w:${w}px"></i></span><span class="muted lock-t">열람권 결제 후 공개</span>`;
+  const reqs=myRequests(), fit=fitOf(t);
+  return `<article class="card cand ${open?'open':''}">
   <div class="top"><div class="av">${esc(t.name[0])}</div>
    <div class="nm"><div class="row"><b>${esc(open?t.name:maskName(t.name))} 강사</b>${badge('추천 검토')}${open?`<span class="b info">${ic('lock-open')}열람 완료</span>`:''}</div>
-    <p>${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)} 생활권</p></div>
+    <p>${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)} 생활권</p>
+    ${fit.req||fit.sameRegion?`<div class="fitchips">${fit.req?`<span>${ic('target')}요청 #${fit.req.no} 과목·학년 일치</span>`:''}${fit.sameRegion?`<span>${ic('map-pin')}같은 생활권</span>`:''}</div>`:''}</div>
    <div class="score"><b>${total(t)}<small>/100</small></b><span>시범강의 평가</span></div></div>
-  <div class="bars">${ITEMS.map((it,i)=>`<div class="bar"><span>${short[i]}</span><div class="tr"><i style="width:${Math.round(t.scores[i]/it[1]*100)}%"></i></div><em>${t.scores[i]} / ${it[1]}</em></div>`).join('')}</div>
+  ${scoreBars(t)}
   <dl class="fit">
    <dt>추천 조합</dt><dd>${esc(t.grade)} ${esc(t.subject)} 지도 경험 ↔ ${esc(t.region)} 생활권 학원</dd>
    <dt>경력 요약</dt><dd>${open?esc(t.career):lock(120)}</dd>
@@ -502,128 +1014,174 @@ function candCard(t){
    <dt>추가 확인</dt><dd>${open?(esc(t.unverified)||'없음'):lock(88)}</dd>
    <dt>근거</dt><dd class="muted" style="font-weight:400">시범강의 평가 + 업무 희망조건 + 학원 근무조건 확인</dd></dl>
   ${open?'':`<div class="paybox"><div><b>프로필 열람권 ${won(S.cfg.price)}</b><span class="muted">실명 · 경력 · 강점 · 희망 조건 · 추가 확인 사항 공개</span></div><button class="btn" data-act="pay-open" data-id="${t.id}">결제하고 보기</button></div>`}
-  <div class="foot"><span class="ct">${ic('phone')}${mine&&mine.status!=='신청'?`<b style="color:var(--ink)">${esc(t.contact)}</b>`:'연락처는 상담 단계 이후 공개'}</span>
-  ${mine?`${badge(mine.status)}<span class="muted">매칭 신청 완료</span>`
-   :`<select id="rs-${t.id}">${S.requests.map(r=>`<option value="${r.id}">${esc(r.subject)} ${esc(r.grade)} #${r.id}</option>`).join('')}</select><button class="btn sm ${open?'dark':'sec'}" data-act="apply" data-id="${t.id}">매칭 신청</button>`}</div>
-  <p class="disc">채용 성공·장기 근무를 보장하지 않으며, 확인되지 않은 사항은 별도로 안내합니다.</p></div>`;
+  <div class="foot"><span class="ct">${ic('phone')}${contactOpen(mine)?`<a href="tel:${esc(t.contact)}"><b>${esc(t.contact)}</b></a>`:'연락처는 상담 단계 이후 공개'}</span>
+  ${mine?`<span class="row" style="gap:6px">${badge(mine.status)}<span class="muted">매칭 신청 완료</span></span>`
+   :!ok?`<span class="muted">제휴 승인 후 매칭 신청 가능</span>`
+   :!reqs.length?`<button class="btn sm sec" data-act="tab" data-tab="req">채용요청 먼저 등록</button>`
+   :`<div class="apply"><select id="rs-${t.id}" aria-label="채용요청 선택">${reqs.map(r=>`<option value="${r.id}">#${r.no} ${esc(r.subject)} ${esc(r.grade)}</option>`).join('')}</select><button class="btn sm ${open?'dark':'sec'}" data-act="apply" data-id="${t.id}">매칭 신청</button></div>`}</div>
+  <p class="disc">채용 성공·장기 근무를 보장하지 않으며, 확인되지 않은 사항은 별도로 안내합니다.</p></article>`;
 }
 function docCard(t){
-  const rows=(t.docs||[]).map((d,i)=>`<tr><td>${badge2(d.type)}</td><td>${esc(d.name)}<br><span class="muted">${fmtSize(d.size)} · ${esc(d.date)}</span></td><td style="text-align:right"><button class="btn sm sec" data-act="doc-del" data-idx="${i}">삭제</button></td></tr>`).join('');
-  return `<div class="card" style="max-width:680px"><h3>제출 서류</h3>
-  <p class="muted" style="margin-top:-4px">채용 검토에 필요한 서류를 올려 주세요. 업로드한 서류는 관리자·평가자만 열람하며 학원에는 공개되지 않습니다.</p>
-  <form data-form="doc"><div class="grid g2"><div><label>서류 종류</label><select name="type">${opts(DOC_TYPES,'졸업증명서')}</select></div>
-   <div><label>파일 선택 (PDF·JPG·PNG, 10MB 이하)</label><input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" style="width:100%;padding:7px;border:1px dashed #b9b19f;border-radius:8px;background:#fcfbf7"></div></div>
-   <button class="btn" style="margin-top:12px">업로드</button></form>
-  ${rows?`<table style="margin-top:14px"><tr><th style="width:130px">종류</th><th>파일</th><th></th></tr>${rows}</table>`:'<p class="muted" style="margin-top:14px">아직 업로드한 서류가 없습니다.</p>'}</div>`;
+  const rows=(t.docs||[]).map((d,i)=>`<li>${ic('file-text')}<div><b>${esc(d.name)}</b><span class="muted">${esc(d.type)} · ${fmtSize(d.size)} · ${esc(d.date)}</span></div><button class="ib" data-act="doc-del" data-idx="${i}" aria-label="${esc(d.name)} 삭제">${ic('trash-2')}</button></li>`).join('');
+  return `<div class="card"><h3>제출 서류 <span class="cnt">${(t.docs||[]).length}</span></h3>
+  <p class="muted" style="margin-top:-6px">채용 검토에 필요한 서류를 올려 주세요. 업로드한 서류는 관리자·평가자만 열람하며 학원에는 공개되지 않습니다.</p>
+  <form data-form="doc"><div class="grid g2 tight"><div><label>서류 종류</label><select name="type">${opts(DOC_TYPES,'졸업증명서')}</select></div>
+   <div><label>파일 선택 (PDF·JPG·PNG, 10MB 이하)</label><input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png,image/*"></div></div>
+   <button class="btn block-m" style="margin-top:12px">${ic('upload')}업로드</button></form>
+  ${rows?`<ul class="files">${rows}</ul>`:'<p class="muted" style="margin-top:14px">아직 업로드한 서류가 없습니다.</p>'}</div>`;
 }
-function badge2(s){return `<span class="b info">${esc(s)}</span>`}
 function docList(t){
   const ds=t.docs||[];
   if(!ds.length) return '<p class="muted">제출된 서류가 없습니다.</p>';
-  return `<table><tr><th style="width:120px">종류</th><th>파일</th><th style="width:90px">열람</th></tr>${ds.map(d=>`<tr><td>${badge2(d.type)}</td><td>${esc(d.name)}<br><span class="muted">${fmtSize(d.size)} · ${esc(d.date)}</span></td><td>${d.url?`<a href="${d.url}" target="_blank" rel="noopener">열기</a>`:'<span class="muted">샘플 파일</span>'}</td></tr>`).join('')}</table>`;
+  return `<ul class="files">${ds.map(d=>`<li>${ic('file-text')}<div><b>${esc(d.name)}</b><span class="muted">${esc(d.type)} · ${fmtSize(d.size)} · ${esc(d.date)}</span></div>${d.url?`<a class="btn sm sec" href="${d.url}" target="_blank" rel="noopener">열기</a>`:'<span class="muted">샘플 파일</span>'}</li>`).join('')}</ul>`;
 }
 function evalForm(t){
   const sc=t.scores||[0,0,0,0,0];
   const dis=(t.status==='미신청')?'<div class="note">이 강사는 아직 검증을 신청하지 않았습니다.</div>':'';
-  return `<div class="card"><h3>${esc(t.name)} · ${esc(t.grade)} ${esc(t.subject)} ${badge(t.status)}</h3>
-  <p class="muted">${esc(t.career)}</p>${dis}
+  const canSched=['admin','matcher'].includes(S.user.role);
+  return `<div class="card"><div class="row" style="margin-bottom:6px"><h3 style="margin:0">${esc(t.name)} · ${esc(t.grade)} ${esc(t.subject)}</h3>${badge(t.status)}</div>
+  <p class="muted">강사${t.id} · ${esc(t.career)}</p>${dis}
   ${t.corr?`<div class="note"><b>강사 정정 요청</b><br>${esc(t.corr)}</div>`:''}
-  <h3 style="margin-top:14px">제출 서류 (${(t.docs||[]).length}건)</h3>${docList(t)}
-  ${t.status==='신청'?`<button class="btn warn" data-act="eval-sched" data-id="${t.id}">시범강의 일정 배정</button>`:''}
-  ${(t.status==='평가예정'||t.status==='승인')?`<form data-form="eval" data-id="${t.id}">
-   <table><tr><th>평가 항목</th><th style="width:130px">점수</th></tr>
-   ${ITEMS.map((it,i)=>`<tr><td>${it[0]} <span class="muted">(${it[1]}점)</span></td><td><input type="number" name="s${i}" min="0" max="${it[1]}" value="${sc[i]}"></td></tr>`).join('')}
-   <tr><td><b>합계</b></td><td class="total"><span id="evTotal">${sc.reduce((a,b)=>a+b,0)}</span> / 100</td></tr></table>
-   <label>종합 결과</label><select name="result">${opts(RESULTS,t.result||'추천 검토')}</select>
-   <label>평가 근거·보완점</label><textarea name="basis">${esc(t.basis)}</textarea>
-   <label>확인되지 않은 사항</label><textarea name="unverified">${esc(t.unverified)}</textarea>
+  <h3 style="margin-top:18px">제출 서류 <span class="cnt">${(t.docs||[]).length}</span></h3>${docList(t)}
+  ${t.status==='신청'?(canSched?`<button class="btn block-m" style="margin-top:12px" data-act="eval-sched" data-id="${t.id}">${ic('calendar-plus')}시범강의 일정 배정</button>`:'<p class="muted">일정 배정은 관리자·매칭담당이 합니다.</p>'):''}
+  ${(t.status==='평가예정'||t.status==='승인')?`<form data-form="eval" data-id="${t.id}" style="margin-top:18px">
+   <div class="scores">${ITEMS.map((it,i)=>`<label class="sc-row"><span>${it[0]} <em>${it[1]}점</em></span><input type="number" name="s${i}" min="0" max="${it[1]}" value="${sc[i]}" inputmode="numeric"></label>`).join('')}
+   <div class="sc-row sum"><span>합계</span><b><span id="evTotal">${sc.reduce((a,b)=>a+b,0)}</span> / 100</b></div>
+   <p class="muted" id="evHint" style="margin:0">${evalHint(sc.reduce((a,b)=>a+b,0))}</p></div>
+   <label>종합 결과 <span class="muted" style="font-weight:400">· 기준 ${PASS_SCORE}점</span></label><div class="seg" role="radiogroup">${RESULTS.map(r=>`<label><input type="radio" name="result" value="${r}" ${(t.result||'추천 검토')===r?'checked':''}><span>${r}</span></label>`).join('')}</div>
+   <p class="muted" style="margin:18px 0 0">기록은 출처별로 나눠 적어요. 직무와 무관한 특성·미확인 소문은 적지 않습니다.</p>
+   <label>확인 사실 <span class="muted" style="font-weight:400">· 증빙으로 확인</span></label><textarea name="facts" placeholder="예: 경력증명서로 학원 재직 6년 확인">${esc(t.facts||'')}</textarea>
+   <label>평가자 관찰 <span class="muted" style="font-weight:400">· 시범강의에서 본 것</span></label><textarea name="basis">${esc(t.basis)}</textarea>
+   <label>당사자 설명 <span class="muted" style="font-weight:400">· 강사 본인 진술</span></label><textarea name="statement" placeholder="예: 소규모 반 운영을 선호한다고 함">${esc(t.statement||'')}</textarea>
+   <label>미확인 사항</label><textarea name="unverified">${esc(t.unverified)}</textarea>
    <p class="muted">범죄·아동학대 관련 상세 정보 등 법률상 확인 주체가 따로 있는 자료는 기록하지 않습니다.</p>
-   <button class="btn">평가 저장·승인</button></form>`:''}</div>`;
+   <button class="btn block-m">평가 저장·승인</button></form>`:''}</div>`;
 }
+const EVAL_FILTERS=[['all','전체'],['todo','처리 필요'],['rec','추천 검토'],['etc','보완·보류']];
+const EVAL_PRED={all:()=>true,todo:t=>['신청','평가예정'].includes(t.status)||!!t.corr,rec:t=>t.result==='추천 검토',etc:t=>['보완교육','보류'].includes(t.result)};
+function evalList(){return S.teachers.filter(EVAL_PRED[S.evalF||'all'])}
+// 검색은 다시 그리지 않고 숨김만 바꾼다 (한글 조합 입력이 끊기지 않게)
+function applyEvalQ(){const q=(S.evalQ||'').trim();let n=0;document.querySelectorAll('.list .item').forEach(b=>{const hit=!q||b.dataset.search.includes(q);b.hidden=!hit;if(hit)n++});const e=document.getElementById('evalEmpty');if(e)e.hidden=n>0}
+function evalHint(sum){return sum>=PASS_SCORE?`기준(${PASS_SCORE}점) 이상 · 필수 조건 확인 후 추천 검토 가능`:`기준(${PASS_SCORE}점) 미만 · 보완교육 또는 보류 검토`}
 function matchBlocks(who){
-  const ms=who==='teacher'?S.matches.filter(m=>m.tid===S.me):S.matches;
-  if(!ms.length) return `<div class="card muted">${who==='teacher'?'아직 진행 중인 매칭이 없습니다. 검증 후 학원이 매칭을 신청하면 이곳에 표시됩니다.':'아직 매칭이 없습니다. 후보 찾기에서 강사를 선택해 신청해 보세요.'}</div>`;
-  return ms.map(m=>{const t=tOf(m.tid),r=rOf(m.rid);
-    return `<div class="card"><div class="row" style="margin-bottom:6px"><b>${who==='teacher'?esc(S.user.name)+' ↔ 봉담 샘플학원':esc(t.name)+' 강사'}</b>${badge(m.status)}${m.hire?`<span class="muted">입사일 ${esc(m.hire)}</span>`:''}</div>
-    <p class="muted" style="margin:0 0 8px">${esc(r.subject)} ${esc(r.grade)} · ${esc(r.pay)} · ${esc(r.hours)}</p>
-    ${m.checks.length?`<div class="tablewrap"><table><tr><th>시점</th><th>상태</th><th>내 응답</th></tr>
-    ${m.checks.map((c,i)=>{const mine=c[who+'Reply'];return `<tr><td>입사 ${c.day}일<br><span class="muted">${esc(c.due)}</span></td><td>${badge(c.status)}</td>
-      <td>${mine?esc(mine):(c.status==='응답 대기'?`<form data-form="reply" data-id="${m.id}" data-idx="${i}" data-who="${who}"><input type="text" name="text" placeholder="수업 적응·업무량·소통 등 확인 내용"><button class="btn sm" style="margin-top:6px">응답 보내기</button></form>`:'<span class="muted">-</span>')}</td></tr>`}).join('')}</table></div>`:'<p class="muted">채용이 확정되면 7·14·30일 점검 일정이 자동으로 생성됩니다.</p>'}</div>`}).join('');
+  const ms=myMatches();
+  if(!ms.length) return who==='teacher'?empty('inbox','아직 진행 중인 매칭이 없어요','검증 후 학원이 매칭을 신청하면 이곳에 표시됩니다.'):empty('inbox','아직 매칭이 없어요','후보 찾기에서 강사를 선택해 신청해 보세요.');
+  return ms.map(m=>{const t=tOf(m.tid),r=rOf(m.rid),a=aOf(r.academyId);
+    return `<div class="card"><div class="row" style="margin-bottom:6px"><b>${who==='teacher'?esc(a.name):esc(t.name)+' 강사'}</b>${badge(m.status)}${m.hire?`<span class="muted">입사일 ${esc(m.hire)}</span>`:''}</div>
+    <p class="muted" style="margin:0 0 12px">#${r.no} ${esc(r.subject)} ${esc(r.grade)} · ${esc(r.pay)} · ${esc(r.hours)}</p>
+    ${who==='teacher'&&m.status==='신청'?`<div class="offer"><b>${esc(a.name)}이 매칭을 신청했어요</b>
+      <dl class="kv"><dt>지역</dt><dd>${esc(a.region)} · ${esc(a.type)}</dd><dt>급여</dt><dd>${esc(r.pay)}</dd><dt>시수</dt><dd>${esc(r.hours)}</dd><dt>수업 외 업무</dt><dd>${esc(r.extra||'없음')}</dd><dt>시작일</dt><dd>${esc(r.start)}</dd></dl>
+      <p class="muted" style="margin:10px 0 0">수락하면 이 학원에 프로필 정보 제공 동의가 기록되고, 서당 담당자가 상담 일정을 잡습니다.</p>
+      <div class="row" style="margin-top:12px"><button class="btn sec" data-act="m-decline" data-id="${m.id}">거절</button><button class="btn" style="flex:1" data-act="m-accept" data-id="${m.id}">수락</button></div></div>`:''}
+    ${who==='academy'&&m.status==='신청'?`<p class="muted" style="margin:0 0 12px">${ic('hourglass')} 강사의 동의를 기다리고 있어요.</p>`:''}
+    ${who==='academy'&&contactOpen(m)?`<p class="row" style="margin:0 0 12px">${ic('phone')}<a href="tel:${esc(t.contact)}"><b>${esc(t.contact)}</b></a></p>`:''}
+    ${settleReport(m)}
+    ${m.checks.length?`${timeline(m)}<ul class="checks">
+    ${m.checks.map((c,i)=>{const mine=c[who+'Reply'];return `<li><div class="row" style="justify-content:space-between"><b>입사 ${c.day}일 점검 <span class="muted">${esc(c.due)}</span></b>${badge(c.status)}</div>
+      ${mine?`<p class="reply">${ic('message-square')}${esc(mine)}</p>`:(c.status==='응답 대기'?`<form data-form="reply" data-id="${m.id}" data-idx="${i}" data-who="${who}" class="inline"><input type="text" name="text" placeholder="수업 적응·업무량·소통 등" required><button class="btn sm">응답</button></form>`:'')}</li>`}).join('')}</ul>`:'<p class="muted">채용이 확정되면 7·14·30일 점검 일정이 자동으로 생성됩니다.</p>'}</div>`}).join('');
 }
 function complaintForm(){
-  const mine=S.complaints.filter(c=>c.by===actor());
-  return `<div class="card"><h3>민원 접수</h3><form data-form="complaint"><textarea name="text" placeholder="실제 안내와 다른 점, 근무 중 어려움 등을 적어 주세요"></textarea><button class="btn sec" style="margin-top:8px">접수하기</button></form>
-  ${mine.length?`<table style="margin-top:12px"><tr><th>접수번호</th><th>내용</th><th>상태</th></tr>${mine.map(c=>`<tr><td>${c.no}</td><td>${esc(c.text)}</td><td>${badge(c.status)}</td></tr>`).join('')}</table>`:''}</div>`;
+  const mine=S.complaints.filter(c=>c.byLogin===S.user.loginId);
+  return `<div class="card"><h3>민원 접수</h3><form data-form="complaint"><textarea name="text" placeholder="실제 안내와 다른 점, 근무 중 어려움 등을 적어 주세요" required></textarea><button class="btn sec block-m" style="margin-top:8px">접수하기</button></form>
+  ${mine.length?`<ul class="plain" style="margin-top:14px">${mine.map(c=>`<li><b>${c.no}</b><span>${esc(c.text)}</span>${badge(c.status)}</li>`).join('')}</ul>`:''}</div>`;
 }
 function logTable(n){
-  return `<div class="tablewrap"><table><tr><th style="width:70px">시간</th><th style="width:200px">주체</th><th>내용</th></tr>${S.logs.slice(0,n).map(l=>`<tr><td>${l.t}</td><td>${esc(l.actor)}</td><td>${esc(l.text)}</td></tr>`).join('')}</table></div>`;
+  const ls=S.logs.slice(0,n);
+  if(!ls.length) return '<p class="muted">활동 기록이 없습니다.</p>';
+  return `<ul class="logs">${ls.map(l=>`<li><span class="t">${l.t}</span><div><b>${esc(l.text)}</b><span class="muted">${esc(l.actor)}</span></div></li>`).join('')}</ul>`;
 }
 
 // ---------- 이벤트 ----------
 document.addEventListener('click',e=>{
+  if(e.target.closest('.reset')){e.preventDefault();try{sessionStorage.removeItem(STORE_KEY)}catch(x){}location.href=BASE_URL;return}
   const el=e.target.closest('[data-act]'); if(!el) return;
   const id=+el.dataset.id, a=el.dataset.act;
-  if(a==='tab'){S.tab=el.dataset.tab;S.selT=null;S.checkout=null}
-  else if(a==='logout'){S.user=null;S.checkout=null}
-  else if(a==='pay-open'){S.checkout={tid:id,ts:Date.now()}}
+  if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
+  else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null}
+  else if(a==='pay-open'){S.checkout={tid:id,ts:Date.now()};window.scrollTo(0,0)}
   else if(a==='pay-cancel'){S.checkout=null}
   else if(a==='pay-go'){doPay();return}
+  else if(a==='filter-reset'){S.f={subject:'',grade:'',region:''}}
   else if(a==='doc-del'){const t=me();const d=t.docs.splice(+el.dataset.idx,1)[0];log(actor(),`서류 삭제: ${d.type}`);S.flash='서류를 삭제했습니다.'}
   else if(a==='verify-apply'){const t=me();t.status='신청';log(actor(),'검증 신청');S.flash='검증 신청이 접수되었습니다.'}
-  else if(a==='eval-open'){S.selT=id}
+  else if(a==='evalf'){S.evalF=el.dataset.k}
+  else if(a==='eval-open'){S.selT=id;window.scrollTo(0,0)}
+  else if(a==='eval-close'){S.selT=null}
   else if(a==='eval-sched'){tOf(id).status='평가예정';log(actor(),`${tOf(id).name} 강사 시범강의 일정 배정`);S.flash='평가 일정을 배정했습니다.'}
   else if(a==='apply'){
     const rid=+document.getElementById('rs-'+id).value;
-    S.matches.push({id:S.matches.length+1,tid:id,rid,status:'신청',hire:'',checks:[]});
+    S.matches.push({id:Math.max(0,...S.matches.map(m=>m.id))+1,tid:id,rid,status:'신청',hire:'',checks:[]});
     rOf(rid).status='후보 제안 중';
-    log(actor(),`${tOf(id).name} 강사에게 매칭 신청`);S.flash='매칭을 신청했습니다. 관리자가 상담을 진행합니다.'}
+    log(actor(),`${tOf(id).name} 강사에게 매칭 신청 (요청 #${rOf(rid).no})`);S.flash='매칭을 신청했습니다. 서당 담당자가 상담을 진행합니다.'}
   else if(a==='m-consult'){const m=S.matches.find(x=>x.id===id);m.status='상담 중';log(actor(),`${tOf(m.tid).name} 매칭 상담 시작`);S.flash='상담을 시작했습니다. 학원에 강사 연락처가 공개됩니다.'}
   else if(a==='m-hire'){const m=S.matches.find(x=>x.id===id);const d=document.getElementById('hire-'+id).value||addDays(today(),14);
-    m.hire=d;m.status='정착 점검 중';m.checks=[7,14,30].map(n=>({day:n,due:addDays(d,n),status:'예정',academyReply:'',teacherReply:'',action:''}));
+    m.hire=d;m.status='정착 점검 중';rOf(m.rid).status='채용 확정';m.checks=[7,14,30].map(n=>({day:n,due:addDays(d,n),status:'예정',academyReply:'',teacherReply:'',action:''}));
     log(actor(),`${tOf(m.tid).name} 채용 확정 · 점검 일정 3건 생성`);S.flash='채용을 확정하고 7·14·30일 점검 일정을 만들었습니다.'}
   else if(a==='c-send'){const m=S.matches.find(x=>x.id===id);m.checks[+el.dataset.idx].status='응답 대기';log(actor(),`입사 ${m.checks[+el.dataset.idx].day}일 점검 알림 발송`);S.flash='학원과 강사에게 점검 알림을 보냈습니다. (샘플: 실제 발송은 하지 않습니다)'}
+  else if(a==='m-rerec'){const m=S.matches.find(x=>x.id===id),r=rOf(m.rid),tid=+document.getElementById('alt-'+id).value;
+    S.matches.push({id:Math.max(0,...S.matches.map(x=>x.id))+1,tid,rid:r.id,status:'신청',hire:'',checks:[]});r.reRecommend=(r.reRecommend||0)+1;
+    log(actor(),`요청 #${r.no} 재추천: ${tOf(tid).name} 강사 (재추천 ${r.reRecommend}회)`);S.flash=`${tOf(tid).name} 강사를 추천했어요. 강사 동의를 기다립니다. (재추천 ${r.reRecommend}회)`}
+  else if(a==='m-accept'){const m=S.matches.find(x=>x.id===id);m.status='강사 동의';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 수락 · 정보 제공 동의`);S.flash='수락했어요. 서당 담당자가 상담 일정을 안내합니다.'}
+  else if(a==='m-decline'){const m=S.matches.find(x=>x.id===id);m.status='강사 거절';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 거절`);S.flash='거절했어요. 학원에는 다른 후보가 추천됩니다.'}
+  else if(a==='noti'){S.noti=!S.noti}
+  else if(a==='receipt'){S.receipt=el.dataset.order}
+  else if(a==='receipt-close'){S.receipt=null}
+  else if(a==='noti-go'){S.noti=false;S.tab=el.dataset.tab;S.selT=el.dataset.sel?+el.dataset.sel:null;S.checkout=null;window.scrollTo(0,0)}
+  else if(a==='ac-approve'){const x=aOf(id);x.status='제휴 승인';x.holdReason='';log(actor(),`${x.name} 제휴 승인 (확인서 v${x.form.version})`);S.flash=`${x.name}을 제휴 승인했습니다. 이제 채용요청을 등록할 수 있어요.`}
+  else if(a==='ac-hold'){const x=aOf(id);x.status='보류';x.holdReason=x.form.agree?'조건 확인 필요':'30일 정착 점검 참여 동의가 없습니다';(x.history=x.history||[]).push(`v${x.form.version} 보류: ${x.holdReason}`);log(actor(),`${x.name} 제휴 보류: ${x.holdReason}`);S.flash=`${x.name}을 보류했습니다. 학원에 사유가 안내됩니다.`}
   else if(a==='c-done'){const c=S.complaints.find(x=>x.no===el.dataset.no);c.status='처리 완료';log(actor(),`민원 ${c.no} 처리 완료`)}
+  else return;
   render();
 });
+// Esc: 알림함 닫기 → 결제 흐름 닫기
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape'||!S.user) return;
+  if(S.receipt){S.receipt=null;render()}
+  else if(S.noti){S.noti=false;render();[...document.querySelectorAll('.bell')].find(b=>b.offsetParent)?.focus()}
+  else if(S.checkout){S.checkout=null;render()}
+});
 document.addEventListener('change',e=>{
+  if(e.target.dataset.sort!==undefined){S.sort=e.target.value;render();return}
   if(e.target.dataset.filter){S.f[e.target.dataset.filter]=e.target.value;render()}
 });
 document.addEventListener('input',e=>{
+  if(e.target.dataset.evalq!==undefined){S.evalQ=e.target.value;applyEvalQ();return}
+  if(e.target.type==='tel'){const d=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);return}
   const f=e.target.closest('form[data-form="eval"]'); if(!f) return;
   let sum=0; ITEMS.forEach((it,i)=>{let v=+f.elements['s'+i].value||0; sum+=Math.max(0,Math.min(it[1],v))});
   document.getElementById('evTotal').textContent=sum;
+  const h=document.getElementById('evHint'); if(h) h.textContent=evalHint(sum);
 });
 document.addEventListener('submit',e=>{
   const f=e.target.closest('form[data-form]'); if(!f) return; e.preventDefault();
   const fd=new FormData(f), k=f.dataset.form, id=+f.dataset.id;
   if(k==='login'){
-    const ACC={'원장':{role:'academy',name:'봉담 샘플학원'},'강사':{role:'teacher',name:'김하늘'},'관리자':{role:'admin',name:'관리자'}};
-    const acc=ACC[(fd.get('id')||'').trim()];
-    if(!acc){S.loginErr='아이디를 확인해 주세요. 원장, 강사, 관리자 중 하나를 입력하면 됩니다.';render();return}
-    S.user={role:acc.role,name:acc.name};
-    if(acc.role==='teacher') S.me=S.teachers.find(x=>x.name===acc.name).id;
-    S.tab=TABS[acc.role][0][0];S.selT=null;log(actor(),'로그인');
+    const loginId=(fd.get('id')||'').replace(/\s/g,'');
+    const acc=S.accounts.find(a=>a.loginId===loginId);
+    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~3, 강사1~14, 관리자1, 매칭담당1, 평가위원1 중 하나를 입력해 주세요.`;render();return}
+    S.user={...acc};
+    S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
   }
-  else if(k==='req'){S.requests.push({id:S.requests.length+1,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),'채용요청 등록');S.flash='채용요청을 등록했습니다.'}
+  else if(k==='req'){const no=Math.max(0,...S.requests.map(r=>r.no))+1;S.requests.push({id:no,no,academyId:S.user.academyId,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),`채용요청 #${no} 등록`);S.flash=`채용요청 #${no}을 등록했습니다.`}
   else if(k==='prof'){const t=me();['subject','grade','region','career','strength','wish','contact'].forEach(x=>t[x]=fd.get(x)||'');t.agree=true;log(actor(),'프로필 저장 · 개인정보 동의 기록');S.flash='프로필을 저장했습니다.'}
   else if(k==='doc'){
     const file=fd.get('file'); const t=me();
     const ext=file&&file.name?file.name.split('.').pop().toLowerCase():'';
-    if(!file||!file.size) S.flash='업로드할 파일을 선택해 주세요.';
-    else if(!DOC_EXT.includes(ext)) S.flash='PDF, JPG, PNG 파일만 올릴 수 있습니다.';
-    else if(file.size>DOC_MAX) S.flash='파일 크기는 10MB 이하여야 합니다.';
+    if(!file||!file.size){S.flash='업로드할 파일을 선택해 주세요.';S.flashType='err'}
+    else if(!DOC_EXT.includes(ext)){S.flash='PDF, JPG, PNG 파일만 올릴 수 있습니다.';S.flashType='err'}
+    else if(file.size>DOC_MAX){S.flash='파일 크기는 10MB 이하여야 합니다.';S.flashType='err'}
     else{t.docs.push({type:fd.get('type'),name:file.name,size:file.size,url:URL.createObjectURL(file),date:today()});log(actor(),`서류 업로드: ${fd.get('type')} (${file.name})`);S.flash=`${fd.get('type')}를 업로드했습니다.`}
   }
   else if(k==='corr'){const t=me();t.corr=fd.get('text');log(actor(),'평가 정정 요청');S.flash='정정 요청을 접수했습니다.'}
-  else if(k==='eval'){const t=tOf(id);t.scores=ITEMS.map((it,i)=>Math.max(0,Math.min(it[1],+fd.get('s'+i)||0)));t.result=fd.get('result');t.basis=fd.get('basis');t.unverified=fd.get('unverified');t.status='승인';t.corr='';log(actor(),`${t.name} 강사 평가 승인 (${total(t)}점 · ${t.result})`);S.flash=`${t.name} 강사 평가를 저장했습니다. ${t.result==='추천 검토'?'학원 후보로 노출됩니다.':'학원 후보에는 노출되지 않습니다.'}`}
+  else if(k==='eval'){const t=tOf(id);t.scores=ITEMS.map((it,i)=>Math.max(0,Math.min(it[1],+fd.get('s'+i)||0)));t.result=fd.get('result');t.basis=fd.get('basis');t.facts=fd.get('facts');t.statement=fd.get('statement');t.unverified=fd.get('unverified');t.status='승인';t.corr='';log(actor(),`${t.name} 강사 평가 승인 (${total(t)}점 · ${t.result})`);S.flash=`${t.name} 강사 평가를 저장했습니다. ${t.result==='추천 검토'?'학원 후보로 노출됩니다.':'학원 후보에는 노출되지 않습니다.'}`}
   else if(k==='reply'){const m=S.matches.find(x=>x.id===id),c=m.checks[+f.dataset.idx];c[f.dataset.who+'Reply']=fd.get('text')||'(내용 없음)';if(c.academyReply&&c.teacherReply)c.status='응답 완료';log(actor(),`입사 ${c.day}일 점검 응답`);S.flash='응답을 보냈습니다.'}
   else if(k==='action'){const m=S.matches.find(x=>x.id===id);m.checks[+f.dataset.idx].action=fd.get('text');log(actor(),'점검 조치 기록 저장');S.flash='조치 기록을 저장했습니다.'}
   else if(k==='mresult'){const m=S.matches.find(x=>x.id===id);m.status=fd.get('result');log(actor(),`${tOf(m.tid).name} 매칭 결과: ${m.status}`);S.flash='결과를 저장했습니다.'}
-  else if(k==='complaint'){const text=(fd.get('text')||'').trim();if(text){const no='C-'+String(S.complaints.length+1).padStart(3,'0');S.complaints.push({no,by:actor(),text,status:'접수'});log(actor(),`민원 접수 ${no}`);S.flash=`민원이 접수되었습니다. (접수번호 ${no})`}}
+  else if(k==='cond'){const x=myAcademy();const v=((x.form||{}).version||0)+1;x.form={version:v,agree:!!fd.get('agree')};FORM_FIELDS.forEach(([k])=>x.form[k]=fd.get(k)||'');if(x.status!=='제휴 승인'){x.status='검토 중';x.holdReason=''}log(actor(),`근무조건 확인서 v${v} 제출`);S.flash=`근무조건 확인서 v${v}을 제출했습니다.${x.status==='검토 중'?' 서당이 검토 후 안내합니다.':''}`}
+  else if(k==='complaint'){const text=(fd.get('text')||'').trim();if(text){const no='C-'+String(S.complaints.length+1).padStart(3,'0');S.complaints.push({no,by:actor(),byLogin:S.user.loginId,byAcademy:S.user.academyId||null,text,status:'접수'});log(actor(),`민원 접수 ${no}`);S.flash=`민원이 접수되었습니다. (접수번호 ${no})`}}
   render();
 });
 
-document.addEventListener('click',e=>{if(e.target.id==='reset'){e.preventDefault();try{sessionStorage.removeItem(STORE_KEY)}catch(x){}location.href=BASE_URL}});
 async function boot(){
   if(!load()) seed();
   const q=new URLSearchParams(location.search), result=q.get('toss');
@@ -636,7 +1194,7 @@ async function boot(){
     let pend=null; try{pend=JSON.parse(sessionStorage.getItem('sdh-pending')||'null')}catch(e){}
     // 데모: 서버가 없으므로 승인 API는 호출하지 않고, 주문번호·금액만 대조합니다.
     if(!pend||pend.orderId!==q.get('orderId')||Number(q.get('amount'))!==pend.amount){S.flash='주문 정보가 일치하지 않아 결제를 반영하지 않았습니다.';S.flashType='err';render();return}
-    if(!S.purchases.some(p=>p.orderId===pend.orderId)) S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),tid:pend.tid,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
+    if(!S.purchases.some(p=>p.orderId===pend.orderId)) S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId||S.user.academyId,tid:pend.tid,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
     log(actor(),`프로필 열람권 결제 인증 완료 (${won(pend.amount)}) · 데모`);
     S.flash=`결제 인증이 완료되었습니다. ${tOf(pend.tid).name} 강사의 프로필을 열람할 수 있습니다. (데모: 승인 API 미호출)`;
     render();return
@@ -644,6 +1202,10 @@ async function boot(){
   render();
 }
 boot();
+const setOnline=()=>document.body.classList.toggle('is-offline',!navigator.onLine);
+window.addEventListener('online',setOnline);window.addEventListener('offline',setOnline);setOnline();
+// PWA: http(s)에서만 서비스 워커 등록 (file:// 로 열면 건너뜀)
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
