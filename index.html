@@ -78,6 +78,26 @@ main{flex:1;min-width:0;max-width:1240px;padding:40px 48px 80px}
 .report{background:var(--ok-soft);border-radius:var(--r-md);padding:14px 16px;margin:0 0 14px}
 .report>.row b{display:inline-flex;gap:6px;align-items:center;color:var(--ok-text)}
 .report dl.kv{margin-top:10px;grid-template-columns:84px 1fr}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;margin:0;min-height:112px;padding:16px;border:1.5px dashed #C9CFD6;border-radius:var(--r-md);background:var(--surface);cursor:pointer;text-align:center;transition:border-color .15s,background .15s}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.drop svg{width:26px;height:26px;color:var(--accent)}.drop b{font-size:14px;color:var(--ink);word-break:break-all}.drop .muted{font-size:12.5px;font-weight:400}
+.drop.over,.drop:focus-within{border-color:var(--accent);background:var(--accent-soft)}
+.btn.cam{display:none;margin-top:8px;position:relative}.cam input{position:absolute;width:1px;height:1px;opacity:0}
+.cam:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:820px) and (pointer:coarse){.btn.cam{display:flex}}
+.drop.picked{border-style:solid;border-color:var(--accent);background:#fff}
+.prog{margin-top:12px}.prog-bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden}.prog-bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .09s linear}
+.prog-t{display:block;margin-top:6px}
+.stat .delta{font-style:normal;font-size:12.5px;font-weight:700;color:var(--mute)}
+.stat .delta span{font-weight:500;color:var(--mute);margin-left:2px}
+.stat .delta.good{color:var(--ok-text)}.stat .delta.bad{color:var(--bad-text)}
+.agenda{list-style:none;margin:0;padding:0}
+.agenda li button{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:0;background:none;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}
+.agenda li:first-child button{border-top:0;padding-top:0}
+.agenda li button>div{flex:1;min-width:0}.agenda b{display:block;font-size:14.5px}
+.agenda li button>svg{color:var(--icon)}
+.agenda .dd{flex:none;min-width:64px;text-align:center;font-size:12.5px;font-weight:800;padding:6px 8px;border-radius:10px;background:var(--surface);color:var(--sub)}
+.agenda .dd.soon{background:var(--accent-soft);color:var(--accent-d)}.agenda .dd.late{background:var(--bad-soft);color:var(--bad-text)}
 .reqs{list-style:none;margin:0;padding:0}
 .reqs>li{padding:16px 0;border-top:1px solid var(--line)}.reqs>li:first-child{border-top:0;padding-top:0}
 .stage{list-style:none;display:flex;gap:4px;margin:0;padding:0}
@@ -301,6 +321,20 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 /* ---------- checkout ---------- */
 #payment-method,#agreement{min-height:20px}
 
+/* ---------- tablet: 사이드바를 아이콘 레일로 (Flutter NavigationRail 과 같은 구조) ---------- */
+@media(min-width:821px) and (max-width:1100px){
+ aside.sb{width:84px;padding:20px 10px;align-items:center;gap:18px}
+ .sb .logo div:last-child,.sb .acct>div:nth-child(2),.sb .sample,.sb .lbl{display:none}
+ .sb .logo{padding:0}
+ .sb .acct{flex-direction:column;padding:8px;gap:6px;background:none}
+ nav.tabs{width:100%}
+ nav.tabs button{flex-direction:column;justify-content:center;gap:4px;padding:10px 4px;font-size:0}
+ nav.tabs button svg{width:22px;height:22px}
+ nav.tabs button::after{content:attr(title);font-size:11px;line-height:1.2;text-align:center;word-break:keep-all}
+ .sb .out{padding:10px}
+ .noti-panel{left:96px}
+}
+
 /* ---------- tablet ---------- */
 @media(max-width:1100px){.cands{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:32px 28px 72px}}
 
@@ -460,7 +494,7 @@ const S = { loginErr:'', user:null, tab:null, flash:'', flashType:'', f:{subject
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v5';
+const STORE_KEY='sdh-toss-sample-v6';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases}))}catch(e){}}
@@ -468,7 +502,8 @@ function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return f
 
 // ---------- 유틸 ----------
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function today(){return new Date().toISOString().slice(0,10)}
+// 오늘 날짜는 기기 현지 시간 기준 (UTC로 자르면 한국 새벽 0~9시에 어제가 됨)
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function addDays(d,n){const x=new Date(d+'T00:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)}
 const maskName = n => n[0]+'○'.repeat(Math.max(n.length-1,1));
 const won = n => Number(n).toLocaleString('ko-KR')+'원';
@@ -516,7 +551,8 @@ function seed(){
   S.academies = [
     {id:1,name:'봉담 샘플학원',region:'봉담',type:'종합',status:'제휴 승인',form:{version:1,pay:'월 급여제 · 협의',payDay:'매월 10일',hours:'주 15시간 · 평일 오후',extra:'채점·학부모 상담 일부',classSize:'8명 이하',handover:'부원장',agree:true}},
     {id:2,name:'화성 수학전문학원',region:'화성',type:'단과',status:'제휴 승인',form:{version:1,pay:'시급제 · 4만 원',payDay:'매월 5일',hours:'주 12시간 · 평일 저녁',extra:'없음',classSize:'6명 이하',handover:'원장',agree:true}},
-    {id:3,name:'동탄 영어학원',region:'동탄',type:'단과',status:'검토 중',form:{version:2,pay:'월 급여제',payDay:'매월 15일',hours:'주 18시간',extra:'셔틀 동승 주 1회',classSize:'10명 이하',handover:'실장',agree:true},history:['v1 보류: 30일 정착 점검 참여 동의 없음']}];
+    {id:3,name:'동탄 영어학원',region:'동탄',type:'단과',status:'검토 중',form:{version:2,pay:'월 급여제',payDay:'매월 15일',hours:'주 18시간',extra:'셔틀 동승 주 1회',classSize:'10명 이하',handover:'실장',agree:true},history:['v1 보류: 30일 정착 점검 참여 동의 없음']},
+    {id:4,name:'수원 종합학원',region:'수원',type:'종합',status:'보류',holdReason:'근무조건 반복 변경: 급여 산정 방식을 바꾼 뒤 확인 요청에 답이 없습니다',form:{version:2,pay:'시급제 · 협의',payDay:'협의',hours:'주 20시간',extra:'상담·행정·차량',classSize:'15명 이하',handover:'원장',agree:true},history:['v1 제출: 월 급여제 · 300만 원','v2 제출: 시급제 · 협의로 변경','v2 보류: 근무조건 반복 변경']}];
   const T = (id,name,subject,grade,region,career,strength,wish,status,scores,result,basis,unverified)=>
     ({id,name,subject,grade,region,career,strength,wish,status,scores,result,basis,unverified:unverified||'',contact:'010-0000-'+String(id).padStart(4,'0'),corr:'',docs:[],agree:true});
   S.teachers = [
@@ -533,7 +569,10 @@ function seed(){
     T(11,'강민재','영어','초등','봉담','초등 영어 4년 · 파닉스·회화','파닉스, 놀이식 수업','평일 오후 · 주 12시간','승인',[20,24,16,13,12],'추천 검토','아이들과의 상호작용이 좋고 수업 진행이 안정적임'),
     T(12,'배수아','수학','중등','화성','중등 수학 8년 · 영재·심화반 지도','심화 문제 풀이, 사고력 지도','평일 오후 · 주 18시간','승인',[25,22,18,14,13],'추천 검토','심화 유형의 풀이 설계가 뛰어나고 학생 수준별 대응이 좋음','소규모 반 운영 경험은 추가 확인 필요'),
     T(13,'조현우','과학','고등','수원','고등 과학 2년','물리 개념','평일 저녁','승인',[17,14,11,10,9],'보완교육','개념은 정확하나 수업 전달 방식 보완 필요'),
-    T(14,'문가은','수학','초등','수원','초등 수학 3년','연산 습관 지도','주 3일 · 오후','평가예정',null,null,'')];
+    T(14,'문가은','수학','초등','수원','초등 수학 3년','연산 습관 지도','주 3일 · 오후','평가예정',null,null,''),
+    T(15,'송지안','수학','고등','화성','고등 수학 1년','수능 기출 풀이','평일 저녁','승인',[14,12,10,9,8],'보류','개념 설명 중 오류가 반복되고 학생 질문에 답하지 못한 장면이 있음. 재평가 전 추천하지 않음','경력증명서 미제출'),
+    T(16,'노하린','영어','중등','동탄','중등 영어 3년','회화 수업','주 3일 · 오후','승인',[16,14,12,10,9],'보류','수업 준비도가 부족했고 시간 배분이 맞지 않았음','이전 학원 재직 기간 확인 필요')];
+  tOf(16).corr='시범강의 당일 자료 파일이 열리지 않아 시간 배분이 어긋났습니다. 같은 과제로 재평가를 요청합니다.';
   const D=(type,name,size,d)=>({type,name,size,url:'',date:addDays(today(),-d)});
   tOf(1).facts='경력증명서로 학원 재직 6년 확인, 졸업·성적증명서 제출';tOf(1).statement='소규모 반(8명 이하) 운영을 선호';
   tOf(9).facts='졸업·성적증명서 확인';tOf(9).statement='평일 저녁 위주, 주말 일부 가능';
@@ -550,6 +589,7 @@ function seed(){
     {loginId:'원장1',role:'academy',name:'정봉담 원장',academyId:1},
     {loginId:'원장2',role:'academy',name:'한화성 원장',academyId:2},
     {loginId:'원장3',role:'academy',name:'오동탄 원장',academyId:3},
+    {loginId:'원장4',role:'academy',name:'유수원 원장',academyId:4},
     ...S.teachers.map(t=>({loginId:'강사'+t.id,role:'teacher',name:t.name,teacherId:t.id}))];
 
   S.requests = [
@@ -577,7 +617,7 @@ function seed(){
     {by:'평가위원1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
     {by:'관리자1',rid:null,task:'동탄 영어학원 확인서 검토',min:25,cost:0,date:addDays(today(),-1)}];
   S.logs = [];
-  log('시스템','샘플 데이터를 불러왔습니다 (계정 20개)');
+  log('시스템',`샘플 데이터를 불러왔습니다 (계정 ${S.accounts.length}개)`);
 }
 
 // ---------- 결제 (토스페이먼츠 결제위젯) ----------
@@ -688,10 +728,10 @@ function render(){
   <aside class="sb">
     <div class="logo"><div class="mk">서</div><div><b>서당 동행</b><small>검증된 강사 매칭</small></div></div>
     <div class="acct"><div class="av">${ic(ROLE_ICON[S.user.role])}</div><div style="flex:1;min-width:0"><b>${esc(sub)}</b><span>${ROLE_NAME[S.user.role]} · ${esc(S.user.loginId)}</span></div>${bell(nc)}</div>
-    <nav class="tabs">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!inFlow?'on':''}" ${S.tab===k&&!inFlow?'aria-current="page"':''}>${ic(TAB_ICON[k])}${n}</button>`).join('')}</nav>
+    <nav class="tabs">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!inFlow?'on':''}" ${S.tab===k&&!inFlow?'aria-current="page"':''} title="${n}">${ic(TAB_ICON[k])}<span class="lbl">${n}</span></button>`).join('')}</nav>
     <div class="grow"></div>
     <div class="sample">${SAMPLE_NOTE}</div>
-    <button class="out" data-act="logout">${ic('log-out')}로그아웃</button>
+    <button class="out" data-act="logout" title="로그아웃">${ic('log-out')}<span class="lbl">로그아웃</span></button>
   </aside>
   <header class="appbar">
     ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk">서</div>`}
@@ -755,7 +795,7 @@ function loginView(){
     <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" placeholder="아무 값이나 입력하세요" autocomplete="current-password">
     <button class="btn">시작하기</button>
     <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
-     <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · 검토 중'))).join('')}</ul>
+     <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · '+aOf(a.academyId).status))).join('')}</ul>
      <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
      <h4>운영</h4><ul>${acc.filter(a=>isStaffRole(a.role)).map(a=>row(a,ROLE_NAME[a.role])).join('')}</ul>
     </details>
@@ -768,7 +808,7 @@ const VIEWS = {
 // ===== 학원 =====
 'academy:home':()=>{
   const ms=myMatches(), a=myAcademy();
-  const next=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기').map(c=>({m,c})));
+  const next=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기'&&!c.academyReply).map(c=>({m,c})));
   return `<h2>${esc(a.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 검증된 정보로 만나 보세요.</p>
   ${a.status==='검토 중'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--warn-soft);color:#7A5A12">${ic('hourglass')}<div><b>서당이 근무조건 확인서를 검토하고 있어요</b><span>제휴 승인 후 채용요청과 매칭 신청을 할 수 있습니다 · 확인서 보기</span></div>${ic('chevron-right')}</button>`:''}
   ${a.status==='보류'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--bad-soft);color:var(--bad-text)">${ic('circle-alert')}<div><b>제휴가 보류됐어요</b><span>${esc(a.holdReason||'')} · 확인서를 고쳐 다시 제출해 주세요</span></div>${ic('chevron-right')}</button>`:''}
@@ -777,6 +817,7 @@ const VIEWS = {
     <div class="stat"><b>${myRequests().length}</b><span>등록한 채용요청</span></div>
     <div class="stat"><b>${ms.filter(m=>!['종료','강사 거절'].includes(m.status)).length}</b><span>진행 중인 매칭</span></div>
     <div class="stat"><b>${ms.filter(m=>m.status==='정착 점검 중').length}</b><span>정착 점검 중</span></div></div>
+  ${agendaCard(ms)}
   <div class="card"><h3>서당 동행 이용 순서</h3><div class="steps">
     <div><b>1. 조건 확인</b>채용요청과 근무조건을 등록합니다</div>
     <div><b>2. 검증 후보</b>시범강의 평가를 통과한 후보만 보입니다</div>
@@ -895,12 +936,16 @@ const VIEWS = {
   const mp=S.matches.filter(m=>['신청','강사 동의','상담 중'].includes(m.status)).length;
   const cw=S.matches.reduce((a,m)=>a+m.checks.filter(c=>c.status==='응답 대기').length,0);
   const cp=S.complaints.filter(c=>c.status==='접수').length;
-  const K=(ic_,n,l,tab)=>`<button class="stat link" data-act="tab" data-tab="${tab}">${ic(ic_)}<b>${n}</b><span>${l}</span></button>`;
+  // 지난주 같은 요일 기준 값(샘플). 운영 DB에서는 audit_logs·상태 이력으로 계산
+  const LW=S.lastWeek||{wait:3,mp:1,cw:0,cp:1};
+  const delta=(n,prev,lowerIsBetter)=>{const d=n-prev;if(!d)return `<em class="delta">지난주와 같음</em>`;
+    const good=lowerIsBetter?d<0:d>0;return `<em class="delta ${good?'good':'bad'}">${d>0?'▲':'▼'} ${Math.abs(d)} <span>지난주 ${prev}</span></em>`};
+  const K=(ic_,n,l,tab,prev,low)=>`<button class="stat link" data-act="tab" data-tab="${tab}">${ic(ic_)}${delta(n,prev,low)}<b>${n}</b><span>${l}</span></button>`;
   const canEval=TABS[S.user.role].some(([k])=>k==='eval');
   return `<h2>오늘 처리할 일</h2><p class="lead">${new Date().toLocaleDateString('ko-KR',{month:'long',day:'numeric',weekday:'long'})} · ${esc(ROLE_NAME[S.user.role])} ${esc(S.user.loginId)}</p>
   <div class="grid g4 stats" style="margin-bottom:16px">
-   ${K('user-check',wait,'검증 대기 강사',canEval?'eval':'dash')}${K('handshake',mp,'진행 중 매칭','match')}
-   ${K('bell-ring',cw,'점검 응답 대기','check')}${K('message-square-warning',cp,'미처리 민원','check')}</div>
+   ${K('user-check',wait,'검증 대기 강사',canEval?'eval':'dash',LW.wait,true)}${K('handshake',mp,'진행 중 매칭','match',LW.mp,false)}
+   ${K('bell-ring',cw,'점검 응답 대기','check',LW.cw,true)}${K('message-square-warning',cp,'미처리 민원','check',LW.cp,true)}</div>
   <div class="grid g2" style="align-items:start">
   <div class="card"><h3>학원 현황</h3><ul class="plain">${S.academies.map(a=>`<li><b>${esc(a.name)}</b><span class="muted">${esc(a.region)} · ${esc(a.type)} · 확인서 v${(a.form||{}).version||0} · 요청 ${S.requests.filter(r=>r.academyId===a.id).length}건</span>${badge(a.status)}
    ${a.status==='검토 중'&&S.user.role!=='evaluator'?`<div class="review">${(a.history||[]).map(h=>`<p class="muted" style="margin:0 0 8px">${ic('history')} ${esc(h)}</p>`).join('')}<dl class="kv">${FORM_FIELDS.map(([k,l])=>`<dt>${l}</dt><dd>${esc(a.form[k]||'-')}</dd>`).join('')}<dt>30일 점검</dt><dd>${a.form.agree?'참여 동의':'<b style="color:var(--bad-text)">미동의</b>'}</dd></dl>
@@ -980,6 +1025,17 @@ function settleReport(m){
    <dl class="kv"><dt>점검 응답</dt><dd>${done} / ${m.checks.length}회 완료</dd><dt>민원</dt><dd>${iss.length}건 (${iss.filter(c=>c.status==='처리 완료').length}건 처리)</dd>
    <dt>서당 조치</dt><dd>${esc(m.checks.map(c=>c.action).filter(Boolean).join(' · ')||'-')}</dd><dt>결과</dt><dd>${RESULT_TEXT[m.status]}</dd></dl>${done<m.checks.length?`<p class="muted" style="margin:8px 0 0">${ic('circle-alert')} 아직 응답하지 않은 점검이 ${m.checks.length-done}건 있어요.</p>`:''}</div>`;
 }
+// 다가오는 일정: 정착 점검 마감일 + 근무 시작일 (지난 7일 ~ 앞으로 30일, 날짜순)
+function agendaCard(ms){
+  const t0=today(), dd=d=>Math.round((new Date(d+'T00:00:00Z')-new Date(t0+'T00:00:00Z'))/864e5);
+  const L=[];
+  ms.forEach(m=>m.checks.filter(c=>c.status!=='응답 완료').forEach(c=>L.push({date:c.due,icon:'calendar-check',title:`${tOf(m.tid).name} 강사 입사 ${c.day}일 점검`,sub:c.academyReply?'학원 응답 완료 · 강사 응답 대기':c.status==='응답 대기'?'응답이 필요해요':'예정',tab:'prog'})));
+  myRequests().forEach(r=>{const ok=S.matches.some(m=>m.rid===r.id&&['정착 점검 중','종료','연장'].includes(m.status));if(!ok)L.push({date:r.start,icon:'flag',title:`요청 #${r.no} ${r.subject} ${r.grade} 근무 시작 희망일`,sub:'채용 확정 전',tab:'req'})});
+  const list=L.filter(x=>dd(x.date)>=-7&&dd(x.date)<=30).sort((a,b)=>a.date<b.date?-1:1);
+  if(!list.length) return '';
+  const dlabel=n=>n===0?'오늘':n>0?`D-${n}`:`${-n}일 지남`;
+  return `<div class="card"><h3>다가오는 일정 <span class="cnt">${list.length}</span></h3><ul class="agenda">${list.map(x=>{const n=dd(x.date);return `<li><button data-act="tab" data-tab="${x.tab}"><span class="dd ${n<0?'late':n<=3?'soon':''}">${dlabel(n)}</span><div><b>${esc(x.title)}</b><span class="muted">${esc(x.date)} · ${esc(x.sub)}</span></div>${ic('chevron-right')}</button></li>`}).join('')}</ul></div>`;
+}
 function workLogCard(){
   const L=S.workLogs||[]; if(!L.length) return '';
   const min=L.reduce((a,w)=>a+w.min,0), cost=L.reduce((a,w)=>a+w.cost,0);
@@ -1025,8 +1081,12 @@ function docCard(t){
   const rows=(t.docs||[]).map((d,i)=>`<li>${ic('file-text')}<div><b>${esc(d.name)}</b><span class="muted">${esc(d.type)} · ${fmtSize(d.size)} · ${esc(d.date)}</span></div><button class="ib" data-act="doc-del" data-idx="${i}" aria-label="${esc(d.name)} 삭제">${ic('trash-2')}</button></li>`).join('');
   return `<div class="card"><h3>제출 서류 <span class="cnt">${(t.docs||[]).length}</span></h3>
   <p class="muted" style="margin-top:-6px">채용 검토에 필요한 서류를 올려 주세요. 업로드한 서류는 관리자·평가자만 열람하며 학원에는 공개되지 않습니다.</p>
-  <form data-form="doc"><div class="grid g2 tight"><div><label>서류 종류</label><select name="type">${opts(DOC_TYPES,'졸업증명서')}</select></div>
-   <div><label>파일 선택 (PDF·JPG·PNG, 10MB 이하)</label><input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png,image/*"></div></div>
+  <form data-form="doc"><div class="grid g2 tight one-m"><div><label>서류 종류</label><select name="type">${opts(DOC_TYPES,'졸업증명서')}</select></div>
+   <div><label>파일</label>
+    <label class="drop" data-drop><input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png,image/*">
+     ${ic('cloud-upload')}<b class="drop-t">파일을 고르거나 여기로 끌어다 놓으세요</b><span class="muted drop-s">PDF·JPG·PNG · 10MB 이하 · 휴대폰은 사진 촬영도 가능</span></label>
+    <label class="btn sec block cam"><input type="file" data-cam accept="image/*" capture="environment">${ic('camera')}카메라로 바로 촬영</label></div></div>
+   <div class="prog" hidden><div class="prog-bar"><i></i></div><span class="muted prog-t">업로드 중 0%</span></div>
    <button class="btn block-m" style="margin-top:12px">${ic('upload')}업로드</button></form>
   ${rows?`<ul class="files">${rows}</ul>`:'<p class="muted" style="margin-top:14px">아직 업로드한 서류가 없습니다.</p>'}</div>`;
 }
@@ -1140,7 +1200,16 @@ document.addEventListener('keydown',e=>{
   else if(S.noti){S.noti=false;render();[...document.querySelectorAll('.bell')].find(b=>b.offsetParent)?.focus()}
   else if(S.checkout){S.checkout=null;render()}
 });
+function showPicked(input){const d=input.closest('[data-drop]');if(!d)return;const f=input.files&&input.files[0];
+  d.classList.toggle('picked',!!f);d.querySelector('.drop-t').textContent=f?f.name:'파일을 고르거나 여기로 끌어다 놓으세요';
+  d.querySelector('.drop-s').textContent=f?`${fmtSize(f.size)} · 다른 파일을 고르려면 다시 누르세요`:'PDF·JPG·PNG · 10MB 이하 · 휴대폰은 사진 촬영도 가능'}
+['dragenter','dragover'].forEach(ev=>document.addEventListener(ev,e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(!d)return;e.preventDefault();d.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>document.addEventListener(ev,e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(!d)return;e.preventDefault();d.classList.remove('over');
+  if(ev==='drop'&&e.dataTransfer.files.length){const i=d.querySelector('input');i.files=e.dataTransfer.files;showPicked(i)}}));
 document.addEventListener('change',e=>{
+  if(e.target.dataset.cam!==undefined){const f=e.target.files&&e.target.files[0];const m=e.target.form&&e.target.form.querySelector('[data-drop] input');
+    if(f&&m){const dt=new DataTransfer();dt.items.add(f);m.files=dt.files;showPicked(m)}e.target.value='';return}
+  if(e.target.type==='file'){showPicked(e.target);return}
   if(e.target.dataset.sort!==undefined){S.sort=e.target.value;render();return}
   if(e.target.dataset.filter){S.f[e.target.dataset.filter]=e.target.value;render()}
 });
@@ -1158,7 +1227,7 @@ document.addEventListener('submit',e=>{
   if(k==='login'){
     const loginId=(fd.get('id')||'').replace(/\s/g,'');
     const acc=S.accounts.find(a=>a.loginId===loginId);
-    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~3, 강사1~14, 관리자1, 매칭담당1, 평가위원1 중 하나를 입력해 주세요.`;render();return}
+    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~16, 관리자1, 매칭담당1, 평가위원1 중 하나를 입력해 주세요.`;render();return}
     S.user={...acc};
     S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
   }
@@ -1170,7 +1239,14 @@ document.addEventListener('submit',e=>{
     if(!file||!file.size){S.flash='업로드할 파일을 선택해 주세요.';S.flashType='err'}
     else if(!DOC_EXT.includes(ext)){S.flash='PDF, JPG, PNG 파일만 올릴 수 있습니다.';S.flashType='err'}
     else if(file.size>DOC_MAX){S.flash='파일 크기는 10MB 이하여야 합니다.';S.flashType='err'}
-    else{t.docs.push({type:fd.get('type'),name:file.name,size:file.size,url:URL.createObjectURL(file),date:today()});log(actor(),`서류 업로드: ${fd.get('type')} (${file.name})`);S.flash=`${fd.get('type')}를 업로드했습니다.`}
+    else{
+      // 업로드 진행 표시 (앱에서는 Supabase Storage 업로드 진행률로 교체)
+      const box=f.querySelector('.prog'),bar=box.querySelector('i'),txt=box.querySelector('.prog-t'),btn=f.querySelector('button.btn');
+      box.hidden=false;btn.disabled=true;let pct=0;
+      const tick=setInterval(()=>{pct=Math.min(100,pct+8+Math.random()*14);bar.style.width=pct+'%';txt.textContent=`업로드 중 ${Math.round(pct)}% · ${file.name}`;
+        if(pct>=100){clearInterval(tick);t.docs.push({type:fd.get('type'),name:file.name,size:file.size,url:URL.createObjectURL(file),date:today()});log(actor(),`서류 업로드: ${fd.get('type')} (${file.name})`);S.flash=`${fd.get('type')}를 업로드했습니다.`;render()}},90);
+      return;
+    }
   }
   else if(k==='corr'){const t=me();t.corr=fd.get('text');log(actor(),'평가 정정 요청');S.flash='정정 요청을 접수했습니다.'}
   else if(k==='eval'){const t=tOf(id);t.scores=ITEMS.map((it,i)=>Math.max(0,Math.min(it[1],+fd.get('s'+i)||0)));t.result=fd.get('result');t.basis=fd.get('basis');t.facts=fd.get('facts');t.statement=fd.get('statement');t.unverified=fd.get('unverified');t.status='승인';t.corr='';log(actor(),`${t.name} 강사 평가 승인 (${total(t)}점 · ${t.result})`);S.flash=`${t.name} 강사 평가를 저장했습니다. ${t.result==='추천 검토'?'학원 후보로 노출됩니다.':'학원 후보에는 노출되지 않습니다.'}`}
