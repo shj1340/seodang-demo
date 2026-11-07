@@ -440,6 +440,81 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
  .login .form{padding:28px 20px calc(40px + var(--safe-b));align-items:flex-start}
 }
 @media(max-width:380px){.login .brand .steps{grid-template-columns:repeat(2,1fr)}.bar{grid-template-columns:72px 1fr 42px}}
+/* ===== 공개 화면(로그인 전): 메인 · 회원가입 ===== */
+.pub{min-height:100vh;min-height:100dvh;background:var(--page)}
+.pubbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);padding-top:var(--safe-t)}
+.pubbar .in{max-width:1120px;margin:0 auto;height:64px;padding:0 24px;display:flex;align-items:center;gap:8px}
+.plogo{display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;cursor:pointer;font-weight:800;font-size:17px;color:var(--ink)}
+.pubbar .grow{flex:1}
+.pubmain{max-width:1120px;margin:0 auto;padding:0 24px 64px}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center;padding:64px 0 40px}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-d);background:var(--accent-soft);border-radius:999px;padding:6px 12px;margin-bottom:18px}
+.hero .eyebrow i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;font-style:normal;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.hero h1{font-size:44px;line-height:1.25;letter-spacing:-.04em;margin:0 0 16px;font-weight:800;color:var(--ink)}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:17px;color:var(--sub);margin:0 0 28px}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap}.hero .cta .btn{padding:15px 22px;font-size:16px;border-radius:14px}
+.livebox{background:var(--bg);border-radius:var(--r-lg);padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.livebox .stat{background:var(--surface);padding:20px}
+.livebox .stat b{font-size:34px}.livebox .stat b small{font-size:16px;font-weight:700;margin-left:2px}
+.livebox .stat.hl{background:var(--accent);}.livebox .stat.hl b,.livebox .stat.hl span{color:#fff}
+.livebox p{grid-column:1/-1;margin:4px 0 0;font-size:12.5px;color:var(--mute)}
+.psec{margin-top:48px}
+.psec>header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px}
+.psec h2{font-size:26px;margin:0}.psec header p{margin:6px 0 0;color:var(--sub)}
+.jobs,.tcards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.jobs li,.tcards li{background:var(--bg);border-radius:var(--r-lg);padding:22px;display:flex;flex-direction:column;gap:8px}
+.jobs .chips,.tcards .chips{gap:6px}
+.jobs .t,.tcards .t{font-size:17px;font-weight:800;color:var(--ink);margin-top:4px}
+.jobs dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:6px 0 0;font-size:14px}.jobs dt{color:var(--mute)}.jobs dd{margin:0;color:var(--text);font-weight:600}
+.lockt{display:inline-flex;align-items:center;gap:4px;color:var(--mute);font-weight:500;font-size:13px}.lockt svg{width:14px;height:14px}
+.jobs .more{box-shadow:inset 0 0 0 1.5px #C9CFD6;background:transparent;align-items:flex-start;justify-content:center;color:var(--sub)}.jobs .more>svg{color:var(--accent)}.jobs .more .btn{margin-top:6px}
+.jobs .more b{color:var(--ink);font-size:16px}
+.tcards .s{color:var(--sub);font-size:14px}
+.sbars{background:var(--bg);border-radius:var(--r-lg);padding:22px;margin-bottom:12px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.sbars div{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--sub);font-weight:600}
+.sbars div b{font-size:22px;color:var(--ink)}
+.sbars i{display:block;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.sbars i span{display:block;height:100%;background:var(--accent)}
+.flow4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.flow4 div{background:var(--bg);border-radius:var(--r-lg);padding:22px;position:relative}
+.flow4 small{display:block;font-size:12px;font-weight:800;color:var(--accent)}
+.flow4 b{display:block;font-size:16px;margin:4px 0;color:var(--ink)}.flow4 span{font-size:14px;color:var(--sub)}
+.flow4 em{position:absolute;top:20px;right:20px;font-style:normal;font-size:13px;font-weight:800;color:var(--accent-d);background:var(--accent-soft);border-radius:999px;padding:3px 10px}
+.pband{margin-top:48px;background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:36px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.pband h2{color:#fff;font-size:24px;margin:0}.pband p{margin:6px 0 0;color:rgba(255,255,255,.7)}
+.pband .btn.sec{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}.pband .btn.sec:hover{background:rgba(255,255,255,.08)}
+.pfoot{text-align:center;margin-top:32px}
+.pubmain.narrow{max-width:560px;padding-top:32px}
+.signup h2{font-size:26px}
+.signup fieldset{border:0;margin:0;padding:0;min-width:0}
+.signup fieldset[hidden]{display:none}
+.signup .agree{background:var(--surface);border-radius:var(--r-md);padding:4px 16px;margin-top:20px}
+.signup .agree .chk{margin:12px 0}
+.signup .hint{font-size:12.5px;color:var(--mute);margin:6px 0 0}
+.signup .btn.block{margin-top:20px}
+.sufoot{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
+.lnk{border:0;background:none;padding:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:inherit}
+.login .back{display:inline-flex;align-items:center;gap:2px;border:0;background:none;padding:0;margin:0 0 20px;color:var(--sub);font-weight:600;cursor:pointer;font-size:14px}
+.login .back svg{width:18px;height:18px}
+.login .su{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
+.login .brand .plogo{color:#fff;font-size:20px}.login .brand .plogo .mk{box-shadow:none;width:40px;height:40px;border-radius:12px}
+@media(max-width:1100px){.jobs,.tcards{grid-template-columns:repeat(2,minmax(0,1fr))}.sbars{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:820px){
+ .pubbar .in{height:56px;padding:0 16px}
+ .pubmain{padding:0 16px calc(40px + var(--safe-b))}
+ .hero{grid-template-columns:1fr;gap:20px;padding:28px 0 8px}
+ .hero h1{font-size:28px;margin-bottom:10px}.hero p{font-size:15px;margin-bottom:18px}
+ .hero .cta .btn{flex:1;padding:14px 12px;font-size:15px}
+ .livebox{padding:16px;gap:8px;border-radius:20px}.livebox .stat{padding:16px;border-radius:16px}.livebox .stat b{font-size:28px}
+ .psec{margin-top:32px}.psec>header{flex-direction:column;align-items:flex-start;gap:0}.psec h2{font-size:21px}
+ .jobs,.tcards,.flow4{grid-template-columns:1fr;gap:10px}
+ .jobs li,.tcards li,.flow4 div{padding:18px;border-radius:20px}
+ .sbars{grid-template-columns:repeat(3,minmax(0,1fr));padding:18px;border-radius:20px;gap:14px}
+ .pband{margin-top:32px;padding:24px;border-radius:20px}.pband h2{font-size:20px}.pband .btn{flex:1}
+ .pubmain.narrow{padding-top:16px}
+ .signup.card{padding:20px}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <script src="https://js.tosspayments.com/v2/standard"></script>
@@ -488,7 +563,7 @@ const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
 const SAMPLE_NOTE = `<b>샘플 화면</b>가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음 · 승인 API 미호출 데모) · <a href="#" class="reset">처음 상태로 초기화</a>`;
 
-const S = { loginErr:'', user:null, tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
+const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
   academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[],
   checkout:null, customerKey:'', cfg:{clientKey:'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm',price:5000} };
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
@@ -512,7 +587,7 @@ function opts(list,sel,blank){return (blank?`<option value="">${blank}</option>`
 function log(actor,text){S.logs.unshift({t:new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}),actor,text})}
 // 상태 라벨 → 색. DB enum ↔ 라벨 대응은 docs/04-db-design.md §6
 const BADGE_TONE={'승인':'ok','제휴 승인':'ok','결제 완료':'ok','추천 검토':'ok','응답 완료':'ok','연장':'ok','처리 완료':'ok','채용 확정':'ok',
-  '종료':'mute','예정':'mute','미신청':'mute','등록':'mute',
+  '종료':'mute','예정':'mute','미신청':'mute','등록':'mute','확인서 작성 전':'mute',
   '신청':'warn','검토 중':'warn','평가예정':'warn','응답 대기':'warn','보완교육':'warn','재추천':'warn','접수':'warn','검토 중':'warn',
   '후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','강사 동의':'info','보류':'bad','강사 거절':'bad'};
 function badge(s){const tone=BADGE_TONE[s]||'mute';const I={ok:'circle-check',warn:'clock',bad:'circle-x',info:'loader',mute:''}[tone];return `<span class="b ${tone}">${I?ic(I):''}${esc(s)}</span>`}
@@ -713,7 +788,7 @@ const bell = n => `<button class="ib bell" data-act="noti" aria-label="알림 ${
 // ---------- 화면 ----------
 function render(){
   const app=document.getElementById('app');
-  if(!S.user){app.innerHTML=loginView();syncRoute();save();icons();return}
+  if(!S.user){app.innerHTML=S.pub==='login'?loginView():S.pub==='signup'?signupView():landingView();document.body.classList.remove('has-bnav');syncRoute();save();icons();return}
   const flash=S.flash?`<div class="flash ${S.flashType==='err'?'err':''}">${ic(S.flashType==='err'?'circle-alert':'circle-check')}${esc(S.flash)}</div>`:''; S.flash='';S.flashType='';
   const tabs=TABS[S.user.role];
   if(!tabs.some(([k])=>k===S.tab)) S.tab=tabs[0][0];
@@ -753,14 +828,15 @@ function icons(){
   try{window.lucide&&lucide.createIcons()}catch(e){}}
 
 // ---------- 주소(해시) 라우팅: 휴대폰 뒤로 가기 = 이전 화면. 앱(go_router) 경로와 같은 이름을 쓴다 ----------
-//   #/login · #/<탭> · #/find/checkout/<강사id> · #/eval/<강사id>
+//   #/ (공개 메인) · #/login · #/signup · #/<탭> · #/find/checkout/<강사id> · #/eval/<강사id>
 let replaceNext=true;
 function currentRoute(){
-  if(!S.user) return '/login';
+  if(!S.user) return S.pub==='home'?'/':'/'+S.pub;
   if(S.checkout) return '/find/checkout/'+S.checkout.tid;
   if(S.tab==='eval'&&S.selT) return '/eval/'+S.selT;
   return '/'+S.tab;
 }
+const pubFromHash=()=>{const p=location.hash.replace(/^#\//,'').split('/')[0];return ['login','signup'].includes(p)?p:'home'};
 function syncRoute(){
   const h='#'+currentRoute();
   if(location.hash!==h) history[replaceNext?'replaceState':'pushState'](null,'',h);
@@ -768,7 +844,7 @@ function syncRoute(){
 }
 window.addEventListener('popstate',()=>{
   const p=location.hash.replace(/^#\//,'').split('/');
-  if(!S.user){replaceNext=true;render();return}
+  if(!S.user){S.pub=pubFromHash();replaceNext=true;render();window.scrollTo(0,0);return}
   const tabs=TABS[S.user.role].map(([k])=>k);
   S.checkout=null;
   if(tabs.includes(p[0])){S.tab=p[0];S.selT=p[0]==='eval'&&p[1]?+p[1]:null}
@@ -781,18 +857,20 @@ function loginView(){
   const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}</span></li>`;
   return `<div class="login">
    <section class="brand">
-    <div class="logo"><div class="mk"><img src="logo.svg" alt=""></div><div><b>서당 동행</b></div></div>
+    <button class="plogo" data-act="pub" data-to="home" aria-label="서당 동행 메인으로"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button>
     <div><h1>이력서로는 알 수 없던 강사,<br>검증된 정보로 만나세요.</h1><p>시범강의 평가 · 적합성 카드 · 입사 후 30일 정착 점검까지.</p></div>
     <div class="steps">
      <div><small>01</small><b>조건 확인</b>채용요청 등록</div><div><small>02</small><b>검증 후보</b>평가 통과자만</div>
      <div><small>03</small><b>적합성 매칭</b>조건 맞춤 추천</div><div><small>04</small><b>30일 정착</b>7·14·30일 점검</div></div>
    </section>
    <section class="form"><form data-form="login">
+    <button type="button" class="back" data-act="pub" data-to="home">${ic('chevron-left')}메인으로</button>
     <h2>로그인</h2><p class="lead" style="margin:0 0 12px">아이디에 따라 해당 권한의 화면이 열려요.</p>
     ${err}
     <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 관리자1" autocomplete="username" autocapitalize="off" autofocus>
     <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" placeholder="아무 값이나 입력하세요" autocomplete="current-password">
     <button class="btn">시작하기</button>
+    <p class="su">아직 회원이 아니신가요? <button type="button" class="lnk" data-act="pub" data-to="signup">회원가입</button></p>
     <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
      <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · '+aOf(a.academyId).status))).join('')}</ul>
      <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
@@ -800,6 +878,114 @@ function loginView(){
     </details>
     <p class="muted foot">샘플 화면 · 가상 데이터 · 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p>
    </form></section></div>`;
+}
+// ===== 공개 화면(로그인 전) =====
+// 메인: 지금 강사를 찾는 학원(학원명·급여는 가림) + 학원을 찾는 강사 수·진행 현황
+function pubBar(){
+  return `<header class="pubbar"><div class="in">
+   <button class="plogo" data-act="pub" data-to="home" aria-label="서당 동행 메인"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button><div class="grow"></div>
+   ${S.pub==='login'?'':`<button class="btn sec sm" data-act="pub" data-to="login">로그인</button>`}
+   ${S.pub==='signup'?'':`<button class="btn sm" data-act="pub" data-to="signup">회원가입</button>`}</div></header>`;
+}
+function pubStats(){
+  const ok=id=>(aOf(id)||{}).status==='제휴 승인';
+  const open=S.requests.filter(r=>r.status!=='채용 확정'&&ok(r.academyId));
+  const verified=S.teachers.filter(t=>t.status==='승인'&&t.result==='추천 검토');
+  return {open, verified,
+    teachers:S.teachers.length,
+    inEval:S.teachers.filter(t=>['신청','평가예정'].includes(t.status)).length,
+    academies:S.academies.filter(a=>a.status==='제휴 승인').length,
+    openAcademies:new Set(open.map(r=>r.academyId)).size,
+    consult:S.matches.filter(m=>['신청','강사 동의','상담 중'].includes(m.status)).length,
+    settling:S.matches.filter(m=>m.status==='정착 점검 중').length};
+}
+// 근무 시작일을 '12월 초'처럼 뭉뚱그려 보여준다 (정확한 날짜는 로그인 후)
+const roughDate=d=>{const x=new Date(d);if(x<=new Date())return '바로 근무';const n=x.getDate();return `${x.getMonth()+1}월 ${n<=10?'초':n<=20?'중순':'말'}`};
+const careerYears=t=>{const m=/(\d+)년/.exec(t.career||'');return m?`경력 ${m[1]}년`:'경력 확인 중'};
+function landingView(){
+  const st=pubStats();
+  const jobs=st.open.map(r=>{const a=aOf(r.academyId);return `<li>
+    <div class="chips"><span class="b info">${esc(r.grade)} ${esc(r.subject)}</span><span class="b ok">${ic('shield-check')}근무조건 확인 완료</span></div>
+    <span class="t">${esc(a.region)} · ${esc(a.type)}학원</span>
+    <span class="lockt">${ic('lock')}학원명은 로그인 후 공개</span>
+    <dl><dt>채용</dt><dd>${r.count}명</dd><dt>근무 시작</dt><dd>${roughDate(r.start)}</dd><dt>수업</dt><dd>${esc(r.hours)}</dd><dt>급여</dt><dd><span class="lockt">${ic('lock')}로그인 후 공개</span></dd></dl></li>`}).join('');
+  const bySubj=SUBJ.map(s=>[s,S.teachers.filter(t=>t.subject===s).length]), maxS=Math.max(1,...bySubj.map(x=>x[1]));
+  const top=[...st.verified].sort((a,b)=>total(b)-total(a)).slice(0,6);
+  return `<div class="pub">${pubBar()}<main class="pubmain">
+  <section class="hero">
+   <div><span class="eyebrow"><i></i>지금 ${st.consult+st.settling}건의 매칭이 진행 중이에요</span>
+    <h1>이력서로는 알 수 없던 강사,<br><em>검증된 정보</em>로 만나세요.</h1>
+    <p>시범강의로 검증한 강사와 근무조건을 확인한 학원만 연결해요. 입사 후 30일까지 서당이 함께 점검합니다.</p>
+    <div class="cta"><button class="btn" data-act="pub" data-to="signup" data-role="academy">${ic('school')}학원으로 시작하기</button>
+     <button class="btn sec" data-act="pub" data-to="signup" data-role="teacher">${ic('graduation-cap')}강사로 시작하기</button></div></div>
+   <div class="livebox">
+    <div class="stat hl"><b>${st.teachers}<small>명</small></b><span>학원을 찾는 등록 강사</span></div>
+    <div class="stat"><b>${st.verified.length}<small>명</small></b><span>시범강의 평가 통과</span></div>
+    <div class="stat"><b>${st.consult}<small>건</small></b><span>매칭·상담 진행 중</span></div>
+    <div class="stat"><b>${st.settling}<small>명</small></b><span>입사 후 정착 점검 중</span></div>
+    <p>제휴 학원 ${st.academies}곳 · 검증 진행 중 강사 ${st.inEval}명 · 샘플 데이터 기준</p></div>
+  </section>
+
+  <section class="psec"><header><div><h2>지금 강사를 찾는 학원</h2><p>서당이 근무조건 확인서를 검토한 학원만 보여드려요. 학원명과 급여는 가입 후 확인할 수 있어요.</p></div><span class="cnt">${st.open.length}건</span></header>
+   <ul class="jobs">${jobs}<li class="more">${ic('user-plus')}<b>강사로 가입하고 추천받기</b><span class="muted">프로필과 서류를 올리면 시범강의 평가 후 조건이 맞는 학원을 추천해 드려요.</span><button class="btn sm" data-act="pub" data-to="signup" data-role="teacher">강사로 가입하기</button></li></ul></section>
+
+  <section class="psec"><header><div><h2>학원을 찾는 강사</h2><p>등록 강사 ${st.teachers}명 중 시범강의 평가를 통과한 ${st.verified.length}명이 추천을 기다리고 있어요.</p></div></header>
+   <div class="sbars">${bySubj.map(([s,n])=>`<div>${esc(s)}<b>${n}명</b><i><span style="width:${Math.round(n/maxS*100)}%"></span></i></div>`).join('')}</div>
+   <ul class="tcards">${top.map(t=>`<li>
+    <div class="chips"><span class="b info">${esc(t.grade)} ${esc(t.subject)}</span><span class="b ok">${ic('badge-check')}시범강의 통과</span></div>
+    <span class="t">${esc(maskName(t.name))} 강사</span>
+    <span class="muted">${esc(t.region)} · ${careerYears(t)}</span>
+    <span class="s">${esc(t.strength)}</span></li>`).join('')}</ul></section>
+
+  <section class="psec"><header><div><h2>서당 동행은 이렇게 진행돼요</h2><p>숫자는 지금 각 단계에 있는 인원이에요.</p></div></header>
+   <div class="flow4">
+    <div><small>01</small><b>조건 확인</b><span>학원이 근무조건 확인서를 내면 서당이 검토해요</span><em>제휴 ${st.academies}곳</em></div>
+    <div><small>02</small><b>강사 검증</b><span>서류 확인과 시범강의 평가를 통과해야 추천돼요</span><em>진행 ${st.inEval}명</em></div>
+    <div><small>03</small><b>적합성 매칭</b><span>조건에 맞는 강사를 추천하고, 강사가 동의해야 연결돼요</span><em>진행 ${st.consult}건</em></div>
+    <div><small>04</small><b>30일 정착</b><span>입사 7·14·30일에 학원·강사 모두에게 확인해요</span><em>점검 ${st.settling}명</em></div></div></section>
+
+  <section class="pband"><div><h2>검증된 강사, 확인된 근무조건</h2><p>가입은 1분이면 끝나요. 샘플 계정으로 먼저 둘러봐도 좋아요.</p></div>
+   <div class="cta" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="pub" data-to="signup">회원가입</button><button class="btn sec" data-act="pub" data-to="login">로그인</button></div></section>
+  <p class="muted pfoot">샘플 화면 · 가상 데이터 · <a href="#" class="reset">처음 상태로 초기화</a></p>
+  </main></div>`;
+}
+// 회원가입(샘플): 학원/강사 선택 → 새 샘플 계정(역할+번호) 생성 후 바로 로그인
+function signupView(){
+  const r=S.suRole, on=v=>r===v?'checked':'';
+  const agree=(name,text)=>`<label class="chk"><input type="checkbox" name="${name}" required> <span><b>[필수]</b> ${text}</span></label>`;
+  return `<div class="pub">${pubBar()}<main class="pubmain narrow">
+  <form class="card signup" data-form="signup" novalidate>
+   <h2>회원가입</h2><p class="lead" style="margin-bottom:18px">샘플 화면이에요. 가입하면 새 샘플 계정이 만들어지고 바로 로그인돼요.</p>
+   <div class="seg" role="radiogroup" aria-label="회원 종류">
+    <label><input type="radio" name="role" value="academy" ${on('academy')} data-su-role><span>${ic('school')}&nbsp;학원</span></label>
+    <label><input type="radio" name="role" value="teacher" ${on('teacher')} data-su-role><span>${ic('graduation-cap')}&nbsp;강사</span></label></div>
+   <fieldset data-for="academy" ${r==='academy'?'':'hidden disabled'}>
+    <label for="su-an">학원명</label><input id="su-an" type="text" name="aname" required placeholder="예: 봉담 샘플학원" autocomplete="organization">
+    <div class="grid g2 tight"><div><label for="su-ar">지역</label><select id="su-ar" name="region">${opts(REGION,'봉담')}</select></div>
+     <div><label for="su-at">학원 유형</label><select id="su-at" name="atype">${opts(['종합','단과','공부방·교습소'],'종합')}</select></div></div>
+    <label for="su-ow">원장 이름</label><input id="su-ow" type="text" name="owner" required placeholder="홍길동" autocomplete="name">
+    <label for="su-biz">사업자등록번호</label><input id="su-biz" type="text" name="biz" inputmode="numeric" required placeholder="000-00-00000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}" data-biz>
+    <p class="hint">샘플이라 진위 확인은 생략해요. 실제 서비스에서는 국세청 사업자 상태 조회로 확인합니다.</p>
+   </fieldset>
+   <fieldset data-for="teacher" ${r==='teacher'?'':'hidden disabled'}>
+    <label for="su-tn">이름</label><input id="su-tn" type="text" name="tname" required placeholder="홍길동" autocomplete="name">
+    <div class="grid g3 tight"><div><label for="su-ts">과목</label><select id="su-ts" name="subject">${opts(SUBJ,'수학')}</select></div>
+     <div><label for="su-tg">학년</label><select id="su-tg" name="grade">${opts(GRADE,'중등')}</select></div>
+     <div><label for="su-tr">희망 지역</label><select id="su-tr" name="tregion">${opts(REGION,'봉담')}</select></div></div>
+   </fieldset>
+   <label for="su-ph">연락처</label><input id="su-ph" type="tel" name="phone" required placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" pattern="01[0-9]-?[0-9]{3,4}-?[0-9]{4}">
+   <div class="grid g2 tight one-m"><div><label for="su-pw">비밀번호</label><input id="su-pw" type="password" name="pw" required minlength="8" placeholder="8자 이상" autocomplete="new-password"></div>
+    <div><label for="su-pw2">비밀번호 확인</label><input id="su-pw2" type="password" name="pw2" required placeholder="한 번 더 입력" autocomplete="new-password"></div></div>
+   <p class="hint">샘플이라 비밀번호는 저장하지 않아요.</p>
+   <div class="agree">
+    ${agree('terms','서비스 이용약관에 동의합니다')}
+    ${agree('privacy','개인정보 수집·이용에 동의합니다')}
+    <fieldset data-for="academy" ${r==='academy'?'':'hidden disabled'}>${agree('settle','근무조건 확인서를 제출하고, 강사 입사 후 7·14·30일 정착 점검에 참여합니다')}</fieldset>
+    <fieldset data-for="teacher" ${r==='teacher'?'':'hidden disabled'}>${agree('bg','채용 시 학원이 법에 따라 성범죄·아동학대 범죄경력을 조회하는 데 동의합니다 (조회 결과는 서당에 저장되지 않아요)')}</fieldset>
+   </div>
+   <button class="btn block">가입하기</button>
+   <p class="sufoot">이미 계정이 있나요? <button type="button" class="lnk" data-act="pub" data-to="login">로그인</button></p>
+  </form></main></div>`;
 }
 const isStaffRole = r => ['admin','manager'].includes(r);
 
@@ -809,6 +995,7 @@ const VIEWS = {
   const ms=myMatches(), a=myAcademy();
   const next=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기'&&!c.academyReply).map(c=>({m,c})));
   return `<h2>${esc(a.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 검증된 정보로 만나 보세요.</p>
+  ${a.status==='확인서 작성 전'?`<button class="todo" data-act="tab" data-tab="req">${ic('file-pen')}<div><b>근무조건 확인서를 작성해 주세요</b><span>서당이 확인서를 검토해 제휴를 승인하면 채용요청과 매칭 신청을 할 수 있어요</span></div>${ic('chevron-right')}</button>`:''}
   ${a.status==='검토 중'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--warn-soft);color:#7A5A12">${ic('hourglass')}<div><b>서당이 근무조건 확인서를 검토하고 있어요</b><span>제휴 승인 후 채용요청과 매칭 신청을 할 수 있습니다 · 확인서 보기</span></div>${ic('chevron-right')}</button>`:''}
   ${a.status==='보류'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--bad-soft);color:var(--bad-text)">${ic('circle-alert')}<div><b>제휴가 보류됐어요</b><span>${esc(a.holdReason||'')} · 확인서를 고쳐 다시 제출해 주세요</span></div>${ic('chevron-right')}</button>`:''}
   ${next.length?`<button class="todo" data-act="tab" data-tab="prog">${ic('bell-ring')}<div><b>정착 점검 응답이 필요해요</b><span>${next.map(x=>`${esc(tOf(x.m.tid).name)} 강사 · 입사 ${x.c.day}일`).join(', ')}</span></div>${ic('chevron-right')}</button>`:''}
@@ -1155,8 +1342,9 @@ document.addEventListener('click',e=>{
   if(e.target.closest('.reset')){e.preventDefault();try{sessionStorage.removeItem(STORE_KEY)}catch(x){}location.href=BASE_URL;return}
   const el=e.target.closest('[data-act]'); if(!el) return;
   const id=+el.dataset.id, a=el.dataset.act;
-  if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
-  else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null}
+  if(a==='pub'){S.pub=el.dataset.to;if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
+  else if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
+  else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null;S.pub='home'}
   else if(a==='pay-open'){S.checkout={tid:id,ts:Date.now()};window.scrollTo(0,0)}
   else if(a==='pay-cancel'){S.checkout=null}
   else if(a==='pay-go'){doPay();return}
@@ -1208,12 +1396,15 @@ function showPicked(input){const d=input.closest('[data-drop]');if(!d)return;con
 document.addEventListener('change',e=>{
   if(e.target.dataset.cam!==undefined){const f=e.target.files&&e.target.files[0];const m=e.target.form&&e.target.form.querySelector('[data-drop] input');
     if(f&&m){const dt=new DataTransfer();dt.items.add(f);m.files=dt.files;showPicked(m)}e.target.value='';return}
+  if(e.target.dataset.suRole!==undefined){S.suRole=e.target.value;e.target.form.querySelectorAll('fieldset[data-for]').forEach(fs=>{const on=fs.dataset.for===S.suRole;fs.hidden=!on;fs.disabled=!on});return}
   if(e.target.type==='file'){showPicked(e.target);return}
   if(e.target.dataset.sort!==undefined){S.sort=e.target.value;render();return}
   if(e.target.dataset.filter){S.f[e.target.dataset.filter]=e.target.value;render()}
 });
 document.addEventListener('input',e=>{
   if(e.target.dataset.evalq!==undefined){S.evalQ=e.target.value;applyEvalQ();return}
+  if(e.target.dataset.biz!==undefined){const d=e.target.value.replace(/\D/g,'').slice(0,10);e.target.value=d.length<4?d:d.length<6?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,5)+'-'+d.slice(5);return}
+  if(e.target.name==='pw2'||e.target.name==='pw'){const f=e.target.form;f&&f.pw2&&f.pw2.setCustomValidity('')}
   if(e.target.type==='tel'){const d=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);return}
   const f=e.target.closest('form[data-form="eval"]'); if(!f) return;
   let sum=0; ITEMS.forEach((it,i)=>{let v=+f.elements['s'+i].value||0; sum+=Math.max(0,Math.min(it[1],v))});
@@ -1223,11 +1414,33 @@ document.addEventListener('input',e=>{
 document.addEventListener('submit',e=>{
   const f=e.target.closest('form[data-form]'); if(!f) return; e.preventDefault();
   const fd=new FormData(f), k=f.dataset.form, id=+f.dataset.id;
+  if(k==='signup'){
+    if(f.pw.value&&f.pw2.value!==f.pw.value) f.pw2.setCustomValidity('비밀번호가 서로 달라요');
+    if(!f.checkValidity()){f.reportValidity();return}
+    const role=fd.get('role'), phone=fd.get('phone');
+    let acc;
+    if(role==='academy'){
+      const aid=Math.max(0,...S.academies.map(x=>x.id))+1;
+      S.academies.push({id:aid,name:fd.get('aname').trim(),region:fd.get('region'),type:fd.get('atype'),status:'확인서 작성 전',bizNo:fd.get('biz'),phone,form:{version:0}});
+      const no=S.accounts.filter(x=>x.role==='academy').length+1;
+      acc={loginId:'원장'+no,role:'academy',name:fd.get('owner').trim()+' 원장',academyId:aid};
+    } else {
+      const tid=Math.max(0,...S.teachers.map(x=>x.id))+1;
+      S.teachers.push({id:tid,name:fd.get('tname').trim(),subject:fd.get('subject'),grade:fd.get('grade'),region:fd.get('tregion'),career:'',strength:'',wish:'',
+        status:'미신청',scores:null,result:null,basis:'',unverified:'',contact:phone,corr:'',docs:[],agree:true,bgConsent:true});
+      acc={loginId:'강사'+tid,role:'teacher',name:fd.get('tname').trim(),teacherId:tid};
+    }
+    S.accounts.push(acc);
+    S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};
+    log(actor(),`회원가입 (${ROLE_NAME[acc.role]}) · 약관·개인정보${role==='teacher'?'·범죄경력 조회':'·정착 점검'} 동의 기록`);
+    S.flash=`가입을 마쳤어요 · 아이디 ${acc.loginId}. ${role==='academy'?'먼저 근무조건 확인서를 작성해 주세요.':'프로필과 서류를 채우고 검증을 신청해 주세요.'}`;
+    S.pub='home';render();window.scrollTo(0,0);return;
+  }
   if(k==='login'){
     const loginId=(fd.get('id')||'').replace(/\s/g,'');
     const acc=S.accounts.find(a=>a.loginId===loginId);
     if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~16, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
-    S.user={...acc};
+    S.user={...acc};S.pub='home';
     S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
   }
   else if(k==='req'){const no=Math.max(0,...S.requests.map(r=>r.no))+1;S.requests.push({id:no,no,academyId:S.user.academyId,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),`채용요청 #${no} 등록`);S.flash=`채용요청 #${no}을 등록했습니다.`}
@@ -1261,7 +1474,7 @@ async function boot(){
   if(!load()) seed();
   const q=new URLSearchParams(location.search), result=q.get('toss');
   if(result) history.replaceState(null,'',BASE_URL);
-  if(!S.user){ if(result) S.loginErr='결제 후 세션이 만료되었습니다. 다시 로그인해 주세요.'; render(); return }
+  if(!S.user){ S.pub=result?'login':pubFromHash(); if(result) S.loginErr='결제 후 세션이 만료되었습니다. 다시 로그인해 주세요.'; render(); return }
   S.checkout=null;
   if(result==='fail'){S.tab='find';S.flash=`결제가 완료되지 않았습니다. ${q.get('message')||''} (${q.get('code')||'-'})`;S.flashType='err';render();return}
   if(result==='success'&&q.get('paymentKey')){
