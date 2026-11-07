@@ -473,16 +473,16 @@ const fmtSize = n => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math
 
 // 역할: profiles.role 과 같은 값
 const FORM_FIELDS=[['pay','급여·산정 방식','예: 월 급여제 · 협의'],['payDay','급여 지급일','예: 매월 10일'],['hours','수업 시수·출퇴근','예: 주 15시간 · 평일 오후'],['extra','수업 외 업무','채점·상담·셔틀 등'],['classSize','반 규모','예: 8명 이하'],['handover','인수인계 담당자','예: 부원장']];
-const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자', matcher:'매칭 담당', evaluator:'평가위원'};
-const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-check', matcher:'handshake', evaluator:'clipboard-check'};
+const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자', manager:'운영담당'};
+const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-check', manager:'handshake'};
 // 운영진 역할은 관리자 화면을 쓰되, 탭으로 권한을 나눈다 (PRD §3)
-const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', matcher:'admin', evaluator:'admin'};
+const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:'admin'};
 const TABS = {
   academy:[['home','홈'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역']],
   teacher:[['home','홈'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태']],
   admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['audit','권한·로그']],
-  matcher:[['dash','대시보드'],['match','매칭·상담'],['check','정착·민원']],
-  evaluator:[['eval','강사 검증']]
+  // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
+  manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']]
 };
 const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
@@ -494,7 +494,7 @@ const S = { loginErr:'', user:null, tab:null, flash:'', flashType:'', f:{subject
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v6';
+const STORE_KEY='sdh-toss-sample-v7';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases}))}catch(e){}}
@@ -534,7 +534,7 @@ const myMatches = () => S.user.role==='teacher' ? S.matches.filter(m=>m.tid===S.
 const myPurchases = () => S.purchases.filter(p=>p.academyId===S.user.academyId);
 const paid = tid => myPurchases().some(p=>p.tid===tid&&p.status==='DONE');
 const academyApproved = () => (myAcademy()||{}).status==='제휴 승인';
-const isStaff = () => ['admin','matcher','evaluator'].includes(S.user.role);
+const isStaff = () => ['admin','manager'].includes(S.user.role);
 const candidates = f => S.teachers.filter(t=>t.status==='승인'&&t.result==='추천 검토'&&(!f.subject||t.subject===f.subject)&&(!f.grade||t.grade===f.grade)&&(!f.region||t.region===f.region));
 // 적합성: 내 채용요청(과목·학년)·학원 생활권과 얼마나 맞는지 (PRD §4-4)
 function fitOf(t){
@@ -584,8 +584,7 @@ function seed(){
   // 계정: 역할 + 번호
   S.accounts = [
     {loginId:'관리자1',role:'admin',name:'서당 관리자'},
-    {loginId:'매칭담당1',role:'matcher',name:'서당 매칭담당'},
-    {loginId:'평가위원1',role:'evaluator',name:'서당 평가위원'},
+    {loginId:'운영담당1',role:'manager',name:'서당 운영담당'},
     {loginId:'원장1',role:'academy',name:'정봉담 원장',academyId:1},
     {loginId:'원장2',role:'academy',name:'한화성 원장',academyId:2},
     {loginId:'원장3',role:'academy',name:'오동탄 원장',academyId:3},
@@ -609,12 +608,12 @@ function seed(){
   S.complaints = [{no:'C-001',by:'강사9(임도현)',byLogin:'강사9',text:'수업 외 채점 업무가 안내보다 많아졌습니다.',status:'접수'}];
   // 건별 업무 시간·비용 (DB work_logs, PRD §2 원가 측정)
   S.workLogs = [
-    {by:'매칭담당1',rid:1,task:'근무조건 확인 통화',min:30,cost:0,date:addDays(today(),-5)},
-    {by:'매칭담당1',rid:1,task:'후보 2명 적합성 카드 작성',min:90,cost:0,date:addDays(today(),-3)},
-    {by:'평가위원1',rid:null,task:'시범강의 평가 (강사12)',min:60,cost:50000,date:addDays(today(),-21)},
-    {by:'매칭담당1',rid:2,task:'7일 점검 통화',min:20,cost:0,date:addDays(today(),-13)},
-    {by:'매칭담당1',rid:2,task:'채용 확정·계약 확인',min:45,cost:0,date:addDays(today(),-21)},
-    {by:'평가위원1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
+    {by:'운영담당1',rid:1,task:'근무조건 확인 통화',min:30,cost:0,date:addDays(today(),-5)},
+    {by:'운영담당1',rid:1,task:'후보 2명 적합성 카드 작성',min:90,cost:0,date:addDays(today(),-3)},
+    {by:'운영담당1',rid:null,task:'시범강의 평가 (강사12)',min:60,cost:50000,date:addDays(today(),-21)},
+    {by:'운영담당1',rid:2,task:'7일 점검 통화',min:20,cost:0,date:addDays(today(),-13)},
+    {by:'운영담당1',rid:2,task:'채용 확정·계약 확인',min:45,cost:0,date:addDays(today(),-21)},
+    {by:'운영담당1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
     {by:'관리자1',rid:null,task:'동탄 영어학원 확인서 검토',min:25,cost:0,date:addDays(today(),-1)}];
   S.logs = [];
   log('시스템',`샘플 데이터를 불러왔습니다 (계정 ${S.accounts.length}개)`);
@@ -802,7 +801,7 @@ function loginView(){
     <p class="muted foot">샘플 화면 · 가상 데이터 · 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p>
    </form></section></div>`;
 }
-const isStaffRole = r => ['admin','matcher','evaluator'].includes(r);
+const isStaffRole = r => ['admin','manager'].includes(r);
 
 const VIEWS = {
 // ===== 학원 =====
@@ -930,7 +929,7 @@ const VIEWS = {
 },
 'teacher:prog':()=>`<h2>진행 상태</h2><p class="lead">지원·매칭 단계와 입사 후 점검을 확인합니다.</p>${matchBlocks('teacher')}${complaintForm()}`,
 
-// ===== 운영(관리자·매칭담당·평가위원) =====
+// ===== 운영(관리자·운영담당) =====
 'admin:dash':()=>{
   const wait=S.teachers.filter(t=>t.status==='신청'||t.status==='평가예정').length;
   const mp=S.matches.filter(m=>['신청','강사 동의','상담 중'].includes(m.status)).length;
@@ -948,7 +947,7 @@ const VIEWS = {
    ${K('bell-ring',cw,'점검 응답 대기','check',LW.cw,true)}${K('message-square-warning',cp,'미처리 민원','check',LW.cp,true)}</div>
   <div class="grid g2" style="align-items:start">
   <div class="card"><h3>학원 현황</h3><ul class="plain">${S.academies.map(a=>`<li><b>${esc(a.name)}</b><span class="muted">${esc(a.region)} · ${esc(a.type)} · 확인서 v${(a.form||{}).version||0} · 요청 ${S.requests.filter(r=>r.academyId===a.id).length}건</span>${badge(a.status)}
-   ${a.status==='검토 중'&&S.user.role!=='evaluator'?`<div class="review">${(a.history||[]).map(h=>`<p class="muted" style="margin:0 0 8px">${ic('history')} ${esc(h)}</p>`).join('')}<dl class="kv">${FORM_FIELDS.map(([k,l])=>`<dt>${l}</dt><dd>${esc(a.form[k]||'-')}</dd>`).join('')}<dt>30일 점검</dt><dd>${a.form.agree?'참여 동의':'<b style="color:var(--bad-text)">미동의</b>'}</dd></dl>
+   ${a.status==='검토 중'?`<div class="review">${(a.history||[]).map(h=>`<p class="muted" style="margin:0 0 8px">${ic('history')} ${esc(h)}</p>`).join('')}<dl class="kv">${FORM_FIELDS.map(([k,l])=>`<dt>${l}</dt><dd>${esc(a.form[k]||'-')}</dd>`).join('')}<dt>30일 점검</dt><dd>${a.form.agree?'참여 동의':'<b style="color:var(--bad-text)">미동의</b>'}</dd></dl>
     <div class="row" style="margin-top:12px"><button class="btn sm sec" data-act="ac-hold" data-id="${a.id}">보류</button><button class="btn sm" data-act="ac-approve" data-id="${a.id}" ${a.form.agree?'':'disabled'}>제휴 승인</button>${a.form.agree?'':'<span class="muted">30일 점검 동의가 있어야 승인할 수 있어요</span>'}</div></div>`:''}</li>`).join('')}</ul></div>
   <div class="card dark"><h3>프로필 열람권 결제</h3><b class="big">${won(S.purchases.reduce((a,p)=>a+p.amount,0))}</b><span>${S.purchases.length}건 · 테스트 결제</span></div></div>
   ${workLogCard()}
@@ -992,7 +991,7 @@ const VIEWS = {
   <div class="card"><h3>민원 접수 내역</h3>${S.complaints.length?`<div class="tablewrap"><table class="rt"><tr><th>접수번호</th><th>접수자</th><th>내용</th><th>상태</th></tr>${S.complaints.map(c=>`<tr><td data-label="접수번호"><b>${c.no}</b></td><td data-label="접수자">${esc(c.by)}</td><td data-label="내용">${esc(c.text)}</td><td data-label="상태">${badge(c.status)}${c.status==='접수'?` <button class="btn sm" data-act="c-done" data-no="${c.no}">처리 완료</button>`:''}</td></tr>`).join('')}</table></div>`:'<p class="muted">접수된 민원이 없습니다.</p>'}</div>`;
 },
 'admin:audit':()=>`<h2>권한·로그</h2><p class="lead">역할별 열람 범위와 활동 기록입니다. (연락처 공개 시점은 정책 확정 전이라 샘플로 표시)</p>
-  <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${['academy','teacher','admin','matcher','evaluator'].map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
+  <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${['academy','teacher','admin','manager'].map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
   <div class="card"><h3>역할별 공개 범위</h3><div class="tablewrap"><table class="wide">
    <tr><th>정보</th><th>방문자</th><th>강사(본인)</th><th>학원</th><th>관리자·평가자</th></tr>
    <tr><td>강사 프로필 요약</td><td>없음</td><td>열람·수정</td><td>요약 열람 (상세는 열람권 결제 후)</td><td>열람·수정</td></tr>
@@ -1098,12 +1097,12 @@ function docList(t){
 function evalForm(t){
   const sc=t.scores||[0,0,0,0,0];
   const dis=(t.status==='미신청')?'<div class="note">이 강사는 아직 검증을 신청하지 않았습니다.</div>':'';
-  const canSched=['admin','matcher'].includes(S.user.role);
+  const canSched=isStaff();
   return `<div class="card"><div class="row" style="margin-bottom:6px"><h3 style="margin:0">${esc(t.name)} · ${esc(t.grade)} ${esc(t.subject)}</h3>${badge(t.status)}</div>
   <p class="muted">강사${t.id} · ${esc(t.career)}</p>${dis}
   ${t.corr?`<div class="note"><b>강사 정정 요청</b><br>${esc(t.corr)}</div>`:''}
   <h3 style="margin-top:18px">제출 서류 <span class="cnt">${(t.docs||[]).length}</span></h3>${docList(t)}
-  ${t.status==='신청'?(canSched?`<button class="btn block-m" style="margin-top:12px" data-act="eval-sched" data-id="${t.id}">${ic('calendar-plus')}시범강의 일정 배정</button>`:'<p class="muted">일정 배정은 관리자·매칭담당이 합니다.</p>'):''}
+  ${t.status==='신청'?(canSched?`<button class="btn block-m" style="margin-top:12px" data-act="eval-sched" data-id="${t.id}">${ic('calendar-plus')}시범강의 일정 배정</button>`:''):''}
   ${(t.status==='평가예정'||t.status==='승인')?`<form data-form="eval" data-id="${t.id}" style="margin-top:18px">
    <div class="scores">${ITEMS.map((it,i)=>`<label class="sc-row"><span>${it[0]} <em>${it[1]}점</em></span><input type="number" name="s${i}" min="0" max="${it[1]}" value="${sc[i]}" inputmode="numeric"></label>`).join('')}
    <div class="sc-row sum"><span>합계</span><b><span id="evTotal">${sc.reduce((a,b)=>a+b,0)}</span> / 100</b></div>
@@ -1227,7 +1226,7 @@ document.addEventListener('submit',e=>{
   if(k==='login'){
     const loginId=(fd.get('id')||'').replace(/\s/g,'');
     const acc=S.accounts.find(a=>a.loginId===loginId);
-    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~16, 관리자1, 매칭담당1, 평가위원1 중 하나를 입력해 주세요.`;render();return}
+    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~16, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
     S.user={...acc};
     S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
   }
