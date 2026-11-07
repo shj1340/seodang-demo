@@ -976,8 +976,7 @@ function heroSlides(st){
     <h1>2027 한걸음 개념 수학,<br>학원 단체 주문 <em>20% 할인</em></h1>
     <p>중1~중3 개념서에 교사용 지도서와 단원평가 문항 파일을 함께 드려요. 서당 동행 제휴 학원 전용 혜택이에요.</p>
     <div class="minibooks m-only" aria-hidden="true"><i>중1</i><i>중2</i><i>중3</i><span>단체가 12,800원부터</span></div>
-    <div class="cta"><button class="btn" data-act="ad">${ic('book-open')}교재 살펴보기</button>
-     <button class="btn sec" data-act="ad-ask">${ic('megaphone')}광고 문의</button></div>
+    <div class="cta"><button class="btn" data-act="ad">${ic('book-open')}교재 살펴보기</button></div>
     <p class="adnote">가상의 출판사·교재로 만든 샘플 광고예요.</p></div>
     <div class="hvis d-only"><div class="books" aria-hidden="true">
      <span class="price"><s>16,000원</s> 12,800원</span><span class="perk">${ic('gift')}교사용 지도서 포함</span>
@@ -1456,7 +1455,6 @@ document.addEventListener('click',e=>{
   const id=+el.dataset.id, a=el.dataset.act;
   if(a==='hero'){heroCtl(el.dataset.to);return}
   if(a==='ad'){pubToast('샘플 광고예요. 실제 서비스에서는 광고주(출판사) 교재 페이지로 이동합니다.');return}
-  if(a==='ad-ask'){pubToast('샘플이에요. 실제 서비스에서는 서당 관리자에게 광고 문의가 접수됩니다.');return}
   if(a==='pubscroll'){document.getElementById(el.dataset.target)?.scrollIntoView({behavior:'smooth',block:'start'});return}
   if(a==='pub'){S.pub=el.dataset.to;if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
   else if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
