@@ -133,7 +133,7 @@ h4{margin:16px 0 6px;font-size:12.5px;color:var(--mute);font-weight:700}
 .grid{display:grid;gap:16px}
 .grid.tight{gap:0 12px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.narrow{max-width:720px}
+.prof2{align-items:start}
 .stat{background:var(--bg);border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column-reverse;gap:10px;border:0;text-align:left;position:relative}
 .stat b{display:block;font-size:38px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ink)}
 .stat span{color:var(--sub);font-size:14px;font-weight:600}
@@ -1316,7 +1316,7 @@ const VIEWS = {
     <div><b>4. 추천·정착</b>동의한 학원에만 정보가 공개됩니다</div></div></div>`;
 },
 'teacher:prof':()=>{const t=me();return `<h2>내 프로필</h2><p class="lead">학원에는 요약 정보만 보이고, 연락처는 상담 단계 이후에 공개됩니다.</p>
-  <div class="narrow"><div class="card"><form data-form="prof">
+  <div class="grid g2 prof2"><div class="card"><h3>프로필</h3><form data-form="prof">
     <div class="grid g3 tight"><div><label>과목</label><select name="subject">${opts(SUBJ,t.subject)}</select></div>
     <div><label>학년</label><select name="grade">${opts(GRADE,t.grade)}</select></div>
     <div><label>희망 지역</label><select name="region">${opts(REGION,t.region)}</select></div></div>
@@ -1337,14 +1337,15 @@ const VIEWS = {
   else body=`<div class="scorehead">${badge(t.result)}<b class="big">${total(t)}<small>/100</small></b><span class="muted">기준 ${PASS_SCORE}점</span></div>
     ${scoreBars(t)}
     <dl class="kv" style="margin-top:18px"><dt>확인 사실</dt><dd>${esc(t.facts)||'-'}</dd><dt>평가자 관찰</dt><dd>${esc(t.basis)||'-'}</dd><dt>당사자 설명</dt><dd>${esc(t.statement)||'-'}</dd><dt>미확인 사항</dt><dd>${esc(t.unverified)||'-'}</dd></dl>
-    <h3 style="margin-top:24px">정정 요청</h3>
+`;
+  const corr=t.status==='승인'?`<div class="card"><h3>정정 요청</h3><p class="muted" style="margin-top:-6px">평가 내용 중 사실과 다른 부분이 있으면 다시 확인해 드려요.</p>
     ${t.corr?`<div class="note">접수된 정정 요청: ${esc(t.corr)}</div>`:''}
-    <form data-form="corr"><textarea name="text" placeholder="평가 내용 중 사실과 다른 부분이 있다면 적어 주세요"></textarea><button class="btn sec block-m" style="margin-top:8px">정정 요청 보내기</button></form>`;
+    <form data-form="corr"><textarea name="text" placeholder="평가 내용 중 사실과 다른 부분이 있다면 적어 주세요"></textarea><button class="btn sec block-m" style="margin-top:8px">정정 요청 보내기</button></form></div>`:'';
   return `<h2>검증</h2><p class="lead">서당은 수업 시연과 업무 준비도를 평가해 학원에 요약으로만 전달합니다.</p>
-  <div class="narrow"><div class="card">
+  <div class="${corr?'grid g2 prof2':''}"><div class="card">
   <ol class="stepper">${['검증 신청','시범강의 평가','결과 확정'].map((s,i)=>`<li class="${i<cur?'done':i===cur?'cur':''}"><i>${i<cur||(i===cur&&t.status==='승인')?ic('check'):i+1}</i><span>${s}</span></li>`).join('')}</ol>
   <div class="row" style="margin-bottom:12px"><b>현재 상태</b>${badge(t.status)}</div>${body}
-  <p class="disc">법률상 별도 확인 주체가 있는 정보(범죄·아동학대 관련 상세 등)는 이 평가서에 기록하지 않습니다.</p></div></div>`;
+  <p class="disc">법률상 별도 확인 주체가 있는 정보(범죄·아동학대 관련 상세 등)는 이 평가서에 기록하지 않습니다.</p></div>${corr}</div>`;
 },
 'teacher:prog':()=>`<h2>진행 상태</h2><p class="lead">지원·매칭 단계와 입사 후 점검을 확인합니다.</p>${matchBlocks('teacher')}${complaintForm()}`,
 
