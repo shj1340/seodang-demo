@@ -34,28 +34,24 @@ svg.lucide{width:18px;height:18px;stroke-width:2;flex:none}
 .m-only{display:none!important}
 
 /* ---------- shell ---------- */
-.shell{display:flex;min-height:100vh;min-height:100dvh}
-aside.sb{position:sticky;top:0;height:100vh;height:100dvh;width:var(--sb);flex:none;background:var(--bg);border-right:1px solid var(--line);display:flex;flex-direction:column;gap:24px;padding:28px 16px}
-.logo{display:flex;align-items:center;gap:10px;padding:0 8px}
+.shell{min-height:100vh;min-height:100dvh}
+/* 공통 상단 바: 로그인 전(공개 메인·로그인·가입)과 로그인 후가 같은 바를 쓴다 */
+.gbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);padding-top:var(--safe-t)}
+.gbar .in{max-width:1120px;margin:0 auto;height:64px;padding:0 24px;display:flex;align-items:center;gap:8px}
+.gnav{display:flex;align-items:center;gap:2px;margin-left:20px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.gnav::-webkit-scrollbar{display:none}
+.gnav button{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:8px 12px;border-radius:10px;color:var(--sub);font-weight:600;font-size:14.5px;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
+.gnav button svg{width:17px;height:17px;color:var(--icon)}
+.gnav button:hover{background:var(--surface);color:var(--ink)}
+.gnav button.on{background:var(--accent-soft);color:var(--accent-d);font-weight:700}.gnav button.on svg{color:var(--accent)}
+.gright{display:flex;align-items:center;gap:6px;flex:none}
+.gacct{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:var(--surface);max-width:220px}
+.gacct .av{width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}.gacct .av svg{width:16px;height:16px}
+.gacct div{min-width:0;line-height:1.25}.gacct b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gacct span{display:block;font-size:11.5px;color:var(--mute);white-space:nowrap}
+.gfoot{margin-top:56px;padding:28px 0 8px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px 24px;flex-wrap:wrap;font-size:13px;color:var(--mute)}
+.gfoot b{display:block;color:var(--ink);font-size:14px;margin-bottom:2px}.gfoot p{margin:0}.gfoot a{color:var(--sub);font-weight:600}
 .mk{width:32px;height:32px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;flex:none;overflow:hidden}.mk img{width:76%;height:auto;display:block}
-.logo b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
-.logo small{display:block;font-size:11.5px;color:var(--mute)}
-.acct{display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px;background:var(--surface)}
-.acct .av{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
-.acct b{display:block;font-size:14px;line-height:1.3}.acct span{font-size:12px;color:var(--sub)}
-nav.tabs{display:flex;flex-direction:column;gap:2px}
-nav.tabs button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-radius:12px;padding:11px 12px;color:var(--sub);font-weight:500;cursor:pointer;transition:background .15s}
-nav.tabs button svg{color:var(--icon)}
-nav.tabs button:hover{background:var(--surface)}
-nav.tabs button.on{background:var(--accent-soft);color:var(--accent-d);font-weight:700}
-nav.tabs button.on svg{color:var(--accent)}
-.sb .grow{flex:1}
-.sample{background:var(--warn-soft);color:#7A5A12;border-radius:14px;padding:14px;font-size:12px;line-height:1.5}
-.sample b{display:block;color:var(--warn-text);font-size:12.5px;margin-bottom:4px}
-.sample a{color:var(--warn-text);font-weight:600}
-.sb .out{display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--sub);padding:8px 12px;cursor:pointer;font-size:14px;border-radius:10px}
-.sb .out:hover{background:var(--surface)}
-main{flex:1;min-width:0;max-width:1240px;padding:40px 48px 80px}
+main{max-width:1120px;margin:0 auto;padding:36px 24px 72px}
 .appbar,.bnav{display:none}
 .ib{width:40px;height:40px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;color:var(--sub);cursor:pointer;flex:none}
 .ib:hover{background:var(--surface)}
@@ -65,7 +61,7 @@ main{flex:1;min-width:0;max-width:1240px;padding:40px 48px 80px}
 .bell i{position:absolute;top:4px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:var(--bad);color:#fff;font-size:10.5px;font-weight:800;font-style:normal;display:grid;place-items:center;line-height:1;border:2px solid var(--bg)}
 .appbar .bell i{border-color:var(--page)}
 .noti-dim{position:fixed;inset:0;background:rgba(25,31,40,.28);z-index:40;animation:fade .2s}
-.noti-panel{position:fixed;z-index:41;top:24px;left:calc(var(--sb) + 12px);width:380px;max-height:calc(100vh - 48px);overflow:auto;background:var(--bg);border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(25,31,40,.2);animation:drop .2s ease-out}
+.noti-panel{position:fixed;z-index:41;top:calc(72px + var(--safe-t));right:max(16px,calc((100vw - 1120px)/2 + 16px));width:380px;max-height:calc(100vh - 96px);overflow:auto;background:var(--bg);border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(25,31,40,.2);animation:drop .2s ease-out}
 .noti-head{display:flex;align-items:center;gap:8px;padding:18px 12px 10px 22px;position:sticky;top:0;background:var(--bg)}
 .noti-head b{font-size:17px;font-weight:800}.noti-head .ib{margin-left:auto}
 .noti-panel ul{list-style:none;margin:0;padding:0 8px 10px}
@@ -296,19 +292,6 @@ dl.fit dt{color:var(--mute)}dl.fit dd{margin:0;font-weight:500}
 .cand .disc{margin:0;padding-top:0}
 
 /* ---------- login ---------- */
-.login{display:grid;grid-template-columns:minmax(0,640px) 1fr;min-height:100vh;min-height:100dvh;background:var(--bg)}
-.login .brand{background:var(--accent);color:#fff;padding:64px;display:flex;flex-direction:column;justify-content:space-between;gap:48px}
-.login .brand .logo{padding:0}.login .brand .mk{box-shadow:none;width:40px;height:40px;border-radius:12px}
-.login .brand .logo b{font-size:20px}
-.login .brand h1{font-size:40px;line-height:1.3;letter-spacing:-.035em;margin:0 0 20px;font-weight:800}
-.login .brand p{font-size:17px;opacity:.8;margin:0}
-.login .brand .steps div{background:rgba(255,255,255,.12);color:rgba(255,255,255,.75)}
-.login .brand .steps div b{color:#fff}.login .brand .steps div small{display:block;font-size:12px;opacity:.7;font-weight:700}
-.login .form{display:flex;align-items:center;justify-content:center;padding:48px 24px}
-.login form{width:100%;max-width:420px}
-.login form h2{font-size:28px}
-.login .btn{width:100%;padding:17px;font-size:17px;border-radius:14px;margin-top:24px}
-.login .foot{text-align:center;margin-top:16px}
 details.accts{margin-top:20px;background:var(--surface);border-radius:var(--r-md);padding:4px 16px}
 details.accts summary{display:flex;align-items:center;gap:8px;padding:12px 0;cursor:pointer;font-weight:600;font-size:14px;color:var(--sub);list-style:none}
 details.accts summary::-webkit-details-marker{display:none}
@@ -321,22 +304,14 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 /* ---------- checkout ---------- */
 #payment-method,#agreement{min-height:20px}
 
-/* ---------- tablet: 사이드바를 아이콘 레일로 (Flutter NavigationRail 과 같은 구조) ---------- */
+/* ---------- tablet: 상단 바를 좁게 (계정 이름·메뉴 아이콘 숨김) ---------- */
 @media(min-width:821px) and (max-width:1100px){
- aside.sb{width:84px;padding:20px 10px;align-items:center;gap:18px}
- .sb .logo div:last-child,.sb .acct>div:nth-child(2),.sb .sample,.sb .lbl{display:none}
- .sb .logo{padding:0}
- .sb .acct{flex-direction:column;padding:8px;gap:6px;background:none}
- nav.tabs{width:100%}
- nav.tabs button{flex-direction:column;justify-content:center;gap:4px;padding:10px 4px;font-size:0}
- nav.tabs button svg{width:22px;height:22px}
- nav.tabs button::after{content:attr(title);font-size:11px;line-height:1.2;text-align:center;word-break:keep-all}
- .sb .out{padding:10px}
- .noti-panel{left:96px}
+ .gacct div,.gnav button svg{display:none}.gacct{padding:4px}
+ .gnav{margin-left:8px}.gnav button{padding:8px 9px;font-size:14px}
 }
 
 /* ---------- tablet ---------- */
-@media(max-width:1100px){.cands{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:32px 28px 72px}}
+@media(max-width:1100px){.cands{grid-template-columns:1fr}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:32px 20px 72px}}
 
 /* =====================================================================
    모바일 (앱과 같은 구조: 상단 앱바 + 하단 탭바 + 카드형 목록)
@@ -344,8 +319,7 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 @media(max-width:820px){
  .m-only{display:revert!important}.d-only{display:none!important}
  body{background:var(--page)}
- .shell{display:block}
- aside.sb{display:none}
+ .gbar{display:none}
  .appbar{display:flex;position:sticky;top:0;z-index:20;align-items:center;gap:10px;height:calc(var(--appbar) + var(--safe-t));padding:var(--safe-t) 8px 0 16px;background:rgba(242,244,246,.88);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px)}
  .flow .appbar{padding-left:4px}
  .appbar .ttl{flex:1;min-width:0;line-height:1.2}
@@ -362,7 +336,8 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
  .flow main{padding-bottom:calc(120px + var(--safe-b))}
  main>h2:first-of-type,main>.flash+h2{display:none}
  main>.lead{font-size:14px;margin:0 0 18px}
- main>.sample{margin-top:24px}
+ .gfoot{margin-top:32px;font-size:12.5px}
+ .auth h2{display:none}.auth .b+h2+.lead{margin-top:10px}
  /* 알림함: 바텀시트 */
  .noti-panel{top:auto;left:0;right:0;bottom:0;width:auto;max-height:78vh;border-radius:24px 24px 0 0;padding-bottom:var(--safe-b);animation:sheet .25s ease-out}
  body.has-bnav .offline{bottom:calc(var(--bnav) + 12px + var(--safe-b))}
@@ -428,18 +403,8 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
  .sticky-cta .btn{flex:1.4;min-height:52px;font-size:16px}
  .todo{padding:14px 16px}
  /* 로그인 */
- .login{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:100vh;min-height:100dvh}
- .login .brand{padding:calc(22px + var(--safe-t)) 20px 22px;gap:16px}
- .login .brand h1{font-size:22px;margin-bottom:6px}
- .login .brand p{font-size:13.5px}
- .login .brand .steps{display:flex;gap:6px;overflow-x:auto;margin:0 -20px;padding:0 20px;scrollbar-width:none}
- .login .brand .steps::-webkit-scrollbar{display:none}
- .login .brand .steps div{flex:none;padding:8px 12px;font-size:0;border-radius:999px}.login .brand .steps div b{font-size:12.5px;margin:0}.login .brand .steps div small{display:none}
- .login form h2{font-size:22px}
- .login .btn{margin-top:20px}
- .login .form{padding:28px 20px calc(40px + var(--safe-b));align-items:flex-start}
 }
-@media(max-width:380px){.login .brand .steps{grid-template-columns:repeat(2,1fr)}.bar{grid-template-columns:72px 1fr 42px}}
+@media(max-width:380px){.bar{grid-template-columns:72px 1fr 42px}}
 /* 히어로 슬라이드(서비스 소개 ↔ 교재 광고) */
 .hcar{padding:48px 0 8px}
 .hslides{display:grid}
@@ -493,10 +458,7 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 }
 /* ===== 공개 화면(로그인 전): 메인 · 회원가입 ===== */
 .pub{min-height:100vh;min-height:100dvh;background:var(--page)}
-.pubbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);padding-top:var(--safe-t)}
-.pubbar .in{max-width:1120px;margin:0 auto;height:64px;padding:0 24px;display:flex;align-items:center;gap:8px}
 .plogo{display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;cursor:pointer;font-weight:800;font-size:17px;color:var(--ink)}
-.pubbar .grow{flex:1}
 .pubmain{max-width:1120px;margin:0 auto;padding:0 24px 64px}
 .hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center;padding:64px 0 40px}
 .hero .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-d);background:var(--accent-soft);border-radius:999px;padding:6px 12px;margin-bottom:18px}
@@ -535,24 +497,21 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 .pband{margin-top:48px;background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:36px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .pband h2{color:#fff;font-size:24px;margin:0}.pband p{margin:6px 0 0;color:rgba(255,255,255,.7)}
 .pband .btn.sec{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}.pband .btn.sec:hover{background:rgba(255,255,255,.08)}
-.pfoot{text-align:center;margin-top:32px}
 .pubmain.narrow{max-width:560px;padding-top:32px}
-.signup h2{font-size:26px}
+.auth h2{font-size:26px;margin:10px 0 4px}.auth .lead{margin:0 0 18px}
+.auth .btn.block{margin-top:20px;min-height:52px;font-size:16px}
+.auth .flash{margin:0 0 12px}
+.psec{scroll-margin-top:84px}
 .signup fieldset{border:0;margin:0;padding:0;min-width:0}
 .signup fieldset[hidden]{display:none}
 .signup .agree{background:var(--surface);border-radius:var(--r-md);padding:4px 16px;margin-top:20px}
 .signup .agree .chk{margin:12px 0}
 .signup .hint{font-size:12.5px;color:var(--mute);margin:6px 0 0}
-.signup .btn.block{margin-top:20px}
 .bizchk{display:flex;align-items:flex-start;gap:10px;margin-top:10px}.bizchk .btn{flex:none}
 .bizres{margin:0;font-size:12.5px;line-height:1.5;color:var(--mute);padding-top:2px}
 .bizres.ok{color:var(--ok-text);font-weight:600}.bizres.bad{color:var(--bad-text);font-weight:600}.bizres.wait{color:var(--sub)}
 .sufoot{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
 .lnk{border:0;background:none;padding:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:inherit}
-.login .back{display:inline-flex;align-items:center;gap:2px;border:0;background:none;padding:0;margin:0 0 20px;color:var(--sub);font-weight:600;cursor:pointer;font-size:14px}
-.login .back svg{width:18px;height:18px}
-.login .su{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
-.login .brand .plogo{color:#fff;font-size:20px}.login .brand .plogo .mk{box-shadow:none;width:40px;height:40px;border-radius:12px}
 /* 서당 클럽 (유료 회원제) */
 .clubs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .club{background:var(--bg);border-radius:var(--r-lg);padding:26px;display:flex;flex-direction:column;gap:16px}
@@ -650,7 +609,6 @@ const TABS = {
 };
 const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text',club:'crown'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
-const SAMPLE_NOTE = `<b>샘플 화면</b>가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음 · 승인 API 미호출 데모) · <a href="#" class="reset">처음 상태로 초기화</a>`;
 
 const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
   academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[], memberships:[], clubApply:[], next:'',
@@ -960,7 +918,7 @@ const bell = n => `<button class="ib bell" data-act="noti" aria-label="알림 ${
 // ---------- 화면 ----------
 function render(){
   const app=document.getElementById('app');
-  if(!S.user){app.innerHTML=S.pub==='login'?loginView():S.pub==='signup'?signupView():landingView();document.body.classList.remove('has-bnav');syncRoute();save();icons();return}
+  if(!S.user){app.innerHTML=S.pub==='login'?loginView():S.pub==='signup'?signupView():landingView();document.body.classList.toggle('has-bnav',S.pub==='home');syncRoute();save();icons();return}
   const flash=S.flash?`<div class="flash ${S.flashType==='err'?'err':''}">${ic(S.flashType==='err'?'circle-alert':'circle-check')}${esc(S.flash)}</div>`:''; S.flash='';S.flashType='';
   const tabs=TABS[S.user.role];
   if(!tabs.some(([k])=>k===S.tab)) S.tab=tabs[0][0];
@@ -971,20 +929,13 @@ function render(){
   const sub=S.user.role==='academy'?(myAcademy()||{}).name:S.user.name;
   const nc=notis().length;
   app.innerHTML=`<div class="shell ${inFlow?'flow':''}">
-  <aside class="sb">
-    <div class="logo"><div class="mk"><img src="logo.svg" alt=""></div><div><b>서당 동행</b><small>검증된 강사 매칭</small></div></div>
-    <div class="acct"><div class="av">${ic(ROLE_ICON[S.user.role])}</div><div style="flex:1;min-width:0"><b>${esc(sub)}</b><span>${ROLE_NAME[S.user.role]} · ${esc(S.user.loginId)}</span></div>${bell(nc)}</div>
-    <nav class="tabs">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!inFlow?'on':''}" ${S.tab===k&&!inFlow?'aria-current="page"':''} title="${n}">${ic(TAB_ICON[k])}<span class="lbl">${n}</span></button>`).join('')}</nav>
-    <div class="grow"></div>
-    <div class="sample">${SAMPLE_NOTE}</div>
-    <button class="out" data-act="logout" title="로그아웃">${ic('log-out')}<span class="lbl">로그아웃</span></button>
-  </aside>
+  ${gbar()}
   <header class="appbar">
     ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
     <div class="ttl"><b>${esc(title)}</b><span>${esc(sub)} · ${esc(S.user.loginId)}</span></div>
     ${inFlow?'':bell(nc)}<button class="ib" data-act="logout" aria-label="로그아웃">${ic('log-out')}</button>
   </header>
-  <main>${flash}${body}<div class="sample m-only">${SAMPLE_NOTE}</div></main>
+  <main>${flash}${body}${siteFoot()}</main>
   ${tabs.length>1?`<nav class="bnav" style="--n:${tabs.length}">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k?'on':''}" ${S.tab===k?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`).join('')}</nav>`:''}
   ${S.noti?notiPanel():''}${S.receipt?receiptSheet():''}
   <div class="offline" role="status">${ic('wifi-off')}오프라인이에요 · 연결되면 다시 동작해요</div></div>`;
@@ -1027,38 +978,56 @@ function loginView(){
   const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:S.next?`<div class="flash">${ic('crown')}${esc(CLUBS[S.next].name)}은 ${CLUBS[S.next].who} 계정으로 로그인한 뒤 가입할 수 있어요.</div>`:''; S.loginErr='';
   const acc=S.accounts;
   const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}${isMember(a.loginId)?' · 클럽 회원':''}</span></li>`;
-  return `<div class="login">
-   <section class="brand">
-    <button class="plogo" data-act="pub" data-to="home" aria-label="서당 동행 메인으로"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button>
-    <div><h1>이력서로는 알 수 없던 강사,<br>검증된 정보로 만나세요.</h1><p>시범강의 평가 · 적합성 카드 · 입사 후 30일 정착 점검까지.</p></div>
-    <div class="steps">
-     <div><small>01</small><b>조건 확인</b>채용요청 등록</div><div><small>02</small><b>검증 후보</b>평가 통과자만</div>
-     <div><small>03</small><b>적합성 매칭</b>조건 맞춤 추천</div><div><small>04</small><b>30일 정착</b>7·14·30일 점검</div></div>
-   </section>
-   <section class="form"><form data-form="login">
-    <button type="button" class="back" data-act="pub" data-to="home">${ic('chevron-left')}메인으로</button>
-    <h2>로그인</h2><p class="lead" style="margin:0 0 12px">아이디에 따라 해당 권한의 화면이 열려요.</p>
+  return pubPage(`<form class="card auth" data-form="login">
+    <span class="b info">${ic('shield-check')}검증된 강사 · 확인된 근무조건</span>
+    <h2>로그인</h2><p class="lead">아이디에 따라 학원·강사·운영 화면이 열려요.</p>
     ${err}
     <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 관리자1" autocomplete="username" autocapitalize="off" autofocus>
     <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" placeholder="아무 값이나 입력하세요" autocomplete="current-password">
-    <button class="btn">시작하기</button>
-    <p class="su">아직 회원이 아니신가요? <button type="button" class="lnk" data-act="pub" data-to="signup">회원가입</button></p>
+    <button class="btn block">로그인</button>
+    <p class="sufoot">아직 회원이 아니신가요? <button type="button" class="lnk" data-act="pub" data-to="signup">회원가입</button></p>
     <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
      <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · '+aOf(a.academyId).status))).join('')}</ul>
      <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
      <h4>운영</h4><ul>${acc.filter(a=>isStaffRole(a.role)).map(a=>row(a,ROLE_NAME[a.role])).join('')}</ul>
     </details>
-    <p class="muted foot">샘플 화면 · 가상 데이터 · 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p>
-   </form></section></div>`;
+   </form>`,true);
 }
 // ===== 공개 화면(로그인 전) =====
 // 메인: 지금 강사를 찾는 학원(학원명·급여는 가림) + 학원을 찾는 강사 수·진행 현황
-function pubBar(){
-  return `<header class="pubbar"><div class="in">
-   <button class="plogo" data-act="pub" data-to="home" aria-label="서당 동행 메인"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button><div class="grow"></div>
-   ${S.pub==='login'?'':`<button class="btn sec sm" data-act="pub" data-to="login">로그인</button>`}
-   ${S.pub==='signup'?'':`<button class="btn sm" data-act="pub" data-to="signup">회원가입</button>`}</div></header>`;
+// ---------- 공통 머리글: 데스크톱은 같은 상단 바(gbar), 모바일은 앱바 + 하단 탭바 ----------
+// 로그인 전에는 메인 섹션 바로가기, 로그인 후에는 역할별 탭이 같은 자리에 온다.
+const PUB_NAV=[['jobs','구인 학원','briefcase'],['teachers','강사 현황','users'],['clubs','서당 클럽','crown'],['how','이용 방법','route']];
+function gbar(){
+  const u=S.user; let nav, right, home;
+  if(u){
+    const flow=!!S.checkout; home=`data-act="tab" data-tab="${TABS[u.role][0][0]}"`;
+    nav=TABS[u.role].map(([k,n])=>{const on=S.tab===k&&!flow;return `<button data-act="tab" data-tab="${k}" class="${on?'on':''}" ${on?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`}).join('');
+    const sub=u.role==='academy'?(myAcademy()||{}).name:u.name;
+    right=`${bell(notis().length)}<div class="gacct" title="${esc(sub)} · ${ROLE_NAME[u.role]}"><span class="av">${ic(ROLE_ICON[u.role])}</span><div><b>${esc(sub)}</b><span>${ROLE_NAME[u.role]} · ${esc(u.loginId)}</span></div></div><button class="ib" data-act="logout" aria-label="로그아웃" title="로그아웃">${ic('log-out')}</button>`;
+  } else {
+    home=`data-act="pub" data-to="home"`;
+    nav=PUB_NAV.map(([id,n,i])=>`<button data-act="pubscroll" data-target="${id}">${ic(i)}<span>${n}</span></button>`).join('');
+    right=`${S.pub==='login'?'':`<button class="btn sec sm" data-act="pub" data-to="login">로그인</button>`}${S.pub==='signup'?'':`<button class="btn sm" data-act="pub" data-to="signup">회원가입</button>`}`;
+  }
+  return `<header class="gbar"><div class="in"><button class="plogo" ${home} aria-label="서당 동행 홈"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button>
+   <nav class="gnav" aria-label="주요 메뉴">${nav}</nav><div class="gright">${right}</div></div></header>`;
 }
+// 모바일 공개 화면 앱바: 로그인 후 앱바와 같은 모양 (메인은 로고, 로그인·가입은 뒤로 가기)
+function pubAppbar(){
+  const sub=S.pub!=='home';
+  return `<header class="appbar">${sub?`<button class="ib" data-act="pub" data-to="home" aria-label="메인으로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
+   <div class="ttl"><b>${sub?(S.pub==='login'?'로그인':'회원가입'):'서당 동행'}</b><span>${sub?'서당 동행':'검증된 강사 매칭 · 봉담·화성'}</span></div>
+   ${sub?'':`<button class="btn sm" data-act="pub" data-to="login">로그인</button>`}</header>`;
+}
+function pubBnav(){
+  if(S.pub!=='home') return '';
+  const items=[['top','홈','house'],['jobs','구인 학원','briefcase'],['teachers','강사','users'],['clubs','클럽','crown']];
+  return `<nav class="bnav" style="--n:5">${items.map(([id,n,i],x)=>`<button data-act="pubscroll" data-target="${id}" class="${x?'':'on'}">${ic(i)}<span>${n}</span></button>`).join('')}<button data-act="pub" data-to="login">${ic('log-in')}<span>로그인</span></button></nav>`;
+}
+const siteFoot=()=>`<footer class="gfoot"><div><b>서당 동행</b>검증된 강사와 확인된 근무조건으로 학원과 강사를 연결합니다 · 봉담·화성</div>
+ <p>샘플 화면 · 가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p></footer>`;
+const pubPage=(body,narrow)=>`<div class="pub">${gbar()}${pubAppbar()}<main class="pubmain ${narrow?'narrow':''}">${body}${siteFoot()}</main>${pubBnav()}</div>`;
 function pubStats(){
   const ok=id=>(aOf(id)||{}).status==='제휴 승인';
   const open=S.requests.filter(r=>r.status!=='채용 확정'&&ok(r.academyId));
@@ -1154,14 +1123,14 @@ function landingView(){
     <dl><dt>채용</dt><dd>${r.count}명</dd><dt>근무 시작</dt><dd>${roughDate(r.start)}</dd><dt>수업</dt><dd>${esc(r.hours)}</dd><dt>급여</dt><dd><span class="lockt">${ic('lock')}로그인 후 공개</span></dd></dl></li>`}).join('');
   const bySubj=SUBJ.map(s=>[s,S.teachers.filter(t=>t.subject===s).length]), maxS=Math.max(1,...bySubj.map(x=>x[1]));
   const top=[...st.verified].sort((a,b)=>total(b)-total(a)).slice(0,6);
-  return `<div class="pub">${pubBar()}<main class="pubmain">
+  return pubPage(`
   ${heroCarousel(st)}
   <div class="m-only hlive">${liveBox(st)}</div>
 
   <section class="psec" id="jobs"><header><div><h2>지금 강사를 찾는 학원</h2><p>서당이 근무조건 확인서를 검토한 학원만 보여드려요. 학원명과 급여는 가입 후 확인할 수 있어요.</p></div><span class="cnt">${st.open.length}건</span></header>
    <ul class="jobs">${jobs}<li class="more">${ic('user-plus')}<b>강사로 가입하고 추천받기</b><span class="muted">프로필과 서류를 올리면 시범강의 평가 후 조건이 맞는 학원을 추천해 드려요.</span><button class="btn sm" data-act="pub" data-to="signup" data-role="teacher">강사로 가입하기</button></li></ul></section>
 
-  <section class="psec"><header><div><h2>학원을 찾는 강사</h2><p>등록 강사 ${st.teachers}명 중 시범강의 평가를 통과한 ${st.verified.length}명이 추천을 기다리고 있어요.</p></div></header>
+  <section class="psec" id="teachers"><header><div><h2>학원을 찾는 강사</h2><p>등록 강사 ${st.teachers}명 중 시범강의 평가를 통과한 ${st.verified.length}명이 추천을 기다리고 있어요.</p></div></header>
    <div class="sbars">${bySubj.map(([s,n])=>`<div>${esc(s)}<b>${n}명</b><i><span style="width:${Math.round(n/maxS*100)}%"></span></i></div>`).join('')}</div>
    <ul class="tcards">${top.map(t=>`<li>
     <div class="chips"><span class="b info">${esc(t.grade)} ${esc(t.subject)}</span><span class="b ok">${ic('badge-check')}시범강의 통과</span></div>
@@ -1169,26 +1138,26 @@ function landingView(){
     <span class="muted">${esc(t.region)} · ${careerYears(t)}</span>
     <span class="s">${esc(t.strength)}</span></li>`).join('')}</ul></section>
 
-  <section class="psec"><header><div><h2>서당 동행은 이렇게 진행돼요</h2><p>숫자는 지금 각 단계에 있는 인원이에요.</p></div></header>
+  ${clubsTeaser()}
+
+  <section class="psec" id="how"><header><div><h2>서당 동행은 이렇게 진행돼요</h2><p>숫자는 지금 각 단계에 있는 인원이에요.</p></div></header>
    <div class="flow4">
     <div><small>01</small><b>조건 확인</b><span>학원이 근무조건 확인서를 내면 서당이 검토해요</span><em>제휴 ${st.academies}곳</em></div>
     <div><small>02</small><b>강사 검증</b><span>서류 확인과 시범강의 평가를 통과해야 추천돼요</span><em>진행 ${st.inEval}명</em></div>
     <div><small>03</small><b>적합성 매칭</b><span>조건에 맞는 강사를 추천하고, 강사가 동의해야 연결돼요</span><em>진행 ${st.consult}건</em></div>
     <div><small>04</small><b>30일 정착</b><span>입사 7·14·30일에 학원·강사 모두에게 확인해요</span><em>점검 ${st.settling}명</em></div></div></section>
 
-  ${clubsTeaser()}
-
   <section class="pband"><div><h2>검증된 강사, 확인된 근무조건</h2><p>가입은 1분이면 끝나요. 샘플 계정으로 먼저 둘러봐도 좋아요.</p></div>
    <div class="cta" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="pub" data-to="signup">회원가입</button><button class="btn sec" data-act="pub" data-to="login">로그인</button></div></section>
-  <p class="muted pfoot">샘플 화면 · 가상 데이터 · <a href="#" class="reset">처음 상태로 초기화</a></p>
-  </main></div>`;
+  `);
 }
 // 회원가입(샘플): 학원/강사 선택 → 새 샘플 계정(역할+번호) 생성 후 바로 로그인
 function signupView(){
   const r=S.suRole, on=v=>r===v?'checked':'';
   const agree=(name,text)=>`<label class="chk"><input type="checkbox" name="${name}" required> <span><b>[필수]</b> ${text}</span></label>`;
-  return `<div class="pub">${pubBar()}<main class="pubmain narrow">
-  <form class="card signup" data-form="signup" novalidate>
+  return pubPage(`
+  <form class="card signup auth" data-form="signup" novalidate>
+   <span class="b info">${ic('user-plus')}1분이면 끝나요</span>
    <h2>회원가입</h2><p class="lead" style="margin-bottom:18px">샘플 화면이에요. 가입하면 새 샘플 계정이 만들어지고 바로 로그인돼요.</p>
    <div class="seg" role="radiogroup" aria-label="회원 종류">
     <label><input type="radio" name="role" value="academy" ${on('academy')} data-su-role><span>${ic('school')}&nbsp;학원</span></label>
@@ -1221,7 +1190,7 @@ function signupView(){
    </div>
    <button class="btn block">가입하기</button>
    <p class="sufoot">이미 계정이 있나요? <button type="button" class="lnk" data-act="pub" data-to="login">로그인</button></p>
-  </form></main></div>`;
+  </form>`,true);
 }
 // 사업자 진위확인: 검증번호는 화면에서, 국세청 확인은 서버(dev_server.py / 실서비스는 Lambda)가 인증키로 호출
 const BIZ={key:'',state:''};
@@ -1610,7 +1579,10 @@ document.addEventListener('click',e=>{
   if(a==='club-file'){S.flash='샘플 자료예요. 실제 서비스에서는 회원만 내려받을 수 있는 파일이 열려요.';render();return}
   if(a==='bizchk'){if(BIZ.state!=='checking')bizCheck(el.form);return}
   if(a==='ad'){pubToast('샘플 광고예요. 실제 서비스에서는 광고주(출판사) 교재 페이지로 이동합니다.');return}
-  if(a==='pubscroll'){document.getElementById(el.dataset.target)?.scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(a==='pubscroll'){const id=el.dataset.target;
+    if(S.pub!=='home'){S.pub='home';S.next='';replaceNext=false;render()}
+    document.querySelectorAll('[data-act="pubscroll"]').forEach(b=>b.classList.toggle('on',b.dataset.target===id));
+    if(id==='top')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});return}
   if(a==='pub'){S.pub=el.dataset.to;S.next='';if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
   else if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
   else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null;S.pub='home'}
@@ -1786,6 +1758,16 @@ async function boot(){
 boot();
 const setOnline=()=>document.body.classList.toggle('is-offline',!navigator.onLine);
 window.addEventListener('online',setOnline);window.addEventListener('offline',setOnline);setOnline();
+// 공개 메인: 스크롤 위치에 맞춰 상단 바·하단 탭바의 현재 섹션 표시
+window.addEventListener('scroll',()=>{
+  if(S.user||S.pub!=='home')return;
+  // 메뉴마다 자기 항목 중 지금 화면 위쪽에 걸린 마지막 섹션을 표시 (하단 탭바에는 '이용 방법'이 없음)
+  document.querySelectorAll('.gnav,.pub .bnav').forEach(nav=>{
+    const bs=[...nav.querySelectorAll('[data-act="pubscroll"]')];let cur=null;
+    bs.forEach(b=>{const el=document.getElementById(b.dataset.target);if(b.dataset.target==='top'||(el&&el.getBoundingClientRect().top<160))cur=b});
+    bs.forEach(b=>b.classList.toggle('on',b===cur));
+  });
+},{passive:true});
 // PWA: http(s)에서만 서비스 워커 등록 (file:// 로 열면 건너뜀)
 if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
