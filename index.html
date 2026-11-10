@@ -544,12 +544,50 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 .signup .agree .chk{margin:12px 0}
 .signup .hint{font-size:12.5px;color:var(--mute);margin:6px 0 0}
 .signup .btn.block{margin-top:20px}
+.bizchk{display:flex;align-items:flex-start;gap:10px;margin-top:10px}.bizchk .btn{flex:none}
+.bizres{margin:0;font-size:12.5px;line-height:1.5;color:var(--mute);padding-top:2px}
+.bizres.ok{color:var(--ok-text);font-weight:600}.bizres.bad{color:var(--bad-text);font-weight:600}.bizres.wait{color:var(--sub)}
 .sufoot{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
 .lnk{border:0;background:none;padding:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:inherit}
 .login .back{display:inline-flex;align-items:center;gap:2px;border:0;background:none;padding:0;margin:0 0 20px;color:var(--sub);font-weight:600;cursor:pointer;font-size:14px}
 .login .back svg{width:18px;height:18px}
 .login .su{text-align:center;margin:16px 0 0;font-size:14px;color:var(--sub)}
 .login .brand .plogo{color:#fff;font-size:20px}.login .brand .plogo .mk{box-shadow:none;width:40px;height:40px;border-radius:12px}
+/* 서당 클럽 (유료 회원제) */
+.clubs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.club{background:var(--bg);border-radius:var(--r-lg);padding:26px;display:flex;flex-direction:column;gap:16px}
+.club .ch{display:flex;gap:14px;align-items:flex-start}
+.club .ch>svg{flex:none;width:46px;height:46px;padding:12px;border-radius:14px;background:var(--accent-soft);color:var(--accent)}
+.club h3{margin:0;font-size:20px}.club .ch p{margin:4px 0 0;color:var(--sub);font-size:14px}
+.club ul{list-style:none;margin:0;padding:0}
+.club li{display:grid;grid-template-columns:112px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.club li b{color:var(--ink)}.club li span{color:var(--sub)}
+.club .csig{margin-top:0}
+.club .cf{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.club .cf>span{display:inline-flex;align-items:center;gap:6px;color:var(--sub);font-size:13.5px;font-weight:600}
+.club .cf>span svg{width:16px;height:16px}
+.csig{display:flex;gap:12px;background:var(--surface);border-radius:var(--r-md);padding:16px 18px;margin-top:16px}
+.csig>svg{flex:none;color:var(--accent);margin-top:2px}
+.csig b{color:var(--ink)}.csig p{margin:4px 0 0;color:var(--sub);font-size:14px;line-height:1.6}
+.csig p.crule{display:flex;gap:6px;align-items:flex-start;color:var(--warn-text);font-weight:600}.crule svg{flex:none;width:16px;height:16px;margin-top:3px}
+.cbens{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cbens li{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:var(--r-md);background:var(--surface)}
+.cbens li>svg{flex:none;color:var(--accent);margin-top:2px}.cbens b{display:block;color:var(--ink)}.cbens span{color:var(--sub);font-size:13.5px}
+.club-lock .cl-h{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cl-p b{font-size:28px;color:var(--ink);letter-spacing:-.02em}.cl-p span{color:var(--mute);margin-left:6px;font-size:14px}
+.club-lock p{color:var(--sub);margin:12px 0 18px}
+.club-on{display:flex;align-items:center;gap:14px;background:var(--accent-soft)}
+.club-on>svg{flex:none;width:28px;height:28px;color:var(--accent)}.club-on>div{flex:1;min-width:0}.club-on b{display:block;color:var(--ink)}.club-on span{color:var(--sub);font-size:14px}
+ul.plain.cevents li{flex-wrap:nowrap;align-items:center;gap:16px}
+.cevents .ce-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.cevents .ce-m b{color:var(--ink)}.cevents .ce-m .muted{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;font-size:13.5px}
+.cevents .ce-m .muted svg{width:14px;height:14px}
+.cevents .ce-a{display:flex;align-items:center;gap:10px;flex:none}.cevents .ce-a .muted{font-size:13px}
+.cevents.locked li{opacity:.75}
+ul.plain.cfiles li{flex-wrap:nowrap}.cfiles li>svg{flex:none;color:var(--accent)}.cfiles li>div{flex:1;min-width:0}.cfiles b{display:block;color:var(--ink);font-size:14.5px}
+ul.plain.cperks li{gap:8px}.cperks svg{flex:none;width:18px;height:18px;color:var(--ok)}
+@media(max-width:820px){.clubs,.cbens{grid-template-columns:1fr}.club{padding:20px;border-radius:20px}.club li{grid-template-columns:96px 1fr}
+ ul.plain.cevents li{flex-direction:column;align-items:stretch;gap:10px}.cevents .ce-a{justify-content:space-between}}
 @media(max-width:1100px){.jobs,.tcards{grid-template-columns:repeat(2,minmax(0,1fr))}.sbars{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:820px){
  .pubbar .in{height:56px;padding:0 16px}
@@ -604,26 +642,26 @@ const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-che
 // 운영진 역할은 관리자 화면을 쓰되, 탭으로 권한을 나눈다 (PRD §3)
 const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:'admin'};
 const TABS = {
-  academy:[['home','홈'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역']],
-  teacher:[['home','홈'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태']],
+  academy:[['home','홈'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역'],['club','원장 클럽']],
+  teacher:[['home','홈'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태'],['club','강사 클럽']],
   admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['audit','권한·로그']],
   // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
   manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']]
 };
-const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text'};
+const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text',club:'crown'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
 const SAMPLE_NOTE = `<b>샘플 화면</b>가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음 · 승인 API 미호출 데모) · <a href="#" class="reset">처음 상태로 초기화</a>`;
 
 const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
-  academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[],
+  academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[], memberships:[], clubApply:[], next:'',
   checkout:null, customerKey:'', cfg:{clientKey:'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm',price:5000} };
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v7';
+const STORE_KEY='sdh-toss-sample-v8';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
-  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases}))}catch(e){}}
+  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubApply:S.clubApply}))}catch(e){}}
 function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return false;Object.assign(S,JSON.parse(raw));return true}catch(e){return false}}
 
 // ---------- 유틸 ----------
@@ -732,6 +770,12 @@ function seed(){
       {day:30,due:addDays(hire,30),status:'예정',academyReply:'',teacherReply:'',action:''}]}];
   const P=(n,academyId,tid,d)=>({orderId:'sdh_seed_'+String(n).padStart(2,'0')+'_'+tid,paymentKey:'seed_pk_'+n,academyId,tid,amount:5000,method:'카드(테스트)',approvedAt:ago(d),status:'DONE',orderName:'강사 프로필 열람권 - '+maskName(tOf(tid).name)});
   S.purchases = [P(1,1,2,7),P(2,1,6,5),P(3,1,9,3),P(4,1,12,1),P(5,2,9,32)];
+  // 서당 클럽: 원장1·강사1은 이용 중, 원장2는 기간 만료
+  const C=(n,loginId,club,academyId,startAgo)=>{const orderId='sdh_seed_club_'+n;
+    S.purchases.push({orderId,paymentKey:'seed_pk_c'+n,academyId,loginId,club,amount:CLUBS[club].price,method:'카드(테스트)',approvedAt:ago(startAgo),status:'DONE',orderName:CLUBS[club].name+' 1개월 이용권'});
+    S.memberships.push({loginId,club,start:addDays(today(),-startAgo),until:addDays(today(),30-startAgo),orderId})};
+  S.memberships=[]; C(1,'원장1','academy',1,12); C(2,'강사1','teacher',null,5); C(3,'원장2','academy',2,40);
+  S.clubApply=['원장1:a1'];
   S.complaints = [{no:'C-001',by:'강사9(임도현)',byLogin:'강사9',text:'수업 외 채점 업무가 안내보다 많아졌습니다.',status:'접수'}];
   // 건별 업무 시간·비용 (DB work_logs, PRD §2 원가 측정)
   S.workLogs = [
@@ -746,6 +790,68 @@ function seed(){
   log('시스템',`샘플 데이터를 불러왔습니다 (계정 ${S.accounts.length}개)`);
 }
 
+// ---------- 서당 클럽 (유료 회원제) ----------
+// 원장 클럽은 학원 원장 계정만, 강사 클럽은 강사 계정만 탭이 보인다. 내용은 결제(1개월 이용권)한 계정만 이용.
+// 메인(로그인 전)에는 소개만 공개한다. 가격·프로그램은 샘플.
+const CLUBS={
+ teacher:{name:'서당 강사 클럽',icon:'graduation-cap',who:'강사',cta:'강사로 이용하기',price:9900,
+  tagline:'강사의 수업 전문성과 취업 경쟁력을 높여주는 회원제',
+  benefits:[['presentation','수업 교육','학생 수준별 지도법, 수업 구성'],['video','시범강의 클리닉','실제 수업을 시연하고 피드백 받기'],['users','강사 교류 모임','과목별 수업 사례·교재 활용법 공유'],
+   ['folder-open','실무 자료','학부모 상담 예시, 시험 대비 운영법'],['briefcase','경력 개발','수업 포트폴리오·강의 소개자료 제작'],['ticket-percent','회원 혜택','교육 프로그램 할인, 모임 우선 신청']],
+  signature:['서당 수업 클리닉','수학 강사들이 모여 ‘아무리 설명해도 이해하지 못하는 학생을 어떻게 지도할까?’ 같은 주제로 실제 수업을 시연하고 서로 피드백하는 프로그램이에요.'],
+  events:[{id:'t1',type:'수업 클리닉',title:'이해가 느린 학생, 어떻게 설명할까 (중등 수학)',d:6,time:'19:30~21:00',place:'봉담 서당 세미나실',cap:8,taken:5},
+   {id:'t2',type:'강사 교류',title:'영어 내신 교재 활용법 나눔',d:13,time:'20:00~21:30',place:'온라인 (Zoom)',cap:20,taken:11},
+   {id:'t3',type:'경력 개발',title:'10분 시범강의 포트폴리오 만들기',d:20,time:'19:00~21:00',place:'봉담 서당 세미나실',cap:10,taken:10}],
+  files:[['file-text','학부모 상담 대화 예시 20선','PDF · 12쪽'],['file-spreadsheet','시험 대비 4주 운영표','XLSX'],['file-text','학생 수준별 질문 설계 가이드','PDF · 8쪽'],['file-video','시범강의 잘된 사례 해설','영상 · 18분']],
+  perks:['서당 교육 프로그램 20% 할인','클리닉·모임 우선 신청 (일반 공개 3일 전)','강의 소개자료 1회 첨삭']},
+ academy:{name:'서당 원장 클럽',icon:'school',who:'원장',cta:'원장으로 이용하기',price:29000,
+  tagline:'학원 운영을 함께 고민하고, 더 잘 운영할 수 있도록 돕는 회원제',
+  benefits:[['presentation','원장 교육','강사 면접 방법, 신입 강사 관리, 학부모 상담'],['clipboard-list','교육자료 제공','채용 면접 질문지, 학원 운영 체크리스트'],['messages-square','인력 관리 상담','강사 갈등, 수업 평가, 인수인계'],
+   ['network','원장 네트워크','지역 학원장 정기 모임 및 사례 공유'],['newspaper','실무 정보','학원 운영·교육정책·노무 관련 정보'],['ticket-percent','회원 혜택','별도 프로그램 교육 할인, 상담 우선 예약']],
+  signature:['서당 원장 라운드테이블','매월 한 번, 원장들이 실제 겪는 운영 문제를 가져와 함께 해결책을 논의하는 모임이에요.'],
+  rule:'경쟁 학원의 학생 정보나 수강료 담합으로 이어질 수 있는 내용은 공유하지 않아요.',
+  events:[{id:'a1',type:'라운드테이블',title:'이달의 원장 라운드테이블 · 신입 강사 첫 달 관리',d:4,time:'10:30~12:00',place:'봉담 서당 세미나실',cap:12,taken:7},
+   {id:'a2',type:'원장 교육',title:'강사 면접, 30분 안에 확인할 것들',d:11,time:'14:00~15:30',place:'온라인 (Zoom)',cap:30,taken:14},
+   {id:'a3',type:'인력 관리 상담',title:'노무사 1:1 상담 (근로계약·퇴직금)',d:18,time:'13:00~17:00 · 30분씩',place:'봉담 서당 상담실',cap:8,taken:8}],
+  files:[['file-text','채용 면접 질문지 (공통 + 수학·영어)','PDF · 10쪽'],['file-check','학원 운영 월간 체크리스트','PDF · 4쪽'],['file-text','강사 인수인계서 양식','DOCX'],['newspaper','교육정책 변화 요약 (학원 관련)','PDF · 6쪽']],
+  perks:['서당 교육 프로그램 20% 할인','노무·인력 상담 우선 예약','라운드테이블 정기 좌석 보장']}
+};
+const CLUB_DAYS=30;
+// 가장 최근 이용권 (만료 포함) / 지금 이용 중인지
+const membership=(loginId=S.user&&S.user.loginId)=>S.memberships.filter(m=>m.loginId===loginId).sort((a,b)=>b.until.localeCompare(a.until))[0]||null;
+const isMember=loginId=>{const m=membership(loginId);return !!m&&m.until>=today()};
+const kDate=d=>{const x=new Date(d+'T00:00:00');return `${x.getMonth()+1}월 ${x.getDate()}일 (${'일월화수목금토'[x.getDay()]})`};
+const clubSig=c=>`<div class="csig">${ic('sparkles')}<div><b>대표 프로그램 · ${c.signature[0]}</b><p>${c.signature[1]}</p>${c.rule?`<p class="crule">${ic('shield-alert')}${c.rule}</p>`:''}</div></div>`;
+function clubView(k){
+  const c=CLUBS[k], m=membership(), on=isMember();
+  if(!on) return `<h2>${c.name}</h2><p class="lead">${c.tagline}</p>
+   <div class="card club-lock"><div class="cl-h"><span class="b ${m?'warn':'mute'}">${ic('lock')}${m?'이용 기간이 끝났어요':'유료 회원 전용'}</span>
+    <div class="cl-p"><b>${won(c.price)}</b><span>/ ${CLUB_DAYS}일 · 샘플 가격</span></div></div>
+    <p>${m?`${m.until}에 이용 기간이 끝났어요. 다시 결제하면 바로 이어서 이용할 수 있어요.`:`${c.who} 계정 중 결제한 회원만 프로그램 신청, 자료실, 회원 혜택을 이용할 수 있어요.`}</p>
+    <button class="btn block-m" data-act="club-join">${ic('crown')}${m?'다시 가입하기':'클럽 가입하기'}</button></div>
+   <div class="card"><h3>회원이 되면 받는 혜택</h3><ul class="cbens">${c.benefits.map(([i,t,x])=>`<li>${ic(i)}<div><b>${t}</b><span>${x}</span></div></li>`).join('')}</ul>${clubSig(c)}</div>
+   <div class="card"><h3>이달의 프로그램 미리보기</h3><ul class="plain cevents locked">${c.events.map(e=>`<li><div class="ce-m"><span class="b info">${e.type}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(addDays(today(),e.d))} · ${ic('lock')}장소·신청은 회원 공개</span></div></li>`).join('')}</ul></div>`;
+  const left=Math.round((new Date(m.until)-new Date(today()))/864e5);
+  const applied=id=>S.clubApply.includes(S.user.loginId+':'+id);
+  return `<h2>${c.name}</h2><p class="lead">${c.tagline}</p>
+  <div class="card club-on">${ic(c.icon)}<div><b>${esc(S.user.name)}님은 ${c.name} 회원이에요</b><span>이용 기간 ${m.start} ~ ${m.until} · ${left?`${left}일 남음`:'오늘까지'}</span></div>${S.purchases.some(p=>p.orderId===m.orderId)?`<button class="btn sec sm" data-act="receipt" data-order="${esc(m.orderId)}">영수증</button>`:''}</div>
+  <div class="card"><h3>이달의 프로그램</h3><ul class="plain cevents">${c.events.map(e=>{const a=applied(e.id), rest=e.cap-e.taken-(a?1:0), full=!a&&rest<=0;
+    return `<li><div class="ce-m"><span class="b info">${e.type}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(addDays(today(),e.d))} ${e.time} · ${ic('map-pin')}${e.place}</span></div>
+     <div class="ce-a"><span class="muted">${a?'신청 완료':full?'정원 마감':`남은 자리 ${rest}`}</span>${a?`<button class="btn sm sec" data-act="club-apply" data-ev="${e.id}">신청 취소</button>`:`<button class="btn sm" data-act="club-apply" data-ev="${e.id}" ${full?'disabled':''}>${full?'마감':'신청'}</button>`}</div></li>`}).join('')}</ul>${clubSig(c)}</div>
+  <div class="grid g2" style="align-items:start">
+   <div class="card"><h3>자료실</h3><ul class="plain cfiles">${c.files.map(([i,t,x])=>`<li>${ic(i)}<div><b>${t}</b><span class="muted">${x}</span></div><button class="btn sm sec" data-act="club-file">열기</button></li>`).join('')}</ul></div>
+   <div class="card"><h3>회원 혜택</h3><ul class="plain cperks">${c.perks.map(x=>`<li>${ic('check')}${x}</li>`).join('')}</ul><p class="muted" style="margin:12px 0 0">혜택은 이용 기간 동안 적용돼요.</p></div></div>`;
+}
+// 메인(로그인 전) 소개 영역
+function clubsTeaser(){
+  return `<section class="psec" id="clubs"><header><div><h2>서당 클럽</h2><p>강사와 원장을 위한 유료 회원제예요. 소개는 누구나 볼 수 있고, 프로그램·자료는 결제한 회원만 이용할 수 있어요.</p></div></header>
+   <div class="clubs">${['teacher','academy'].map(k=>{const c=CLUBS[k];return `<article class="club">
+    <div class="ch">${ic(c.icon)}<div><h3>${c.name}</h3><p>${c.tagline}</p></div></div>
+    <ul>${c.benefits.map(([,t,x])=>`<li><b>${t}</b><span>${x}</span></li>`).join('')}</ul>
+    ${clubSig(c)}
+    <div class="cf"><span>${ic('lock')}${c.who} 회원 전용 · ${won(c.price)} / ${CLUB_DAYS}일</span><button class="btn sm" data-act="club-pub" data-club="${k}">${c.cta}</button></div></article>`}).join('')}</div></section>`;
+}
+
 // ---------- 결제 (토스페이먼츠 결제위젯) ----------
 function getCustomerKey(){ // 22~50자, -_=.@ 중 하나 포함, 추측 불가한 값
   if(!S.customerKey) S.customerKey='academy-'+Math.random().toString(36).slice(2,12)+Math.random().toString(36).slice(2,12)+'-sample';
@@ -758,7 +864,9 @@ async function initWidget(){
   const showErr=m=>{const e=document.getElementById('pay-err');if(e)e.innerHTML=`<div class="flash err">${esc(m)}</div>`;const b=document.getElementById('payment-method');if(b)b.innerHTML=''};
   try{
     if(typeof TossPayments==='undefined') throw new Error('토스페이먼츠 SDK(js.tosspayments.com)를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');
-    orderInfo={orderId:'sdh_'+crypto.randomUUID(),amount:S.cfg.price,orderName:'강사 프로필 열람권 - '+maskName(tOf(S.checkout.tid).name),tid:S.checkout.tid,academyId:S.user.academyId};
+    const ck=S.checkout.kind==='club'?CLUBS[S.checkout.club]:null;
+    orderInfo=ck?{orderId:'sdh_'+crypto.randomUUID(),amount:ck.price,orderName:ck.name+' 1개월 이용권',kind:'club',club:S.checkout.club,loginId:S.user.loginId,academyId:S.user.academyId||null}
+      :{orderId:'sdh_'+crypto.randomUUID(),amount:S.cfg.price,orderName:'강사 프로필 열람권 - '+maskName(tOf(S.checkout.tid).name),tid:S.checkout.tid,academyId:S.user.academyId};
     try{sessionStorage.setItem('sdh-pending',JSON.stringify(orderInfo))}catch(e){}
     const tossPayments=TossPayments(S.cfg.clientKey);
     widgets=tossPayments.widgets({customerKey:getCustomerKey()});
@@ -778,7 +886,21 @@ async function doPay(){
       customerEmail:'sample@example.com',customerName:(myAcademy()||{}).name||S.user.name});
   }catch(e){document.getElementById('pay-err').innerHTML=`<div class="flash err">${esc(e.message||'결제가 취소되었습니다.')}</div>`;bs.forEach(b=>b.disabled=false)}
 }
+const payBox=amount=>`<div class="card"><h3>결제수단</h3><div id="pay-err"></div><div id="payment-method"><p class="muted">결제수단을 불러오는 중…</p></div><div id="agreement"></div>
+   <button class="btn block d-only" data-act="pay-go" disabled>결제하기</button></div></div>
+  <div class="sticky-cta m-only"><div><span class="muted">결제 금액</span><b>${won(amount)}</b></div><button class="btn" data-act="pay-go" disabled>결제하기</button></div>`;
+function clubCheckoutView(){
+  const c=CLUBS[S.checkout.club];
+  return `<h2>${c.name} 가입</h2><p class="lead">결제가 끝나면 바로 프로그램 신청, 자료실, 회원 혜택을 이용할 수 있어요.</p>
+  <div class="grid g2" style="align-items:start"><div class="card"><h3>주문 정보</h3>
+   <dl class="kv"><dt>상품</dt><dd>${c.name} 1개월 이용권</dd><dt>이용 기간</dt><dd>${today()} ~ ${addDays(today(),CLUB_DAYS)}</dd>
+   <dt>가입 계정</dt><dd>${esc(S.user.name)} · ${esc(S.user.loginId)}</dd><dt>결제 금액</dt><dd><b class="total">${won(c.price)}</b></dd></dl>
+   <div class="note" style="margin-top:16px">토스페이먼츠 테스트 환경이라 실제 금액은 청구되지 않아요. 초안은 자동 갱신 없는 1개월 이용권이에요. 매달 자동 결제는 토스페이먼츠 자동결제(빌링) 계약이 따로 필요해요. 가격은 샘플 값이에요.</div>
+   <button class="btn sec d-only" data-act="pay-cancel">${ic('arrow-left')}돌아가기</button></div>
+  ${payBox(c.price)}`;
+}
 function checkoutView(){
+  if(S.checkout.kind==='club') return clubCheckoutView();
   const t=tOf(S.checkout.tid);
   return `<h2>프로필 열람권 결제</h2><p class="lead">결제가 완료되면 ${esc(maskName(t.name))} 강사의 프로필 상세를 열람할 수 있습니다.</p>
   <div class="grid g2" style="align-items:start"><div class="card"><h3>주문 정보</h3>
@@ -788,9 +910,7 @@ function checkoutView(){
    <dt>결제 금액</dt><dd><b class="total">${won(S.cfg.price)}</b></dd></dl>
    <div class="note" style="margin-top:16px">토스페이먼츠 테스트 환경이라 실제 금액은 청구되지 않습니다. 이 HTML 단독 버전은 서버가 없어 결제 승인(confirm) API를 호출하지 않는 데모입니다. 가격은 샘플 값이며 확정된 정책이 아닙니다.</div>
    <button class="btn sec d-only" data-act="pay-cancel">${ic('arrow-left')}돌아가기</button></div>
-  <div class="card"><h3>결제수단</h3><div id="pay-err"></div><div id="payment-method"><p class="muted">결제수단을 불러오는 중…</p></div><div id="agreement"></div>
-   <button class="btn block d-only" data-act="pay-go" disabled>결제하기</button></div></div>
-  <div class="sticky-cta m-only"><div><span class="muted">결제 금액</span><b>${won(S.cfg.price)}</b></div><button class="btn" data-act="pay-go" disabled>결제하기</button></div>`;
+  ${payBox(S.cfg.price)}`;
 }
 
 // ---------- 알림 (DB notifications 와 같은 역할: 제목·내용·이동 경로) ----------
@@ -825,7 +945,7 @@ function receiptSheet(){
   return `<div class="noti-dim" data-act="receipt-close"></div><section class="noti-panel sheet" role="dialog" aria-label="결제 영수증">
    <div class="noti-head"><b>결제 영수증</b><button class="ib" data-act="receipt-close" aria-label="닫기">${ic('x')}</button></div>
    <div style="padding:4px 22px 24px"><b class="big">${won(p.amount)}</b>${badge(p.status==='DONE'?'결제 완료':p.status)}
-   <dl class="kv" style="margin-top:18px"><dt>상품</dt><dd>${esc(p.orderName)}</dd><dt>구매 학원</dt><dd>${esc((aOf(p.academyId)||{}).name)}</dd><dt>승인 시각</dt><dd>${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</dd><dt>결제수단</dt><dd>${esc(p.method)}</dd><dt>주문번호</dt><dd style="word-break:break-all">${esc(p.orderId)}</dd><dt>결제 키</dt><dd style="word-break:break-all" class="muted">${esc(p.paymentKey)}</dd></dl>
+   <dl class="kv" style="margin-top:18px"><dt>상품</dt><dd>${esc(p.orderName)}</dd>${p.academyId?`<dt>구매 학원</dt><dd>${esc((aOf(p.academyId)||{}).name)}</dd>`:`<dt>구매 계정</dt><dd>${esc(p.loginId||'')}</dd>`}<dt>승인 시각</dt><dd>${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</dd><dt>결제수단</dt><dd>${esc(p.method)}</dd><dt>주문번호</dt><dd style="word-break:break-all">${esc(p.orderId)}</dd><dt>결제 키</dt><dd style="word-break:break-all" class="muted">${esc(p.paymentKey)}</dd></dl>
    <p class="muted" style="margin:16px 0 0">테스트 결제로 실제 청구되지 않았습니다. 세금계산서·현금영수증은 실결제 전환 후 발행됩니다.</p></div></section>`;
 }
 function notiPanel(){
@@ -845,9 +965,9 @@ function render(){
   const tabs=TABS[S.user.role];
   if(!tabs.some(([k])=>k===S.tab)) S.tab=tabs[0][0];
   const vr=VIEW_ROLE[S.user.role];
-  const inFlow=vr==='academy'&&S.checkout;
+  const inFlow=(vr==='academy'||vr==='teacher')&&!!S.checkout;
   const body=inFlow?checkoutView():VIEWS[vr+':'+S.tab]();
-  const title=inFlow?'열람권 결제':(tabs.find(([k])=>k===S.tab)||[])[1];
+  const title=inFlow?(S.checkout.kind==='club'?'클럽 가입':'열람권 결제'):(tabs.find(([k])=>k===S.tab)||[])[1];
   const sub=S.user.role==='academy'?(myAcademy()||{}).name:S.user.name;
   const nc=notis().length;
   app.innerHTML=`<div class="shell ${inFlow?'flow':''}">
@@ -880,11 +1000,11 @@ function icons(){
   try{window.lucide&&lucide.createIcons()}catch(e){}}
 
 // ---------- 주소(해시) 라우팅: 휴대폰 뒤로 가기 = 이전 화면. 앱(go_router) 경로와 같은 이름을 쓴다 ----------
-//   #/ (공개 메인) · #/login · #/signup · #/<탭> · #/find/checkout/<강사id> · #/eval/<강사id>
+//   #/ (공개 메인) · #/login · #/signup · #/<탭> · #/find/checkout/<강사id> · #/club/checkout · #/eval/<강사id>
 let replaceNext=true;
 function currentRoute(){
   if(!S.user) return S.pub==='home'?'/':'/'+S.pub;
-  if(S.checkout) return '/find/checkout/'+S.checkout.tid;
+  if(S.checkout) return S.checkout.kind==='club'?'/club/checkout':'/find/checkout/'+S.checkout.tid;
   if(S.tab==='eval'&&S.selT) return '/eval/'+S.selT;
   return '/'+S.tab;
 }
@@ -904,9 +1024,9 @@ window.addEventListener('popstate',()=>{
 });
 
 function loginView(){
-  const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:''; S.loginErr='';
+  const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:S.next?`<div class="flash">${ic('crown')}${esc(CLUBS[S.next].name)}은 ${CLUBS[S.next].who} 계정으로 로그인한 뒤 가입할 수 있어요.</div>`:''; S.loginErr='';
   const acc=S.accounts;
-  const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}</span></li>`;
+  const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}${isMember(a.loginId)?' · 클럽 회원':''}</span></li>`;
   return `<div class="login">
    <section class="brand">
     <button class="plogo" data-act="pub" data-to="home" aria-label="서당 동행 메인으로"><div class="mk"><img src="logo.svg" alt=""></div>서당 동행</button>
@@ -1056,6 +1176,8 @@ function landingView(){
     <div><small>03</small><b>적합성 매칭</b><span>조건에 맞는 강사를 추천하고, 강사가 동의해야 연결돼요</span><em>진행 ${st.consult}건</em></div>
     <div><small>04</small><b>30일 정착</b><span>입사 7·14·30일에 학원·강사 모두에게 확인해요</span><em>점검 ${st.settling}명</em></div></div></section>
 
+  ${clubsTeaser()}
+
   <section class="pband"><div><h2>검증된 강사, 확인된 근무조건</h2><p>가입은 1분이면 끝나요. 샘플 계정으로 먼저 둘러봐도 좋아요.</p></div>
    <div class="cta" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="pub" data-to="signup">회원가입</button><button class="btn sec" data-act="pub" data-to="login">로그인</button></div></section>
   <p class="muted pfoot">샘플 화면 · 가상 데이터 · <a href="#" class="reset">처음 상태로 초기화</a></p>
@@ -1076,8 +1198,10 @@ function signupView(){
     <div class="grid g2 tight"><div><label for="su-ar">지역</label><select id="su-ar" name="region">${opts(REGION,'봉담')}</select></div>
      <div><label for="su-at">학원 유형</label><select id="su-at" name="atype">${opts(['종합','단과','공부방·교습소'],'종합')}</select></div></div>
     <label for="su-ow">원장 이름</label><input id="su-ow" type="text" name="owner" required placeholder="홍길동" autocomplete="name">
-    <label for="su-biz">사업자등록번호</label><input id="su-biz" type="text" name="biz" inputmode="numeric" required placeholder="000-00-00000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}" data-biz>
-    <p class="hint">샘플이라 진위 확인은 생략해요. 실제 서비스에서는 국세청 사업자 상태 조회로 확인합니다.</p>
+    <div class="grid g2 tight one-m"><div><label for="su-biz">사업자등록번호</label><input id="su-biz" type="text" name="biz" inputmode="numeric" required placeholder="000-00-00000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{5}" data-biz></div>
+     <div><label for="su-od">개업일자</label><input id="su-od" type="date" name="opendt" required max="${new Date().toISOString().slice(0,10)}" data-bizin></div></div>
+    <div class="bizchk"><button type="button" class="btn sec sm" data-act="bizchk">${ic('shield-check')}국세청 확인</button>
+     <p class="bizres" data-bizres role="status" aria-live="polite">원장 이름·사업자등록번호·개업일자(사업자등록증에 적힌 날짜)로 국세청에 등록된 사업자인지 확인해요.</p></div>
    </fieldset>
    <fieldset data-for="teacher" ${r==='teacher'?'':'hidden disabled'}>
     <label for="su-tn">이름</label><input id="su-tn" type="text" name="tname" required placeholder="홍길동" autocomplete="name">
@@ -1098,6 +1222,31 @@ function signupView(){
    <button class="btn block">가입하기</button>
    <p class="sufoot">이미 계정이 있나요? <button type="button" class="lnk" data-act="pub" data-to="login">로그인</button></p>
   </form></main></div>`;
+}
+// 사업자 진위확인: 검증번호는 화면에서, 국세청 확인은 서버(dev_server.py / 실서비스는 Lambda)가 인증키로 호출
+const BIZ={key:'',state:''};
+function bizSumOk(v){const d=v.replace(/\D/g,'').split('').map(Number);if(d.length!==10)return false;
+  const w=[1,3,7,1,3,7,1,3,5];let s=w.reduce((a,x,i)=>a+x*d[i],0)+Math.floor(d[8]*5/10);return (10-s%10)%10===d[9]}
+const bizKey=f=>[f.biz.value.replace(/\D/g,''),(f.opendt.value||'').replace(/\D/g,''),f.owner.value.trim()].join('|');
+function bizShow(f,cls,text){const p=f&&f.querySelector('[data-bizres]');if(!p)return;p.className='bizres '+cls;p.textContent=text}
+function bizReset(f){if(!f||!BIZ.key)return;BIZ.key='';BIZ.state='';f.biz&&f.biz.setCustomValidity('');
+  bizShow(f,'','원장 이름·사업자등록번호·개업일자(사업자등록증에 적힌 날짜)로 국세청에 등록된 사업자인지 확인해요.')}
+async function bizCheck(f){
+  f.biz.setCustomValidity('');
+  for(const el of [f.owner,f.biz,f.opendt]) if(!el.checkValidity()){el.reportValidity();return}
+  if(!bizSumOk(f.biz.value)){f.biz.setCustomValidity('사업자등록번호를 다시 확인해 주세요 (검증번호가 맞지 않아요)');f.biz.reportValidity();
+    BIZ.key=bizKey(f);BIZ.state='badnum';bizShow(f,'bad','사업자등록번호 형식이 맞지 않아요. 숫자를 다시 확인해 주세요.');return}
+  const [b_no,start_dt,p_nm]=bizKey(f).split('|');
+  BIZ.key=bizKey(f);BIZ.state='checking';bizShow(f,'wait','국세청에 확인하고 있어요…');
+  let r=null;
+  try{const res=await fetch('api/biz/validate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({b_no,start_dt,p_nm})});
+    if(res.headers.get('content-type')?.includes('json'))r=await res.json()}catch(e){}
+  if(BIZ.key!==bizKey(f))return; // 확인 중에 입력이 바뀜
+  const st=r&&r.state;
+  if(st==='ok'){BIZ.state='ok';bizShow(f,'ok',`국세청 확인 완료 · ${r.b_stt}${r.tax_type?' · '+r.tax_type:''}`)}
+  else if(st==='mismatch'){BIZ.state='mismatch';bizShow(f,'bad','국세청 정보와 맞지 않아요. 원장 이름(대표자)·사업자등록번호·개업일자를 사업자등록증과 똑같이 입력해 주세요.')}
+  else if(st==='closed'){BIZ.state='closed';bizShow(f,'bad',`${r.b_stt||'휴업 또는 폐업'} 상태라 가입할 수 없어요. 문의가 필요하면 고객센터로 연락해 주세요.`)}
+  else{BIZ.state='off';bizShow(f,'wait','지금은 국세청 확인을 할 수 없어요. 가입은 진행되고, 사업자 정보는 운영담당이 확인할게요.')}
 }
 const isStaffRole = r => ['admin','manager'].includes(r);
 
@@ -1167,12 +1316,14 @@ const VIEWS = {
 },
 'academy:pay':()=>{
   const ps=myPurchases();
-  return `<h2>결제 내역</h2><p class="lead">프로필 열람권 결제 내역입니다. 토스페이먼츠 테스트 결제이며 실제 청구는 없습니다.</p>
+  return `<h2>결제 내역</h2><p class="lead">프로필 열람권과 원장 클럽 결제 내역입니다. 토스페이먼츠 테스트 결제이며 실제 청구는 없습니다.</p>
   ${ps.length?`<div class="card"><div class="tablewrap"><table class="rt"><tr><th>승인 시각</th><th>상품</th><th>금액</th><th>결제수단</th><th>상태</th><th>주문번호</th></tr>
   ${ps.map(p=>`<tr><td data-label="승인 시각">${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</td><td data-label="상품"><button class="linkbtn" data-act="receipt" data-order="${esc(p.orderId)}"><b>${esc(p.orderName)}</b>${ic('chevron-right')}</button></td><td data-label="금액">${won(p.amount)}</td><td data-label="결제수단">${esc(p.method)}</td><td data-label="상태">${badge(p.status==='DONE'?'결제 완료':p.status)}</td><td data-label="주문번호" class="muted" style="word-break:break-all">${esc(p.orderId)}</td></tr>`).join('')}</table></div>
   <p class="sum">합계 <b>${won(ps.reduce((a,p)=>a+p.amount,0))}</b> · ${ps.length}건</p></div>`
   :empty('receipt','결제 내역이 없어요','후보 찾기에서 강사 프로필 열람권을 결제해 보세요.')}`;
 },
+'academy:club':()=>clubView('academy'),
+'teacher:club':()=>clubView('teacher'),
 'academy:prog':()=>`<h2>진행 현황</h2><p class="lead">매칭 상담과 입사 후 점검을 한곳에서 확인합니다.</p>${matchBlocks('academy')}${complaintForm()}`,
 
 // ===== 강사 =====
@@ -1248,7 +1399,7 @@ const VIEWS = {
   <div class="card"><h3>학원 현황</h3><ul class="plain">${S.academies.map(a=>`<li><b>${esc(a.name)}</b><span class="muted">${esc(a.region)} · ${esc(a.type)} · 확인서 v${(a.form||{}).version||0} · 요청 ${S.requests.filter(r=>r.academyId===a.id).length}건</span>${badge(a.status)}
    ${a.status==='검토 중'?`<div class="review">${(a.history||[]).map(h=>`<p class="muted" style="margin:0 0 8px">${ic('history')} ${esc(h)}</p>`).join('')}<dl class="kv">${FORM_FIELDS.map(([k,l])=>`<dt>${l}</dt><dd>${esc(a.form[k]||'-')}</dd>`).join('')}<dt>30일 점검</dt><dd>${a.form.agree?'참여 동의':'<b style="color:var(--bad-text)">미동의</b>'}</dd></dl>
     <div class="row" style="margin-top:12px"><button class="btn sm sec" data-act="ac-hold" data-id="${a.id}">보류</button><button class="btn sm" data-act="ac-approve" data-id="${a.id}" ${a.form.agree?'':'disabled'}>제휴 승인</button>${a.form.agree?'':'<span class="muted">30일 점검 동의가 있어야 승인할 수 있어요</span>'}</div></div>`:''}</li>`).join('')}</ul></div>
-  <div class="card dark"><h3>프로필 열람권 결제</h3><b class="big">${won(S.purchases.reduce((a,p)=>a+p.amount,0))}</b><span>${S.purchases.length}건 · 테스트 결제</span></div></div>
+  ${(()=>{const pv=S.purchases.filter(p=>!p.club),cl=S.purchases.filter(p=>p.club),on=S.accounts.filter(a=>isMember(a.loginId)).length;return `<div class="card dark"><h3>프로필 열람권 결제</h3><b class="big">${won(pv.reduce((a,p)=>a+p.amount,0))}</b><span>${pv.length}건 · 테스트 결제</span><h3 style="margin-top:20px">서당 클럽 회비</h3><b class="big">${won(cl.reduce((a,p)=>a+p.amount,0))}</b><span>${cl.length}건 · 지금 이용 중 ${on}명</span></div>`})()}</div>
   ${workLogCard()}
   <div class="card"><h3>최근 활동</h3>${logTable(6)}</div>`;
 },
@@ -1455,12 +1606,19 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]'); if(!el) return;
   const id=+el.dataset.id, a=el.dataset.act;
   if(a==='hero'){heroCtl(el.dataset.to);return}
+  if(a==='club-pub'){S.next=el.dataset.club;S.pub='login';replaceNext=false;render();window.scrollTo(0,0);return}
+  if(a==='club-file'){S.flash='샘플 자료예요. 실제 서비스에서는 회원만 내려받을 수 있는 파일이 열려요.';render();return}
+  if(a==='bizchk'){if(BIZ.state!=='checking')bizCheck(el.form);return}
   if(a==='ad'){pubToast('샘플 광고예요. 실제 서비스에서는 광고주(출판사) 교재 페이지로 이동합니다.');return}
   if(a==='pubscroll'){document.getElementById(el.dataset.target)?.scrollIntoView({behavior:'smooth',block:'start'});return}
-  if(a==='pub'){S.pub=el.dataset.to;if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
+  if(a==='pub'){S.pub=el.dataset.to;S.next='';if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
   else if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
   else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null;S.pub='home'}
   else if(a==='pay-open'){S.checkout={tid:id,ts:Date.now()};window.scrollTo(0,0)}
+  else if(a==='club-join'){if(CLUBS[S.user.role]&&!isMember()){S.checkout={kind:'club',club:S.user.role,ts:Date.now()};window.scrollTo(0,0)}}
+  else if(a==='club-apply'){if(!isMember())return;const key=S.user.loginId+':'+el.dataset.ev,ev=CLUBS[S.user.role].events.find(e=>e.id===el.dataset.ev),i=S.clubApply.indexOf(key);
+    if(i>=0){S.clubApply.splice(i,1);log(actor(),`클럽 프로그램 신청 취소: ${ev.title}`);S.flash='신청을 취소했어요.'}
+    else{S.clubApply.push(key);log(actor(),`클럽 프로그램 신청: ${ev.title}`);S.flash=`신청했어요 · ${kDate(addDays(today(),ev.d))} ${ev.time}`}}
   else if(a==='pay-cancel'){S.checkout=null}
   else if(a==='pay-go'){doPay();return}
   else if(a==='filter-reset'){S.f={subject:'',grade:'',region:''}}
@@ -1518,6 +1676,7 @@ document.addEventListener('change',e=>{
 });
 document.addEventListener('input',e=>{
   if(e.target.dataset.evalq!==undefined){S.evalQ=e.target.value;applyEvalQ();return}
+  if(e.target.dataset.biz!==undefined||e.target.dataset.bizin!==undefined||(e.target.name==='owner'&&e.target.form&&e.target.form.dataset.form==='signup'))bizReset(e.target.form);
   if(e.target.dataset.biz!==undefined){const d=e.target.value.replace(/\D/g,'').slice(0,10);e.target.value=d.length<4?d:d.length<6?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,5)+'-'+d.slice(5);return}
   if(e.target.name==='pw2'||e.target.name==='pw'){const f=e.target.form;f&&f.pw2&&f.pw2.setCustomValidity('')}
   if(e.target.type==='tel'){const d=e.target.value.replace(/\D/g,'').slice(0,11);e.target.value=d.length<4?d:d.length<8?d.slice(0,3)+'-'+d.slice(3):d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);return}
@@ -1531,12 +1690,18 @@ document.addEventListener('submit',e=>{
   const fd=new FormData(f), k=f.dataset.form, id=+f.dataset.id;
   if(k==='signup'){
     if(f.pw.value&&f.pw2.value!==f.pw.value) f.pw2.setCustomValidity('비밀번호가 서로 달라요');
+    if(fd.get('role')==='academy'&&f.biz.value&&!bizSumOk(f.biz.value)) f.biz.setCustomValidity('사업자등록번호를 다시 확인해 주세요 (검증번호가 맞지 않아요)');
     if(!f.checkValidity()){f.reportValidity();return}
     const role=fd.get('role'), phone=fd.get('phone');
+    if(role==='academy'){
+      if(BIZ.key!==bizKey(f)){bizCheck(f).then(()=>{if(BIZ.state==='ok'||BIZ.state==='off')f.requestSubmit()});return}
+      if(BIZ.state==='checking')return;
+      if(BIZ.state!=='ok'&&BIZ.state!=='off'){f.biz.focus();return}
+    }
     let acc;
     if(role==='academy'){
       const aid=Math.max(0,...S.academies.map(x=>x.id))+1;
-      S.academies.push({id:aid,name:fd.get('aname').trim(),region:fd.get('region'),type:fd.get('atype'),status:'확인서 작성 전',bizNo:fd.get('biz'),phone,form:{version:0}});
+      S.academies.push({id:aid,name:fd.get('aname').trim(),region:fd.get('region'),type:fd.get('atype'),status:'확인서 작성 전',bizNo:fd.get('biz'),bizCheck:BIZ.state==='ok'?'국세청 확인 완료':'확인 대기',phone,form:{version:0}});
       const no=S.accounts.filter(x=>x.role==='academy').length+1;
       acc={loginId:'원장'+no,role:'academy',name:fd.get('owner').trim()+' 원장',academyId:aid};
     } else {
@@ -1547,8 +1712,9 @@ document.addEventListener('submit',e=>{
     }
     S.accounts.push(acc);
     S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};
+    if(role==='academy')log(actor(),`사업자 진위확인 · ${BIZ.state==='ok'?'국세청 확인 완료':'확인 대기 (국세청 확인 불가)'}`);
     log(actor(),`회원가입 (${ROLE_NAME[acc.role]}) · 약관·개인정보${role==='teacher'?'·범죄경력 조회':'·정착 점검'} 동의 기록`);
-    S.flash=`가입을 마쳤어요 · 아이디 ${acc.loginId}. ${role==='academy'?'먼저 근무조건 확인서를 작성해 주세요.':'프로필과 서류를 채우고 검증을 신청해 주세요.'}`;
+    S.flash=`가입을 마쳤어요 · 아이디 ${acc.loginId}. ${role==='academy'?(BIZ.state==='ok'?'':'사업자 정보는 운영담당이 확인할게요. ')+'먼저 근무조건 확인서를 작성해 주세요.':'프로필과 서류를 채우고 검증을 신청해 주세요.'}`;
     S.pub='home';render();window.scrollTo(0,0);return;
   }
   if(k==='login'){
@@ -1557,6 +1723,10 @@ document.addEventListener('submit',e=>{
     if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~17, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
     S.user={...acc};S.pub='home';
     S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
+    // 메인의 '서당 클럽'에서 들어온 경우 클럽 탭으로
+    if(S.next){const w=S.next;S.next='';
+      if(CLUBS[acc.role]){S.tab='club';if(acc.role!==w)S.flash=`${CLUBS[w].name}은 ${CLUBS[w].who} 계정만 이용할 수 있어요. ${CLUBS[acc.role].name}으로 안내했어요.`}
+      else S.flash='서당 클럽은 강사·원장 계정만 이용할 수 있어요.'}
   }
   else if(k==='req'){const no=Math.max(0,...S.requests.map(r=>r.no))+1;S.requests.push({id:no,no,academyId:S.user.academyId,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),`채용요청 #${no} 등록`);S.flash=`채용요청 #${no}을 등록했습니다.`}
   else if(k==='prof'){const t=me();['subject','grade','region','career','strength','wish','contact'].forEach(x=>t[x]=fd.get(x)||'');t.agree=true;log(actor(),'프로필 저장 · 개인정보 동의 기록');S.flash='프로필을 저장했습니다.'}
@@ -1591,12 +1761,21 @@ async function boot(){
   if(result) history.replaceState(null,'',BASE_URL);
   if(!S.user){ S.pub=result?'login':pubFromHash(); if(result) S.loginErr='결제 후 세션이 만료되었습니다. 다시 로그인해 주세요.'; render(); return }
   S.checkout=null;
-  if(result==='fail'){S.tab='find';S.flash=`결제가 완료되지 않았습니다. ${q.get('message')||''} (${q.get('code')||'-'})`;S.flashType='err';render();return}
+  let pend=null; try{pend=JSON.parse(sessionStorage.getItem('sdh-pending')||'null')}catch(e){}
+  if(result==='fail'){S.tab=pend&&pend.kind==='club'?'club':'find';S.flash=`결제가 완료되지 않았습니다. ${q.get('message')||''} (${q.get('code')||'-'})`;S.flashType='err';render();return}
   if(result==='success'&&q.get('paymentKey')){
-    S.tab='find';
-    let pend=null; try{pend=JSON.parse(sessionStorage.getItem('sdh-pending')||'null')}catch(e){}
+    S.tab=pend&&pend.kind==='club'?'club':'find';
     // 데모: 서버가 없으므로 승인 API는 호출하지 않고, 주문번호·금액만 대조합니다.
     if(!pend||pend.orderId!==q.get('orderId')||Number(q.get('amount'))!==pend.amount){S.flash='주문 정보가 일치하지 않아 결제를 반영하지 않았습니다.';S.flashType='err';render();return}
+    if(pend.kind==='club'){
+      if(pend.loginId!==S.user.loginId){S.flash='다른 계정의 주문이라 반영하지 않았어요.';S.flashType='err';render();return}
+      if(!S.purchases.some(p=>p.orderId===pend.orderId)){
+        S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId,loginId:pend.loginId,club:pend.club,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
+        S.memberships.push({loginId:pend.loginId,club:pend.club,start:today(),until:addDays(today(),CLUB_DAYS),orderId:pend.orderId});
+        log(actor(),`${CLUBS[pend.club].name} 가입 결제 (${won(pend.amount)}) · 데모`)}
+      S.flash=`${CLUBS[pend.club].name}에 가입했어요. ${addDays(today(),CLUB_DAYS)}까지 이용할 수 있어요. (데모: 승인 API 미호출)`;
+      render();return
+    }
     if(!S.purchases.some(p=>p.orderId===pend.orderId)) S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId||S.user.academyId,tid:pend.tid,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
     log(actor(),`프로필 열람권 결제 인증 완료 (${won(pend.amount)}) · 데모`);
     S.flash=`결제 인증이 완료되었습니다. ${tOf(pend.tid).name} 강사의 프로필을 열람할 수 있습니다. (데모: 승인 API 미호출)`;
