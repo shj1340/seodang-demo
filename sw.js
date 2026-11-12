@@ -1,6 +1,6 @@
 // 서당 동행 샘플 서비스 워커: 화면 파일을 캐시해 오프라인에서도 열리게 한다.
 // 결제(토스)와 다른 도메인 요청은 캐시하지 않고 항상 네트워크로 보낸다.
-const CACHE = 'seodang-shell-v2';
+const CACHE = 'seodang-shell-v3';
 const SHELL = ['./', './seodang_toss_v2.html', './index.html', './manifest.webmanifest', './icon.svg', './logo.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -12,6 +12,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return;
+  // 서버 API(로그인 상태 등)는 캐시하지 않는다
+  if (url.pathname.includes('/api/')) return;
   // 화면 파일: 네트워크 우선(새 버전 반영), 실패하면 캐시
   e.respondWith(fetch(e.request).then(r => {
     const copy = r.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); return r;

@@ -63,6 +63,7 @@ main{max-width:1120px;margin:0 auto;padding:36px 24px 72px}
 .noti-dim{position:fixed;inset:0;background:rgba(25,31,40,.28);z-index:40;animation:fade .2s}
 .noti-panel{position:fixed;z-index:41;top:calc(72px + var(--safe-t));right:max(16px,calc((100vw - 1120px)/2 + 16px));width:380px;max-height:calc(100vh - 96px);overflow:auto;background:var(--bg);border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(25,31,40,.2);animation:drop .2s ease-out}
 .noti-head{display:flex;align-items:center;gap:8px;padding:18px 12px 10px 22px;position:sticky;top:0;background:var(--bg)}
+.noti-test{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 22px 12px;font-size:12.5px}
 .noti-head b{font-size:17px;font-weight:800}.noti-head .ib{margin-left:auto}
 .noti-panel ul{list-style:none;margin:0;padding:0 8px 10px}
 .noti-panel li button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:none;padding:12px 14px;border-radius:14px;cursor:pointer}
@@ -104,6 +105,7 @@ main{max-width:1120px;margin:0 auto;padding:36px 24px 72px}
 .q:focus{outline:2px solid var(--accent)}
 .chiprow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .fchip{border:0;border-radius:999px;padding:7px 12px;background:var(--bg);color:var(--sub);font-size:13px;font-weight:600;cursor:pointer;box-shadow:inset 0 0 0 1px var(--line)}
+.fchip svg{width:15px;height:15px;vertical-align:-3px;margin-right:4px}table.rt tr.on td{background:var(--accent-soft)}
 .fchip span{color:var(--mute);margin-left:2px}.fchip.on{background:var(--ink);color:#fff;box-shadow:none}.fchip.on span{color:rgba(255,255,255,.7)}
 .linkbtn{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:0;cursor:pointer;text-align:left;color:inherit}
 .linkbtn svg{width:15px;height:15px;color:var(--icon)}
@@ -501,6 +503,7 @@ details.accts code{font-family:inherit;font-weight:700;color:var(--ink);min-widt
 .auth h2{font-size:26px;margin:10px 0 4px}.auth .lead{margin:0 0 18px}
 .auth .btn.block{margin-top:20px;min-height:52px;font-size:16px}
 .auth .flash{margin:0 0 12px}
+.auth .hint{font-size:12.5px;color:var(--mute);margin:6px 0 0}
 .psec{scroll-margin-top:84px}
 .signup fieldset{border:0;margin:0;padding:0;min-width:0}
 .signup fieldset[hidden]{display:none}
@@ -564,6 +567,30 @@ ul.plain.cperks li{gap:8px}.cperks svg{flex:none;width:18px;height:18px;color:va
  .signup.card{padding:20px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- 출시 필수 기능 (계정·약관·내 정보·운영) ---------- */
+.pv{margin-top:14px}.pvrow{display:flex;gap:8px;margin-top:6px}.pvrow input{flex:1;min-width:0}.pvrow .btn{flex:none;white-space:nowrap}
+.pvmsg{font-size:13px;color:var(--mute);margin:6px 0 0;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.pvmsg b{color:var(--accent);letter-spacing:.08em}.pvmsg svg{width:16px;height:16px}
+.pvmsg.ok{color:var(--ok-text)}.pvmsg.bad{color:var(--bad-text)}
+.agree .chk.all{padding-bottom:10px;margin-bottom:6px;border-bottom:1px solid var(--line)}.agree .lnk{font-size:13px}
+.found ul{margin:12px 0 16px}.found li{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-bottom:1px solid var(--line)}.found li b{font-size:17px}
+.terms h4{margin:18px 0 6px;font-size:15px}.terms p{margin:0;color:var(--sub);line-height:1.7;font-size:14.5px}
+ul.notices li{border-bottom:1px solid var(--line)}ul.notices li:last-child{border-bottom:0}
+ul.notices summary{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 0;cursor:pointer;list-style:none}ul.notices summary::-webkit-details-marker{display:none}
+ul.notices summary b{flex:1;min-width:160px}ul.notices details p{margin:0 0 14px;color:var(--sub);line-height:1.7}ul.notices form{margin:0 0 14px}
+.meh{display:flex;align-items:center;gap:14px}.meh .av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.meh b{display:block;font-size:18px}.meh span{color:var(--mute);font-size:13.5px}
+ul.menu li,ul.toggles li,ul.notices li,.found li{padding-left:0;padding-right:0}ul.menu li{padding:0;border:0;display:block}ul.notices li{display:block;padding:0}.found li{display:flex;flex-direction:column;align-items:flex-start}
+ul.menu li button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:14px 4px;text-align:left;cursor:pointer;border-bottom:1px solid var(--line);font:inherit;color:var(--ink)}
+ul.menu li:last-child button{border-bottom:0}ul.menu li button>svg:first-child{color:var(--accent)}ul.menu li button div{flex:1}ul.menu li b{display:block;font-size:15px}ul.menu li span{color:var(--mute);font-size:13px}
+ul.toggles li{padding:10px 0;border-bottom:1px solid var(--line)}ul.toggles li:last-child{border-bottom:0}ul.toggles em{display:block;font-style:normal;color:var(--mute);font-size:13px}
+.btn.danger{background:var(--bad);color:#fff}
+.nf{text-align:center;padding:48px 24px}.nf>svg{width:44px;height:44px;color:var(--mute)}
+.noti-panel li.read button{opacity:.6}.noti-panel li:not(.read) button b::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--bad);margin-left:6px;vertical-align:middle}
+.noti-head .lnk{margin-left:auto;font-size:13px}.noti-head .ib+.ib{margin-left:0}
+.gfoot .flinks{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 6px}.gfoot .flinks .lnk{font-size:13px;color:var(--sub)}.gfoot .flinks .lnk.strong{font-weight:800;color:var(--ink)}
+.gfoot .bizinfo{font-size:12px;color:var(--mute);line-height:1.7;margin:0 0 6px}
+button.gacct{border:0;background:none;cursor:pointer;font:inherit;text-align:left;border-radius:var(--r-sm);padding:4px 8px}button.gacct:hover,button.gacct.on{background:var(--surface)}
 </style>
 <script src="https://js.tosspayments.com/v2/standard"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -603,23 +630,24 @@ const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:
 const TABS = {
   academy:[['home','홈'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역'],['club','원장 클럽']],
   teacher:[['home','홈'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태'],['club','강사 클럽']],
-  admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['audit','권한·로그']],
+  admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['club','클럽 관리'],['audit','운영']],
   // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
   manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']]
 };
-const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'scroll-text',club:'crown'};
+const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'settings',club:'crown'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
 
 const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
-  academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[], memberships:[], clubApply:[], next:'',
+  academies:[], accounts:[], teachers:[], requests:[], matches:[], complaints:[], logs:[], purchases:[], memberships:[], clubEvents:[], clubApply:[], notices:[], inquiries:[], notiRead:{}, next:'', sub:null,
+  cm:{club:'academy',month:'',sel:null,edit:null}, // 관리자 클럽 관리 화면 상태 (선택한 클럽·달·프로그램, 등록/수정 중인 프로그램)
   checkout:null, customerKey:'', cfg:{clientKey:'test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm',price:5000} };
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v8';
+const STORE_KEY='sdh-toss-sample-v10';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
-  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubApply:S.clubApply}))}catch(e){}}
+  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub}))}catch(e){}}
 function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return false;Object.assign(S,JSON.parse(raw));return true}catch(e){return false}}
 
 // ---------- 유틸 ----------
@@ -636,7 +664,9 @@ function log(actor,text){S.logs.unshift({t:new Date().toLocaleTimeString('ko-KR'
 const BADGE_TONE={'승인':'ok','제휴 승인':'ok','결제 완료':'ok','추천 검토':'ok','응답 완료':'ok','연장':'ok','처리 완료':'ok','채용 확정':'ok',
   '종료':'mute','예정':'mute','미신청':'mute','등록':'mute','확인서 작성 전':'mute',
   '신청':'warn','검토 중':'warn','평가예정':'warn','응답 대기':'warn','보완교육':'warn','재추천':'warn','접수':'warn','검토 중':'warn',
-  '후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','강사 동의':'info','보류':'bad','강사 거절':'bad'};
+  '후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','강사 동의':'info','보류':'bad','강사 거절':'bad',
+  // 클럽 프로그램·신청
+  '모집 중':'info','마감':'mute','정원 마감':'warn','취소':'bad','확정':'ok','참석':'ok','이용 중':'ok','반려':'bad','불참':'bad','본인 취소':'mute','기간 만료':'mute'};
 function badge(s){const tone=BADGE_TONE[s]||'mute';const I={ok:'circle-check',warn:'clock',bad:'circle-x',info:'loader',mute:''}[tone];return `<span class="b ${tone}">${I?ic(I):''}${esc(s)}</span>`}
 function badge2(s){return `<span class="b info">${esc(s)}</span>`}
 const empty = (icon,title,sub='') => `<div class="card empty">${ic(icon)}<b>${title}</b>${sub?`<span>${sub}</span>`:''}</div>`;
@@ -733,7 +763,15 @@ function seed(){
     S.purchases.push({orderId,paymentKey:'seed_pk_c'+n,academyId,loginId,club,amount:CLUBS[club].price,method:'카드(테스트)',approvedAt:ago(startAgo),status:'DONE',orderName:CLUBS[club].name+' 1개월 이용권'});
     S.memberships.push({loginId,club,start:addDays(today(),-startAgo),until:addDays(today(),30-startAgo),orderId})};
   S.memberships=[]; C(1,'원장1','academy',1,12); C(2,'강사1','teacher',null,5); C(3,'원장2','academy',2,40);
-  S.clubApply=['원장1:a1'];
+  C(4,'원장3','academy',3,3); C(5,'강사2','teacher',null,8); C(6,'강사5','teacher',null,2);
+  // 이달의 프로그램 (관리자가 클럽 관리 탭에서 등록·수정). 날짜는 오늘 기준 상대값으로 시드
+  S.clubEvents=[];
+  ['academy','teacher'].forEach(k=>CLUBS[k].seedEvents.forEach(e=>S.clubEvents.push({id:e.id,club:k,type:e.type,title:e.title,date:addDays(today(),e.d),time:e.time,place:e.place,cap:e.cap,desc:e.desc||'',status:e.status||'모집 중',by:'관리자1'})));
+  // 신청 접수: 신청(확정 대기) → 확정 / 반려, 회원 본인 취소, 행사 후 참석 / 불참
+  const AP=(ev,loginId,status,d)=>S.clubApply.push({id:'ap'+(S.clubApply.length+1),ev,loginId,status,at:ago(d)});
+  S.clubApply=[];
+  AP('a1','원장3','확정',3);AP('a1','원장1','신청',1);AP('a3','원장1','확정',6);AP('a3','원장3','확정',2);AP('a0','원장1','참석',30);AP('a0','원장2','불참',31);
+  AP('t1','강사2','확정',4);AP('t1','강사1','신청',1);AP('t3','강사2','확정',5);AP('t3','강사5','확정',2);AP('t0','강사1','참석',25);
   S.complaints = [{no:'C-001',by:'강사9(임도현)',byLogin:'강사9',text:'수업 외 채점 업무가 안내보다 많아졌습니다.',status:'접수'}];
   // 건별 업무 시간·비용 (DB work_logs, PRD §2 원가 측정)
   S.workLogs = [
@@ -744,6 +782,7 @@ function seed(){
     {by:'운영담당1',rid:2,task:'채용 확정·계약 확인',min:45,cost:0,date:addDays(today(),-21)},
     {by:'운영담당1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
     {by:'관리자1',rid:null,task:'동탄 영어학원 확인서 검토',min:25,cost:0,date:addDays(today(),-1)}];
+  seedSupport();
   S.logs = [];
   log('시스템',`샘플 데이터를 불러왔습니다 (계정 ${S.accounts.length}개)`);
 }
@@ -757,9 +796,12 @@ const CLUBS={
   benefits:[['presentation','수업 교육','학생 수준별 지도법, 수업 구성'],['video','시범강의 클리닉','실제 수업을 시연하고 피드백 받기'],['users','강사 교류 모임','과목별 수업 사례·교재 활용법 공유'],
    ['folder-open','실무 자료','학부모 상담 예시, 시험 대비 운영법'],['briefcase','경력 개발','수업 포트폴리오·강의 소개자료 제작'],['ticket-percent','회원 혜택','교육 프로그램 할인, 모임 우선 신청']],
   signature:['서당 수업 클리닉','수학 강사들이 모여 ‘아무리 설명해도 이해하지 못하는 학생을 어떻게 지도할까?’ 같은 주제로 실제 수업을 시연하고 서로 피드백하는 프로그램이에요.'],
-  events:[{id:'t1',type:'수업 클리닉',title:'이해가 느린 학생, 어떻게 설명할까 (중등 수학)',d:6,time:'19:30~21:00',place:'봉담 서당 세미나실',cap:8,taken:5},
-   {id:'t2',type:'강사 교류',title:'영어 내신 교재 활용법 나눔',d:13,time:'20:00~21:30',place:'온라인 (Zoom)',cap:20,taken:11},
-   {id:'t3',type:'경력 개발',title:'10분 시범강의 포트폴리오 만들기',d:20,time:'19:00~21:00',place:'봉담 서당 세미나실',cap:10,taken:10}],
+  types:['수업 클리닉','강사 교류','수업 교육','경력 개발','실무 자료 설명회'],
+  // 처음 실행할 때 S.clubEvents 로 옮기는 샘플 (이후는 관리자가 등록)
+  seedEvents:[{id:'t0',type:'수업 교육',title:'학생 수준별 질문 설계 워크숍',d:-24,time:'19:30~21:00',place:'봉담 서당 세미나실',cap:10,status:'마감'},
+   {id:'t1',type:'수업 클리닉',title:'이해가 느린 학생, 어떻게 설명할까 (중등 수학)',d:6,time:'19:30~21:00',place:'봉담 서당 세미나실',cap:8,desc:'10분 수업을 시연하고 동료 강사·서당 평가위원에게 피드백을 받아요.'},
+   {id:'t2',type:'강사 교류',title:'영어 내신 교재 활용법 나눔',d:13,time:'20:00~21:30',place:'온라인 (Zoom)',cap:20},
+   {id:'t3',type:'경력 개발',title:'10분 시범강의 포트폴리오 만들기',d:20,time:'19:00~21:00',place:'봉담 서당 세미나실',cap:2}],
   files:[['file-text','학부모 상담 대화 예시 20선','PDF · 12쪽'],['file-spreadsheet','시험 대비 4주 운영표','XLSX'],['file-text','학생 수준별 질문 설계 가이드','PDF · 8쪽'],['file-video','시범강의 잘된 사례 해설','영상 · 18분']],
   perks:['서당 교육 프로그램 20% 할인','클리닉·모임 우선 신청 (일반 공개 3일 전)','강의 소개자료 1회 첨삭']},
  academy:{name:'서당 원장 클럽',icon:'school',who:'원장',cta:'원장으로 이용하기',price:29000,
@@ -768,9 +810,11 @@ const CLUBS={
    ['network','원장 네트워크','지역 학원장 정기 모임 및 사례 공유'],['newspaper','실무 정보','학원 운영·교육정책·노무 관련 정보'],['ticket-percent','회원 혜택','별도 프로그램 교육 할인, 상담 우선 예약']],
   signature:['서당 원장 라운드테이블','매월 한 번, 원장들이 실제 겪는 운영 문제를 가져와 함께 해결책을 논의하는 모임이에요.'],
   rule:'경쟁 학원의 학생 정보나 수강료 담합으로 이어질 수 있는 내용은 공유하지 않아요.',
-  events:[{id:'a1',type:'라운드테이블',title:'이달의 원장 라운드테이블 · 신입 강사 첫 달 관리',d:4,time:'10:30~12:00',place:'봉담 서당 세미나실',cap:12,taken:7},
-   {id:'a2',type:'원장 교육',title:'강사 면접, 30분 안에 확인할 것들',d:11,time:'14:00~15:30',place:'온라인 (Zoom)',cap:30,taken:14},
-   {id:'a3',type:'인력 관리 상담',title:'노무사 1:1 상담 (근로계약·퇴직금)',d:18,time:'13:00~17:00 · 30분씩',place:'봉담 서당 상담실',cap:8,taken:8}],
+  types:['라운드테이블','원장 교육','인력 관리 상담','원장 네트워크','실무 정보 설명회'],
+  seedEvents:[{id:'a0',type:'라운드테이블',title:'지난달 라운드테이블 · 학부모 상담 민원 대응',d:-27,time:'10:30~12:00',place:'봉담 서당 세미나실',cap:12,status:'마감'},
+   {id:'a1',type:'라운드테이블',title:'이달의 원장 라운드테이블 · 신입 강사 첫 달 관리',d:4,time:'10:30~12:00',place:'봉담 서당 세미나실',cap:12,desc:'원장님이 겪은 사례를 한 가지씩 가져와 함께 해결책을 찾아요.'},
+   {id:'a2',type:'원장 교육',title:'강사 면접, 30분 안에 확인할 것들',d:11,time:'14:00~15:30',place:'온라인 (Zoom)',cap:30},
+   {id:'a3',type:'인력 관리 상담',title:'노무사 1:1 상담 (근로계약·퇴직금)',d:18,time:'13:00~17:00 · 30분씩',place:'봉담 서당 상담실',cap:2}],
   files:[['file-text','채용 면접 질문지 (공통 + 수학·영어)','PDF · 10쪽'],['file-check','학원 운영 월간 체크리스트','PDF · 4쪽'],['file-text','강사 인수인계서 양식','DOCX'],['newspaper','교육정책 변화 요약 (학원 관련)','PDF · 6쪽']],
   perks:['서당 교육 프로그램 20% 할인','노무·인력 상담 우선 예약','라운드테이블 정기 좌석 보장']}
 };
@@ -779,6 +823,17 @@ const CLUB_DAYS=30;
 const membership=(loginId=S.user&&S.user.loginId)=>S.memberships.filter(m=>m.loginId===loginId).sort((a,b)=>b.until.localeCompare(a.until))[0]||null;
 const isMember=loginId=>{const m=membership(loginId);return !!m&&m.until>=today()};
 const kDate=d=>{const x=new Date(d+'T00:00:00');return `${x.getMonth()+1}월 ${x.getDate()}일 (${'일월화수목금토'[x.getDay()]})`};
+// 클럽 프로그램·신청 (DB club_events · club_applications 와 같은 역할)
+const SEAT_ST=['신청','확정','참석']; // 자리를 차지하는 신청 상태
+const evOf=id=>S.clubEvents.find(e=>e.id===id);
+const evApps=id=>S.clubApply.filter(a=>a.ev===id);
+const seats=id=>evApps(id).filter(a=>SEAT_ST.includes(a.status)).length;
+const evOpen=e=>e.status==='모집 중'&&e.date>=today()&&seats(e.id)<e.cap;
+const myApp=id=>S.clubApply.find(a=>a.ev===id&&a.loginId===S.user.loginId&&a.status!=='취소');
+// 회원에게 보이는 프로그램: 오늘 이후 + (취소됐어도 내가 신청했던 것)
+const memberEvents=k=>S.clubEvents.filter(e=>e.club===k&&e.date>=today()&&(e.status!=='취소'||(S.user&&myApp(e.id)))).sort((a,b)=>a.date.localeCompare(b.date));
+const ym=d=>d.slice(0,7), ymLabel=m=>`${+m.slice(0,4)}년 ${+m.slice(5,7)}월`;
+function ymAdd(m,n){const d=new Date(+m.slice(0,4),+m.slice(5,7)-1+n,1);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 const clubSig=c=>`<div class="csig">${ic('sparkles')}<div><b>대표 프로그램 · ${c.signature[0]}</b><p>${c.signature[1]}</p>${c.rule?`<p class="crule">${ic('shield-alert')}${c.rule}</p>`:''}</div></div>`;
 function clubView(k){
   const c=CLUBS[k], m=membership(), on=isMember();
@@ -788,14 +843,16 @@ function clubView(k){
     <p>${m?`${m.until}에 이용 기간이 끝났어요. 다시 결제하면 바로 이어서 이용할 수 있어요.`:`${c.who} 계정 중 결제한 회원만 프로그램 신청, 자료실, 회원 혜택을 이용할 수 있어요.`}</p>
     <button class="btn block-m" data-act="club-join">${ic('crown')}${m?'다시 가입하기':'클럽 가입하기'}</button></div>
    <div class="card"><h3>회원이 되면 받는 혜택</h3><ul class="cbens">${c.benefits.map(([i,t,x])=>`<li>${ic(i)}<div><b>${t}</b><span>${x}</span></div></li>`).join('')}</ul>${clubSig(c)}</div>
-   <div class="card"><h3>이달의 프로그램 미리보기</h3><ul class="plain cevents locked">${c.events.map(e=>`<li><div class="ce-m"><span class="b info">${e.type}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(addDays(today(),e.d))} · ${ic('lock')}장소·신청은 회원 공개</span></div></li>`).join('')}</ul></div>`;
+   <div class="card"><h3>이달의 프로그램 미리보기</h3>${memberEvents(k).length?`<ul class="plain cevents locked">${memberEvents(k).map(e=>`<li><div class="ce-m"><span class="b info">${esc(e.type)}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(e.date)} · ${ic('lock')}장소·신청은 회원 공개</span></div></li>`).join('')}</ul>`:'<p class="muted">다가오는 프로그램을 준비 중이에요.</p>'}</div>`;
   const left=Math.round((new Date(m.until)-new Date(today()))/864e5);
-  const applied=id=>S.clubApply.includes(S.user.loginId+':'+id);
+  const evs=memberEvents(k);
   return `<h2>${c.name}</h2><p class="lead">${c.tagline}</p>
-  <div class="card club-on">${ic(c.icon)}<div><b>${esc(S.user.name)}님은 ${c.name} 회원이에요</b><span>이용 기간 ${m.start} ~ ${m.until} · ${left?`${left}일 남음`:'오늘까지'}</span></div>${S.purchases.some(p=>p.orderId===m.orderId)?`<button class="btn sec sm" data-act="receipt" data-order="${esc(m.orderId)}">영수증</button>`:''}</div>
-  <div class="card"><h3>이달의 프로그램</h3><ul class="plain cevents">${c.events.map(e=>{const a=applied(e.id), rest=e.cap-e.taken-(a?1:0), full=!a&&rest<=0;
-    return `<li><div class="ce-m"><span class="b info">${e.type}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(addDays(today(),e.d))} ${e.time} · ${ic('map-pin')}${e.place}</span></div>
-     <div class="ce-a"><span class="muted">${a?'신청 완료':full?'정원 마감':`남은 자리 ${rest}`}</span>${a?`<button class="btn sm sec" data-act="club-apply" data-ev="${e.id}">신청 취소</button>`:`<button class="btn sm" data-act="club-apply" data-ev="${e.id}" ${full?'disabled':''}>${full?'마감':'신청'}</button>`}</div></li>`}).join('')}</ul>${clubSig(c)}</div>
+  <div class="card club-on">${ic(c.icon)}<div><b>${esc(S.user.name)}님은 ${c.name} 회원이에요</b><span>이용 기간 ${m.start} ~ ${m.until} · ${left?`${left}일 남음`:'오늘까지'}</span></div>${(p=>p?`<div class="row"><button class="btn sec sm" data-act="receipt" data-order="${esc(m.orderId)}">영수증</button>${p.refund&&p.refund.status==='requested'?badge('환불 요청'):refundBtn(p)}</div>`:'')(S.purchases.find(p=>p.orderId===m.orderId))}</div>
+  <div class="card"><h3>이달의 프로그램</h3>${evs.length?`<ul class="plain cevents">${evs.map(e=>{const ap=myApp(e.id), rest=e.cap-seats(e.id), open=evOpen(e);
+    const st=e.status==='취소'?'서당이 취소했어요':ap?{신청:'신청 접수 · 확정 대기',확정:'참가 확정',반려:'신청이 반려됐어요'}[ap.status]:!open?'신청 마감':`남은 자리 ${rest}`;
+    const btn=e.status==='취소'||(ap&&ap.status==='반려')?'':ap?`<button class="btn sm sec" data-act="club-apply" data-ev="${e.id}">신청 취소</button>`:`<button class="btn sm" data-act="club-apply" data-ev="${e.id}" ${open?'':'disabled'}>${open?'신청':'마감'}</button>`;
+    return `<li><div class="ce-m"><span class="b info">${esc(e.type)}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(e.date)} ${esc(e.time)} · ${ic('map-pin')}${esc(e.place)}</span>${e.desc?`<span class="muted">${esc(e.desc)}</span>`:''}</div>
+     <div class="ce-a"><span class="muted">${st}</span>${btn}</div></li>`}).join('')}</ul>`:'<p class="muted">다가오는 프로그램이 아직 없어요. 등록되면 알려 드릴게요.</p>'}${clubSig(c)}</div>
   <div class="grid g2" style="align-items:start">
    <div class="card"><h3>자료실</h3><ul class="plain cfiles">${c.files.map(([i,t,x])=>`<li>${ic(i)}<div><b>${t}</b><span class="muted">${x}</span></div><button class="btn sm sec" data-act="club-file">열기</button></li>`).join('')}</ul></div>
    <div class="card"><h3>회원 혜택</h3><ul class="plain cperks">${c.perks.map(x=>`<li>${ic('check')}${x}</li>`).join('')}</ul><p class="muted" style="margin:12px 0 0">혜택은 이용 기간 동안 적용돼요.</p></div></div>`;
@@ -808,6 +865,76 @@ function clubsTeaser(){
     <ul>${c.benefits.map(([,t,x])=>`<li><b>${t}</b><span>${x}</span></li>`).join('')}</ul>
     ${clubSig(c)}
     <div class="cf"><span>${ic('lock')}${c.who} 회원 전용 · ${won(c.price)} / ${CLUB_DAYS}일</span><button class="btn sm" data-act="club-pub" data-club="${k}">${c.cta}</button></div></article>`}).join('')}</div></section>`;
+}
+
+// ---------- 서버 연결 ----------
+// Spring 서버(server/)가 이 화면을 제공하면 실제 로그인(비밀번호·로그인 유지)을 쓴다.
+// GitHub Pages 데모·파일로 열면 /api/health 가 없으므로 지금처럼 샘플 로그인으로 동작한다.
+// 1단계: 계정·로그인·푸시만 서버. 학원·강사·매칭 데이터는 아직 이 브라우저의 샘플 데이터.
+const API={on:false,push:false,hint:''};
+const xsrf=()=>decodeURIComponent((document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]*)/)||[])[1]||'');
+async function api(path,{method='GET',body,retried}={}){
+  const headers={'Accept':'application/json'};
+  if(body!==undefined)headers['Content-Type']='application/json';
+  if(method!=='GET')headers['X-XSRF-TOKEN']=xsrf();
+  const res=await fetch('api/'+path,{method,headers,credentials:'same-origin',body:body===undefined?undefined:JSON.stringify(body)});
+  let data=null;try{data=await res.json()}catch(e){}
+  // 로그아웃·세션 교체 뒤에는 CSRF 토큰이 바뀐다 → 새 토큰을 받아 한 번만 다시 보낸다
+  if(res.status===403&&method!=='GET'&&!retried){await fetch('api/health',{credentials:'same-origin'}).catch(()=>{});return api(path,{method,body,retried:true})}
+  if(!res.ok){const err=new Error((data&&data.message)||'서버에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.');err.status=res.status;throw err}
+  return data;
+}
+async function apiInit(){
+  try{const r=await fetch('api/health',{credentials:'same-origin'});if(!r.ok)return;
+    const h=await r.json();if(h.mode!=='server')return;Object.assign(API,{on:true,push:!!h.push,pay:!!h.pay,hint:h.sampleHint||''})}catch(e){}
+}
+// 서버 계정 → 이 브라우저의 샘플 계정. 다른 기기에서 가입한 계정이면 빈 학원·강사 데이터를 만든다
+function localAccountFor(me){
+  let acc=S.accounts.find(a=>a.loginId===me.loginId);
+  if(acc) return acc;
+  if(me.role==='academy'){const aid=Math.max(0,...S.academies.map(x=>x.id))+1;
+    S.academies.push({id:aid,name:me.name.replace(/ 원장$/,'')+' 학원',region:REGION[0],type:'종합',status:'확인서 작성 전',bizNo:'',bizCheck:'확인 대기',phone:'',form:{version:0}});
+    acc={loginId:me.loginId,role:'academy',name:me.name,academyId:aid}}
+  else if(me.role==='teacher'){const tid=Math.max(0,...S.teachers.map(x=>x.id))+1;
+    S.teachers.push({id:tid,name:me.name,subject:SUBJ[0],grade:GRADE[0],region:REGION[0],career:'',strength:'',wish:'',status:'미신청',scores:null,result:null,basis:'',unverified:'',contact:'',corr:'',docs:[],agree:false,bgConsent:true});
+    acc={loginId:me.loginId,role:'teacher',name:me.name,teacherId:tid}}
+  else acc={loginId:me.loginId,role:me.role,name:me.name};
+  S.accounts.push(acc);return acc;
+}
+// 로그인 직후 공통 처리 (샘플·서버 로그인 모두)
+function enterAs(acc){
+  S.user={...acc};S.pub='home';
+  S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
+  // 메인의 '서당 클럽'에서 들어온 경우 클럽 탭으로
+  if(S.next){const w=S.next;S.next='';
+    if(CLUBS[acc.role]){S.tab='club';if(acc.role!==w)S.flash=`${CLUBS[w].name}은 ${CLUBS[w].who} 계정만 이용할 수 있어요. ${CLUBS[acc.role].name}으로 안내했어요.`}
+    else S.flash='서당 클럽은 강사·원장 계정만 이용할 수 있어요.'}
+  registerPush();
+}
+async function apiLogin(loginId,password,remember=true){
+  try{const me=await api('auth/login',{method:'POST',body:{loginId,password,remember}});API.me=me;enterAs(localAccountFor(me))}
+  catch(e){S.loginErr=e.message}
+  render();
+}
+
+// ---------- 앱(Flutter 웹뷰) 연결: 푸시 토큰 ----------
+// 앱은 페이지를 열 때마다 window.seodangOnPushToken(token, 'android'|'ios') 을 불러 준다.
+const AppBridge={inApp:false,token:'',platform:''};
+async function registerPush(){
+  if(!API.on||!S.user||!AppBridge.token)return;
+  try{await api('push/token',{method:'POST',body:{token:AppBridge.token,platform:AppBridge.platform}})}catch(e){}
+}
+window.seodangOnPushToken=(token,platform)=>{
+  const changed=token&&token!==AppBridge.token;Object.assign(AppBridge,{inApp:true,token:token||'',platform});
+  if(changed)registerPush();
+};
+async function pushTest(){
+  try{const r=await api('push/test',{method:'POST'});
+    if(!r.enabled){S.flash='서버에 Firebase 키가 없어 푸시를 보낼 수 없어요. (docs/08 Firebase 설정)';S.flashType='err'}
+    else if(!r.devices){S.flash='이 계정으로 로그인한 앱 기기가 없어요. 휴대폰 앱에서 로그인해 주세요.';S.flashType='err'}
+    else S.flash=`테스트 알림을 기기 ${r.sent}대에 보냈어요.${r.sent<r.devices?` (${r.devices-r.sent}대 실패)`:''}`}
+  catch(e){S.flash=e.message;S.flashType='err'}
+  S.noti=false;render();
 }
 
 // ---------- 결제 (토스페이먼츠 결제위젯) ----------
@@ -888,13 +1015,25 @@ function notis(){
       if(m.status==='신청') add('handshake','학원이 매칭을 신청했어요',`${a.name} · 수락 또는 거절해 주세요`,'prog');
       m.checks.filter(c=>c.status==='응답 대기'&&!c.teacherReply).forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답이 필요해요`,`${a.name} · ${c.due}까지`,'prog'));});
     const t=me(); if(t.corr) add('message-square','정정 요청이 접수됐어요','재평가 결과를 기다리는 중','ver');
-  } else {
+  }
+  // 클럽 회원: 내 신청 결과 (다가오는 프로그램만)
+  if(CLUBS[u.role]) S.clubApply.filter(a=>a.loginId===u.loginId).forEach(a=>{const e=evOf(a.ev);if(!e||e.date<today())return;
+    if(e.status==='취소'&&a.status!=='취소') add('calendar-x','클럽 프로그램이 취소됐어요',`${e.title} · ${kDate(e.date)}`,'club');
+    else if(a.status==='확정') add('calendar-check','클럽 프로그램 참가가 확정됐어요',`${e.title} · ${kDate(e.date)} ${e.time}`,'club');
+    else if(a.status==='반려') add('calendar-x','클럽 프로그램 신청이 반려됐어요',`${e.title} · 서당에 문의해 주세요`,'club')});
+  // 1:1 문의 답변 (7일 안)
+  S.inquiries.filter(q=>q.loginId===u.loginId&&q.status==='답변 완료'&&q.answeredAt>new Date(Date.now()-7*864e5).toISOString()).forEach(q=>add('message-square','1:1 문의에 답변이 왔어요',q.title,'sub:inquiry'));
+  if(u.role==='admin'||u.role==='manager'){
     const can=k=>TABS[u.role].some(([x])=>x===k);
+    if(can('check')) S.inquiries.filter(q=>q.status==='답변 대기').forEach(q=>add('message-circle-question','1:1 문의 답변 대기',`${q.loginId} · ${q.title}`,'check'));
+    if(can('audit')) S.purchases.filter(p=>p.refund&&p.refund.status==='requested').forEach(p=>add('receipt','환불 요청',`${p.loginId||academyLogin(p.academyId)} · ${p.orderName}`,'audit'));
     if(can('eval')) S.teachers.filter(t=>t.status==='신청'||t.status==='평가예정'||t.corr).forEach(t=>add('clipboard-check',t.corr?'정정 요청':t.status==='신청'?'검증 신청 접수':'시범강의 평가 예정',`${t.name} 강사(강사${t.id}) · ${t.grade} ${t.subject}`,'eval',t.id));
     if(can('match')) S.academies.filter(a=>a.status==='검토 중').forEach(a=>add('building-2','근무조건 확인서 검토',`${a.name} · v${a.form.version}`,'dash'));
     if(can('match')) S.matches.filter(m=>m.status==='강사 동의').forEach(m=>add('handshake','상담을 시작할 수 있어요',`${tOf(m.tid).name} 강사 ↔ ${aOf(rOf(m.rid).academyId).name}`,'match'));
     if(can('check')){S.matches.forEach(m=>m.checks.filter(c=>c.status==='응답 대기').forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답 대기`,`${tOf(m.tid).name} 강사 · 학원 ${c.academyReply?'완료':'대기'} · 강사 ${c.teacherReply?'완료':'대기'}`,'check')));
       S.complaints.filter(c=>c.status==='접수').forEach(c=>add('message-square-warning',`민원 ${c.no} 접수`,c.text,'check'));}
+    if(can('club')) S.clubEvents.filter(e=>e.status!=='취소'&&e.date>=today()).forEach(e=>{const w=evApps(e.id).filter(a=>a.status==='신청').length;
+      if(w) add('crown',`클럽 신청 ${w}건 확정 대기`,`${CLUBS[e.club].name} · ${e.title}`,'club')});
   }
   return L;
 }
@@ -907,37 +1046,41 @@ function receiptSheet(){
    <p class="muted" style="margin:16px 0 0">테스트 결제로 실제 청구되지 않았습니다. 세금계산서·현금영수증은 실결제 전환 후 발행됩니다.</p></div></section>`;
 }
 function notiPanel(){
-  const L=notis();
+  const L=notis(), r=readSet(), un=L.filter(n=>!r.has(notiKey(n))).length;
   return `<div class="noti-dim" data-act="noti"></div><section class="noti-panel" role="dialog" aria-label="알림">
-   <div class="noti-head"><b>알림</b><span class="cnt">${L.length}</span><button class="ib" data-act="noti" aria-label="닫기">${ic('x')}</button></div>
-   ${L.length?`<ul>${L.map(n=>`<li><button data-act="noti-go" data-tab="${n.tab}" ${n.sel?`data-sel="${n.sel}"`:''}>${ic(n.icon)}<div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div>${ic('chevron-right')}</button></li>`).join('')}</ul>`:`<p class="muted" style="padding:24px;text-align:center">새 알림이 없어요.</p>`}
+   <div class="noti-head"><b>알림</b><span class="cnt">${un}</span>${un?`<button class="lnk" data-act="noti-readall">모두 읽음</button>`:''}<button class="ib" data-act="noti-set" aria-label="알림 설정" title="알림 설정">${ic('settings')}</button><button class="ib" data-act="noti" aria-label="닫기">${ic('x')}</button></div>
+   ${API.on?`<div class="noti-test"><button class="btn sec sm" data-act="push-test">${ic('smartphone')}내 기기로 테스트 알림 보내기</button><span class="muted">${AppBridge.inApp?'이 기기는 앱으로 접속 중':'앱에서 로그인한 기기로 보내요'}</span></div>`:''}
+   ${L.length?`<ul>${L.map(n=>`<li class="${r.has(notiKey(n))?'read':''}"><button data-act="noti-go" data-key="${esc(notiKey(n))}" data-tab="${n.tab}" ${n.sel?`data-sel="${n.sel}"`:''}>${ic(n.icon)}<div><b>${esc(n.title)}</b><span>${esc(n.sub)}</span></div>${ic('chevron-right')}</button></li>`).join('')}</ul>`:`<p class="muted" style="padding:24px;text-align:center">새 알림이 없어요.</p>`}
   </section>`;
 }
 const bell = n => `<button class="ib bell" data-act="noti" aria-label="알림 ${n}개">${ic('bell')}${n?`<i>${n>9?'9+':n}</i>`:''}</button>`;
 
 // ---------- 화면 ----------
+const PUBVIEWS={login:()=>loginView(),signup:()=>signupView(),'find-id':()=>findIdView(),'reset-pw':()=>resetPwView(),terms:()=>pubPage(termsBody(),false),notice:()=>pubPage(noticeBody(),false),'404':()=>pubPage(notFoundBody(),true),home:()=>landingView()};
+const PUB_TITLE={login:'로그인',signup:'회원가입','find-id':'아이디 찾기','reset-pw':'비밀번호 찾기',terms:'약관 및 정책',notice:'공지·FAQ','404':'페이지 없음'};
 function render(){
   const app=document.getElementById('app');
-  if(!S.user){app.innerHTML=S.pub==='login'?loginView():S.pub==='signup'?signupView():landingView();document.body.classList.toggle('has-bnav',S.pub==='home');syncRoute();save();icons();return}
+  if(!S.user){app.innerHTML=(PUBVIEWS[S.pub]||landingView)();document.body.classList.toggle('has-bnav',S.pub==='home');syncRoute();save();icons();return}
   const flash=S.flash?`<div class="flash ${S.flashType==='err'?'err':''}">${ic(S.flashType==='err'?'circle-alert':'circle-check')}${esc(S.flash)}</div>`:''; S.flash='';S.flashType='';
   const tabs=TABS[S.user.role];
   if(!tabs.some(([k])=>k===S.tab)) S.tab=tabs[0][0];
   const vr=VIEW_ROLE[S.user.role];
   const inFlow=(vr==='academy'||vr==='teacher')&&!!S.checkout;
-  const body=inFlow?checkoutView():VIEWS[vr+':'+S.tab]();
-  const title=inFlow?(S.checkout.kind==='club'?'클럽 가입':'열람권 결제'):(tabs.find(([k])=>k===S.tab)||[])[1];
+  const sp=!inFlow&&S.sub&&SUBVIEWS[S.sub]?S.sub:null; if(!sp)S.sub=null;
+  const body=inFlow?checkoutView():sp?SUBVIEWS[sp]():VIEWS[vr+':'+S.tab]();
+  const title=inFlow?(S.checkout.kind==='club'?'클럽 가입':'열람권 결제'):sp?SUB_TITLE[sp]:(tabs.find(([k])=>k===S.tab)||[])[1];
   const sub=S.user.role==='academy'?(myAcademy()||{}).name:S.user.name;
-  const nc=notis().length;
+  const nc=unreadCount();
   app.innerHTML=`<div class="shell ${inFlow?'flow':''}">
   ${gbar()}
   <header class="appbar">
-    ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
+    ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:sp?`<button class="ib" data-act="sub" data-to="${sp.startsWith('me-')||['notice','inquiry','terms'].includes(sp)?'me':''}" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
     <div class="ttl"><b>${esc(title)}</b><span>${esc(sub)} · ${esc(S.user.loginId)}</span></div>
-    ${inFlow?'':bell(nc)}<button class="ib" data-act="logout" aria-label="로그아웃">${ic('log-out')}</button>
+    ${inFlow?'':bell(nc)}<button class="ib ${sp==='me'?'on':''}" data-act="sub" data-to="me" aria-label="내 정보">${ic('circle-user-round')}</button>
   </header>
   <main>${flash}${body}${siteFoot()}</main>
-  ${tabs.length>1?`<nav class="bnav" style="--n:${tabs.length}">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k?'on':''}" ${S.tab===k?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`).join('')}</nav>`:''}
-  ${S.noti?notiPanel():''}${S.receipt?receiptSheet():''}
+  ${tabs.length>1?`<nav class="bnav" style="--n:${tabs.length}">${tabs.map(([k,n])=>`<button data-act="tab" data-tab="${k}" class="${S.tab===k&&!sp?'on':''}" ${S.tab===k&&!sp?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`).join('')}</nav>`:''}
+  ${S.noti?notiPanel():''}${S.receipt?receiptSheet():''}${S.refundOpen?refundSheet():''}
   <div class="offline" role="status">${ic('wifi-off')}오프라인이에요 · 연결되면 다시 동작해요</div></div>`;
   // 모바일에서 표를 카드처럼 보이게: 셀 내용을 한 덩어리로 감싼다 (td::before 에 라벨)
   app.querySelectorAll('table.rt td').forEach(td=>{const v=document.createElement('div');v.className='v';while(td.firstChild)v.appendChild(td.firstChild);td.appendChild(v)});
@@ -956,10 +1099,13 @@ let replaceNext=true;
 function currentRoute(){
   if(!S.user) return S.pub==='home'?'/':'/'+S.pub;
   if(S.checkout) return S.checkout.kind==='club'?'/club/checkout':'/find/checkout/'+S.checkout.tid;
+  if(S.sub) return '/'+(S.sub.startsWith('me-')?'me/'+S.sub.slice(3):S.sub);
   if(S.tab==='eval'&&S.selT) return '/eval/'+S.selT;
   return '/'+S.tab;
 }
-const pubFromHash=()=>{const p=location.hash.replace(/^#\//,'').split('/')[0];return ['login','signup'].includes(p)?p:'home'};
+const pubFromHash=()=>{const p=location.hash.replace(/^#\//,'').split('/')[0];return !p?'home':PUBVIEWS[p]?p:'404'};
+// 로그인 후 주소 → 하위 화면 (#/me, #/me/pw, #/notice …). 탭도 하위 화면도 아니면 404
+const subFromPath=p=>p[0]==='me'?(p[1]?'me-'+p[1]:'me'):SUBVIEWS[p[0]]&&p[0]!=='404'?p[0]:null;
 function syncRoute(){
   const h='#'+currentRoute();
   if(location.hash!==h) history[replaceNext?'replaceState':'pushState'](null,'',h);
@@ -970,12 +1116,14 @@ window.addEventListener('popstate',()=>{
   if(!S.user){S.pub=pubFromHash();replaceNext=true;render();window.scrollTo(0,0);return}
   const tabs=TABS[S.user.role].map(([k])=>k);
   S.checkout=null;
+  S.sub=null;
   if(tabs.includes(p[0])){S.tab=p[0];S.selT=p[0]==='eval'&&p[1]?+p[1]:null}
+  else if(p[0]&&!['find','club'].includes(p[0])) S.sub=subFromPath(p)||'404';
   replaceNext=true;render();
 });
 
 function loginView(){
-  const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:S.next?`<div class="flash">${ic('crown')}${esc(CLUBS[S.next].name)}은 ${CLUBS[S.next].who} 계정으로 로그인한 뒤 가입할 수 있어요.</div>`:''; S.loginErr='';
+  S.flashLogin=S.flashLogin||'';const err=S.loginErr?`<div class="flash err">${ic('circle-alert')}${esc(S.loginErr)}</div>`:S.flashLogin?`<div class="flash">${ic('circle-check')}${esc(S.flashLogin)}</div>`:S.next?`<div class="flash">${ic('crown')}${esc(CLUBS[S.next].name)}은 ${CLUBS[S.next].who} 계정으로 로그인한 뒤 가입할 수 있어요.</div>`:''; S.loginErr='';S.flashLogin='';
   const acc=S.accounts;
   const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}${isMember(a.loginId)?' · 클럽 회원':''}</span></li>`;
   return pubPage(`<form class="card auth" data-form="login">
@@ -983,9 +1131,12 @@ function loginView(){
     <h2>로그인</h2><p class="lead">아이디에 따라 학원·강사·운영 화면이 열려요.</p>
     ${err}
     <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 관리자1" autocomplete="username" autocapitalize="off" autofocus>
-    <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" placeholder="아무 값이나 입력하세요" autocomplete="current-password">
+    <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" ${API.on?'required placeholder="비밀번호"':'placeholder="아무 값이나 입력하세요"'} autocomplete="current-password">
+    ${API.on&&API.hint?`<p class="hint">${esc(API.hint)}</p>`:''}
+    ${AppBridge.inApp?'':`<label class="chk" style="margin-top:10px"><input type="checkbox" name="remember" checked><span>로그인 상태 유지 <em class="muted">(공용 PC에서는 끄세요)</em></span></label>`}
     <button class="btn block">로그인</button>
-    <p class="sufoot">아직 회원이 아니신가요? <button type="button" class="lnk" data-act="pub" data-to="signup">회원가입</button></p>
+    <p class="sufoot"><button type="button" class="lnk" data-act="pub" data-to="find-id">아이디 찾기</button> · <button type="button" class="lnk" data-act="pub" data-to="reset-pw">비밀번호 찾기</button> · <button type="button" class="lnk" data-act="pub" data-to="signup">회원가입</button></p>
+    <p class="hint">${API.on?'비밀번호를 5번 틀리면 10분 동안 로그인할 수 없어요.':'샘플 모드: 비밀번호 확인·잠금은 서버 모드에서 동작해요.'}</p>
     <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
      <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · '+aOf(a.academyId).status))).join('')}</ul>
      <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
@@ -1001,10 +1152,10 @@ const PUB_NAV=[['jobs','구인 학원','briefcase'],['teachers','강사 현황',
 function gbar(){
   const u=S.user; let nav, right, home;
   if(u){
-    const flow=!!S.checkout; home=`data-act="tab" data-tab="${TABS[u.role][0][0]}"`;
+    const flow=!!S.checkout||!!S.sub; home=`data-act="tab" data-tab="${TABS[u.role][0][0]}"`;
     nav=TABS[u.role].map(([k,n])=>{const on=S.tab===k&&!flow;return `<button data-act="tab" data-tab="${k}" class="${on?'on':''}" ${on?'aria-current="page"':''}>${ic(TAB_ICON[k])}<span>${n}</span></button>`}).join('');
     const sub=u.role==='academy'?(myAcademy()||{}).name:u.name;
-    right=`${bell(notis().length)}<div class="gacct" title="${esc(sub)} · ${ROLE_NAME[u.role]}"><span class="av">${ic(ROLE_ICON[u.role])}</span><div><b>${esc(sub)}</b><span>${ROLE_NAME[u.role]} · ${esc(u.loginId)}</span></div></div><button class="ib" data-act="logout" aria-label="로그아웃" title="로그아웃">${ic('log-out')}</button>`;
+    right=`${bell(unreadCount())}<button class="gacct ${S.sub==='me'?'on':''}" data-act="sub" data-to="me" title="내 정보 · ${esc(sub)}"><span class="av">${ic(ROLE_ICON[u.role])}</span><div><b>${esc(sub)}</b><span>${ROLE_NAME[u.role]} · ${esc(u.loginId)}</span></div></button><button class="ib" data-act="logout" aria-label="로그아웃" title="로그아웃">${ic('log-out')}</button>`;
   } else {
     home=`data-act="pub" data-to="home"`;
     nav=PUB_NAV.map(([id,n,i])=>`<button data-act="pubscroll" data-target="${id}">${ic(i)}<span>${n}</span></button>`).join('');
@@ -1017,7 +1168,7 @@ function gbar(){
 function pubAppbar(){
   const sub=S.pub!=='home';
   return `<header class="appbar">${sub?`<button class="ib" data-act="pub" data-to="home" aria-label="메인으로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
-   <div class="ttl"><b>${sub?(S.pub==='login'?'로그인':'회원가입'):'서당 동행'}</b><span>${sub?'서당 동행':'검증된 강사 매칭 · 봉담·화성'}</span></div>
+   <div class="ttl"><b>${sub?(PUB_TITLE[S.pub]||'서당 동행'):'서당 동행'}</b><span>${sub?'서당 동행':'검증된 강사 매칭 · 봉담·화성'}</span></div>
    ${sub?'':`<button class="btn sm" data-act="pub" data-to="login">로그인</button>`}</header>`;
 }
 function pubBnav(){
@@ -1026,8 +1177,11 @@ function pubBnav(){
   return `<nav class="bnav" style="--n:5">${items.map(([id,n,i],x)=>`<button data-act="pubscroll" data-target="${id}" class="${x?'':'on'}">${ic(i)}<span>${n}</span></button>`).join('')}<button data-act="pub" data-to="login">${ic('log-in')}<span>로그인</span></button></nav>`;
 }
 const siteFoot=()=>`<footer class="gfoot"><div><b>서당 동행</b>검증된 강사와 확인된 근무조건으로 학원과 강사를 연결합니다 · 봉담·화성</div>
+ <nav class="flinks"><button class="lnk" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="terms">이용약관</button><button class="lnk strong" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="privacy">개인정보처리방침</button><button class="lnk" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="refund">환불 정책</button><button class="lnk" data-act="${S.user?'sub':'pub'}" data-to="notice">공지·FAQ</button></nav>
+ <p class="bizinfo">${BIZINFO.name} · 대표 ${BIZINFO.ceo} · 사업자등록번호 ${BIZINFO.bizNo} · 통신판매업 ${BIZINFO.mailOrder}<br>${BIZINFO.addr} · ${BIZINFO.cs} · ${BIZINFO.email} · ${BIZINFO.privacy}</p>
  <p>샘플 화면 · 가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p></footer>`;
-const pubPage=(body,narrow)=>`<div class="pub">${gbar()}${pubAppbar()}<main class="pubmain ${narrow?'narrow':''}">${body}${siteFoot()}</main>${pubBnav()}</div>`;
+const pubPage=(body,narrow)=>{const fl=S.flashPub?`<div class="flash">${ic('circle-check')}${esc(S.flashPub)}</div>`:'';S.flashPub='';
+  return `<div class="pub">${gbar()}${pubAppbar()}<main class="pubmain ${narrow?'narrow':''}">${fl}${body}${siteFoot()}</main>${pubBnav()}</div>`};
 function pubStats(){
   const ok=id=>(aOf(id)||{}).status==='제휴 승인';
   const open=S.requests.filter(r=>r.status!=='채용 확정'&&ok(r.academyId));
@@ -1178,13 +1332,17 @@ function signupView(){
      <div><label for="su-tg">학년</label><select id="su-tg" name="grade">${opts(GRADE,'중등')}</select></div>
      <div><label for="su-tr">희망 지역</label><select id="su-tr" name="tregion">${opts(REGION,'봉담')}</select></div></div>
    </fieldset>
-   <label for="su-ph">연락처</label><input id="su-ph" type="tel" name="phone" required placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" pattern="01[0-9]-?[0-9]{3,4}-?[0-9]{4}">
+   ${pvBox('signup','휴대폰 본인인증 (필수 · 한 사람 한 계정)')}
    <div class="grid g2 tight one-m"><div><label for="su-pw">비밀번호</label><input id="su-pw" type="password" name="pw" required minlength="8" placeholder="8자 이상" autocomplete="new-password"></div>
     <div><label for="su-pw2">비밀번호 확인</label><input id="su-pw2" type="password" name="pw2" required placeholder="한 번 더 입력" autocomplete="new-password"></div></div>
-   <p class="hint">샘플이라 비밀번호는 저장하지 않아요.</p>
+   <p class="hint">${API.on?'비밀번호는 원문을 저장하지 않고 암호화(해시)해서 서버에 저장해요.':'샘플이라 비밀번호는 저장하지 않아요.'}</p>
    <div class="agree">
-    ${agree('terms','서비스 이용약관에 동의합니다')}
-    ${agree('privacy','개인정보 수집·이용에 동의합니다')}
+    <label class="chk all"><input type="checkbox" data-agree-all> <span><b>전체 동의</b> (선택 항목 포함)</span></label>
+    ${agree('age','만 14세 이상입니다')}
+    ${agree('terms',`서비스 이용약관에 동의합니다 <button type="button" class="lnk" data-act="terms-pop" data-k="terms">보기</button>`)}
+    ${agree('privacy',`개인정보 수집·이용에 동의합니다 <button type="button" class="lnk" data-act="terms-pop" data-k="privacy">보기</button>`)}
+    <label class="chk"><input type="checkbox" name="marketing" data-mk> <span><b>[선택]</b> 혜택·행사 정보(광고성) 앱 알림·문자 수신</span></label>
+    <label class="chk"><input type="checkbox" name="night" data-night disabled> <span><b>[선택]</b> 야간(오후 9시~오전 8시)에도 광고성 알림 받기</span></label>
     <fieldset data-for="academy" ${r==='academy'?'':'hidden disabled'}>${agree('settle','근무조건 확인서를 제출하고, 강사 입사 후 7·14·30일 정착 점검에 참여합니다')}</fieldset>
     <fieldset data-for="teacher" ${r==='teacher'?'':'hidden disabled'}>${agree('bg','채용 시 학원이 법에 따라 성범죄·아동학대 범죄경력을 조회하는 데 동의합니다 (조회 결과는 서당에 저장되지 않아요)')}</fieldset>
    </div>
@@ -1287,8 +1445,8 @@ const VIEWS = {
   const ps=myPurchases();
   return `<h2>결제 내역</h2><p class="lead">프로필 열람권과 원장 클럽 결제 내역입니다. 토스페이먼츠 테스트 결제이며 실제 청구는 없습니다.</p>
   ${ps.length?`<div class="card"><div class="tablewrap"><table class="rt"><tr><th>승인 시각</th><th>상품</th><th>금액</th><th>결제수단</th><th>상태</th><th>주문번호</th></tr>
-  ${ps.map(p=>`<tr><td data-label="승인 시각">${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</td><td data-label="상품"><button class="linkbtn" data-act="receipt" data-order="${esc(p.orderId)}"><b>${esc(p.orderName)}</b>${ic('chevron-right')}</button></td><td data-label="금액">${won(p.amount)}</td><td data-label="결제수단">${esc(p.method)}</td><td data-label="상태">${badge(p.status==='DONE'?'결제 완료':p.status)}</td><td data-label="주문번호" class="muted" style="word-break:break-all">${esc(p.orderId)}</td></tr>`).join('')}</table></div>
-  <p class="sum">합계 <b>${won(ps.reduce((a,p)=>a+p.amount,0))}</b> · ${ps.length}건</p></div>`
+  ${ps.map(p=>`<tr><td data-label="승인 시각">${esc(new Date(p.approvedAt).toLocaleString('ko-KR'))}</td><td data-label="상품"><button class="linkbtn" data-act="receipt" data-order="${esc(p.orderId)}"><b>${esc(p.orderName)}</b>${ic('chevron-right')}</button></td><td data-label="금액">${won(p.amount)}</td><td data-label="결제수단">${esc(p.method)}</td><td data-label="상태"><div class="row">${refundBadge(p)}${refundBtn(p)}</div>${p.refund&&p.refund.answer?`<span class="muted">${esc(p.refund.answer)}</span>`:''}</td><td data-label="주문번호" class="muted" style="word-break:break-all">${esc(p.orderId)}</td></tr>`).join('')}</table></div>
+  <p class="sum">합계 <b>${won(ps.filter(p=>p.status==='DONE').reduce((a,p)=>a+p.amount,0))}</b> · ${ps.length}건${ps.some(p=>p.status==='CANCELED')?' (환불 제외)':''}</p></div>`
   :empty('receipt','결제 내역이 없어요','후보 찾기에서 강사 프로필 열람권을 결제해 보세요.')}`;
 },
 'academy:club':()=>clubView('academy'),
@@ -1408,9 +1566,11 @@ const VIEWS = {
    <td data-label="학원 응답">${esc(c.academyReply)||'<span class="muted">-</span>'}</td><td data-label="강사 응답">${esc(c.teacherReply)||'<span class="muted">-</span>'}</td>
    <td data-label="서당 조치"><form data-form="action" data-id="${m.id}" data-idx="${i}" class="inline"><input type="text" name="text" value="${esc(c.action)}" placeholder="조치 내용"><button class="btn sm sec">저장</button></form></td></tr>`).join('')}</table></div>
    <form data-form="mresult" data-id="${m.id}" class="row" style="margin-top:12px"><span class="muted">30일 결과</span><select name="result" style="width:auto">${opts(['정착 점검 중','종료','연장','재추천'],m.status)}</select><button class="btn sm">결과 저장</button></form></div>`}).join(''):empty('calendar-check','채용이 확정된 매칭이 아직 없어요')}
-  <div class="card"><h3>민원 접수 내역</h3>${S.complaints.length?`<div class="tablewrap"><table class="rt"><tr><th>접수번호</th><th>접수자</th><th>내용</th><th>상태</th></tr>${S.complaints.map(c=>`<tr><td data-label="접수번호"><b>${c.no}</b></td><td data-label="접수자">${esc(c.by)}</td><td data-label="내용">${esc(c.text)}</td><td data-label="상태">${badge(c.status)}${c.status==='접수'?` <button class="btn sm" data-act="c-done" data-no="${c.no}">처리 완료</button>`:''}</td></tr>`).join('')}</table></div>`:'<p class="muted">접수된 민원이 없습니다.</p>'}</div>`;
+  <div class="card"><h3>민원 접수 내역</h3>${S.complaints.length?`<div class="tablewrap"><table class="rt"><tr><th>접수번호</th><th>접수자</th><th>내용</th><th>상태</th></tr>${S.complaints.map(c=>`<tr><td data-label="접수번호"><b>${c.no}</b></td><td data-label="접수자">${esc(c.by)}</td><td data-label="내용">${esc(c.text)}</td><td data-label="상태">${badge(c.status)}${c.status==='접수'?` <button class="btn sm" data-act="c-done" data-no="${c.no}">처리 완료</button>`:''}</td></tr>`).join('')}</table></div>`:'<p class="muted">접수된 민원이 없습니다.</p>'}</div>${inquiryAdminCard()}`;
 },
-'admin:audit':()=>`<h2>권한·로그</h2><p class="lead">역할별 열람 범위와 활동 기록입니다. (연락처 공개 시점은 정책 확정 전이라 샘플로 표시)</p>
+'admin:club':()=>clubAdminView(),
+'admin:audit':()=>opsView(),
+'admin:perm':()=>`<p class="lead">역할별 열람 범위입니다. (연락처 공개 시점은 정책 확정 전이라 샘플로 표시)</p>
   <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${['academy','teacher','admin','manager'].map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
   <div class="card"><h3>역할별 공개 범위</h3><div class="tablewrap"><table class="wide">
    <tr><th>정보</th><th>방문자</th><th>강사(본인)</th><th>학원</th><th>관리자·평가자</th></tr>
@@ -1419,9 +1579,66 @@ const VIEWS = {
    <tr><td>제출 서류 (졸업·성적증명서 등)</td><td>없음</td><td>업로드·삭제</td><td>없음</td><td>열람</td></tr>
    <tr><td>강사 상세 평가서</td><td>없음</td><td>본인 결과 열람·정정 요청</td><td>평가 점수·적합성 카드 열람 (근거 상세 제외)</td><td>열람·수정</td></tr>
    <tr><td>다른 학원의 요청·매칭</td><td>없음</td><td>없음</td><td>없음 (소속 학원만)</td><td>열람·수정</td></tr>
-   <tr><td>민원 내부 처리 내역</td><td>없음</td><td>없음</td><td>없음</td><td>열람·수정</td></tr></table></div></div>
-  <div class="card"><h3>활동 로그</h3>${logTable(50)}</div>`
+   <tr><td>민원 내부 처리 내역</td><td>없음</td><td>없음</td><td>없음</td><td>열람·수정</td></tr></table></div></div>`
 };
+
+// ---------- 클럽 관리 (관리자 전용): 이달의 프로그램 등록·수정 + 신청 접수 관리 ----------
+function clubAdminView(){
+  const cm=S.cm; if(!cm.month) cm.month=ym(today());
+  const c=CLUBS[cm.club];
+  const evs=S.clubEvents.filter(e=>e.club===cm.club&&ym(e.date)===cm.month).sort((a,b)=>a.date.localeCompare(b.date));
+  const apps=evs.flatMap(e=>evApps(e.id)), wait=apps.filter(a=>a.status==='신청').length;
+  const seatSum=evs.filter(e=>e.status!=='취소').reduce((n,e)=>n+seats(e.id),0), capSum=evs.filter(e=>e.status!=='취소').reduce((n,e)=>n+e.cap,0);
+  const members=S.memberships.filter(m=>m.club===cm.club&&m.until>=today()).length;
+  const sel=cm.sel&&evOf(cm.sel)&&evOf(cm.sel).club===cm.club?evOf(cm.sel):null;
+  const stat=(n,l,i)=>`<div class="stat">${ic(i)}<b>${n}</b><span>${l}</span></div>`;
+  return `<h2>클럽 관리</h2><p class="lead">강사·원장 클럽의 이달의 프로그램을 등록하고, 회원 신청을 확정·반려하고 참석을 기록해요. 회원 화면에는 바로 반영돼요.</p>
+  <div class="row" style="margin-bottom:16px;justify-content:space-between">
+   <div class="chips">${['academy','teacher'].map(k=>`<button class="fchip ${cm.club===k?'on':''}" data-act="cm-club" data-k="${k}">${ic(CLUBS[k].icon)}${CLUBS[k].name}</button>`).join('')}</div>
+   <div class="row"><button class="ib" data-act="cm-month" data-d="-1" aria-label="이전 달">${ic('chevron-left')}</button><b>${ymLabel(cm.month)}</b><button class="ib" data-act="cm-month" data-d="1" aria-label="다음 달">${ic('chevron-right')}</button>
+    <button class="btn sm" data-act="cm-new">${ic('plus')}프로그램 등록</button></div></div>
+  <div class="grid g4 stats" style="margin-bottom:16px">${stat(evs.filter(e=>e.status!=='취소').length,'이달 프로그램','calendar-days')}${stat(wait,'확정 대기 신청','inbox')}${stat(capSum?`${seatSum}/${capSum}`:'0','신청 / 정원','users')}${stat(members,'지금 이용 중인 회원','crown')}</div>
+  ${cm.edit?clubEvForm(cm.edit==='new'?null:evOf(cm.edit),c):''}
+  <div class="card"><h3>${ymLabel(cm.month)} · ${c.name} 프로그램</h3>${evs.length?`<div class="tablewrap"><table class="rt"><tr><th>날짜</th><th>유형</th><th>프로그램</th><th>장소</th><th>신청/정원</th><th>상태</th><th>관리</th></tr>
+   ${evs.map(e=>{const n=seats(e.id),w=evApps(e.id).filter(a=>a.status==='신청').length,past=e.date<today();return `<tr class="${sel&&sel.id===e.id?'on':''}">
+    <td data-label="날짜">${kDate(e.date)}<br><span class="muted">${esc(e.time)}</span></td><td data-label="유형">${badge2(e.type)}</td><td data-label="프로그램"><b>${esc(e.title)}</b></td><td data-label="장소">${esc(e.place)}</td>
+    <td data-label="신청/정원"><b>${n}</b> / ${e.cap}${w?` <span class="b warn">대기 ${w}</span>`:''}</td><td data-label="상태">${badge(past&&e.status!=='취소'?'종료':e.status==='모집 중'&&n>=e.cap?'정원 마감':e.status)}</td>
+    <td data-label="관리"><div class="row"><button class="btn sm ${sel&&sel.id===e.id?'':'sec'}" data-act="cm-sel" data-ev="${e.id}">신청자 ${evApps(e.id).length}</button>${e.status!=='취소'?`<button class="btn sm sec" data-act="cm-edit" data-ev="${e.id}">수정</button>`:''}
+     ${e.status==='모집 중'&&!past?`<button class="btn sm sec" data-act="cm-close" data-ev="${e.id}">마감</button>`:''}${e.status==='마감'&&!past?`<button class="btn sm sec" data-act="cm-open" data-ev="${e.id}">재개</button>`:''}
+     ${e.status!=='취소'&&!past?`<button class="btn sm sec" data-act="cm-cancel" data-ev="${e.id}">취소</button>`:''}</div></td></tr>`}).join('')}</table></div>`:`<p class="muted">${ymLabel(cm.month)}에 등록된 프로그램이 없어요. <b>프로그램 등록</b>으로 추가하세요.</p>`}</div>
+  ${sel?clubAppsCard(sel):''}`;
+}
+function clubEvForm(e,c){
+  const v=e||{type:c.types[0],title:'',date:addDays(today(),7),time:'19:30~21:00',place:'봉담 서당 세미나실',cap:10,desc:'',status:'모집 중'};
+  return `<div class="card"><h3>${e?'프로그램 수정':`새 프로그램 · ${c.name}`}</h3>
+  <form data-form="cm-ev" data-ev="${e?e.id:''}"><div class="grid g2 tight one-m">
+   <div><label>유형</label><select name="type">${opts([...new Set([...c.types,v.type])],v.type)}</select></div>
+   <div><label>프로그램 이름</label><input type="text" name="title" value="${esc(v.title)}" placeholder="예: 이달의 라운드테이블 · 신입 강사 관리" required></div>
+   <div><label>날짜</label><input type="date" name="date" value="${esc(v.date)}" required></div>
+   <div><label>시간</label><input type="text" name="time" value="${esc(v.time)}" placeholder="예: 19:30~21:00" required></div>
+   <div><label>장소</label><input type="text" name="place" value="${esc(v.place)}" placeholder="예: 봉담 서당 세미나실 / 온라인 (Zoom)" required></div>
+   <div><label>정원</label><input type="number" name="cap" value="${v.cap}" min="1" max="500" required></div></div>
+   <label>안내 (회원에게 보임 · 선택)</label><textarea name="desc" placeholder="준비물, 진행 방식 등">${esc(v.desc)}</textarea>
+   ${e?`<p class="muted" style="margin:8px 0 0">지금 신청 ${seats(e.id)}명 · 정원을 신청 수보다 적게 줄일 수 없어요.</p>`:''}
+   <div class="row" style="margin-top:12px"><button class="btn">${e?'수정 저장':'등록하기'}</button><button type="button" class="btn sec" data-act="cm-edit-close">닫기</button></div></form></div>`;
+}
+function clubAppsCard(e){
+  const apps=evApps(e.id).slice().sort((a,b)=>a.at.localeCompare(b.at)), past=e.date<=today();
+  const acc=id=>S.accounts.find(a=>a.loginId===id)||{name:id};
+  const wait=apps.filter(a=>a.status==='신청').length, room=e.cap-apps.filter(a=>['확정','참석'].includes(a.status)).length;
+  const act=a=>a.status==='신청'?`<button class="btn sm" data-act="cm-ap" data-ap="${a.id}" data-st="확정">확정</button><button class="btn sm sec" data-act="cm-ap" data-ap="${a.id}" data-st="반려">반려</button>`
+    :a.status==='확정'?(past?`<button class="btn sm" data-act="cm-ap" data-ap="${a.id}" data-st="참석">참석</button><button class="btn sm sec" data-act="cm-ap" data-ap="${a.id}" data-st="불참">불참</button>`:`<button class="btn sm sec" data-act="cm-ap" data-ap="${a.id}" data-st="신청">확정 취소</button>`)
+    :['반려','참석','불참'].includes(a.status)?`<button class="btn sm sec" data-act="cm-ap" data-ap="${a.id}" data-st="${a.status==='반려'?'신청':'확정'}">되돌리기</button>`:'';
+  return `<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">신청자 · ${esc(e.title)}</h3>
+   <div class="row">${wait?`<button class="btn sm" data-act="cm-confirm-all" data-ev="${e.id}" ${wait>room?'disabled':''}>대기 ${wait}명 모두 확정</button>`:''}${apps.length?`<button class="btn sm sec" data-act="cm-copy" data-ev="${e.id}">${ic('copy')}명단 복사</button>`:''}<button class="ib" data-act="cm-sel" data-ev="" aria-label="닫기">${ic('x')}</button></div></div>
+   <p class="muted">${kDate(e.date)} ${esc(e.time)} · ${esc(e.place)} · 정원 ${e.cap}명 중 확정 ${e.cap-room}명${wait>room?` · 남은 자리(${room})보다 대기가 많아요`:''}</p>
+   ${apps.length?`<div class="tablewrap"><table class="rt"><tr><th>신청자</th><th>회원 상태</th><th>신청 시각</th><th>상태</th><th>처리</th></tr>${apps.map(a=>`<tr>
+    <td data-label="신청자"><b>${esc(acc(a.loginId).name)}</b> <span class="muted">${esc(a.loginId)}</span></td>
+    <td data-label="회원 상태">${isMember(a.loginId)?badge('이용 중'):badge('기간 만료')}</td>
+    <td data-label="신청 시각">${esc(new Date(a.at).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}))}</td>
+    <td data-label="상태">${badge(a.status==='취소'?'본인 취소':a.status)}</td><td data-label="처리"><div class="row">${act(a)}</div></td></tr>`).join('')}</table></div>`:'<p class="muted">아직 신청자가 없어요.</p>'}
+   <p class="muted" style="margin:12px 0 0">확정·반려하면 회원 알림함에 표시돼요. (실제 푸시 발송은 서버 연결 후)</p></div>`;
+}
 
 // ---------- 조각 ----------
 // 채용 매칭 8단계 (PRD §4-3)
@@ -1570,12 +1787,335 @@ function logTable(n){
   return `<ul class="logs">${ls.map(l=>`<li><span class="t">${l.t}</span><div><b>${esc(l.text)}</b><span class="muted">${esc(l.actor)}</span></div></li>`).join('')}</ul>`;
 }
 
+// =====================================================================
+// 출시 필수 기능 (docs/09 기능 정의서 '누락 필수 기능' M-01~M-23, 앱 항목 제외)
+//   서버 모드: 계정·보안·결제는 Spring 서버 API (server/), 샘플 모드: 이 브라우저의 샘플 데이터
+// =====================================================================
+const TERMS_VERSION='2026-11-11';
+// 사이트 하단 사업자 정보 (전자상거래법 제10조). 실제 값은 사업자 등록·통신판매업 신고 후 채운다
+const BIZINFO={name:'서당 동행 (상호 등록 예정)',ceo:'(대표자)',bizNo:'(사업자등록번호 등록 예정)',mailOrder:'(통신판매업 신고번호 신고 예정)',addr:'경기도 화성시 봉담읍 (주소 등록 예정)',cs:'고객센터 1600-0000 (평일 10:00~18:00)',email:'help@seodang.example',privacy:'개인정보 보호책임자 (지정 예정)'};
+const NOTIFY_KINDS=[['match','매칭·상담','매칭 신청·수락·상담 시작·채용 확정'],['check','정착 점검·민원','7·14·30일 점검, 민원 처리'],['eval','검증·평가','시범강의 일정, 평가 결과'],['club','서당 클럽','프로그램 신청 확정·반려·취소'],['notice','공지·문의 답변','서비스 공지, 1:1 문의 답변']];
+const INQ_CATS=['계정','결제·환불','매칭','검증','클럽','기타'];
+const FAQS=[
+ ['아이디를 잊었어요','로그인 화면의 [아이디 찾기]에서 가입할 때 인증한 휴대폰으로 본인인증하면 아이디를 알려 드려요.'],
+ ['비밀번호를 5번 틀려 로그인이 안 돼요','보안을 위해 10분 동안 잠겨요. 기다리거나 [비밀번호 찾기]로 새 비밀번호를 만들면 바로 풀려요.'],
+ ['프로필 열람권을 환불할 수 있나요?','열람권은 결제 즉시 상세 프로필이 열리는 디지털 상품이라, 열람한 뒤에는 청약철회가 제한돼요. 잘못 결제했거나 열람하지 않았다면 결제 내역에서 환불을 요청해 주세요.'],
+ ['클럽 이용권 환불은요?','결제 후 7일 안에 프로그램 신청·자료 이용을 하지 않았다면 전액 환불돼요. 이용했다면 남은 기간만큼 계산해 환불해요. (환불 정책 참고)'],
+ ['알림을 끄고 싶어요','내 정보 > 알림 설정에서 종류별로 끌 수 있어요. 광고성 알림은 동의한 경우에만 보내고, 밤 9시~아침 8시에는 따로 동의한 경우에만 보내요.'],
+ ['탈퇴하면 정보는 어떻게 되나요?','이름·연락처 등 개인정보는 바로 지워요. 결제 기록은 전자상거래법에 따라 5년, 접속 기록은 1년 보관한 뒤 지워요.']];
+const TERMS_DOCS={
+ terms:['서비스 이용약관',[
+  ['제1조 (목적)','이 약관은 서당 동행(이하 "서당")이 제공하는 학원·강사 매칭 서비스와 서당 클럽의 이용 조건과 절차, 서당과 회원의 권리·의무를 정합니다.'],
+  ['제2조 (회원)','회원은 학원 원장(학원 회원)과 강사(강사 회원)로 나뉘며, 만 14세 이상이고 휴대폰 본인인증을 마친 사람만 가입할 수 있습니다. 한 사람은 하나의 계정만 만들 수 있습니다.'],
+  ['제3조 (서비스)','서당은 강사 검증(시범강의 평가), 근무조건 확인, 후보 추천과 상담, 입사 후 7·14·30일 정착 점검, 유료 회원제(서당 클럽)를 제공합니다. 채용 계약은 학원과 강사가 직접 맺으며, 서당은 계약 당사자가 아닙니다.'],
+  ['제4조 (유료 서비스와 환불)','프로필 열람권과 클럽 이용권은 유료입니다. 결제·청약철회·환불은 [환불 정책]을 따릅니다.'],
+  ['제5조 (금지 행위)','다른 사람의 정보 도용, 허위 근무조건·경력 등록, 경쟁 학원의 학생 정보 공유나 수강료 담합, 서비스 밖 직거래로 수수료를 피하는 행위를 금지하며, 위반하면 이용을 정지할 수 있습니다.'],
+  ['제6조 (탈퇴와 이용 정지)','회원은 언제든 내 정보에서 탈퇴할 수 있습니다. 서당은 약관을 위반한 회원의 이용을 정지할 수 있으며, 정지 사유를 알립니다.']]],
+ privacy:['개인정보처리방침',[
+  ['1. 수집하는 항목','(필수) 이름, 휴대폰 번호(본인인증), 아이디, 비밀번호(암호화 저장) · 학원 회원: 학원명, 지역, 사업자등록번호·개업일자(국세청 진위확인) · 강사 회원: 과목·학년·희망 지역·경력·증빙 서류 · (선택) 마케팅 수신 동의 · (자동) 접속 기록, 앱 알림 기기 토큰'],
+  ['2. 이용 목적','회원 식별과 본인 확인, 매칭·검증·정착 점검 서비스 제공, 결제·환불, 부정 이용 방지, 고객 문의 응대, (동의한 경우) 혜택·행사 안내'],
+  ['3. 보관 기간','탈퇴하면 바로 파기합니다. 단, 법령에 따라 계약·결제 기록 5년(전자상거래법), 소비자 불만·분쟁 기록 3년, 접속 기록 1년(통신비밀보호법·안전성 확보조치 기준) 보관합니다.'],
+  ['4. 제3자 제공','매칭 상담이 시작되면 학원과 강사에게 서로의 연락처를 제공합니다(제공 전 동의). 그 밖에는 법령에 따른 경우를 빼고 제공하지 않습니다.'],
+  ['5. 처리 위탁','결제: (주)토스페이먼츠 · 앱 알림: Google Firebase · 서버 운영: (클라우드 사업자 확정 후 기재)'],
+  ['6. 범죄경력 자료','성범죄·아동학대 범죄경력 조회는 학원이 법에 따라 직접 하며, 서당은 조회 결과를 저장하지 않고 조회 완료 여부만 기록합니다.'],
+  ['7. 이용자의 권리','언제든 내 정보에서 열람·정정·삭제(탈퇴)·수신 동의 철회를 할 수 있습니다. 개인정보 보호책임자: '+BIZINFO.privacy+' · '+BIZINFO.email]]],
+ refund:['환불 정책',[
+  ['프로필 열람권','결제 즉시 상세 프로필이 열리는 디지털 콘텐츠입니다. 열람한 뒤에는 청약철회가 제한됩니다(전자상거래법 제17조 제2항). 결제 후 열람하지 않았거나 중복 결제된 경우 전액 환불합니다.'],
+  ['서당 클럽 이용권 (30일)','결제 후 7일 안에 프로그램 신청·자료 이용이 없으면 전액 환불합니다. 이용했거나 7일이 지난 경우 남은 일수만큼 일할 계산해 환불합니다.'],
+  ['환불 방법','결제 내역(원장) 또는 클럽 화면(강사)에서 [환불 요청]을 누르고 사유를 적으면, 서당이 3영업일 안에 확인해 결제 수단으로 취소합니다. 카드 취소는 카드사에 따라 3~7일 걸릴 수 있습니다.'],
+  ['서비스 문제','서당의 잘못으로 서비스를 이용하지 못했다면 이용하지 못한 기간만큼 환불하거나 기간을 연장합니다.']]]};
+// 샘플 계정 휴대폰 (서버 db/sample 과 같은 규칙, 가짜 번호)
+const samplePhone=id=>id.startsWith('원장')?'010-1000-'+id.slice(2).padStart(4,'0'):id.startsWith('강사')?'010-0000-'+id.slice(2).padStart(4,'0'):id==='관리자1'?'010-9000-0001':id==='운영담당1'?'010-9000-0002':'';
+const digits=s=>String(s||'').replace(/\D/g,'');
+const maskPh=p=>{const d=digits(p);return d.length>=10?d.slice(0,3)+'-****-'+d.slice(-4):''};
+const kAt=iso=>new Date(iso).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+function seedSupport(){
+  const ago=d=>new Date(Date.now()-d*864e5).toISOString();
+  S.accounts.forEach(a=>{a.phone=a.phone||samplePhone(a.loginId);a.status=a.status||'active';a.consent=a.consent||{terms:TERMS_VERSION,marketing:false,night:false};a.notifyOff=a.notifyOff||[]});
+  S.notices=[{id:1,title:'서당 동행 테스트 서비스 안내',body:'지금은 봉담·화성 지역 학원과 강사를 대상으로 테스트 중이에요. 화면의 데이터는 가상 샘플이고, 결제는 토스페이먼츠 테스트 결제라 실제로 청구되지 않아요.',to:'all',pinned:true,at:ago(6),by:'관리자1'},
+    {id:2,title:'11월 원장 라운드테이블 신청을 받아요',body:'원장 클럽 회원은 클럽 화면에서 이달의 프로그램을 신청할 수 있어요. 자리가 한정돼 있어 서당이 확인 후 확정해 드려요.',to:'academy',pinned:false,at:ago(2),by:'관리자1'},
+    {id:3,title:'시범강의 평가 일정 안내',body:'검증을 신청한 강사님께 평가 일정을 순서대로 안내하고 있어요. 평가 일정은 알림과 검증 화면에서 확인할 수 있어요.',to:'teacher',pinned:false,at:ago(1),by:'운영담당1'}];
+  S.inquiries=[{id:1,loginId:'원장1',cat:'결제·환불',title:'열람권 결제 영수증을 세금계산서로 받을 수 있나요?',text:'학원 경비 처리를 위해 세금계산서가 필요해요.',at:ago(3),status:'답변 완료',answer:'실결제로 전환되면 결제 내역에서 세금계산서를 신청할 수 있어요. 지금은 테스트 결제라 발행되지 않아요.',answeredBy:'운영담당1',answeredAt:ago(2)},
+    {id:2,loginId:'강사3',cat:'계정',title:'휴대폰 번호가 바뀌었어요',text:'새 번호로 알림을 받고 싶어요.',at:ago(0.5),status:'답변 대기',answer:''}];
+  S.notiRead={};
+}
+// ---------- 업무 알림 발송 (M-15): 서버 모드에서만 실제 푸시. 받는 사람의 알림 설정은 서버가 지킨다 ----------
+function notify(o){
+  if(!API.on) return;
+  api('push/notify',{method:'POST',body:{to:o.to||[],toRoles:o.toRoles||[],kind:o.kind,title:o.title,body:o.body||'',route:o.route||'/'}}).catch(()=>{});
+}
+const STAFF=['admin','manager'];
+const academyLogin=aid=>(S.accounts.find(a=>a.role==='academy'&&a.academyId===aid)||{}).loginId;
+const teacherLogin=tid=>(S.accounts.find(a=>a.role==='teacher'&&a.teacherId===tid)||{}).loginId;
+// ---------- 알림 읽음 (M-16) ----------
+const notiKey=n=>n.title+'|'+n.sub;
+const readSet=()=>new Set((S.notiRead||{})[S.user.loginId]||[]);
+const unreadCount=()=>{const r=readSet();return notis().filter(n=>!r.has(notiKey(n))).length};
+function markRead(keys){S.notiRead=S.notiRead||{};const r=readSet();keys.forEach(k=>r.add(k));S.notiRead[S.user.loginId]=[...r].slice(-300)}
+
+// ---------- 휴대폰 본인인증 상자 (M-14). 서버 모드: /api/verify, 샘플 모드: 화면에서 흉내 ----------
+const PV={};
+function pvBox(purpose,label){const v=PV[purpose]||{};
+  return `<div class="pv" data-pv-box="${purpose}"><label>${label||'휴대폰 본인인증'}</label>
+   <div class="pvrow"><input type="tel" name="pvphone" value="${esc(v.phone||'')}" placeholder="010-0000-0000" inputmode="tel" autocomplete="tel" ${v.token?'readonly':''}>
+    <button type="button" class="btn sec sm" data-act="pv-send" data-pv="${purpose}" ${v.token?'disabled':''}>${v.requestId?'다시 받기':'인증번호 받기'}</button></div>
+   ${v.requestId&&!v.token?`<div class="pvrow"><input type="text" name="pvcode" inputmode="numeric" maxlength="6" placeholder="인증번호 6자리" autocomplete="one-time-code"><button type="button" class="btn sm" data-act="pv-check" data-pv="${purpose}">확인</button></div>`:''}
+   <p class="pvmsg ${v.token?'ok':v.err?'bad':''}">${v.token?`${ic('circle-check')}본인인증 완료 · ${esc(v.phone)}`:v.err?esc(v.err):v.testCode?`테스트 모드 인증번호 <b>${v.testCode}</b> · 실서비스는 PASS 본인인증으로 바뀌어요`:'실서비스는 PASS(통신사) 본인인증이에요. 지금은 테스트용 인증번호로 확인해요.'}</p></div>`}
+function pvRefresh(purpose){document.querySelectorAll(`[data-pv-box="${purpose}"]`).forEach(el=>{el.outerHTML=pvBox(purpose)});icons()}
+async function pvSend(purpose,box){
+  const phone=box.querySelector('[name=pvphone]').value;const v=PV[purpose]={phone};
+  if(!/^01[016789]\d{7,8}$/.test(digits(phone))){v.err='휴대폰 번호를 다시 확인해 주세요';pvRefresh(purpose);return}
+  try{if(API.on){const r=await api('verify/start',{method:'POST',body:{purpose,phone}});Object.assign(v,{requestId:r.requestId,testCode:r.testCode||''})}
+    else Object.assign(v,{requestId:'sample',testCode:String(Math.floor(100000+Math.random()*900000))})}
+  catch(e){v.err=e.message}
+  pvRefresh(purpose);document.querySelector(`[data-pv-box="${purpose}"] [name=pvcode]`)?.focus();
+}
+async function pvCheck(purpose,box){
+  const v=PV[purpose];const code=(box.querySelector('[name=pvcode]').value||'').trim();
+  try{if(API.on){const r=await api('verify/confirm',{method:'POST',body:{requestId:v.requestId,code}});v.token=r.token}
+    else{if(code!==v.testCode)throw new Error('인증번호가 맞지 않아요');v.token='sample-'+purpose}
+    v.err=''}
+  catch(e){v.err=e.message}
+  pvRefresh(purpose);
+  if(v.token&&PV_DONE[purpose])PV_DONE[purpose]();
+}
+const PV_DONE={}; // 인증이 끝나면 바로 할 일 (아이디 찾기 등)
+
+// ---------- 공개 화면: 아이디 찾기(M-01) · 비밀번호 재설정(M-02) · 약관(M-08) · 공지·FAQ(M-18) · 404(M-20) ----------
+function findIdView(){
+  const res=S.found;
+  return pubPage(`<div class="card auth"><h2>아이디 찾기</h2><p class="lead">가입할 때 인증한 휴대폰으로 본인인증하면 아이디를 알려 드려요.</p>
+   ${res?(res.length?`<div class="found"><p>${ic('circle-check')} 이 휴대폰으로 가입한 계정이에요.</p><ul class="plain">${res.map(a=>`<li><b>${esc(a.loginId)}</b><span class="muted">${esc(a.roleLabel)} · ${esc(a.name)}${a.joined?' · '+a.joined+' 가입':''}</span></li>`).join('')}</ul>
+     <div class="row"><button class="btn" data-act="pub" data-to="login">로그인하기</button><button class="btn sec" data-act="pub" data-to="reset-pw">비밀번호 찾기</button></div></div>`
+     :`<div class="flash err">${ic('circle-alert')}이 휴대폰으로 가입한 계정이 없어요.</div><button class="btn" data-act="pub" data-to="signup">회원가입</button>`)
+   :pvBox('find_id')}
+   <p class="sufoot"><button type="button" class="lnk" data-act="pub" data-to="login">로그인으로 돌아가기</button></p></div>`,true);
+}
+function resetPwView(){
+  const v=PV.reset_password||{};
+  return pubPage(`<form class="card auth" data-form="reset-pw" novalidate><h2>비밀번호 재설정</h2><p class="lead">아이디와 가입할 때 인증한 휴대폰으로 확인한 뒤 새 비밀번호를 만들어요. 잠긴 계정도 바로 풀려요.</p>
+   <label for="rp-id">아이디</label><input id="rp-id" type="text" name="loginId" required placeholder="예: 원장5" autocapitalize="off" value="${esc(S.rpId||'')}">
+   ${pvBox('reset_password')}
+   <fieldset ${v.token?'':'disabled'}><div class="grid g2 tight one-m"><div><label for="rp-pw">새 비밀번호</label><input id="rp-pw" type="password" name="pw" minlength="8" required placeholder="8자 이상" autocomplete="new-password"></div>
+    <div><label for="rp-pw2">새 비밀번호 확인</label><input id="rp-pw2" type="password" name="pw2" required placeholder="한 번 더" autocomplete="new-password"></div></div>
+    <button class="btn block" style="margin-top:14px">비밀번호 바꾸기</button></fieldset>
+   <p class="sufoot"><button type="button" class="lnk" data-act="pub" data-to="find-id">아이디 찾기</button> · <button type="button" class="lnk" data-act="pub" data-to="login">로그인</button></p></form>`,true);
+}
+function termsBody(){
+  const k=S.termsTab||'terms', [title,secs]=TERMS_DOCS[k];
+  return `<h2>약관 및 정책</h2><p class="lead">시행일 ${TERMS_VERSION} · 초안 (출시 전 법률 검토 예정)</p>
+   <div class="chips" style="margin-bottom:16px">${Object.entries(TERMS_DOCS).map(([x,[t]])=>`<button class="fchip ${x===k?'on':''}" data-act="terms-tab" data-k="${x}">${t}</button>`).join('')}</div>
+   <div class="card terms"><h3>${title}</h3>${secs.map(([h,p])=>`<h4>${h}</h4><p>${esc(p)}</p>`).join('')}</div>`;
+}
+function noticeBody(){
+  const role=S.user?S.user.role:'';const tab=S.noticeTab||'notice';
+  const list=S.notices.filter(n=>n.to==='all'||!S.user||n.to===role||STAFF.includes(role)).sort((a,b)=>(b.pinned-a.pinned)||b.at.localeCompare(a.at));
+  return `<h2>공지·FAQ</h2><p class="lead">서비스 소식과 자주 묻는 질문이에요. 더 궁금한 점은 1:1 문의로 남겨 주세요.</p>
+   <div class="chips" style="margin-bottom:16px"><button class="fchip ${tab==='notice'?'on':''}" data-act="notice-tab" data-k="notice">공지사항</button><button class="fchip ${tab==='faq'?'on':''}" data-act="notice-tab" data-k="faq">자주 묻는 질문</button></div>
+   ${tab==='notice'?`<div class="card">${list.length?`<ul class="plain notices">${list.map(n=>`<li><details><summary>${n.pinned?'<span class="b warn">고정</span>':''}${n.to!=='all'?`<span class="b mute">${n.to==='academy'?'원장':'강사'}</span>`:''}<b>${esc(n.title)}</b><span class="muted">${new Date(n.at).toLocaleDateString('ko-KR')}</span></summary><p>${esc(n.body)}</p></details></li>`).join('')}</ul>`:'<p class="muted">공지가 없어요.</p>'}</div>`
+   :`<div class="card"><ul class="plain notices">${FAQS.map(([q,a])=>`<li><details><summary><b>Q. ${esc(q)}</b></summary><p>${esc(a)}</p></details></li>`).join('')}</ul></div>`}
+   ${S.user?`<button class="btn sec" data-act="sub" data-to="inquiry">${ic('message-circle-question')}1:1 문의하기</button>`:`<p class="muted">${esc(BIZINFO.cs)}</p>`}`;
+}
+const notFoundBody=()=>`<div class="card nf">${ic('map-pin-off')}<h2>페이지를 찾을 수 없어요</h2><p class="lead">주소가 바뀌었거나 삭제된 페이지예요.</p><button class="btn" data-act="${S.user?'sub':'pub'}" data-to="${S.user?'':'home'}">홈으로</button></div>`;
+
+// ---------- 로그인 후 '내 정보' 하위 화면 (M-03·M-04·M-05·M-10·M-16·M-18·M-19) ----------
+const SUB_TITLE={me:'내 정보','me-edit':'회원정보 수정','me-pw':'비밀번호 변경','me-notify':'알림 설정','me-leave':'회원 탈퇴',notice:'공지·FAQ',inquiry:'1:1 문의',terms:'약관 및 정책','404':'페이지 없음'};
+const myAcc=()=>S.accounts.find(a=>a.loginId===S.user.loginId)||S.user;
+function meInfo(){const a=myAcc(),m=API.me;return {name:m?m.name:a.name,phone:m?m.phone:maskPh(a.phone),joined:m?m.joined:'',marketing:m?m.marketing:!!(a.consent||{}).marketing,night:m?m.night:!!(a.consent||{}).night,off:m?m.notifyOff:(a.notifyOff||[])}}
+async function loadMe(){if(!API.on)return;try{API.me=await api('auth/me');render()}catch(e){}}
+const SUBVIEWS={
+ me:()=>{const i=meInfo(),u=S.user;const row=(to,icon,t,s)=>`<li><button data-act="sub" data-to="${to}">${ic(icon)}<div><b>${t}</b>${s?`<span>${s}</span>`:''}</div>${ic('chevron-right')}</button></li>`;
+  return `<h2>내 정보</h2><div class="card meh"><span class="av">${ic(ROLE_ICON[u.role])}</span><div><b>${esc(i.name)}</b><span>${ROLE_NAME[u.role]} · ${esc(u.loginId)}${i.phone?' · '+esc(i.phone):''}${i.joined?' · '+i.joined+' 가입':''}</span></div></div>
+  <div class="card"><ul class="plain menu">${row('me-edit','user-pen','회원정보 수정','이름 · 휴대폰')}${row('me-pw','key-round','비밀번호 변경')}${row('me-notify','bell-ring','알림 설정',i.marketing?'마케팅 수신 동의':'업무 알림 · 마케팅 수신')}</ul></div>
+  <div class="card"><ul class="plain menu">${row('notice','megaphone','공지·FAQ')}${row('inquiry','message-circle-question','1:1 문의')}${row('terms','file-text','약관 및 정책')}</ul></div>
+  <div class="row"><button class="btn sec" data-act="logout">${ic('log-out')}로그아웃</button><button class="btn sec" data-act="sub" data-to="me-leave">회원 탈퇴</button></div>`},
+ 'me-edit':()=>{const i=meInfo();return `<h2>회원정보 수정</h2><p class="lead">바꾼 내용은 기록으로 남아요. 학원 정보(학원명·사업자)는 진행 화면에서 운영담당 확인을 거쳐 바꿔요.</p>
+  <div class="card"><form data-form="me-name"><label for="me-n">이름</label><input id="me-n" type="text" name="name" required maxlength="20" value="${esc(i.name.replace(/ 원장$/,''))}"><button class="btn" style="margin-top:12px">이름 저장</button></form></div>
+  <div class="card"><h3>휴대폰 번호</h3><p class="muted">지금: ${esc(i.phone||'없음')}</p>${pvBox('change_phone','새 휴대폰 본인인증')}<button class="btn" data-act="me-phone" ${(PV.change_phone||{}).token?'':'disabled'}>새 번호로 바꾸기</button></div>`},
+ 'me-pw':()=>`<h2>비밀번호 변경</h2><div class="card"><form data-form="me-pw" novalidate>
+  <label for="mp-c">현재 비밀번호</label><input id="mp-c" type="password" name="current" required autocomplete="current-password">
+  <div class="grid g2 tight one-m"><div><label for="mp-n">새 비밀번호</label><input id="mp-n" type="password" name="pw" minlength="8" required placeholder="8자 이상" autocomplete="new-password"></div><div><label for="mp-n2">새 비밀번호 확인</label><input id="mp-n2" type="password" name="pw2" required autocomplete="new-password"></div></div>
+  <p class="muted">바꾸면 다른 기기의 로그인 유지는 풀려요. 이 기기는 그대로 로그인돼요.</p><button class="btn">비밀번호 바꾸기</button></form></div>`,
+ 'me-notify':()=>{const i=meInfo();return `<h2>알림 설정</h2><p class="lead">업무 알림은 종류별로 끌 수 있어요. 광고성 알림은 동의한 경우에만 보내요 (정보통신망법 제50조).</p>
+  <form data-form="me-notify"><div class="card"><h3>업무 알림</h3><ul class="plain toggles">${NOTIFY_KINDS.map(([k,t,s])=>`<li><label class="chk"><input type="checkbox" name="on_${k}" ${i.off.includes(k)?'':'checked'}><span><b>${t}</b><em>${s}</em></span></label></li>`).join('')}</ul></div>
+  <div class="card"><h3>혜택·광고 알림 (선택)</h3><ul class="plain toggles"><li><label class="chk"><input type="checkbox" name="marketing" ${i.marketing?'checked':''} data-mk><span><b>마케팅 정보 수신</b><em>교육 프로그램 할인, 클럽 행사 소식 · 제목에 (광고) 표시</em></span></label></li>
+   <li><label class="chk"><input type="checkbox" name="night" ${i.night?'checked':''} ${i.marketing?'':'disabled'} data-night><span><b>야간(오후 9시~오전 8시) 광고성 알림</b><em>동의하지 않으면 밤에는 보내지 않아요</em></span></label></li></ul>
+   <p class="muted">동의·철회한 날짜는 기록돼요. 2년마다 수신 동의 여부를 다시 안내해요.</p></div><button class="btn">저장</button></form>`},
+ 'me-leave':()=>`<h2>회원 탈퇴</h2><div class="card"><h3>탈퇴하기 전에 확인해 주세요</h3><ul class="plain cperks">
+   <li>${ic('check')}이름·휴대폰 등 개인정보는 바로 지워요</li><li>${ic('check')}결제 기록은 전자상거래법에 따라 5년, 접속 기록은 1년 보관 후 지워요</li>
+   <li>${ic('check')}진행 중인 매칭·클럽 신청은 취소되고, 남은 클럽 이용권은 환불 정책에 따라 처리해요</li><li>${ic('check')}같은 아이디로는 다시 가입할 수 없어요 (휴대폰으로 새로 가입은 가능)</li></ul></div>
+  <div class="card"><form data-form="me-leave" novalidate><label>탈퇴 이유 (선택)</label><select name="reason">${opts(['','원하는 강사·학원을 찾았어요','이용이 불편해요','알림이 너무 많아요','개인정보가 걱정돼요','기타'],'')}</select>
+   <label for="ml-pw">비밀번호 확인</label><input id="ml-pw" type="password" name="pw" required autocomplete="current-password">
+   <label class="chk" style="margin-top:12px"><input type="checkbox" name="ok" required><span>위 내용을 확인했고 탈퇴할게요</span></label>
+   <button class="btn danger" style="margin-top:12px">탈퇴하기</button></form></div>`,
+ notice:()=>noticeBody(),
+ terms:()=>termsBody(),
+ inquiry:()=>{const mine=S.inquiries.filter(q=>q.loginId===S.user.loginId).sort((a,b)=>b.at.localeCompare(a.at));
+  return `<h2>1:1 문의</h2><p class="lead">보통 1영업일 안에 답변드려요. 답변이 오면 알림으로 알려 드려요. 급한 일은 ${esc(BIZINFO.cs)}</p>
+  <div class="card"><form data-form="inquiry"><div class="grid g2 tight one-m"><div><label>문의 종류</label><select name="cat">${opts(INQ_CATS,'기타')}</select></div><div><label>제목</label><input type="text" name="title" required maxlength="60" placeholder="한 줄로 적어 주세요"></div></div>
+   <label>내용</label><textarea name="text" required maxlength="1000" placeholder="상황을 자세히 적어 주시면 빨리 도와드릴 수 있어요"></textarea><button class="btn" style="margin-top:12px">문의 남기기</button></form></div>
+  <div class="card"><h3>내 문의 ${mine.length}</h3>${mine.length?`<ul class="plain notices">${mine.map(q=>`<li><details ${q.status==='답변 완료'?'open':''}><summary>${badge(q.status)}<span class="b mute">${esc(q.cat)}</span><b>${esc(q.title)}</b><span class="muted">${kAt(q.at)}</span></summary><p>${esc(q.text)}</p>${q.answer?`<p class="reply">${ic('message-square')}<b>서당 답변</b> ${esc(q.answer)} <span class="muted">${kAt(q.answeredAt)}</span></p>`:''}</details></li>`).join('')}</ul>`:'<p class="muted">남긴 문의가 없어요.</p>'}</div>`},
+ '404':()=>notFoundBody()
+};
+
+// ---------- 환불 (M-12): 회원 요청 → 관리자 승인/거절. 서버 결제(server)면 토스 결제 취소 API ----------
+const refundBadge=p=>p.status==='CANCELED'?badge('환불 완료'):p.refund&&p.refund.status==='requested'?badge('환불 요청'):p.refund&&p.refund.status==='rejected'?badge('환불 거절'):badge('결제 완료');
+function refundBtn(p){if(p.status!=='DONE'||(p.refund&&p.refund.status==='requested'))return '';return `<button class="btn sm sec" data-act="refund-open" data-order="${esc(p.orderId)}">환불 요청</button>`}
+function refundSheet(){const p=S.purchases.find(x=>x.orderId===S.refundOpen);if(!p)return '';
+  return `<div class="noti-dim" data-act="refund-close"></div><section class="noti-panel sheet" role="dialog" aria-label="환불 요청"><div class="noti-head"><b>환불 요청</b><button class="ib" data-act="refund-close" aria-label="닫기">${ic('x')}</button></div>
+   <form data-form="refund" data-order="${esc(p.orderId)}" style="padding:4px 22px 24px"><p><b>${esc(p.orderName)}</b> · ${won(p.amount)}</p><p class="muted">${p.club?'클럽 이용권: 7일 안에 이용하지 않았으면 전액, 이용했다면 남은 일수만큼 환불돼요.':'열람권: 열람 전이거나 중복 결제면 전액 환불돼요. 열람한 뒤에는 환불이 제한될 수 있어요.'} <button type="button" class="lnk" data-act="sub" data-to="terms" data-terms="refund">환불 정책</button></p>
+   <label>환불 사유</label><textarea name="reason" required maxlength="300" placeholder="예: 같은 강사를 두 번 결제했어요"></textarea><button class="btn block" style="margin-top:12px">요청 보내기</button></form></section>`}
+
+// ---------- 관리자 '운영' 탭: 회원 관리(M-17) · 공지 작성(M-18) · 결제·환불(M-12) · 접속 기록(M-23) · 권한 ----------
+const OPS=[['members','회원 관리','users'],['notices','공지 관리','megaphone'],['refunds','결제·환불','receipt'],['logs','접속 기록','scroll-text'],['perm','권한 범위','shield']];
+async function loadOps(kind){
+  if(!API.on)return;API.cache=API.cache||{};
+  try{if(kind==='members')API.cache.accounts=await api('admin/accounts'+(S.memQ?'?q='+encodeURIComponent(S.memQ):''));
+    if(kind==='logs')API.cache.logs=await api('admin/access-logs?limit=150');
+    if(kind==='refunds')API.cache.payments=await api('admin/payments')}catch(e){API.cache.err=e.message}
+  render();
+}
+const ACT_LABEL={login:'로그인',login_fail:'로그인 실패',locked:'계정 잠김',login_blocked:'정지 계정 로그인 시도',logout:'로그아웃',signup:'가입',find_id:'아이디 찾기',password_reset:'비밀번호 재설정',password_change:'비밀번호 변경',profile_change:'이름 변경',phone_change:'휴대폰 변경',consent_change:'수신 동의 변경',withdraw:'탈퇴',admin_status:'계정 상태 변경',admin_unlock:'잠금 해제',admin_view_accounts:'회원 목록 조회',payment:'결제',refund_request:'환불 요청',refund_approve:'환불 승인',refund_reject:'환불 거절'};
+function opsView(){
+  const k=S.ops||'members';const c=API.cache||{};
+  const head=`<h2>운영</h2><p class="lead">회원·공지·결제·접속 기록을 관리해요. ${API.on?'계정·결제·접속 기록은 서버 데이터예요.':'샘플 모드: 이 브라우저의 샘플 데이터예요.'}</p>
+   <div class="chips" style="margin-bottom:16px">${OPS.map(([x,t,i])=>`<button class="fchip ${x===k?'on':''}" data-act="ops" data-k="${x}">${ic(i)}${t}</button>`).join('')}</div>`;
+  if(k==='members'){
+    if(API.on&&!c.accounts){loadOps('members');return head+'<div class="card"><p class="muted">불러오는 중…</p></div>'}
+    const rows=API.on?c.accounts:S.accounts.filter(a=>!S.memQ||a.loginId.includes(S.memQ)||a.name.includes(S.memQ)).map(a=>({loginId:a.loginId,roleLabel:ROLE_NAME[a.role],name:a.status==='deleted'?'탈퇴 회원':a.name,phone:maskPh(a.phone),status:a.status||'active',statusReason:a.statusReason,locked:false,joined:'',marketing:!!(a.consent||{}).marketing}));
+    const st=s=>({active:'정상',suspended:'이용 정지',deleted:'탈퇴'}[s]||s);
+    return head+`<div class="card"><form data-form="mem-q" class="row" style="margin-bottom:12px"><input type="search" name="q" value="${esc(S.memQ||'')}" placeholder="아이디·이름 검색" style="flex:1;min-width:160px"><button class="btn sm sec">검색</button></form>
+     <div class="tablewrap"><table class="rt"><tr><th>아이디</th><th>이름</th><th>역할</th><th>휴대폰</th><th>상태</th><th>관리</th></tr>${rows.map(a=>`<tr><td data-label="아이디"><b>${esc(a.loginId)}</b></td><td data-label="이름">${esc(a.name)}</td><td data-label="역할">${esc(a.roleLabel)}</td><td data-label="휴대폰">${esc(a.phone||'-')}</td>
+      <td data-label="상태">${badge(st(a.status))}${a.locked?' '+badge('잠김'):''}${a.statusReason?`<br><span class="muted">${esc(a.statusReason)}</span>`:''}</td>
+      <td data-label="관리"><div class="row">${a.status==='active'&&a.loginId!==S.user.loginId?`<button class="btn sm sec" data-act="mem-status" data-id2="${esc(a.loginId)}" data-st="suspended">정지</button>`:''}${a.status==='suspended'?`<button class="btn sm" data-act="mem-status" data-id2="${esc(a.loginId)}" data-st="active">정지 해제</button>`:''}${a.locked?`<button class="btn sm sec" data-act="mem-unlock" data-id2="${esc(a.loginId)}">잠금 해제</button>`:''}</div></td></tr>`).join('')}</table></div>
+     <p class="muted" style="margin:12px 0 0">정지하면 그 계정은 로그인·로그인 유지가 막혀요. 모든 조치는 접속 기록에 남아요.</p></div>`;
+  }
+  if(k==='notices'){
+    const list=S.notices.slice().sort((a,b)=>b.at.localeCompare(a.at));
+    return head+`<div class="card"><h3>새 공지</h3><form data-form="notice-new"><label>제목</label><input type="text" name="title" required maxlength="60">
+     <label>내용</label><textarea name="body" required maxlength="2000"></textarea>
+     <div class="row" style="margin-top:10px"><label style="margin:0">대상</label><select name="to" style="width:auto">${'<option value="all">전체</option><option value="academy">원장</option><option value="teacher">강사</option>'}</select>
+      <label class="chk" style="margin:0"><input type="checkbox" name="pinned"><span>상단 고정</span></label><label class="chk" style="margin:0"><input type="checkbox" name="push" checked><span>앱 알림으로도 보내기</span></label></div>
+     <button class="btn" style="margin-top:12px">게시</button></form></div>
+     <div class="card"><h3>게시한 공지 ${list.length}</h3><div class="tablewrap"><table class="rt"><tr><th>제목</th><th>대상</th><th>게시</th><th>관리</th></tr>${list.map(n=>`<tr><td data-label="제목">${n.pinned?'<span class="b warn">고정</span> ':''}<b>${esc(n.title)}</b></td><td data-label="대상">${{all:'전체',academy:'원장',teacher:'강사'}[n.to]}</td><td data-label="게시">${new Date(n.at).toLocaleDateString('ko-KR')} · ${esc(n.by)}</td>
+      <td data-label="관리"><div class="row"><button class="btn sm sec" data-act="notice-pin" data-id="${n.id}">${n.pinned?'고정 해제':'고정'}</button><button class="btn sm sec" data-act="notice-del" data-id="${n.id}">삭제</button></div></td></tr>`).join('')}</table></div></div>`;
+  }
+  if(k==='refunds'){
+    const local=S.purchases.slice().sort((a,b)=>((b.refund&&b.refund.status==='requested')-(a.refund&&a.refund.status==='requested'))||b.approvedAt.localeCompare(a.approvedAt));
+    const who=p=>p.loginId||academyLogin(p.academyId)||'';
+    const wait=local.filter(p=>p.refund&&p.refund.status==='requested').length;
+    return head+`<div class="card"><h3>환불 요청 ${wait}건</h3><p class="muted">승인하면 ${API.on&&API.pay?'토스페이먼츠 결제 취소 API를 호출하고':'(샘플) 결제를 취소 처리하고'} 이용권은 바로 끝나요. 거절할 때는 사유를 적어 주세요.</p>
+     <div class="tablewrap"><table class="rt"><tr><th>결제</th><th>회원</th><th>금액</th><th>상태</th><th>요청 사유</th><th>처리</th></tr>${local.slice(0,30).map(p=>`<tr><td data-label="결제"><b>${esc(p.orderName)}</b><br><span class="muted">${kAt(p.approvedAt)}${p.server?' · 서버 검증':''}</span></td><td data-label="회원">${esc(who(p))}</td><td data-label="금액">${won(p.amount)}</td><td data-label="상태">${refundBadge(p)}</td>
+      <td data-label="요청 사유">${p.refund?esc(p.refund.reason)+(p.refund.answer?`<br><span class="muted">답변: ${esc(p.refund.answer)}</span>`:''):'-'}</td>
+      <td data-label="처리">${p.refund&&p.refund.status==='requested'?`<form data-form="refund-decide" data-order="${esc(p.orderId)}" class="inline"><input type="text" name="answer" placeholder="답변(거절 시 필수)"><button class="btn sm" name="d" value="ok">승인</button><button class="btn sm sec" name="d" value="no">거절</button></form>`:''}</td></tr>`).join('')}</table></div></div>`;
+  }
+  if(k==='logs'){
+    if(API.on&&!c.logs){loadOps('logs');return head+'<div class="card"><p class="muted">불러오는 중…</p></div>'}
+    return head+(API.on?`<div class="card"><h3>접속 기록 (서버 · 최근 150건)</h3><p class="muted">로그인·실패·잠금·비밀번호 변경·탈퇴·관리자 조치를 1년 이상 보관해요 (개인정보 안전성 확보조치 기준 제8조).</p>
+     <div class="tablewrap"><table class="rt"><tr><th>시각</th><th>아이디</th><th>행동</th><th>IP</th><th>내용</th></tr>${c.logs.map(l=>`<tr><td data-label="시각">${kAt(l.at)}</td><td data-label="아이디">${esc(l.loginId||'-')}</td><td data-label="행동">${esc(ACT_LABEL[l.action]||l.action)}</td><td data-label="IP" class="muted">${esc(l.ip||'')}</td><td data-label="내용">${esc(l.detail||'')}</td></tr>`).join('')}</table></div>
+     <button class="btn sm sec" data-act="ops-reload" data-k="logs" style="margin-top:12px">${ic('refresh-cw')}새로고침</button></div>`
+     :`<div class="card"><h3>활동 로그 (샘플)</h3><p class="muted">서버 모드에서는 로그인·실패·잠금 등 접속 기록을 서버에 1년 이상 보관해요.</p>${logTable(50)}</div>`);
+  }
+  return head+VIEWS['admin:perm']();
+}
+
+// 운영진: 1:1 문의 답변 (정착·민원 탭, M-19)
+function inquiryAdminCard(){const list=S.inquiries.slice().sort((a,b)=>(a.status==='답변 대기'?0:1)-(b.status==='답변 대기'?0:1)||b.at.localeCompare(a.at));
+  const name=id=>(S.accounts.find(a=>a.loginId===id)||{}).name||'';
+  return `<div class="card"><h3>1:1 문의 ${list.filter(q=>q.status==='답변 대기').length?`<span class="b warn">답변 대기 ${list.filter(q=>q.status==='답변 대기').length}</span>`:''}</h3>${list.length?`<ul class="plain notices">${list.map(q=>`<li><details ${q.status==='답변 대기'?'open':''}><summary>${badge(q.status)}<span class="b mute">${esc(q.cat)}</span><b>${esc(q.title)}</b><span class="muted">${esc(q.loginId)} ${esc(name(q.loginId))} · ${kAt(q.at)}</span></summary><p>${esc(q.text)}</p>
+   ${q.answer?`<p class="reply">${ic('message-square')}${esc(q.answer)} <span class="muted">${esc(q.answeredBy||'')} · ${q.answeredAt?kAt(q.answeredAt):''}</span></p>`:''}
+   <form data-form="inq-answer" data-id="${q.id}" class="inline"><input type="text" name="answer" placeholder="${q.answer?'답변 고치기':'답변을 적어 주세요'}" required><button class="btn sm">${q.answer?'다시 보내기':'답변 보내기'}</button></form></details></li>`).join('')}</ul>`:'<p class="muted">들어온 문의가 없어요.</p>'}</div>`}
+// ---------- 출시 필수 기능: 동작 ----------
+function termsPop(k){const [t,secs]=TERMS_DOCS[k];document.querySelector('.tpop')?.remove();
+  document.body.insertAdjacentHTML('beforeend',`<div class="tpop"><div class="noti-dim" data-act="terms-pop-close"></div><section class="noti-panel sheet" role="dialog" aria-label="${t}"><div class="noti-head"><b>${t}</b><button class="ib" data-act="terms-pop-close" aria-label="닫기">${ic('x')}</button></div><div class="terms" style="padding:0 22px 24px">${secs.map(([h,p])=>`<h4>${h}</h4><p>${esc(p)}</p>`).join('')}</div></section></div>`);icons()}
+// 아이디 찾기: 본인인증이 끝나면 바로 조회
+PV_DONE.find_id=async()=>{const v=PV.find_id;
+  try{S.found=API.on?await api('auth/find-id',{method:'POST',body:{verifyToken:v.token}})
+    :S.accounts.filter(a=>a.status!=='deleted'&&digits(a.phone)===digits(v.phone)).map(a=>({loginId:a.loginId,roleLabel:ROLE_NAME[a.role],name:maskName(a.name),joined:''}))}
+  catch(e){v.err=e.message;v.token='';pvRefresh('find_id');return}
+  render()};
+PV_DONE.reset_password=()=>{S.rpId=document.querySelector('form[data-form=reset-pw] [name=loginId]')?.value||'';render()};
+PV_DONE.change_phone=()=>render();
+async function mePhone(){const v=PV.change_phone;if(!v||!v.token)return;
+  try{if(API.on)API.me=await api('me/phone',{method:'POST',body:{verifyToken:v.token}});const a=myAcc();a.phone=v.phone;if(a.teacherId)tOf(a.teacherId).contact=v.phone;
+    log(actor(),'휴대폰 번호 변경 (본인인증)');S.flash='휴대폰 번호를 바꿨어요.';delete PV.change_phone}
+  catch(e){S.flash=e.message;S.flashType='err'}
+  render()}
+async function memAction(a,loginId,st){
+  let reason='';if(a==='mem-status'&&st==='suspended'){reason=prompt(`${loginId} 계정을 정지할 사유를 적어 주세요 (회원에게 안내돼요)`,'');if(reason===null)return}
+  try{if(API.on){await api(a==='mem-unlock'?`admin/accounts/${encodeURIComponent(loginId)}/unlock`:`admin/accounts/${encodeURIComponent(loginId)}/status`,{method:'POST',body:a==='mem-unlock'?{}:{status:st,reason}});API.cache.accounts=null}
+    else{const x=S.accounts.find(y=>y.loginId===loginId);x.status=st;x.statusReason=reason}
+    log(actor(),a==='mem-unlock'?`${loginId} 잠금 해제`:`${loginId} ${st==='suspended'?'이용 정지':'정지 해제'}${reason?' · '+reason:''}`);S.flash=a==='mem-unlock'?'잠금을 풀었어요.':st==='suspended'?`${loginId} 계정을 정지했어요.`:`${loginId} 계정 정지를 풀었어요.`}
+  catch(e){S.flash=e.message;S.flashType='err'}
+  render()}
+const pwMismatch=f=>{if(f.pw2&&f.pw2.value!==f.pw.value){f.pw2.setCustomValidity('비밀번호가 서로 달라요');f.reportValidity();f.pw2.setCustomValidity('');return true}return false};
+const SUBMITS={
+ 'reset-pw':async(f,fd)=>{const v=PV.reset_password||{};if(!f.checkValidity()){f.reportValidity();return}if(pwMismatch(f))return;
+  const loginId=(fd.get('loginId')||'').trim();
+  try{if(API.on)await api('auth/reset-password',{method:'POST',body:{verifyToken:v.token,loginId,password:fd.get('pw')}});
+    else{const acc=S.accounts.find(a=>a.loginId===loginId&&a.status!=='deleted');if(!acc||digits(acc.phone)!==digits(v.phone))throw new Error('본인인증한 휴대폰으로 가입한 아이디가 아니에요')}
+    delete PV.reset_password;S.pub='login';S.loginErr='';S.flashLogin=`${loginId} 비밀번호를 바꿨어요. 새 비밀번호로 로그인해 주세요.`;render()}
+  catch(e){Object.assign(PV.reset_password,{err:e.message});pvRefresh('reset_password')}},
+ 'me-name':async(f,fd)=>{const name=(fd.get('name')||'').trim();if(!name)return;
+  try{let n=name;if(API.on){API.me=await api('me/profile',{method:'POST',body:{name}});n=API.me.name}else if(S.user.role==='academy'&&!n.endsWith('원장'))n+=' 원장';
+    const a=myAcc();a.name=n;S.user.name=n;if(a.teacherId)tOf(a.teacherId).name=n;log(actor(),'이름 변경');S.flash='이름을 바꿨어요.'}
+  catch(e){S.flash=e.message;S.flashType='err'} render()},
+ 'me-pw':async(f,fd)=>{if(!f.checkValidity()){f.reportValidity();return}if(pwMismatch(f))return;
+  try{if(API.on)await api('me/password',{method:'POST',body:{current:fd.get('current'),next:fd.get('pw')}});log(actor(),'비밀번호 변경');S.flash=API.on?'비밀번호를 바꿨어요. 다른 기기의 로그인 유지는 풀렸어요.':'샘플 모드: 비밀번호는 서버 모드에서 실제로 바뀌어요.';S.sub='me'}
+  catch(e){S.flash=e.message;S.flashType='err'} render()},
+ 'me-notify':async(f,fd)=>{const off=NOTIFY_KINDS.map(([k])=>k).filter(k=>!fd.get('on_'+k)),marketing=!!fd.get('marketing'),night=marketing&&!!fd.get('night');
+  try{if(API.on)API.me=await api('me/prefs',{method:'POST',body:{marketing,night,notifyOff:off}});const a=myAcc();a.notifyOff=off;a.consent={...(a.consent||{}),marketing,night,at:new Date().toISOString()};
+    log(actor(),`알림 설정 저장 · 마케팅 ${marketing?'동의':'미동의'}`);S.flash=`알림 설정을 저장했어요.${marketing?` 마케팅 수신 동의일: ${today()}`:''}`}
+  catch(e){S.flash=e.message;S.flashType='err'} render()},
+ 'me-leave':async(f,fd)=>{if(!f.checkValidity()){f.reportValidity();return}if(!confirm('정말 탈퇴할까요? 되돌릴 수 없어요.'))return;
+  try{if(API.on)await api('me/withdraw',{method:'POST',body:{password:fd.get('pw'),reason:fd.get('reason')||''}});
+    const a=myAcc(),id=a.loginId;log(actor(),`회원 탈퇴${fd.get('reason')?' · '+fd.get('reason'):''}`);
+    Object.assign(a,{status:'deleted',name:'탈퇴 회원',phone:''});S.clubApply.filter(x=>x.loginId===id&&['신청','확정'].includes(x.status)).forEach(x=>x.status='취소');
+    S.user=null;S.sub=null;API.me=null;S.pub='home';S.flashPub='탈퇴했어요. 그동안 이용해 주셔서 고마워요.';render();window.scrollTo(0,0)}
+  catch(e){S.flash=e.message;S.flashType='err';render()}},
+ inquiry:(f,fd)=>{const id=Math.max(0,...S.inquiries.map(q=>q.id))+1;
+  S.inquiries.push({id,loginId:S.user.loginId,cat:fd.get('cat'),title:(fd.get('title')||'').trim(),text:(fd.get('text')||'').trim(),at:new Date().toISOString(),status:'답변 대기',answer:''});
+  log(actor(),`1:1 문의 접수 #${id}`);notify({toRoles:STAFF,kind:'notice',title:'새 1:1 문의',body:`${S.user.loginId} · ${fd.get('title')}`,route:'/check'});S.flash='문의를 남겼어요. 답변이 오면 알려 드릴게요.';render()},
+ 'inq-answer':(f,fd)=>{const q=S.inquiries.find(x=>x.id===+f.dataset.id);const ans=(fd.get('answer')||'').trim();if(!ans)return;
+  Object.assign(q,{answer:ans,status:'답변 완료',answeredBy:S.user.loginId,answeredAt:new Date().toISOString()});log(actor(),`1:1 문의 #${q.id} 답변`);
+  notify({to:[q.loginId],kind:'notice',title:'1:1 문의에 답변이 왔어요',body:q.title,route:'/inquiry'});S.flash='답변을 보냈어요.';render()},
+ refund:async(f,fd)=>{const p=S.purchases.find(x=>x.orderId===f.dataset.order);const reason=(fd.get('reason')||'').trim();if(!reason)return;
+  try{if(API.on&&p.server)await api('pay/refund-request',{method:'POST',body:{orderId:p.orderId,reason}});
+    p.refund={status:'requested',reason,at:new Date().toISOString()};log(actor(),`환불 요청: ${p.orderName}`);notify({toRoles:['admin'],kind:'notice',title:'환불 요청',body:`${S.user.loginId} · ${p.orderName} ${won(p.amount)}`,route:'/audit'});
+    S.flash='환불을 요청했어요. 서당이 3영업일 안에 확인해 드려요.';S.refundOpen=null}
+  catch(e){S.flash=e.message;S.flashType='err';S.refundOpen=null} render()},
+ 'refund-decide':async(f,fd)=>{const p=S.purchases.find(x=>x.orderId===f.dataset.order);const ok=f.dataset.d==='ok';const answer=(fd.get('answer')||'').trim();
+  if(!ok&&!answer){S.flash='거절할 때는 답변(사유)을 적어 주세요.';S.flashType='err';render();return}
+  try{if(API.on&&p.server)await api(`admin/payments/${encodeURIComponent(p.orderId)}/refund`,{method:'POST',body:{approve:ok,answer}});
+    p.refund={...p.refund,status:ok?'approved':'rejected',answer};
+    if(ok){p.status='CANCELED';const m=S.memberships.find(x=>x.orderId===p.orderId);if(m)m.until=addDays(today(),-1)}
+    const who=p.loginId||academyLogin(p.academyId);log(actor(),`환불 ${ok?'승인':'거절'}: ${who} · ${p.orderName}`);
+    notify({to:[who],kind:'notice',title:ok?'환불이 승인됐어요':'환불 요청이 거절됐어요',body:ok?`${p.orderName} ${won(p.amount)} 결제를 취소했어요`:answer,route:'/'});
+    S.flash=ok?`환불을 승인했어요${API.on&&p.server?' (토스 결제 취소 완료)':''}.`:'환불 요청을 거절했어요.'}
+  catch(e){S.flash=e.message;S.flashType='err'} render()},
+ 'mem-q':(f,fd)=>{S.memQ=(fd.get('q')||'').trim();if(API.cache)API.cache.accounts=null;render()},
+ 'notice-new':(f,fd)=>{const id=Math.max(0,...S.notices.map(n=>n.id))+1,to=fd.get('to'),n={id,title:(fd.get('title')||'').trim(),body:(fd.get('body')||'').trim(),to,pinned:!!fd.get('pinned'),at:new Date().toISOString(),by:S.user.loginId};
+  S.notices.push(n);log(actor(),`공지 게시: ${n.title}`);
+  if(fd.get('push'))notify({toRoles:to==='all'?['academy','teacher']:[to],kind:'notice',title:'[공지] '+n.title,body:n.body.slice(0,80),route:'/notice'});
+  S.flash=`공지를 게시했어요.${fd.get('push')?(API.on?' 알림을 보냈어요 (알림을 끈 회원은 제외).':' (샘플 모드: 실제 알림은 서버 모드에서 보내요)'):''}`;render()}
+};
+// 거절/승인 버튼 구분 (submit 이벤트의 submitter)
+document.addEventListener('click',e=>{const b=e.target.closest('form[data-form=refund-decide] button[name=d]');if(b)b.form.dataset.d=b.value},true);
+
 // ---------- 이벤트 ----------
 document.addEventListener('click',e=>{
   if(e.target.closest('.reset')){e.preventDefault();try{sessionStorage.removeItem(STORE_KEY)}catch(x){}location.href=BASE_URL;return}
   const el=e.target.closest('[data-act]'); if(!el) return;
   const id=+el.dataset.id, a=el.dataset.act;
   if(a==='hero'){heroCtl(el.dataset.to);return}
+  if(a==='push-test'){pushTest();return}
+  if(a==='pv-send'){pvSend(el.dataset.pv,el.closest('[data-pv-box]'));return}
+  if(a==='pv-check'){pvCheck(el.dataset.pv,el.closest('[data-pv-box]'));return}
+  if(a==='terms-pop'){termsPop(el.dataset.k);return}
+  if(a==='terms-pop-close'){document.querySelector('.tpop')?.remove();return}
+  if(a==='ops-reload'){(API.cache||{})[el.dataset.k==='logs'?'logs':el.dataset.k]=null;loadOps(el.dataset.k);return}
+  if(a==='me-phone'){mePhone();return}
+  if(a==='mem-status'||a==='mem-unlock'){memAction(a,el.dataset.id2,el.dataset.st);return}
   if(a==='club-pub'){S.next=el.dataset.club;S.pub='login';replaceNext=false;render();window.scrollTo(0,0);return}
   if(a==='club-file'){S.flash='샘플 자료예요. 실제 서비스에서는 회원만 내려받을 수 있는 파일이 열려요.';render();return}
   if(a==='bizchk'){if(BIZ.state!=='checking')bizCheck(el.form);return}
@@ -1584,14 +2124,44 @@ document.addEventListener('click',e=>{
     if(S.pub!=='home'){S.pub='home';S.next='';replaceNext=false;render()}
     document.querySelectorAll('[data-act="pubscroll"]').forEach(b=>b.classList.toggle('on',b.dataset.target===id));
     if(id==='top')window.scrollTo({top:0,behavior:'smooth'});else document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});return}
-  if(a==='pub'){S.pub=el.dataset.to;S.next='';if(el.dataset.role)S.suRole=el.dataset.role;replaceNext=false;window.scrollTo(0,0)}
-  else if(a==='tab'){S.noti=false;S.receipt=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
-  else if(a==='logout'){S.noti=false;log(actor(),'로그아웃');S.user=null;S.checkout=null;S.pub='home'}
+  if(a==='pub'){S.pub=el.dataset.to;S.next='';if(el.dataset.role)S.suRole=el.dataset.role;if(el.dataset.terms)S.termsTab=el.dataset.terms;
+    if(S.pub==='find-id'){S.found=null;delete PV.find_id} if(S.pub==='reset-pw')delete PV.reset_password;replaceNext=false;window.scrollTo(0,0)}
+  else if(a==='tab'){S.noti=false;S.receipt=null;S.sub=null;S.refundOpen=null;S.tab=el.dataset.tab;S.selT=null;S.checkout=null;window.scrollTo(0,0)}
+  else if(a==='sub'){S.noti=false;S.refundOpen=null;S.sub=el.dataset.to||null;if(el.dataset.terms)S.termsTab=el.dataset.terms;S.checkout=null;window.scrollTo(0,0);
+    if(S.sub&&(S.sub==='me'||S.sub.startsWith('me-'))&&API.on)loadMe(); if(S.sub==='me-edit')delete PV.change_phone}
+  else if(a==='terms-tab'){S.termsTab=el.dataset.k}
+  else if(a==='notice-tab'){S.noticeTab=el.dataset.k}
+  else if(a==='noti-readall'){markRead(notis().map(notiKey))}
+  else if(a==='noti-set'){S.noti=false;S.sub='me-notify';if(API.on)loadMe();window.scrollTo(0,0)}
+  else if(a==='refund-open'){S.refundOpen=el.dataset.order;S.receipt=null}
+  else if(a==='refund-close'){S.refundOpen=null}
+  else if(a==='ops'){S.ops=el.dataset.k;if(API.cache)API.cache[{members:'accounts',logs:'logs',refunds:'payments'}[S.ops]]=null}
+  else if(a==='notice-pin'){const n=S.notices.find(x=>x.id===id);n.pinned=!n.pinned;log(actor(),`공지 ${n.pinned?'고정':'고정 해제'}: ${n.title}`)}
+  else if(a==='notice-del'){const n=S.notices.find(x=>x.id===id);if(!confirm(`'${n.title}' 공지를 삭제할까요?`))return;S.notices=S.notices.filter(x=>x.id!==id);log(actor(),`공지 삭제: ${n.title}`);S.flash='공지를 삭제했어요.'}
+  else if(a==='logout'){S.noti=false;S.sub=null;API.me=null;API.cache=null;log(actor(),'로그아웃');S.user=null;S.checkout=null;S.pub='home';
+    if(API.on){const t=AppBridge.token;(t?api('push/token/remove',{method:'POST',body:{token:t}}):Promise.resolve()).catch(()=>{}).finally(()=>api('auth/logout',{method:'POST'}).catch(()=>{}))}}
   else if(a==='pay-open'){S.checkout={tid:id,ts:Date.now()};window.scrollTo(0,0)}
   else if(a==='club-join'){if(CLUBS[S.user.role]&&!isMember()){S.checkout={kind:'club',club:S.user.role,ts:Date.now()};window.scrollTo(0,0)}}
-  else if(a==='club-apply'){if(!isMember())return;const key=S.user.loginId+':'+el.dataset.ev,ev=CLUBS[S.user.role].events.find(e=>e.id===el.dataset.ev),i=S.clubApply.indexOf(key);
-    if(i>=0){S.clubApply.splice(i,1);log(actor(),`클럽 프로그램 신청 취소: ${ev.title}`);S.flash='신청을 취소했어요.'}
-    else{S.clubApply.push(key);log(actor(),`클럽 프로그램 신청: ${ev.title}`);S.flash=`신청했어요 · ${kDate(addDays(today(),ev.d))} ${ev.time}`}}
+  else if(a==='club-apply'){if(!isMember())return;const ev=evOf(el.dataset.ev);if(!ev)return;const mine=myApp(ev.id);
+    if(mine){mine.status='취소';mine.at2=new Date().toISOString();log(actor(),`클럽 프로그램 신청 취소: ${ev.title}`);S.flash='신청을 취소했어요.'}
+    else{if(!evOpen(ev)){S.flash='신청이 마감된 프로그램이에요.';S.flashType='err'}
+      else{S.clubApply.push({id:'ap'+Date.now(),ev:ev.id,loginId:S.user.loginId,status:'신청',at:new Date().toISOString()});log(actor(),`클럽 프로그램 신청: ${ev.title}`);notify({toRoles:['admin'],kind:'club',title:'클럽 프로그램 신청',body:`${S.user.loginId} · ${ev.title}`,route:'/club'});S.flash=`신청했어요 · ${kDate(ev.date)} ${ev.time} · 서당이 확인 후 확정해 드려요`}}}
+  // 클럽 관리 (관리자)
+  else if(a==='cm-club'){S.cm.club=el.dataset.k;S.cm.sel=null;S.cm.edit=null}
+  else if(a==='cm-month'){S.cm.month=ymAdd(S.cm.month||ym(today()),+el.dataset.d);S.cm.sel=null}
+  else if(a==='cm-new'){S.cm.edit='new';window.scrollTo(0,0)}
+  else if(a==='cm-edit'){S.cm.edit=el.dataset.ev;window.scrollTo(0,0)}
+  else if(a==='cm-edit-close'){S.cm.edit=null}
+  else if(a==='cm-sel'){S.cm.sel=el.dataset.ev||null}
+  else if(a==='cm-close'||a==='cm-open'){const ev=evOf(el.dataset.ev);ev.status=a==='cm-close'?'마감':'모집 중';log(actor(),`클럽 프로그램 ${a==='cm-close'?'신청 마감':'신청 재개'}: ${ev.title}`);S.flash=a==='cm-close'?'신청을 마감했어요. 회원 화면에서 신청 버튼이 닫혀요.':'신청을 다시 받아요.'}
+  else if(a==='cm-cancel'){const ev=evOf(el.dataset.ev),n=seats(ev.id);if(!confirm(`'${ev.title}' 프로그램을 취소할까요?${n?`\n신청자 ${n}명에게 취소 안내가 표시돼요.`:''}`))return;
+    ev.status='취소';log(actor(),`클럽 프로그램 취소: ${ev.title} (신청자 ${n}명)`);notify({to:evApps(ev.id).filter(x=>SEAT_ST.includes(x.status)).map(x=>x.loginId),kind:'club',title:'클럽 프로그램이 취소됐어요',body:`${ev.title} · ${kDate(ev.date)}`,route:'/club'});S.flash=`프로그램을 취소했어요.${n?` 신청자 ${n}명의 클럽 화면에 '서당이 취소했어요'로 표시돼요.`:''}`}
+  else if(a==='cm-ap'){const ap=S.clubApply.find(x=>x.id===el.dataset.ap),ev=evOf(ap.ev),to=el.dataset.st;
+    if(to==='확정'&&ap.status==='신청'&&S.clubApply.filter(x=>x.ev===ev.id&&['확정','참석'].includes(x.status)).length>=ev.cap){S.flash='정원이 찼어요. 정원을 늘리거나 다른 확정을 취소해 주세요.';S.flashType='err'}
+    else{ap.status=to;log(actor(),`클럽 신청 ${to}: ${ap.loginId} · ${ev.title}`);if(to==='확정'||to==='반려')notify({to:[ap.loginId],kind:'club',title:to==='확정'?'클럽 프로그램 참가가 확정됐어요':'클럽 프로그램 신청이 반려됐어요',body:`${ev.title} · ${kDate(ev.date)} ${ev.time}`,route:'/club'});S.flash=`${ap.loginId} 신청을 '${to}'(으)로 바꿨어요.`}}
+  else if(a==='cm-confirm-all'){const ev=evOf(el.dataset.ev),w=evApps(ev.id).filter(x=>x.status==='신청');w.forEach(x=>x.status='확정');notify({to:w.map(x=>x.loginId),kind:'club',title:'클럽 프로그램 참가가 확정됐어요',body:`${ev.title} · ${kDate(ev.date)} ${ev.time}`,route:'/club'});log(actor(),`클럽 신청 ${w.length}건 일괄 확정: ${ev.title}`);S.flash=`대기 ${w.length}명을 모두 확정했어요.`}
+  else if(a==='cm-copy'){const ev=evOf(el.dataset.ev);const txt=[`${ev.title} (${ev.date} ${ev.time} · ${ev.place})`,...evApps(ev.id).filter(x=>x.status!=='취소').map((x,i)=>`${i+1}. ${(S.accounts.find(y=>y.loginId===x.loginId)||{}).name||''} (${x.loginId}) · ${x.status}`)].join('\n');
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{S.flash='신청자 명단을 복사했어요.';render()},()=>{prompt('명단을 복사해 쓰세요',txt)});return}
   else if(a==='pay-cancel'){S.checkout=null}
   else if(a==='pay-go'){doPay();return}
   else if(a==='filter-reset'){S.f={subject:'',grade:'',region:''}}
@@ -1600,28 +2170,28 @@ document.addEventListener('click',e=>{
   else if(a==='evalf'){S.evalF=el.dataset.k}
   else if(a==='eval-open'){S.selT=id;window.scrollTo(0,0)}
   else if(a==='eval-close'){S.selT=null}
-  else if(a==='eval-sched'){tOf(id).status='평가예정';log(actor(),`${tOf(id).name} 강사 시범강의 일정 배정`);S.flash='평가 일정을 배정했습니다.'}
+  else if(a==='eval-sched'){tOf(id).status='평가예정';log(actor(),`${tOf(id).name} 강사 시범강의 일정 배정`);S.flash='평가 일정을 배정했습니다.';notify({to:[teacherLogin(id)],kind:'eval',title:'시범강의 평가 일정이 배정됐어요',body:'검증 화면에서 일정을 확인해 주세요',route:'/ver'})}
   else if(a==='apply'){
     const rid=+document.getElementById('rs-'+id).value;
     S.matches.push({id:Math.max(0,...S.matches.map(m=>m.id))+1,tid:id,rid,status:'신청',hire:'',checks:[]});
     rOf(rid).status='후보 제안 중';
-    log(actor(),`${tOf(id).name} 강사에게 매칭 신청 (요청 #${rOf(rid).no})`);S.flash='매칭을 신청했습니다. 서당 담당자가 상담을 진행합니다.'}
-  else if(a==='m-consult'){const m=S.matches.find(x=>x.id===id);m.status='상담 중';log(actor(),`${tOf(m.tid).name} 매칭 상담 시작`);S.flash='상담을 시작했습니다. 학원에 강사 연락처가 공개됩니다.'}
+    log(actor(),`${tOf(id).name} 강사에게 매칭 신청 (요청 #${rOf(rid).no})`);S.flash='매칭을 신청했습니다. 서당 담당자가 상담을 진행합니다.';notify({to:[teacherLogin(id)],toRoles:STAFF,kind:'match',title:'학원이 매칭을 신청했어요',body:`${aOf(rOf(rid).academyId).name} · 수락 또는 거절해 주세요`,route:'/prog'})}
+  else if(a==='m-consult'){const m=S.matches.find(x=>x.id===id);m.status='상담 중';log(actor(),`${tOf(m.tid).name} 매칭 상담 시작`);S.flash='상담을 시작했습니다. 학원에 강사 연락처가 공개됩니다.';notify({to:[teacherLogin(m.tid),academyLogin(rOf(m.rid).academyId)],kind:'match',title:'매칭 상담이 시작됐어요',body:'진행 화면에서 연락처와 다음 단계를 확인해 주세요',route:'/prog'})}
   else if(a==='m-hire'){const m=S.matches.find(x=>x.id===id);const d=document.getElementById('hire-'+id).value||addDays(today(),14);
     m.hire=d;m.status='정착 점검 중';rOf(m.rid).status='채용 확정';m.checks=[7,14,30].map(n=>({day:n,due:addDays(d,n),status:'예정',academyReply:'',teacherReply:'',action:''}));
-    log(actor(),`${tOf(m.tid).name} 채용 확정 · 점검 일정 3건 생성`);S.flash='채용을 확정하고 7·14·30일 점검 일정을 만들었습니다.'}
-  else if(a==='c-send'){const m=S.matches.find(x=>x.id===id);m.checks[+el.dataset.idx].status='응답 대기';log(actor(),`입사 ${m.checks[+el.dataset.idx].day}일 점검 알림 발송`);S.flash='학원과 강사에게 점검 알림을 보냈습니다. (샘플: 실제 발송은 하지 않습니다)'}
+    log(actor(),`${tOf(m.tid).name} 채용 확정 · 점검 일정 3건 생성`);S.flash='채용을 확정하고 7·14·30일 점검 일정을 만들었습니다.';notify({to:[teacherLogin(m.tid),academyLogin(rOf(m.rid).academyId)],kind:'match',title:'채용이 확정됐어요',body:`입사일 ${d} · 7·14·30일 정착 점검이 이어져요`,route:'/prog'})}
+  else if(a==='c-send'){const m=S.matches.find(x=>x.id===id);m.checks[+el.dataset.idx].status='응답 대기';log(actor(),`입사 ${m.checks[+el.dataset.idx].day}일 점검 알림 발송`);S.flash=API.on?'학원과 강사에게 점검 알림을 보냈습니다.':'학원과 강사에게 점검 알림을 보냈습니다. (샘플: 실제 발송은 서버 모드에서)';notify({to:[teacherLogin(m.tid),academyLogin(rOf(m.rid).academyId)],kind:'check',title:`입사 ${m.checks[+el.dataset.idx].day}일 정착 점검 응답을 부탁드려요`,body:'진행 화면에서 응답해 주세요',route:'/prog'})}
   else if(a==='m-rerec'){const m=S.matches.find(x=>x.id===id),r=rOf(m.rid),tid=+document.getElementById('alt-'+id).value;
     S.matches.push({id:Math.max(0,...S.matches.map(x=>x.id))+1,tid,rid:r.id,status:'신청',hire:'',checks:[]});r.reRecommend=(r.reRecommend||0)+1;
     log(actor(),`요청 #${r.no} 재추천: ${tOf(tid).name} 강사 (재추천 ${r.reRecommend}회)`);S.flash=`${tOf(tid).name} 강사를 추천했어요. 강사 동의를 기다립니다. (재추천 ${r.reRecommend}회)`}
-  else if(a==='m-accept'){const m=S.matches.find(x=>x.id===id);m.status='강사 동의';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 수락 · 정보 제공 동의`);S.flash='수락했어요. 서당 담당자가 상담 일정을 안내합니다.'}
-  else if(a==='m-decline'){const m=S.matches.find(x=>x.id===id);m.status='강사 거절';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 거절`);S.flash='거절했어요. 학원에는 다른 후보가 추천됩니다.'}
+  else if(a==='m-accept'){const m=S.matches.find(x=>x.id===id);m.status='강사 동의';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 수락 · 정보 제공 동의`);S.flash='수락했어요. 서당 담당자가 상담 일정을 안내합니다.';notify({to:[academyLogin(rOf(m.rid).academyId)],toRoles:STAFF,kind:'match',title:'강사가 매칭에 동의했어요',body:'서당이 상담을 준비해요',route:'/prog'})}
+  else if(a==='m-decline'){const m=S.matches.find(x=>x.id===id);m.status='강사 거절';log(actor(),`${aOf(rOf(m.rid).academyId).name} 매칭 거절`);S.flash='거절했어요. 학원에는 다른 후보가 추천됩니다.';notify({to:[academyLogin(rOf(m.rid).academyId)],toRoles:STAFF,kind:'match',title:'강사가 매칭을 거절했어요',body:'다른 후보를 추천받으세요',route:'/find'})}
   else if(a==='noti'){S.noti=!S.noti}
   else if(a==='receipt'){S.receipt=el.dataset.order}
   else if(a==='receipt-close'){S.receipt=null}
-  else if(a==='noti-go'){S.noti=false;S.tab=el.dataset.tab;S.selT=el.dataset.sel?+el.dataset.sel:null;S.checkout=null;window.scrollTo(0,0)}
-  else if(a==='ac-approve'){const x=aOf(id);x.status='제휴 승인';x.holdReason='';log(actor(),`${x.name} 제휴 승인 (확인서 v${x.form.version})`);S.flash=`${x.name}을 제휴 승인했습니다. 이제 채용요청을 등록할 수 있어요.`}
-  else if(a==='ac-hold'){const x=aOf(id);x.status='보류';x.holdReason=x.form.agree?'조건 확인 필요':'30일 정착 점검 참여 동의가 없습니다';(x.history=x.history||[]).push(`v${x.form.version} 보류: ${x.holdReason}`);log(actor(),`${x.name} 제휴 보류: ${x.holdReason}`);S.flash=`${x.name}을 보류했습니다. 학원에 사유가 안내됩니다.`}
+  else if(a==='noti-go'){S.noti=false;if(el.dataset.key)markRead([el.dataset.key]);S.sub=null;if(el.dataset.tab.startsWith('sub:')){S.sub=el.dataset.tab.slice(4);S.selT=null;S.checkout=null;window.scrollTo(0,0);render();return}S.tab=el.dataset.tab;S.selT=el.dataset.sel?+el.dataset.sel:null;S.checkout=null;window.scrollTo(0,0)}
+  else if(a==='ac-approve'){const x=aOf(id);x.status='제휴 승인';x.holdReason='';log(actor(),`${x.name} 제휴 승인 (확인서 v${x.form.version})`);S.flash=`${x.name}을 제휴 승인했습니다. 이제 채용요청을 등록할 수 있어요.`;notify({to:[academyLogin(id)],kind:'match',title:'제휴가 승인됐어요',body:'이제 채용요청을 등록할 수 있어요',route:'/req'})}
+  else if(a==='ac-hold'){const x=aOf(id);x.status='보류';x.holdReason=x.form.agree?'조건 확인 필요':'30일 정착 점검 참여 동의가 없습니다';(x.history=x.history||[]).push(`v${x.form.version} 보류: ${x.holdReason}`);log(actor(),`${x.name} 제휴 보류: ${x.holdReason}`);S.flash=`${x.name}을 보류했습니다. 학원에 사유가 안내됩니다.`;notify({to:[academyLogin(id)],kind:'match',title:'제휴가 보류됐어요',body:x.holdReason,route:'/req'})}
   else if(a==='c-done'){const c=S.complaints.find(x=>x.no===el.dataset.no);c.status='처리 완료';log(actor(),`민원 ${c.no} 처리 완료`)}
   else return;
   render();
@@ -1640,6 +2210,8 @@ function showPicked(input){const d=input.closest('[data-drop]');if(!d)return;con
 ['dragleave','drop'].forEach(ev=>document.addEventListener(ev,e=>{const d=e.target.closest&&e.target.closest('[data-drop]');if(!d)return;e.preventDefault();d.classList.remove('over');
   if(ev==='drop'&&e.dataTransfer.files.length){const i=d.querySelector('input');i.files=e.dataTransfer.files;showPicked(i)}}));
 document.addEventListener('change',e=>{
+  if(e.target.dataset.agreeAll!==undefined){const box=e.target.closest('.agree');box.querySelectorAll('input[type=checkbox]').forEach(c=>{if(c!==e.target&&!c.closest('fieldset[disabled]')){c.disabled=false;c.checked=e.target.checked}});return}
+  if(e.target.dataset.mk!==undefined){const n=e.target.form&&e.target.form.querySelector('[data-night]');if(n){n.disabled=!e.target.checked;if(!e.target.checked)n.checked=false}return}
   if(e.target.dataset.cam!==undefined){const f=e.target.files&&e.target.files[0];const m=e.target.form&&e.target.form.querySelector('[data-drop] input');
     if(f&&m){const dt=new DataTransfer();dt.items.add(f);m.files=dt.files;showPicked(m)}e.target.value='';return}
   if(e.target.dataset.suRole!==undefined){S.suRole=e.target.value;e.target.form.querySelectorAll('fieldset[data-for]').forEach(fs=>{const on=fs.dataset.for===S.suRole;fs.hidden=!on;fs.disabled=!on});return}
@@ -1665,41 +2237,50 @@ document.addEventListener('submit',e=>{
     if(f.pw.value&&f.pw2.value!==f.pw.value) f.pw2.setCustomValidity('비밀번호가 서로 달라요');
     if(fd.get('role')==='academy'&&f.biz.value&&!bizSumOk(f.biz.value)) f.biz.setCustomValidity('사업자등록번호를 다시 확인해 주세요 (검증번호가 맞지 않아요)');
     if(!f.checkValidity()){f.reportValidity();return}
-    const role=fd.get('role'), phone=fd.get('phone');
+    const pv=PV.signup||{};
+    if(!pv.token){Object.assign(PV.signup=PV.signup||{},{err:'휴대폰 본인인증을 먼저 해 주세요'});pvRefresh('signup');f.querySelector('[data-pv-box] input')?.focus();return}
+    const role=fd.get('role'), phone=pv.phone;
+    if(!API.on&&S.accounts.some(a=>a.status!=='deleted'&&digits(a.phone)===digits(phone))){Object.assign(PV.signup,{err:'이미 이 휴대폰으로 가입한 계정이 있어요. 아이디 찾기를 이용해 주세요',token:'',requestId:''});pvRefresh('signup');return}
+    const consent={terms:TERMS_VERSION,marketing:!!fd.get('marketing'),night:!!fd.get('marketing')&&!!fd.get('night')};
     if(role==='academy'){
       if(BIZ.key!==bizKey(f)){bizCheck(f).then(()=>{if(BIZ.state==='ok'||BIZ.state==='off')f.requestSubmit()});return}
       if(BIZ.state==='checking')return;
       if(BIZ.state!=='ok'&&BIZ.state!=='off'){f.biz.focus();return}
+    }
+    if(API.on&&!f.dataset.loginId){
+      const b=f.querySelector('button.btn.block');b.disabled=true;
+      api('auth/signup',{method:'POST',body:{role,name:(role==='academy'?fd.get('owner'):fd.get('tname')).trim(),password:fd.get('pw'),verifyToken:pv.token,
+          agreeAge:!!fd.get('age'),agreeTerms:!!fd.get('terms'),agreePrivacy:!!fd.get('privacy'),marketing:consent.marketing,night:consent.night}})
+        .then(me=>{API.me=me;f.dataset.loginId=me.loginId;f.requestSubmit()})
+        .catch(e=>{b.disabled=false;S.flash=e.message;S.flashType='err';const p=document.querySelector('main');p&&p.insertAdjacentHTML('afterbegin',`<div class="flash err">${esc(e.message)}</div>`)});
+      return;
     }
     let acc;
     if(role==='academy'){
       const aid=Math.max(0,...S.academies.map(x=>x.id))+1;
       S.academies.push({id:aid,name:fd.get('aname').trim(),region:fd.get('region'),type:fd.get('atype'),status:'확인서 작성 전',bizNo:fd.get('biz'),bizCheck:BIZ.state==='ok'?'국세청 확인 완료':'확인 대기',phone,form:{version:0}});
       const no=S.accounts.filter(x=>x.role==='academy').length+1;
-      acc={loginId:'원장'+no,role:'academy',name:fd.get('owner').trim()+' 원장',academyId:aid};
+      acc={loginId:f.dataset.loginId||'원장'+no,role:'academy',name:fd.get('owner').trim()+' 원장',academyId:aid,phone,status:'active',consent,notifyOff:[]};
     } else {
       const tid=Math.max(0,...S.teachers.map(x=>x.id))+1;
       S.teachers.push({id:tid,name:fd.get('tname').trim(),subject:fd.get('subject'),grade:fd.get('grade'),region:fd.get('tregion'),career:'',strength:'',wish:'',
         status:'미신청',scores:null,result:null,basis:'',unverified:'',contact:phone,corr:'',docs:[],agree:true,bgConsent:true});
-      acc={loginId:'강사'+tid,role:'teacher',name:fd.get('tname').trim(),teacherId:tid};
+      acc={loginId:f.dataset.loginId||'강사'+tid,role:'teacher',name:fd.get('tname').trim(),teacherId:tid,phone,status:'active',consent,notifyOff:[]};
     }
     S.accounts.push(acc);
-    S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};
+    S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};registerPush();
     if(role==='academy')log(actor(),`사업자 진위확인 · ${BIZ.state==='ok'?'국세청 확인 완료':'확인 대기 (국세청 확인 불가)'}`);
-    log(actor(),`회원가입 (${ROLE_NAME[acc.role]}) · 약관·개인정보${role==='teacher'?'·범죄경력 조회':'·정착 점검'} 동의 기록`);
+    log(actor(),`회원가입 (${ROLE_NAME[acc.role]}) · 본인인증 · 약관 ${TERMS_VERSION}·개인정보${role==='teacher'?'·범죄경력 조회':'·정착 점검'} 동의${consent.marketing?' · 마케팅 수신 동의':''}`);delete PV.signup;
     S.flash=`가입을 마쳤어요 · 아이디 ${acc.loginId}. ${role==='academy'?(BIZ.state==='ok'?'':'사업자 정보는 운영담당이 확인할게요. ')+'먼저 근무조건 확인서를 작성해 주세요.':'프로필과 서류를 채우고 검증을 신청해 주세요.'}`;
     S.pub='home';render();window.scrollTo(0,0);return;
   }
   if(k==='login'){
     const loginId=(fd.get('id')||'').replace(/\s/g,'');
-    const acc=S.accounts.find(a=>a.loginId===loginId);
+    if(API.on){const b=f.querySelector('button.btn');b.disabled=true;apiLogin(loginId,fd.get('pw')||'',AppBridge.inApp||!!fd.get('remember'));return}
+    const acc=S.accounts.find(a=>a.loginId===loginId&&a.status!=='deleted');
+    if(acc&&acc.status==='suspended'){S.loginErr='이용이 정지된 계정이에요. 고객센터로 문의해 주세요.';render();return}
     if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~17, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
-    S.user={...acc};S.pub='home';
-    S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
-    // 메인의 '서당 클럽'에서 들어온 경우 클럽 탭으로
-    if(S.next){const w=S.next;S.next='';
-      if(CLUBS[acc.role]){S.tab='club';if(acc.role!==w)S.flash=`${CLUBS[w].name}은 ${CLUBS[w].who} 계정만 이용할 수 있어요. ${CLUBS[acc.role].name}으로 안내했어요.`}
-      else S.flash='서당 클럽은 강사·원장 계정만 이용할 수 있어요.'}
+    enterAs(acc);
   }
   else if(k==='req'){const no=Math.max(0,...S.requests.map(r=>r.no))+1;S.requests.push({id:no,no,academyId:S.user.academyId,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),`채용요청 #${no} 등록`);S.flash=`채용요청 #${no}을 등록했습니다.`}
   else if(k==='prof'){const t=me();['subject','grade','region','career','strength','wish','contact'].forEach(x=>t[x]=fd.get(x)||'');t.agree=true;log(actor(),'프로필 저장 · 개인정보 동의 기록');S.flash='프로필을 저장했습니다.'}
@@ -1719,17 +2300,35 @@ document.addEventListener('submit',e=>{
     }
   }
   else if(k==='corr'){const t=me();t.corr=fd.get('text');log(actor(),'평가 정정 요청');S.flash='정정 요청을 접수했습니다.'}
-  else if(k==='eval'){const t=tOf(id);t.scores=ITEMS.map((it,i)=>Math.max(0,Math.min(it[1],+fd.get('s'+i)||0)));t.result=fd.get('result');t.basis=fd.get('basis');t.facts=fd.get('facts');t.statement=fd.get('statement');t.unverified=fd.get('unverified');t.status='승인';t.corr='';log(actor(),`${t.name} 강사 평가 승인 (${total(t)}점 · ${t.result})`);S.flash=`${t.name} 강사 평가를 저장했습니다. ${t.result==='추천 검토'?'학원 후보로 노출됩니다.':'학원 후보에는 노출되지 않습니다.'}`}
+  else if(k==='eval'){const t=tOf(id);t.scores=ITEMS.map((it,i)=>Math.max(0,Math.min(it[1],+fd.get('s'+i)||0)));t.result=fd.get('result');t.basis=fd.get('basis');t.facts=fd.get('facts');t.statement=fd.get('statement');t.unverified=fd.get('unverified');t.status='승인';t.corr='';log(actor(),`${t.name} 강사 평가 승인 (${total(t)}점 · ${t.result})`);notify({to:[teacherLogin(t.id)],kind:'eval',title:'검증 평가 결과가 나왔어요',body:`${total(t)}점 · ${t.result}`,route:'/ver'});S.flash=`${t.name} 강사 평가를 저장했습니다. ${t.result==='추천 검토'?'학원 후보로 노출됩니다.':'학원 후보에는 노출되지 않습니다.'}`}
   else if(k==='reply'){const m=S.matches.find(x=>x.id===id),c=m.checks[+f.dataset.idx];c[f.dataset.who+'Reply']=fd.get('text')||'(내용 없음)';if(c.academyReply&&c.teacherReply)c.status='응답 완료';log(actor(),`입사 ${c.day}일 점검 응답`);S.flash='응답을 보냈습니다.'}
   else if(k==='action'){const m=S.matches.find(x=>x.id===id);m.checks[+f.dataset.idx].action=fd.get('text');log(actor(),'점검 조치 기록 저장');S.flash='조치 기록을 저장했습니다.'}
   else if(k==='mresult'){const m=S.matches.find(x=>x.id===id);m.status=fd.get('result');log(actor(),`${tOf(m.tid).name} 매칭 결과: ${m.status}`);S.flash='결과를 저장했습니다.'}
   else if(k==='cond'){const x=myAcademy();const v=((x.form||{}).version||0)+1;x.form={version:v,agree:!!fd.get('agree')};FORM_FIELDS.forEach(([k])=>x.form[k]=fd.get(k)||'');if(x.status!=='제휴 승인'){x.status='검토 중';x.holdReason=''}log(actor(),`근무조건 확인서 v${v} 제출`);S.flash=`근무조건 확인서 v${v}을 제출했습니다.${x.status==='검토 중'?' 서당이 검토 후 안내합니다.':''}`}
-  else if(k==='complaint'){const text=(fd.get('text')||'').trim();if(text){const no='C-'+String(S.complaints.length+1).padStart(3,'0');S.complaints.push({no,by:actor(),byLogin:S.user.loginId,byAcademy:S.user.academyId||null,text,status:'접수'});log(actor(),`민원 접수 ${no}`);S.flash=`민원이 접수되었습니다. (접수번호 ${no})`}}
+  else if(SUBMITS[k]){SUBMITS[k](f,fd);return}
+  else if(k==='cm-ev'){const evId=f.dataset.ev, cap=Math.max(1,+fd.get('cap')||1);
+    const v={type:fd.get('type'),title:(fd.get('title')||'').trim(),date:fd.get('date'),time:(fd.get('time')||'').trim(),place:(fd.get('place')||'').trim(),cap,desc:(fd.get('desc')||'').trim()};
+    if(evId){const ev=evOf(evId),n=seats(evId);if(cap<n){S.flash=`정원을 지금 신청 수(${n}명)보다 적게 줄일 수 없어요.`;S.flashType='err';render();return}
+      Object.assign(ev,v);log(actor(),`클럽 프로그램 수정: ${ev.title}`);S.flash='프로그램을 수정했어요. 회원 화면에 바로 반영돼요.'}
+    else{const id=(S.cm.club==='academy'?'a':'t')+Date.now().toString(36);S.clubEvents.push({id,club:S.cm.club,...v,status:'모집 중',by:S.user.loginId});
+      log(actor(),`클럽 프로그램 등록: ${CLUBS[S.cm.club].name} · ${v.title}`);S.flash=`'${v.title}'을 등록했어요. ${CLUBS[S.cm.club].name} 회원이 바로 신청할 수 있어요.`;S.cm.sel=id}
+    S.cm.month=ym(v.date);S.cm.edit=null}
+  else if(k==='complaint'){const text=(fd.get('text')||'').trim();if(text){const no='C-'+String(S.complaints.length+1).padStart(3,'0');S.complaints.push({no,by:actor(),byLogin:S.user.loginId,byAcademy:S.user.academyId||null,text,status:'접수'});log(actor(),`민원 접수 ${no}`);S.flash=`민원이 접수되었습니다. (접수번호 ${no})`;notify({toRoles:STAFF,kind:'check',title:`민원 ${no} 접수`,body:text.slice(0,80),route:'/check'})}}
   render();
 });
 
 async function boot(){
   if(!load()) seed();
+  await apiInit();
+  if(API.on){
+    // 앱(Android 웹뷰)은 켜자마자 저장된 쿠키를 늦게 실을 때가 있어, 401이면 잠깐 뒤 두 번까지 다시 확인한다
+    const inApp=navigator.userAgent.includes('SeodangApp');
+    for(let i=0;i<(inApp?3:1);i++){
+      try{const me=await api('auth/me');if(!S.user||S.user.loginId!==me.loginId){const t=S.next;enterAs(localAccountFor(me));S.next=t}break}
+      catch(e){window.__bootAuth=[i,e.status];if(e.status!==401)break;if(i===(inApp?2:0))S.user=null;else await new Promise(r=>setTimeout(r,800))}
+    }
+  }
+  { const h=location.hash.replace(/^#\//,'').split('/')[0]; if(S.user&&TABS[S.user.role].some(([k])=>k===h)) S.tab=h; }
   const q=new URLSearchParams(location.search), result=q.get('toss');
   if(result) history.replaceState(null,'',BASE_URL);
   if(!S.user){ S.pub=result?'login':pubFromHash(); if(result) S.loginErr='결제 후 세션이 만료되었습니다. 다시 로그인해 주세요.'; render(); return }
@@ -1738,20 +2337,24 @@ async function boot(){
   if(result==='fail'){S.tab=pend&&pend.kind==='club'?'club':'find';S.flash=`결제가 완료되지 않았습니다. ${q.get('message')||''} (${q.get('code')||'-'})`;S.flashType='err';render();return}
   if(result==='success'&&q.get('paymentKey')){
     S.tab=pend&&pend.kind==='club'?'club':'find';
-    // 데모: 서버가 없으므로 승인 API는 호출하지 않고, 주문번호·금액만 대조합니다.
     if(!pend||pend.orderId!==q.get('orderId')||Number(q.get('amount'))!==pend.amount){S.flash='주문 정보가 일치하지 않아 결제를 반영하지 않았습니다.';S.flashType='err';render();return}
+    // 서버 모드 + 시크릿 키 있음: 서버가 가격표와 대조하고 토스 승인 API를 호출 (M-13). 없으면 데모(승인 생략)
+    let srv=null;
+    if(API.on&&API.pay){try{srv=await api('pay/confirm',{method:'POST',body:{paymentKey:q.get('paymentKey'),orderId:pend.orderId,amount:pend.amount,orderName:pend.orderName,product:pend.kind==='club'?'club:'+pend.club:'profile'}})}
+      catch(e){S.flash=`결제 승인에 실패해 반영하지 않았어요: ${e.message}`;S.flashType='err';render();return}}
+    const how=srv?(srv.method||'카드')+' · 서버 승인 확인':'결제위젯(테스트) · 승인 생략', note=srv?'':' (데모: 승인 API 미호출)';
     if(pend.kind==='club'){
       if(pend.loginId!==S.user.loginId){S.flash='다른 계정의 주문이라 반영하지 않았어요.';S.flashType='err';render();return}
       if(!S.purchases.some(p=>p.orderId===pend.orderId)){
-        S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId,loginId:pend.loginId,club:pend.club,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
+        S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId,loginId:pend.loginId,club:pend.club,amount:pend.amount,method:how,approvedAt:(srv&&srv.approvedAt)||new Date().toISOString(),status:'DONE',orderName:pend.orderName,server:!!srv});
         S.memberships.push({loginId:pend.loginId,club:pend.club,start:today(),until:addDays(today(),CLUB_DAYS),orderId:pend.orderId});
         log(actor(),`${CLUBS[pend.club].name} 가입 결제 (${won(pend.amount)}) · 데모`)}
-      S.flash=`${CLUBS[pend.club].name}에 가입했어요. ${addDays(today(),CLUB_DAYS)}까지 이용할 수 있어요. (데모: 승인 API 미호출)`;
+      S.flash=`${CLUBS[pend.club].name}에 가입했어요. ${addDays(today(),CLUB_DAYS)}까지 이용할 수 있어요.${note}`;
       render();return
     }
-    if(!S.purchases.some(p=>p.orderId===pend.orderId)) S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId||S.user.academyId,tid:pend.tid,amount:pend.amount,method:'결제위젯(테스트) · 승인 생략',approvedAt:new Date().toISOString(),status:'DONE',orderName:pend.orderName});
+    if(!S.purchases.some(p=>p.orderId===pend.orderId)) S.purchases.unshift({orderId:pend.orderId,paymentKey:q.get('paymentKey'),academyId:pend.academyId||S.user.academyId,tid:pend.tid,amount:pend.amount,method:how,approvedAt:(srv&&srv.approvedAt)||new Date().toISOString(),status:'DONE',orderName:pend.orderName,server:!!srv});
     log(actor(),`프로필 열람권 결제 인증 완료 (${won(pend.amount)}) · 데모`);
-    S.flash=`결제 인증이 완료되었습니다. ${tOf(pend.tid).name} 강사의 프로필을 열람할 수 있습니다. (데모: 승인 API 미호출)`;
+    S.flash=`결제가 완료되었습니다. ${tOf(pend.tid).name} 강사의 프로필을 열람할 수 있습니다.${note}`;
     render();return
   }
   render();
