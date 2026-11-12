@@ -647,7 +647,7 @@ const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-che
 // 운영진 역할은 관리자 화면을 쓰되, 탭으로 권한을 나눈다 (PRD §3)
 const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:'admin'};
 const TABS = {
-  academy:[['home','홈'],['dash','대시보드'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['pay','결제 내역'],['club','원장 클럽']],
+  academy:[['home','홈'],['dash','대시보드'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['club','원장 클럽']],
   teacher:[['home','홈'],['dash','대시보드'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태'],['club','강사 클럽']],
   admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['club','클럽 관리'],['audit','운영']],
   // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
@@ -923,7 +923,7 @@ function localAccountFor(me){
 // 로그인 직후 공통 처리 (샘플·서버 로그인 모두)
 function enterAs(acc){
   S.user={...acc};S.pub='home';
-  S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};log(actor(),'로그인');
+  S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:'',paid:''};log(actor(),'로그인');
   // 메인의 '서당 클럽'에서 들어온 경우 클럽 탭으로
   if(S.next){const w=S.next;S.next='';
     if(CLUBS[acc.role]){S.tab='club';if(acc.role!==w)S.flash=`${CLUBS[w].name}은 ${CLUBS[w].who} 계정만 이용할 수 있어요. ${CLUBS[acc.role].name}으로 안내했어요.`}
@@ -1127,7 +1127,7 @@ function currentRoute(){
 const csTabFrom=p=>{if(p[0]==='notice')S.noticeTab=CS_TABS.some(([k])=>k===p[1])?p[1]:'notice'};
 const pubFromHash=()=>{const pp=location.hash.replace(/^#\//,'').split('/');csTabFrom(pp);const p=pp[0];return !p?'home':PUBVIEWS[p]?p:'404'};
 // 로그인 후 주소 → 하위 화면 (#/me, #/me/pw, #/notice …). 탭도 하위 화면도 아니면 404
-const subFromPath=p=>(csTabFrom(p),p[0]==='me')?(p[1]?'me-'+p[1]:'me'):SUBVIEWS[p[0]]&&p[0]!=='404'?p[0]:null;
+const subFromPath=p=>p[0]==='pay'?'me-pay':(csTabFrom(p),p[0]==='me')?(p[1]?'me-'+p[1]:'me'):SUBVIEWS[p[0]]&&p[0]!=='404'?p[0]:null;
 function syncRoute(){
   const h='#'+currentRoute();
   if(location.hash!==h) history[replaceNext?'replaceState':'pushState'](null,'',h);
@@ -1503,17 +1503,19 @@ const VIEWS = {
 },
 'academy:find':()=>{
   const f=S.f, sort=S.sort||'fit';
-  const list=candidates(f).sort((x,y)=>sort==='score'?total(y)-total(x):(fitOf(y).score-fitOf(x).score)||(total(y)-total(x)));
+  const all=candidates(f), nPaid=all.filter(t=>paid(t.id)).length;
+  const list=all.filter(t=>!f.paid||(f.paid==='paid')===paid(t.id)).sort((x,y)=>sort==='score'?total(y)-total(x):(fitOf(y).score-fitOf(x).score)||(total(y)-total(x)));
   return `<h2>후보 찾기</h2><p class="lead">시범강의 평가에서 <b>추천 검토</b>를 받은 강사만 보여드려요. 점수는 바로, 실명·경력 등 상세 프로필은 열람권으로 확인하세요. 연락처는 상담 단계 이후 공개됩니다.</p>
   <div class="filters">
     <select data-filter="subject" class="${f.subject?'on':''}" aria-label="과목">${opts(SUBJ,f.subject,'과목 전체')}</select>
     <select data-filter="grade" class="${f.grade?'on':''}" aria-label="학년">${opts(GRADE,f.grade,'학년 전체')}</select>
     <select data-filter="region" class="${f.region?'on':''}" aria-label="지역">${opts(REGION,f.region,'지역 전체')}</select>
-    ${f.subject||f.grade||f.region?`<button class="chip-reset" data-act="filter-reset">${ic('rotate-ccw')}초기화</button>`:''}
+    <select data-filter="paid" class="${f.paid?'on':''}" aria-label="열람 상태"><option value="">열람 상태 전체</option><option value="paid" ${f.paid==='paid'?'selected':''}>결제한 강사 (${nPaid})</option><option value="unpaid" ${f.paid==='unpaid'?'selected':''}>미결제 강사 (${all.length-nPaid})</option></select>
+    ${f.subject||f.grade||f.region||f.paid?`<button class="chip-reset" data-act="filter-reset">${ic('rotate-ccw')}초기화</button>`:''}
   </div>
-  <div class="listbar"><span class="muted">검증 통과 ${list.length}명</span>
+  <div class="listbar"><span class="muted">${f.paid==='paid'?'결제한 강사':f.paid==='unpaid'?'미결제 강사':'검증 통과'} ${list.length}명</span>
    <div class="seg sm" role="radiogroup" aria-label="정렬">${[['fit','조건 일치순'],['score','점수순']].map(([k,l])=>`<label><input type="radio" name="sort" value="${k}" data-sort ${sort===k?'checked':''}><span>${l}</span></label>`).join('')}</div></div>
-  ${list.length?`<div class="cands">${list.map(candCard).join('')}</div>`:empty('search-x','조건에 맞는 후보가 없어요','필터를 바꾸거나 초기화해 보세요.')}`;
+  ${list.length?`<div class="cands">${list.map(candCard).join('')}</div>`:(f.paid==='paid'&&!nPaid?empty('lock-open','아직 결제한 강사가 없어요','후보 카드의 \'결제하고 보기\'로 열람권을 결제하면 여기에 모여요.'):empty('search-x','조건에 맞는 후보가 없어요','필터를 바꾸거나 초기화해 보세요.'))}`;
 },
 'academy:pay':()=>{
   const ps=myPurchases();
@@ -2013,14 +2015,14 @@ function inquiryBody(){const mine=S.inquiries.filter(q=>q.loginId===S.user.login
 const notFoundBody=()=>`<div class="card nf">${ic('map-pin-off')}<h2>페이지를 찾을 수 없어요</h2><p class="lead">주소가 바뀌었거나 삭제된 페이지예요.</p><button class="btn" data-act="${S.user?'sub':'pub'}" data-to="${S.user?'':'home'}">홈으로</button></div>`;
 
 // ---------- 로그인 후 '내 정보' 하위 화면 (M-03·M-04·M-05·M-10·M-16·M-18·M-19) ----------
-const SUB_TITLE={me:'내 정보','me-edit':'회원정보 수정','me-pw':'비밀번호 변경','me-notify':'알림 설정','me-leave':'회원 탈퇴',notice:'고객센터',inquiry:'1:1 문의',terms:'약관 및 정책','404':'페이지 없음'};
+const SUB_TITLE={me:'내 정보','me-edit':'회원정보 수정','me-pw':'비밀번호 변경','me-notify':'알림 설정','me-leave':'회원 탈퇴','me-pay':'결제 내역',notice:'고객센터',inquiry:'1:1 문의',terms:'약관 및 정책','404':'페이지 없음'};
 const myAcc=()=>S.accounts.find(a=>a.loginId===S.user.loginId)||S.user;
 function meInfo(){const a=myAcc(),m=API.me;return {name:m?m.name:a.name,phone:m?m.phone:maskPh(a.phone),joined:m?m.joined:'',marketing:m?m.marketing:!!(a.consent||{}).marketing,night:m?m.night:!!(a.consent||{}).night,off:m?m.notifyOff:(a.notifyOff||[])}}
 async function loadMe(){if(!API.on)return;try{API.me=await api('auth/me');render()}catch(e){}}
 const SUBVIEWS={
  me:()=>{const i=meInfo(),u=S.user;const row=(to,icon,t,s)=>`<li><button data-act="sub" data-to="${to}">${ic(icon)}<div><b>${t}</b>${s?`<span>${s}</span>`:''}</div>${ic('chevron-right')}</button></li>`;
   return `<h2>내 정보</h2><div class="card meh"><span class="av">${ic(ROLE_ICON[u.role])}</span><div><b>${esc(i.name)}</b><span>${ROLE_NAME[u.role]} · ${esc(u.loginId)}${i.phone?' · '+esc(i.phone):''}${i.joined?' · '+i.joined+' 가입':''}</span></div></div>
-  <div class="card"><ul class="plain menu">${row('me-edit','user-pen','회원정보 수정','이름 · 휴대폰')}${row('me-pw','key-round','비밀번호 변경')}${row('me-notify','bell-ring','알림 설정',i.marketing?'마케팅 수신 동의':'업무 알림 · 마케팅 수신')}</ul></div>
+  <div class="card"><ul class="plain menu">${row('me-edit','user-pen','회원정보 수정','이름 · 휴대폰')}${row('me-pw','key-round','비밀번호 변경')}${row('me-notify','bell-ring','알림 설정',i.marketing?'마케팅 수신 동의':'업무 알림 · 마케팅 수신')}${u.role==='academy'?row('me-pay','receipt','결제 내역','프로필 열람권 · 원장 클럽 · 환불 요청'):''}</ul></div>
   <div class="card"><ul class="plain menu">${row('notice','headset','고객센터','공지사항 · FAQ · Q&A · 이벤트')}${row('inquiry','message-circle-question','1:1 문의 (Q&A)')}${row('terms','file-text','약관 및 정책')}</ul></div>
   <div class="row"><button class="btn sec" data-act="logout">${ic('log-out')}로그아웃</button><button class="btn sec" data-act="sub" data-to="me-leave">회원 탈퇴</button></div>`},
  'me-edit':()=>{const i=meInfo();return `<h2>회원정보 수정</h2><p class="lead">바꾼 내용은 기록으로 남아요. 학원 정보(학원명·사업자)는 진행 화면에서 운영담당 확인을 거쳐 바꿔요.</p>
@@ -2042,6 +2044,7 @@ const SUBVIEWS={
    <label for="ml-pw">비밀번호 확인</label><input id="ml-pw" type="password" name="pw" required autocomplete="current-password">
    <label class="chk" style="margin-top:12px"><input type="checkbox" name="ok" required><span>위 내용을 확인했고 탈퇴할게요</span></label>
    <button class="btn danger" style="margin-top:12px">탈퇴하기</button></form></div>`,
+ 'me-pay':()=>S.user.role==='academy'?VIEWS['academy:pay']():notFoundBody(),
  notice:()=>noticeBody(),
  terms:()=>termsBody(),
  inquiry:()=>`<h2>1:1 문의</h2>${inquiryBody()}`,
@@ -2257,7 +2260,7 @@ document.addEventListener('click',e=>{
     (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{S.flash='신청자 명단을 복사했어요.';render()},()=>{prompt('명단을 복사해 쓰세요',txt)});return}
   else if(a==='pay-cancel'){S.checkout=null}
   else if(a==='pay-go'){doPay();return}
-  else if(a==='filter-reset'){S.f={subject:'',grade:'',region:''}}
+  else if(a==='filter-reset'){S.f={subject:'',grade:'',region:'',paid:''}}
   else if(a==='doc-del'){const t=me();const d=t.docs.splice(+el.dataset.idx,1)[0];log(actor(),`서류 삭제: ${d.type}`);S.flash='서류를 삭제했습니다.'}
   else if(a==='verify-apply'){const t=me();t.status='신청';log(actor(),'검증 신청');S.flash='검증 신청이 접수되었습니다.'}
   else if(a==='evalf'){S.evalF=el.dataset.k}
@@ -2361,7 +2364,7 @@ document.addEventListener('submit',e=>{
       acc={loginId:f.dataset.loginId||'강사'+tid,role:'teacher',name:fd.get('tname').trim(),teacherId:tid,phone,status:'active',consent,notifyOff:[]};
     }
     S.accounts.push(acc);
-    S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:''};registerPush();
+    S.user={...acc};S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:'',paid:''};registerPush();
     if(role==='academy')log(actor(),`사업자 진위확인 · ${BIZ.state==='ok'?'국세청 확인 완료':'확인 대기 (국세청 확인 불가)'}`);
     log(actor(),`회원가입 (${ROLE_NAME[acc.role]}) · 본인인증 · 약관 ${TERMS_VERSION}·개인정보${role==='teacher'?'·범죄경력 조회':'·정착 점검'} 동의${consent.marketing?' · 마케팅 수신 동의':''}`);delete PV.signup;
     S.flash=`가입을 마쳤어요 · 아이디 ${acc.loginId}. ${role==='academy'?(BIZ.state==='ok'?'':'사업자 정보는 운영담당이 확인할게요. ')+'먼저 근무조건 확인서를 작성해 주세요.':'프로필과 서류를 채우고 검증을 신청해 주세요.'}`;
@@ -2422,7 +2425,8 @@ async function boot(){
     }
   }
   { const pp=location.hash.replace(/^#\//,'').split('/'),h=pp[0]; if(S.user&&TABS[S.user.role].some(([k])=>k===h)) S.tab=h;
-    else if(S.user&&h==='notice'){S.sub='notice';csTabFrom(pp)} }
+    else if(S.user&&h==='notice'){S.sub='notice';csTabFrom(pp)}
+    else if(S.user&&(h==='pay'||(h==='me'&&pp[1]==='pay'))&&S.user.role==='academy') S.sub='me-pay'; }
   const q=new URLSearchParams(location.search), result=q.get('toss');
   if(result) history.replaceState(null,'',BASE_URL);
   if(!S.user){ S.pub=result?'login':pubFromHash(); if(result) S.loginErr='결제 후 세션이 만료되었습니다. 다시 로그인해 주세요.'; render(); return }
