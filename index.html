@@ -53,6 +53,10 @@ svg.lucide{width:18px;height:18px;stroke-width:2;flex:none}
 .gnotice .nd{color:var(--mute);flex:none}
 .gnotice .csl{display:flex;align-items:center;gap:2px;flex:none;margin-left:auto;padding-left:12px}.gnotice .csl b{color:var(--sub);font-weight:700;margin-right:4px}
 .gnotice .csl button{border:0;background:none;padding:4px 8px;border-radius:8px;font:inherit;color:var(--sub);cursor:pointer}.gnotice .csl button:hover{background:var(--bg);color:var(--ink)}
+.attl li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.attl li:last-child{border-bottom:0}.attl li>div:first-child{display:flex;flex-direction:column}
+.attl .seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font:inherit;font-weight:600;color:var(--sub);cursor:pointer}.attl .seg button.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(25,31,40,.12)}
+table.sched td{vertical-align:top;min-width:96px}.slot{display:block;margin:2px 0;padding:4px 6px;border-radius:8px;background:var(--accent-soft);color:var(--accent-d);font-size:12px;font-weight:700}.slot em{display:block;font-style:normal;font-weight:500;color:var(--sub)}.slot.wait{background:var(--warn-soft);color:var(--warn-text)}
+p .slot{display:inline-block}
 .mhome .hcar{padding-top:0}.mhome .psec:first-of-type{margin-top:0}
 .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .qgrid button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;border:0;border-radius:var(--r-md);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font:inherit;color:var(--ink)}
@@ -642,18 +646,23 @@ const fmtSize = n => n>=1048576 ? (n/1048576).toFixed(1)+' MB' : Math.max(1,Math
 
 // 역할: profiles.role 과 같은 값
 const FORM_FIELDS=[['pay','급여·산정 방식','예: 월 급여제 · 협의'],['payDay','급여 지급일','예: 매월 10일'],['hours','수업 시수·출퇴근','예: 주 15시간 · 평일 오후'],['extra','수업 외 업무','채점·상담·셔틀 등'],['classSize','반 규모','예: 8명 이하'],['handover','인수인계 담당자','예: 부원장']];
-const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자', manager:'운영담당'};
-const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-check', manager:'handshake'};
+const ROLE_NAME = {academy:'학원 원장', teacher:'강사', admin:'관리자', manager:'운영담당', branch:'지점 관리자', student:'학생', parent:'학부모'};
+const ROLE_ICON = {academy:'school', teacher:'graduation-cap', admin:'shield-check', manager:'handshake', branch:'building', student:'backpack', parent:'users'};
 // 운영진 역할은 관리자 화면을 쓰되, 탭으로 권한을 나눈다 (PRD §3)
-const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:'admin'};
+const VIEW_ROLE = {academy:'academy', teacher:'teacher', admin:'admin', manager:'admin', branch:'branch', student:'family', parent:'family'};
 const TABS = {
   academy:[['home','홈'],['dash','대시보드'],['find','후보 찾기'],['req','채용요청'],['prog','진행 현황'],['club','원장 클럽']],
-  teacher:[['home','홈'],['dash','대시보드'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태'],['club','강사 클럽']],
+  teacher:[['home','홈'],['dash','대시보드'],['prof','내 프로필'],['ver','검증'],['prog','진행 상태'],['lesson','수업·강의실'],['club','강사 클럽']],
   admin:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원'],['club','클럽 관리'],['audit','운영']],
   // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
-  manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']]
+  manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']],
+  // 지점 관리자: 서당 지점의 강의실 대여·일정, 학생 출결
+  branch:[['dash','대시보드'],['room','강의실 예약'],['att','출결 관리']],
+  // 학생·학부모: 수업할 강사 찾기, 내 수업, 출결 확인
+  student:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결']],
+  parent:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결']]
 };
-const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'settings',club:'crown'};
+const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',room:'door-open',att:'clipboard-list',tfind:'search',lesson:'book-open-check',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'settings',club:'crown'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
 
 const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
@@ -663,10 +672,11 @@ const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flas
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v10';
+const STORE_KEY='sdh-toss-sample-v11';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
-  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub}))}catch(e){}}
+  teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub,
+  branches:S.branches,rooms:S.rooms,bookings:S.bookings,classes:S.classes,students:S.students,attendance:S.attendance,lessonReqs:S.lessonReqs}))}catch(e){}}
 function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return false;Object.assign(S,JSON.parse(raw));return true}catch(e){return false}}
 
 // ---------- 유틸 ----------
@@ -685,7 +695,9 @@ const BADGE_TONE={'승인':'ok','제휴 승인':'ok','결제 완료':'ok','추�
   '신청':'warn','검토 중':'warn','평가예정':'warn','응답 대기':'warn','보완교육':'warn','재추천':'warn','접수':'warn','검토 중':'warn',
   '후보 제안 중':'info','상담 중':'info','정착 점검 중':'info','강사 동의':'info','보류':'bad','강사 거절':'bad',
   // 클럽 프로그램·신청
-  '모집 중':'info','마감':'mute','정원 마감':'warn','취소':'bad','확정':'ok','참석':'ok','이용 중':'ok','반려':'bad','불참':'bad','본인 취소':'mute','기간 만료':'mute'};
+  '모집 중':'info','마감':'mute','정원 마감':'warn','취소':'bad','확정':'ok','참석':'ok','이용 중':'ok','반려':'bad','불참':'bad','본인 취소':'mute','기간 만료':'mute',
+  // 강의실 예약·수업 요청·출결
+  '요청':'warn','거절':'bad','강사 수락':'info','수업 확정':'ok','출석':'ok','지각':'warn','결석':'bad'};
 function badge(s){const tone=BADGE_TONE[s]||'mute';const I={ok:'circle-check',warn:'clock',bad:'circle-x',info:'loader',mute:''}[tone];return `<span class="b ${tone}">${I?ic(I):''}${esc(s)}</span>`}
 function badge2(s){return `<span class="b info">${esc(s)}</span>`}
 const empty = (icon,title,sub='') => `<div class="card empty">${ic(icon)}<b>${title}</b>${sub?`<span>${sub}</span>`:''}</div>`;
@@ -801,7 +813,7 @@ function seed(){
     {by:'운영담당1',rid:2,task:'채용 확정·계약 확인',min:45,cost:0,date:addDays(today(),-21)},
     {by:'운영담당1',rid:null,task:'시범강의 평가 (강사9)',min:60,cost:50000,date:addDays(today(),-40)},
     {by:'관리자1',rid:null,task:'동탄 영어학원 확인서 검토',min:25,cost:0,date:addDays(today(),-1)}];
-  seedSupport();
+  seedSupport(); seedRoles();
   S.logs = [];
   log('시스템',`샘플 데이터를 불러왔습니다 (계정 ${S.accounts.length}개)`);
 }
@@ -1036,6 +1048,7 @@ function notis(){
       m.checks.filter(c=>c.status==='응답 대기'&&!c.teacherReply).forEach(c=>add('bell-ring',`입사 ${c.day}일 점검 응답이 필요해요`,`${a.name} · ${c.due}까지`,'prog'));});
     const t=me(); if(t.corr) add('message-square','정정 요청이 접수됐어요','재평가 결과를 기다리는 중','ver');
   }
+  roleNotis(u,add);
   // 클럽 회원: 내 신청 결과 (다가오는 프로그램만)
   if(CLUBS[u.role]) S.clubApply.filter(a=>a.loginId===u.loginId).forEach(a=>{const e=evOf(a.ev);if(!e||e.date<today())return;
     if(e.status==='취소'&&a.status!=='취소') add('calendar-x','클럽 프로그램이 취소됐어요',`${e.title} · ${kDate(e.date)}`,'club');
@@ -1152,7 +1165,7 @@ function loginView(){
     <span class="b info">${ic('shield-check')}검증된 강사 · 확인된 근무조건</span>
     <h2>로그인</h2><p class="lead">아이디에 따라 학원·강사·운영 화면이 열려요.</p>
     ${err}
-    <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 관리자1" autocomplete="username" autocapitalize="off" autofocus>
+    <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 지점관리자1, 학부모1" autocomplete="username" autocapitalize="off" autofocus>
     <label for="login-pw">비밀번호</label><input id="login-pw" type="password" name="pw" enterkeyhint="go" ${API.on?'required placeholder="비밀번호"':'placeholder="아무 값이나 입력하세요"'} autocomplete="current-password">
     ${API.on&&API.hint?`<p class="hint">${esc(API.hint)}</p>`:''}
     ${AppBridge.inApp?'':`<label class="chk" style="margin-top:10px"><input type="checkbox" name="remember" checked><span>로그인 상태 유지 <em class="muted">(공용 PC에서는 끄세요)</em></span></label>`}
@@ -1162,7 +1175,9 @@ function loginView(){
     <details class="accts"><summary>${ic('users')}샘플 계정 ${acc.length}개 보기</summary>
      <h4>학원</h4><ul>${acc.filter(a=>a.role==='academy').map(a=>row(a,aOf(a.academyId).name+(aOf(a.academyId).status==='제휴 승인'?'':' · '+aOf(a.academyId).status))).join('')}</ul>
      <h4>강사</h4><ul>${acc.filter(a=>a.role==='teacher').map(a=>{const t=tOf(a.teacherId);return row(a,`${t.name} · ${t.grade} ${t.subject} · ${t.result||t.status}`)}).join('')}</ul>
-     <h4>운영</h4><ul>${acc.filter(a=>isStaffRole(a.role)).map(a=>row(a,ROLE_NAME[a.role])).join('')}</ul>
+     <h4>지점</h4><ul>${acc.filter(a=>a.role==='branch').map(a=>row(a,`${ROLE_NAME.branch} · ${(brOf(a.branchId)||{}).name||''}`)).join('')}</ul>
+     <h4>학생·학부모</h4><ul>${acc.filter(a=>a.role==='student'||a.role==='parent').map(a=>row(a,a.role==='student'?`${ROLE_NAME.student} · ${(sOf(a.studentId)||{}).name||''} ${(sOf(a.studentId)||{}).grade||''}`:`${ROLE_NAME.parent} · 자녀 ${S.students.filter(x=>x.parent===a.loginId).map(x=>x.name).join(', ')}`)).join('')}</ul>
+     <h4>운영</h4><ul>${acc.filter(a=>isStaffRole(a.role)).map(a=>row(a,ROLE_NAME[a.role]+(a.role==='manager'?' (강사 평가·매칭)':' (시스템 운영)'))).join('')}</ul>
     </details>
    </form>`,true);
 }
@@ -1297,32 +1312,195 @@ function pubToast(t){
   if(!el){el=document.createElement('div');el.className='ptoast';el.setAttribute('role','status');document.body.appendChild(el)}
   el.textContent=t;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
 }
+// =====================================================================
+// 세부 권한 (2026-11-17): 지점 관리자 · 학생 · 학부모 + 강사 '수업·강의실'
+//   관리자 = 시스템 운영자, 운영담당 = 강사 평가자(평가·매칭·정착 그대로)
+// =====================================================================
+const ROLE_GUIDE=[
+ ['admin','모든 시스템을 관장하는 최고 권한. 회원·권한·공지·결제·클럽 관리','없음 (접속 기록은 남음)'],
+ ['manager','출장 시범강의로 강사를 평가하고, 매칭·정착 점검·민원 1차 처리','권한 설정, 결제·환불 처리'],
+ ['branch','서당 지점의 강의실 대여 승인과 일정 관리, 수업 학생 출결 기록','다른 지점 정보, 강사 평가서, 학원 채용 정보'],
+ ['academy','강사를 구하는 원장. 채용요청, 검증 후보 열람, 매칭, 정착 점검','강사 서류 원본, 다른 학원 정보'],
+ ['teacher','학원 또는 학생을 찾고, 수업할 강의실을 예약','다른 강사 평가, 학생 연락처(수업 확정 전)'],
+ ['student','수업할 강사를 찾고 요청, 내 수업·출결 확인','강사 연락처·평가 상세, 다른 학생 정보'],
+ ['parent','자녀의 수업 강사를 찾고 요청, 자녀 수업·출결 확인','강사 연락처·평가 상세, 다른 학생 정보']];
+function seedRoles(){
+  const t0=today(), ago=d=>new Date(Date.now()-d*864e5).toISOString();
+  S.branches=[{id:1,name:'서당 봉담점',region:'봉담',addr:'화성시 봉담읍 (샘플 주소)',hours:'평일 14:00~22:00 · 토 10:00~18:00'},
+   {id:2,name:'서당 병점점',region:'화성',addr:'화성시 병점동 (샘플 주소)',hours:'평일 15:00~22:00'}];
+  S.rooms=[{id:1,branchId:1,name:'101호 소그룹실',seats:6,price:12000,equip:'화이트보드 · TV'},
+   {id:2,branchId:1,name:'102호 강의실',seats:12,price:18000,equip:'전자칠판 · 빔프로젝터'},
+   {id:3,branchId:1,name:'103호 1:1실',seats:2,price:8000,equip:'화이트보드'},
+   {id:4,branchId:2,name:'201호 강의실',seats:10,price:15000,equip:'전자칠판'}];
+  S.students=[{id:1,name:'김민준',grade:'중2',school:'봉담중',parent:'학부모1'},{id:2,name:'김서연',grade:'초6',school:'봉담초',parent:'학부모1'},
+   {id:3,name:'이도윤',grade:'중2',school:'봉담중',parent:'학부모2'},{id:4,name:'박하은',grade:'중3',school:'와우중',parent:''},{id:5,name:'최지호',grade:'중2',school:'봉담중',parent:''}];
+  S.accounts.push({loginId:'지점관리자1',role:'branch',name:'봉담점 관리자',branchId:1},{loginId:'지점관리자2',role:'branch',name:'병점점 관리자',branchId:2},
+   {loginId:'학생1',role:'student',name:'김민준',studentId:1},{loginId:'학생2',role:'student',name:'이도윤',studentId:3},{loginId:'학생3',role:'student',name:'박하은',studentId:4},
+   {loginId:'학부모1',role:'parent',name:'김민준 학부모'},{loginId:'학부모2',role:'parent',name:'이도윤 학부모'});
+  S.classes=[{id:1,branchId:1,roomId:2,tid:1,title:'중2 수학 개념 소그룹',days:'월·수',time:'17:00~18:30',students:[1,3,5]},
+   {id:2,branchId:1,roomId:1,tid:6,title:'중등 영어 서술형 대비',days:'화·목',time:'18:00~19:30',students:[1,4]},
+   {id:3,branchId:1,roomId:3,tid:11,title:'초등 영어 파닉스 1:1',days:'토',time:'10:00~11:00',students:[2]}];
+  const B=(id,roomId,loginId,d,start,end,purpose,status)=>({id,roomId,loginId,date:addDays(t0,d),start,end,purpose,status});
+  S.bookings=[B(1,2,'강사1',0,'17:00','18:30','중2 수학 개념 소그룹 (정규 수업)','확정'),B(2,1,'강사6',0,'18:00','19:30','중등 영어 서술형 대비 (정규 수업)','확정'),
+   B(3,3,'강사9',1,'19:00','21:00','고등 수학 1:1 보강','요청'),B(4,2,'강사12',2,'15:00','17:00','중등 심화반 특강','요청'),
+   B(5,1,'강사1',3,'16:00','17:00','학부모 상담','확정'),B(6,4,'강사5',1,'19:00','21:00','고등 수학 소그룹','요청')];
+  S.attendance={};
+  [[1,[[-7,{1:'출석',3:'출석',5:'지각'}],[-5,{1:'출석',3:'결석',5:'출석'}],[-2,{1:'지각',3:'출석',5:'출석'}]]],
+   [2,[[-6,{1:'출석',4:'출석'}],[-1,{1:'출석',4:'결석'}]]],[3,[[-3,{2:'출석'}]]]].forEach(([c,L])=>L.forEach(([d,v])=>S.attendance[c+'|'+addDays(t0,d)]=v));
+  S.lessonReqs=[{id:1,loginId:'학부모1',sid:2,subject:'수학',grade:'초등',region:'봉담',mode:'1:1',time:'주 2회 · 평일 오후',note:'연산이 느려 기초부터 차근차근 봐 주셨으면 해요',tid:null,status:'요청',at:ago(1)},
+   {id:2,loginId:'학생1',sid:1,subject:'영어',grade:'중등',region:'봉담',mode:'소그룹',time:'화·목 저녁',note:'서술형이 약해요',tid:6,status:'수업 확정',at:ago(12)},
+   {id:3,loginId:'학부모2',sid:3,subject:'수학',grade:'중등',region:'봉담',mode:'소그룹',time:'월·수 오후',note:'',tid:1,status:'요청',at:ago(2)}];
+}
+const brOf=id=>(S.branches||[]).find(b=>b.id===id), roomOf=id=>(S.rooms||[]).find(r=>r.id===id), sOf=id=>(S.students||[]).find(x=>x.id===id), clsOf=id=>(S.classes||[]).find(c=>c.id===id);
+const myBranch=()=>brOf(S.user.branchId)||{};
+const myRooms=()=>S.rooms.filter(r=>r.branchId===S.user.branchId);
+const brBookings=()=>S.bookings.filter(b=>(roomOf(b.roomId)||{}).branchId===S.user.branchId).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+const myKids=()=>S.user.role==='student'?[sOf(S.user.studentId)].filter(Boolean):S.students.filter(x=>x.parent===S.user.loginId);
+const kidCls=sid=>S.classes.filter(c=>c.students.includes(sid));
+const attOf=(cid,sid)=>Object.entries(S.attendance).filter(([k])=>k.startsWith(cid+'|')).map(([k,v])=>({date:k.split('|')[1],st:v[sid]})).filter(x=>x.st).sort((a,b)=>b.date.localeCompare(a.date));
+const attRate=L=>L.length?Math.round(L.filter(x=>x.st!=='결석').length/L.length*100):null;
+const tLogin=tid=>'강사'+tid;
+const hrs=(a,b)=>{const m=x=>{const[h,mm]=x.split(':');return +h*60+ +mm};return Math.max(0,(m(b)-m(a))/60)};
+const lrMine=()=>S.lessonReqs.filter(r=>r.loginId===S.user.loginId||(S.user.role==='parent'&&myKids().some(k=>k.id===r.sid))||(S.user.role==='student'&&r.sid===S.user.studentId));
+const tReqs=t=>S.lessonReqs.filter(r=>(r.tid===t.id||(!r.tid&&r.subject===t.subject&&!(r.passed||[]).includes(t.id)))&&r.status!=='취소');
+const seg=(key,items)=>`<div class="chips" style="margin-bottom:16px">${items.map(([k,t,n])=>`<button class="fchip ${S[key]===k?'on':''}" data-act="seg" data-k="${key}" data-v="${k}">${t}${n?` <span>${n}</span>`:''}</button>`).join('')}</div>`;
+const bookRow=(b,mgr)=>{const r=roomOf(b.roomId)||{};return `<tr><td data-label="날짜"><b>${kDate(b.date)}</b><br><span class="muted">${b.start}~${b.end}</span></td><td data-label="강의실">${esc(r.name||'')}${mgr?'':`<br><span class="muted">${esc((brOf(r.branchId)||{}).name||'')}</span>`}</td>
+  <td data-label="${mgr?'예약자':'용도'}">${mgr?`<b>${esc(b.loginId)}</b> ${esc((tOf(+b.loginId.replace('강사',''))||{}).name||'')}<br><span class="muted">${esc(b.purpose)}</span>`:esc(b.purpose)}</td><td data-label="이용료">${won(r.price*hrs(b.start,b.end))}</td>
+  <td data-label="상태"><div class="row">${badge(b.status)}${mgr&&b.status==='요청'?`<button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button>`:''}${!mgr&&(b.status==='요청'||b.status==='확정')&&b.date>=today()?`<button class="btn sm sec" data-act="bk-cancel" data-id="${b.id}">취소</button>`:''}</div></td></tr>`};
+const bookTable=(L,mgr)=>L.length?`<div class="tablewrap"><table class="rt"><tr><th>날짜</th><th>강의실</th><th>${mgr?'예약자':'용도'}</th><th>이용료</th><th>상태</th></tr>${L.map(b=>bookRow(b,mgr)).join('')}</table></div>`:'<p class="muted">예약이 없어요.</p>';
+function attBoard(){
+  const cls=S.classes.filter(c=>c.branchId===S.user.branchId); if(!cls.length) return empty('clipboard-list','이 지점에 등록된 수업이 없어요');
+  if(!cls.some(c=>c.id===S.attCls)) S.attCls=cls[0].id; S.attDate=S.attDate||today();
+  const c=clsOf(S.attCls), rec=S.attendance[c.id+'|'+S.attDate]||{};
+  return `<div class="filters"><select data-st="attCls" aria-label="수업">${cls.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.title)} · ${x.days} ${x.time}</option>`).join('')}</select>
+   <input type="date" data-st="attDate" value="${S.attDate}" aria-label="날짜" style="width:auto"></div>
+  <div class="card"><h3>${esc(c.title)} · ${kDate(S.attDate)}</h3><p class="muted">${esc((roomOf(c.roomId)||{}).name||'')} · ${esc((tOf(c.tid)||{}).name||'')} 강사 · 학생 ${c.students.length}명</p>
+   <ul class="plain attl">${c.students.map(id=>{const st=sOf(id),v=rec[id];return `<li><div><b>${esc(st.name)}</b><span class="muted">${esc(st.grade)} · ${esc(st.school)}${st.parent?' · 학부모 연결':''}</span></div>
+    <div class="seg sm">${['출석','지각','결석'].map(x=>`<button class="${v===x?'on':''}" data-act="att-set" data-sid="${id}" data-v="${x}">${x}</button>`).join('')}</div></li>`}).join('')}</ul>
+   <p class="muted">기록하면 학생·학부모의 '출결' 화면에 바로 보여요. 결석은 알림으로도 보내요.</p></div>`;
+}
+const ROLE_VIEWS={
+'branch:dash':()=>{const b=myBranch(),bk=brBookings(),t=today();
+  const pend=bk.filter(x=>x.status==='요청'), todays=bk.filter(x=>x.date===t&&x.status==='확정'), cls=S.classes.filter(c=>c.branchId===b.id);
+  const absent=cls.map(c=>S.attendance[c.id+'|'+t]||{}).reduce((n,r)=>n+Object.values(r).filter(v=>v==='결석').length,0);
+  return `<h2>${esc(b.name)}</h2><p class="lead">${esc(b.addr)} · ${esc(b.hours)}</p>
+  <div class="grid g4 stats" style="margin-bottom:16px"><div class="stat"><b>${pend.length}</b><span>승인 대기 예약</span></div><div class="stat"><b>${todays.length}</b><span>오늘 확정 예약</span></div>
+   <div class="stat"><b>${myRooms().length}</b><span>강의실</span></div><div class="stat"><b>${absent}</b><span>오늘 결석</span></div></div>
+  <div class="card"><h3>승인 대기 예약 ${pend.length}</h3>${bookTable(pend,true)}</div>
+  <div class="card"><h3>오늘 일정 · ${kDate(t)}</h3>${todays.length?`<ul class="plain hlist">${todays.map(x=>`<li><button data-act="tab" data-tab="room"><span class="b info">${x.start}~${x.end}</span><b>${esc((roomOf(x.roomId)||{}).name)} · ${esc(x.purpose)}</b><span class="muted">${esc(x.loginId)}</span></button></li>`).join('')}</ul>`:'<p class="muted">오늘 확정된 예약이 없어요.</p>'}</div>`},
+'branch:room':()=>{S.bkSeg=S.bkSeg||'week';const bk=brBookings(),t=today(),days=[...Array(7)].map((_,i)=>addDays(t,i));
+  return `<h2>강의실 예약</h2><p class="lead">강사의 대여 요청을 승인하고, 강의실별 일정을 관리해요. 이용료는 시간당 요금 기준(샘플)이에요.</p>
+  ${seg('bkSeg',[['week','이번 주 일정'],['req','예약 요청',bk.filter(x=>x.status==='요청').length],['all','전체 예약',bk.length],['rooms','강의실 관리',myRooms().length]])}
+  ${S.bkSeg==='week'?`<div class="card"><div class="tablewrap"><table class="wide sched"><tr><th>강의실</th>${days.map(d=>`<th>${kDate(d).replace(/^\d+월 /,'')}</th>`).join('')}</tr>
+    ${myRooms().map(r=>`<tr><td><b>${esc(r.name)}</b><br><span class="muted">${r.seats}석</span></td>${days.map(d=>`<td>${bk.filter(x=>x.roomId===r.id&&x.date===d&&x.status!=='거절'&&x.status!=='취소').map(x=>`<span class="slot ${x.status==='요청'?'wait':''}">${x.start}~${x.end}<em>${esc(x.loginId)}</em></span>`).join('')||'<span class="muted">-</span>'}</td>`).join('')}</tr>`).join('')}</table></div>
+    <p class="muted"><span class="slot">확정</span> <span class="slot wait">승인 대기</span></p></div>`
+  :S.bkSeg==='req'?`<div class="card">${bookTable(bk.filter(x=>x.status==='요청'),true)}</div>`
+  :S.bkSeg==='all'?`<div class="card">${bookTable(bk,true)}</div>`
+  :`<div class="cands">${myRooms().map(r=>`<article class="card"><h3>${esc(r.name)}</h3><p class="muted">${r.seats}석 · ${esc(r.equip)}</p><p><b>${won(r.price)}</b> / 시간</p></article>`).join('')}</div>
+   <div class="card"><h3>강의실 추가</h3><form data-form="room-new"><div class="grid g4 tight one-m"><div><label>이름</label><input type="text" name="name" required placeholder="예: 104호 강의실"></div><div><label>좌석</label><input type="number" name="seats" min="1" value="8" required></div><div><label>시간당 이용료(원)</label><input type="number" name="price" min="0" step="1000" value="12000" required></div><div><label>시설</label><input type="text" name="equip" placeholder="예: 전자칠판"></div></div><button class="btn" style="margin-top:12px">추가</button></form></div>`}`},
+'branch:att':()=>`<h2>출결 관리</h2><p class="lead">지점에서 진행하는 수업의 학생 출결을 기록해요. 학생·학부모 화면에 바로 반영돼요.</p>${attBoard()}`,
+'teacher:lesson':()=>{S.tSeg=S.tSeg||'req';const t=me(),L=tReqs(t);
+  const mine=S.bookings.filter(b=>b.loginId===S.user.loginId).sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start)), cls=S.classes.filter(c=>c.tid===t.id);
+  return `<h2>수업·강의실</h2><p class="lead">학생·학부모의 수업 요청에 답하고, 서당 지점 강의실을 빌려 수업해요.</p>
+  ${seg('tSeg',[['req','학생 요청',L.filter(r=>r.status==='요청').length],['room','강의실 예약',mine.filter(b=>b.status==='요청').length],['cls','내 수업',cls.length]])}
+  ${S.tSeg==='req'?(L.length?`<div class="cands">${L.map(r=>{const k=sOf(r.sid)||{};return `<article class="card"><div class="row">${badge(r.status)}<span class="b mute">${r.tid?'나에게 요청':'과목 공개 요청'}</span></div>
+     <h3>${esc(r.grade)} ${esc(r.subject)} · ${esc(r.mode)}</h3><p class="muted">${esc(k.grade||'')} 학생 · ${esc(r.region)} · ${esc(r.time)}</p>${r.note?`<p>${esc(r.note)}</p>`:''}
+     ${r.status==='요청'?`<div class="row"><button class="btn sm" data-act="lr-accept" data-id="${r.id}">수락</button><button class="btn sm sec" data-act="lr-decline" data-id="${r.id}">거절</button></div>`:r.status==='강사 수락'?'<p class="muted">학생·학부모가 수업을 확정하면 연락처가 서로 공개돼요.</p>':''}</article>`}).join('')}</div>`:empty('inbox','받은 수업 요청이 없어요','내 과목의 공개 요청과 나를 지정한 요청이 여기에 모여요.'))
+  :S.tSeg==='room'?`<div class="card"><h3>강의실 빌리기</h3><form data-form="booking"><div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${S.rooms.map(r=>`<option value="${r.id}">${esc(brOf(r.branchId).name)} · ${esc(r.name)} (${r.seats}석 · ${won(r.price)}/시간)</option>`).join('')}</select></div>
+     <div><label>날짜</label><input type="date" name="date" min="${today()}" value="${addDays(today(),1)}" required></div><div><label>시작</label><input type="time" name="start" value="18:00" step="1800" required></div><div><label>끝</label><input type="time" name="end" value="20:00" step="1800" required></div></div>
+     <label>용도</label><input type="text" name="purpose" required placeholder="예: 중2 수학 보강"><button class="btn" style="margin-top:12px">예약 요청</button><p class="muted">지점 관리자가 승인하면 확정돼요. 겹치는 시간은 요청할 수 없어요.</p></form></div>
+    <div class="card"><h3>내 예약 ${mine.length}</h3>${bookTable(mine,false)}</div>`
+  :(cls.length?`<div class="cands">${cls.map(c=>`<article class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(brOf(c.branchId).name)} · ${esc((roomOf(c.roomId)||{}).name)} · ${c.days} ${c.time}</p>
+     <ul class="plain">${c.students.map(id=>{const r=attRate(attOf(c.id,id));return `<li>${esc(sOf(id).name)} <span class="muted">${esc(sOf(id).grade)}</span> · 출석률 <b>${r==null?'-':r+'%'}</b></li>`}).join('')}</ul></article>`).join('')}</div>`:empty('book-open','진행 중인 수업이 없어요'))}`},
+'family:tfind':()=>{const f=S.f,L=S.teachers.filter(t=>t.result==='추천 검토'&&(!f.subject||t.subject===f.subject)&&(!f.grade||t.grade===f.grade)&&(!f.region||t.region===f.region)).sort((a,b)=>total(b)-total(a)),kids=myKids();
+  return `<h2>강사 찾기</h2><p class="lead">서당이 시범강의로 직접 평가한 강사만 보여요. 연락처는 수업이 확정된 뒤 공개돼요.</p>
+  <div class="filters"><select data-filter="subject" class="${f.subject?'on':''}" aria-label="과목">${opts(SUBJ,f.subject,'과목 전체')}</select><select data-filter="grade" class="${f.grade?'on':''}" aria-label="학년">${opts(GRADE,f.grade,'학년 전체')}</select><select data-filter="region" class="${f.region?'on':''}" aria-label="지역">${opts(REGION,f.region,'지역 전체')}</select></div>
+  <div class="card" id="lr-form"><h3>수업 요청하기</h3><form data-form="lesson-req"><div class="grid g3 tight one-m">
+   <div><label>학생</label><select name="sid">${kids.map(k=>`<option value="${k.id}">${esc(k.name)} (${esc(k.grade)})</option>`).join('')}</select></div>
+   <div><label>강사</label><select name="tid"><option value="">서당에 추천받기 (과목 공개 요청)</option>${L.map(t=>`<option value="${t.id}" ${S.lrT===t.id?'selected':''}>${esc(maskName(t.name))} · ${esc(t.grade)} ${esc(t.subject)} · ${total(t)}점</option>`).join('')}</select></div>
+   <div><label>과목</label><select name="subject">${opts(SUBJ,f.subject||'수학')}</select></div>
+   <div><label>수업 방식</label><select name="mode">${opts(['1:1','소그룹'],'1:1')}</select></div><div><label>희망 시간</label><input type="text" name="time" required placeholder="예: 주 2회 · 평일 오후"></div><div><label>지역</label><select name="region">${opts(REGION,'봉담')}</select></div></div>
+   <label>남길 말 (선택)</label><input type="text" name="note" maxlength="100" placeholder="예: 서술형이 약해요"><button class="btn" style="margin-top:12px">요청 보내기</button></form></div>
+  ${L.length?`<div class="cands">${L.map(t=>`<article class="card cand"><div class="top"><div class="av">${esc(t.name[0])}</div><div class="nm"><div class="row"><b>${esc(maskName(t.name))} 강사</b><span class="b ok">${ic('badge-check')}시범강의 통과</span></div><p>${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)} · ${careerYears(t)}</p></div><div class="score"><b>${total(t)}<small>/100</small></b><span>서당 평가</span></div></div>
+    <p>${esc(t.strength)}</p><button class="btn sec sm" data-act="lr-pick" data-id="${t.id}">${ic('send')}이 강사에게 요청</button></article>`).join('')}</div>`:empty('search-x','조건에 맞는 강사가 없어요','필터를 바꾸거나 서당에 추천을 요청해 보세요.')}`},
+'family:lesson':()=>{const kids=myKids(),L=lrMine().sort((a,b)=>b.at.localeCompare(a.at));
+  return `<h2>내 수업</h2><p class="lead">${S.user.role==='parent'?'자녀의':'나의'} 수업 요청과 진행 중인 수업이에요.</p>
+  <div class="card"><h3>수업 요청 ${L.length}</h3>${L.length?`<ul class="plain notices">${L.map(r=>{const t=r.tid&&tOf(r.tid);return `<li><details ${r.status==='강사 수락'?'open':''}><summary>${badge(r.status)}<b>${esc((sOf(r.sid)||{}).name||'')} · ${esc(r.grade)} ${esc(r.subject)} ${esc(r.mode)}</b><span class="muted">${t?esc(r.status==='수업 확정'?t.name:maskName(t.name))+' 강사':'서당 추천 대기'}</span></summary>
+    <p>${esc(r.time)} · ${esc(r.region)}${r.note?' · '+esc(r.note):''}</p>${r.status==='강사 수락'?`<p><button class="btn sm" data-act="lr-confirm" data-id="${r.id}">수업 확정</button> <button class="btn sm sec" data-act="lr-cancel" data-id="${r.id}">요청 취소</button></p>`:r.status==='요청'?`<p><button class="btn sm sec" data-act="lr-cancel" data-id="${r.id}">요청 취소</button></p>`:r.status==='수업 확정'&&t?`<p>${ic('phone')} 강사 연락처 <b>${esc(t.contact)}</b></p>`:''}</details></li>`}).join('')}</ul>`:'<p class="muted">보낸 요청이 없어요. 강사 찾기에서 요청해 보세요.</p>'}</div>
+  ${kids.map(k=>`<div class="card"><h3>${esc(k.name)} · 진행 중인 수업</h3>${kidCls(k.id).length?`<ul class="plain hlist">${kidCls(k.id).map(c=>`<li><button data-act="tab" data-tab="att"><span class="b info">${c.days}</span><b>${esc(c.title)}</b><span class="muted">${c.time} · ${esc(brOf(c.branchId).name)} ${esc((roomOf(c.roomId)||{}).name)}</span></button></li>`).join('')}</ul>`:'<p class="muted">진행 중인 수업이 없어요.</p>'}</div>`).join('')}`},
+'family:att':()=>{const kids=myKids();
+  return `<h2>출결</h2><p class="lead">서당 지점에서 기록한 출결이에요. 결석이 기록되면 알림으로 알려 드려요.</p>
+  ${kids.map(k=>`<div class="card"><h3>${esc(k.name)} <span class="muted">${esc(k.grade)}</span></h3>${kidCls(k.id).map(c=>{const L=attOf(c.id,k.id),r=attRate(L);return `<h4>${esc(c.title)} · 출석률 ${r==null?'-':r+'%'}</h4>${L.length?`<ul class="plain hlist">${L.map(x=>`<li><button>${badge(x.st)}<b>${kDate(x.date)}</b><span class="muted">${c.time}</span></button></li>`).join('')}</ul>`:'<p class="muted">아직 기록이 없어요.</p>'}`}).join('')||'<p class="muted">진행 중인 수업이 없어요.</p>'}</div>`).join('')}`}
+};
+const overlap=(r,d,a,b,skip,only)=>S.bookings.some(x=>x.id!==skip&&x.roomId===r&&x.date===d&&(only?x.status===only:(x.status==='요청'||x.status==='확정'))&&x.start<b&&a<x.end);
+const ROLE_ACTS={
+ seg:el=>{S[el.dataset.k]=el.dataset.v},
+ 'bk-ok':(el,id)=>{const b=S.bookings.find(x=>x.id===id);
+  if(overlap(b.roomId,b.date,b.start,b.end,b.id,'확정')){S.flash='같은 시간에 확정된 예약이 있어 승인할 수 없어요.';S.flashType='err';return}
+  b.status='확정';log(actor(),`강의실 예약 승인 #${b.id} ${roomOf(b.roomId).name} ${b.date} ${b.start}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 확정됐어요',body:`${roomOf(b.roomId).name} · ${b.date} ${b.start}~${b.end}`,route:'/lesson'});S.flash='예약을 승인했어요.'},
+ 'bk-no':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='거절';log(actor(),`강의실 예약 거절 #${b.id}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 거절됐어요',body:`${roomOf(b.roomId).name} · ${b.date}`,route:'/lesson'});S.flash='예약을 거절했어요.'},
+ 'bk-cancel':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='취소';log(actor(),`강의실 예약 취소 #${b.id}`);S.flash='예약을 취소했어요.'},
+ 'att-set':el=>{const k=S.attCls+'|'+S.attDate,sid=+el.dataset.sid,v=el.dataset.v;S.attendance[k]=S.attendance[k]||{};S.attendance[k][sid]=v;log(actor(),`출결 기록: ${sOf(sid).name} ${S.attDate} ${v}`);
+  const st=sOf(sid);if(v==='결석')notify({to:[st.parent,(S.accounts.find(a=>a.studentId===sid)||{}).loginId].filter(Boolean),kind:'notice',title:'결석이 기록됐어요',body:`${st.name} · ${clsOf(S.attCls).title} · ${S.attDate}`,route:'/att'})},
+ 'lr-accept':(el,id)=>{const r=S.lessonReqs.find(x=>x.id===id);r.tid=me().id;r.status='강사 수락';log(actor(),`수업 요청 수락 #${r.id}`);notify({to:[r.loginId],kind:'match',title:'강사가 수업 요청을 수락했어요',body:`${r.grade} ${r.subject} · 내 수업에서 확정해 주세요`,route:'/lesson'});S.flash='수락했어요. 학생·학부모가 확정하면 연락처가 공개돼요.'},
+ 'lr-decline':(el,id)=>{const r=S.lessonReqs.find(x=>x.id===id),t=me();if(r.tid===t.id){r.status='거절';notify({to:[r.loginId],kind:'match',title:'강사가 수업 요청을 거절했어요',body:`${r.grade} ${r.subject} · 다른 강사를 찾아보세요`,route:'/lesson'})}else r.passed=[...(r.passed||[]),t.id];log(actor(),`수업 요청 거절 #${r.id}`);S.flash='거절했어요.'},
+ 'lr-confirm':(el,id)=>{const r=S.lessonReqs.find(x=>x.id===id);r.status='수업 확정';log(actor(),`수업 확정 #${r.id}`);notify({to:[tLogin(r.tid)],kind:'match',title:'수업이 확정됐어요',body:`${r.grade} ${r.subject} ${r.mode} · ${r.time}`,route:'/lesson'});S.flash='수업을 확정했어요. 강사 연락처가 공개됐어요.'},
+ 'lr-cancel':(el,id)=>{const r=S.lessonReqs.find(x=>x.id===id);r.status='취소';log(actor(),`수업 요청 취소 #${r.id}`);S.flash='요청을 취소했어요.'},
+ 'lr-pick':(el,id)=>{S.lrT=id;S.f.subject=tOf(id).subject;render();document.getElementById('lr-form')?.scrollIntoView({behavior:'smooth',block:'start'});return false}
+};
+const ROLE_SUBMITS={
+ 'room-new':(f,fd)=>{const id=Math.max(0,...S.rooms.map(r=>r.id))+1;S.rooms.push({id,branchId:S.user.branchId,name:fd.get('name').trim(),seats:+fd.get('seats'),price:+fd.get('price'),equip:(fd.get('equip')||'').trim()||'-'});log(actor(),`강의실 추가: ${fd.get('name')}`);S.flash='강의실을 추가했어요.';render()},
+ booking:(f,fd)=>{const r=+fd.get('room'),d=fd.get('date'),a=fd.get('start'),b=fd.get('end');
+  if(b<=a){S.flash='끝 시간이 시작보다 늦어야 해요.';S.flashType='err';render();return}
+  if(overlap(r,d,a,b)){S.flash='그 시간에 이미 예약(또는 승인 대기)이 있어요. 다른 시간을 골라 주세요.';S.flashType='err';render();return}
+  const id=Math.max(0,...S.bookings.map(x=>x.id))+1;S.bookings.push({id,roomId:r,loginId:S.user.loginId,date:d,start:a,end:b,purpose:fd.get('purpose').trim(),status:'요청'});
+  const br=roomOf(r).branchId;notify({to:S.accounts.filter(x=>x.role==='branch'&&x.branchId===br).map(x=>x.loginId),kind:'notice',title:'강의실 예약 요청',body:`${S.user.loginId} · ${roomOf(r).name} ${d} ${a}~${b}`,route:'/room'});
+  log(actor(),`강의실 예약 요청 #${id}`);S.flash='예약을 요청했어요. 지점 관리자가 승인하면 알려 드려요.';render()},
+ 'lesson-req':(f,fd)=>{const id=Math.max(0,...S.lessonReqs.map(x=>x.id))+1,tid=+fd.get('tid')||null,k=sOf(+fd.get('sid'));
+  const r={id,loginId:S.user.loginId,sid:k.id,subject:tid?tOf(tid).subject:fd.get('subject'),grade:/^초/.test(k.grade)?'초등':/^고/.test(k.grade)?'고등':'중등',region:fd.get('region'),mode:fd.get('mode'),time:fd.get('time').trim(),note:(fd.get('note')||'').trim(),tid,status:'요청',at:new Date().toISOString()};
+  S.lessonReqs.push(r);S.lrT=null;notify(tid?{to:[tLogin(tid)],kind:'match',title:'새 수업 요청',body:`${r.grade} ${r.subject} ${r.mode} · ${r.time}`,route:'/lesson'}:{toRoles:['manager'],kind:'match',title:'강사 추천 요청',body:`${r.grade} ${r.subject} · ${r.region}`,route:'/match'});
+  log(actor(),`수업 요청 #${id} (${tid?'강사 지정':'추천 요청'})`);S.flash=tid?'강사에게 요청을 보냈어요. 답이 오면 알려 드려요.':'서당에 추천을 요청했어요. 같은 과목 강사들에게도 공개돼요.';S.tab='lesson';render()}
+};
+function roleNotis(u,add){
+  if(u.role==='branch'){const p=brBookings().filter(x=>x.status==='요청');if(p.length)add('door-open',`강의실 예약 요청 ${p.length}건`,p.slice(0,2).map(x=>`${x.loginId} ${x.date} ${x.start}`).join(' · '),'room')}
+  if(u.role==='teacher'){const t=me();
+   tReqs(t).filter(r=>r.status==='요청').forEach(r=>add('book-open-check',r.tid?'나에게 수업 요청이 왔어요':'내 과목 수업 요청',`${r.grade} ${r.subject} ${r.mode} · ${r.time}`,'lesson'));
+   S.bookings.filter(b=>b.loginId===u.loginId&&b.date>=today()&&(b.status==='확정'||b.status==='거절')).forEach(b=>add(b.status==='확정'?'door-open':'circle-x',`강의실 예약 ${b.status}`,`${roomOf(b.roomId).name} · ${b.date} ${b.start}`,'lesson'))}
+  if(VIEW_ROLE[u.role]==='family'){
+   lrMine().filter(r=>r.status==='강사 수락').forEach(r=>add('user-check','강사가 수업 요청을 수락했어요',`${r.grade} ${r.subject} · 확정해 주세요`,'lesson'));
+   myKids().forEach(k=>kidCls(k.id).forEach(c=>attOf(c.id,k.id).filter(x=>x.st==='결석'&&x.date>=addDays(today(),-7)).forEach(x=>add('calendar-x',`${k.name} 결석`,`${c.title} · ${kDate(x.date)}`,'att'))))}
+}
 // 로그인 후 홈 (원장·강사): 공개 메인처럼 소식·광고 슬라이드 + 바로가기 + 공지·이벤트 + 지역 현황. 할 일은 '대시보드' 탭
 function memberSlides(st){
-  const u=S.user, ac=u.role==='academy', club=CLUBS[u.role], who=ac?(myAcademy()||{}).name:u.name;
+  const u=S.user, ac=u.role==='academy', fam=VIEW_ROLE[u.role]==='family', club=CLUBS[u.role], who=ac?(myAcademy()||{}).name:u.name;
   const ad=heroSlides(st).filter(x=>x.ad);
-  const hello={label:'환영해요',html:`<div class="hcopy"><span class="eyebrow"><i></i>${esc(who||'')}${ac?'':' 강사'}님, 반가워요</span>
+  const hello=fam?{label:'환영해요',html:`<div class="hcopy"><span class="eyebrow"><i></i>${esc(who||'')}님, 반가워요</span>
+    <h1>시범강의로 검증한 강사에게<br><em>수업을 요청하세요.</em></h1>
+    <p>서당이 직접 평가한 강사 ${st.verified.length}명 중에서 과목·학년·지역에 맞는 강사를 찾을 수 있어요. 수업은 서당 지점 강의실에서 하고 출결도 바로 확인해요.</p>
+    <div class="cta"><button class="btn" data-act="tab" data-tab="tfind">${ic('search')}강사 찾기</button>
+     <button class="btn sec" data-act="tab" data-tab="att">${ic('clipboard-list')}출결 보기</button></div></div>
+    <div class="hvis d-only">${liveBox(st)}</div>`}:{label:'환영해요',html:`<div class="hcopy"><span class="eyebrow"><i></i>${esc(who||'')}${ac?'':' 강사'}님, 반가워요</span>
     <h1>${ac?'검증된 강사를<br><em>추천받아 보세요.</em>':'근무조건이 확인된 학원이<br><em>기다리고 있어요.</em>'}</h1>
     <p>${ac?`지금 시범강의 평가를 통과한 강사 ${st.verified.length}명이 추천을 기다리고 있어요.`:`지금 근무조건 확인을 마친 학원 ${st.open.length}곳이 강사를 찾고 있어요.`}</p>
     <div class="cta"><button class="btn" data-act="tab" data-tab="${ac?'find':'prof'}">${ic(ac?'search':'user-round')}${ac?'후보 찾기':'내 프로필'}</button>
      <button class="btn sec" data-act="tab" data-tab="dash">${ic('layout-dashboard')}대시보드</button></div></div>
     <div class="hvis d-only">${liveBox(st)}</div>`};
-  const clubS={label:club.name,html:`<div class="hcopy"><span class="eyebrow"><i></i>${club.name}</span>
+  const clubS=club&&{label:club.name,html:`<div class="hcopy"><span class="eyebrow"><i></i>${club.name}</span>
     <h1>${esc(club.tagline)}</h1>
     <p>${club.benefits.map(([,t])=>t).join(' · ')} · ${won(club.price)} / ${CLUB_DAYS}일</p>
     <div class="cta"><button class="btn" data-act="tab" data-tab="club">${ic(club.icon)}이달의 프로그램 보기</button></div></div>
     <div class="hvis d-only"><div class="ccard"><b>${club.name} 혜택</b><span class="muted">${club.who} 회원 전용</span>
      <ul>${club.benefits.map(([,t,x])=>`<li>${ic('circle-check')}${t} · ${x}</li>`).join('')}</ul></div></div>`};
-  return [hello,...ad,clubS];
+  return club?[hello,...ad,clubS]:[hello,...ad];
 }
 function memberHome(){
-  const st=pubStats(), u=S.user, ac=u.role==='academy';
+  const st=pubStats(), u=S.user, fam=VIEW_ROLE[u.role]==='family', ac=u.role==='academy'||fam;
   const quick=TABS[u.role].filter(([k])=>k!=='home');
   const today=new Date().toISOString().slice(0,10);
   const nts=visibleNotices().slice(0,3), evs=EVENTS.filter(e=>e.until>=today&&(e.to==='all'||e.to===u.role));
   const bySubj=SUBJ.map(x=>[x,S.teachers.filter(t=>t.subject===x).length]), maxS=Math.max(1,...bySubj.map(x=>x[1]));
   const top=[...st.verified].sort((a,b)=>total(b)-total(a)).slice(0,6);
-  const side=ac?`<section class="psec"><header><div><h2>학원을 찾는 강사</h2><p>시범강의 평가를 통과한 ${st.verified.length}명이 추천을 기다리고 있어요. 자세한 정보는 후보 찾기에서 볼 수 있어요.</p></div><button class="btn sec sm" data-act="tab" data-tab="find">후보 찾기</button></header>
+  const side=ac?`<section class="psec"><header><div><h2>학원을 찾는 강사</h2><p>시범강의 평가를 통과한 ${st.verified.length}명이 추천을 기다리고 있어요. 자세한 정보는 ${fam?'강사 찾기':'후보 찾기'}에서 볼 수 있어요.</p></div><button class="btn sec sm" data-act="tab" data-tab="${fam?'tfind':'find'}">${fam?'강사 찾기':'후보 찾기'}</button></header>
      <div class="sbars">${bySubj.map(([x,n])=>`<div>${esc(x)}<b>${n}명</b><i><span style="width:${Math.round(n/maxS*100)}%"></span></i></div>`).join('')}</div>
      <ul class="tcards">${top.map(t=>`<li><div class="chips"><span class="b info">${esc(t.grade)} ${esc(t.subject)}</span><span class="b ok">${ic('badge-check')}시범강의 통과</span></div>
       <span class="t">${esc(maskName(t.name))} 강사</span><span class="muted">${esc(t.region)} · ${careerYears(t)}</span><span class="s">${esc(t.strength)}</span></li>`).join('')}</ul></section>`
@@ -1450,6 +1628,8 @@ async function bizCheck(f){
 const isStaffRole = r => ['admin','manager'].includes(r);
 
 const VIEWS = {
+'family:home':()=>memberHome(),
+...ROLE_VIEWS,
 'academy:home':()=>memberHome(),
 'teacher:home':()=>memberHome(),
 // ===== 학원 =====
@@ -1647,7 +1827,7 @@ const VIEWS = {
 'admin:club':()=>clubAdminView(),
 'admin:audit':()=>opsView(),
 'admin:perm':()=>`<p class="lead">역할별 열람 범위입니다. (연락처 공개 시점은 정책 확정 전이라 샘플로 표시)</p>
-  <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${['academy','teacher','admin','manager'].map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
+  <div class="card"><h3>계정 ${S.accounts.length}개</h3><div class="chips">${Object.keys(ROLE_NAME).map(r=>`<span class="b mute">${ROLE_NAME[r]} ${S.accounts.filter(a=>a.role===r).length}</span>`).join('')}</div></div>
   <div class="card"><h3>역할별 공개 범위</h3><div class="tablewrap"><table class="wide">
    <tr><th>정보</th><th>방문자</th><th>강사(본인)</th><th>학원</th><th>관리자·평가자</th></tr>
    <tr><td>강사 프로필 요약</td><td>없음</td><td>열람·수정</td><td>요약 열람 (상세는 열람권 결제 후)</td><td>열람·수정</td></tr>
@@ -1655,7 +1835,10 @@ const VIEWS = {
    <tr><td>제출 서류 (졸업·성적증명서 등)</td><td>없음</td><td>업로드·삭제</td><td>없음</td><td>열람</td></tr>
    <tr><td>강사 상세 평가서</td><td>없음</td><td>본인 결과 열람·정정 요청</td><td>평가 점수·적합성 카드 열람 (근거 상세 제외)</td><td>열람·수정</td></tr>
    <tr><td>다른 학원의 요청·매칭</td><td>없음</td><td>없음</td><td>없음 (소속 학원만)</td><td>열람·수정</td></tr>
-   <tr><td>민원 내부 처리 내역</td><td>없음</td><td>없음</td><td>없음</td><td>열람·수정</td></tr></table></div></div>`
+   <tr><td>민원 내부 처리 내역</td><td>없음</td><td>없음</td><td>없음</td><td>열람·수정</td></tr></table></div></div>
+  <div class="card"><h3>역할별 메뉴 (세부 권한)</h3><div class="tablewrap"><table class="wide">
+   <tr><th>역할</th><th>하는 일</th><th>메뉴</th><th>볼 수 없는 정보</th></tr>
+   ${ROLE_GUIDE.map(([r,w,x])=>`<tr><td><b>${ROLE_NAME[r]}</b>${r==='admin'?'<br><span class="muted">시스템 운영자</span>':r==='manager'?'<br><span class="muted">강사 평가자</span>':''}</td><td>${w}</td><td>${TABS[r].map(([,n])=>n).join(' · ')}</td><td class="muted">${x}</td></tr>`).join('')}</table></div></div>`
 };
 
 // ---------- 클럽 관리 (관리자 전용): 이달의 프로그램 등록·수정 + 신청 접수 관리 ----------
@@ -2143,6 +2326,7 @@ async function memAction(a,loginId,st){
   render()}
 const pwMismatch=f=>{if(f.pw2&&f.pw2.value!==f.pw.value){f.pw2.setCustomValidity('비밀번호가 서로 달라요');f.reportValidity();f.pw2.setCustomValidity('');return true}return false};
 const SUBMITS={
+ ...ROLE_SUBMITS,
  'reset-pw':async(f,fd)=>{const v=PV.reset_password||{};if(!f.checkValidity()){f.reportValidity();return}if(pwMismatch(f))return;
   const loginId=(fd.get('loginId')||'').trim();
   try{if(API.on)await api('auth/reset-password',{method:'POST',body:{verifyToken:v.token,loginId,password:fd.get('pw')}});
@@ -2200,6 +2384,7 @@ document.addEventListener('click',e=>{
   if(e.target.closest('.reset')){e.preventDefault();try{sessionStorage.removeItem(STORE_KEY)}catch(x){}location.href=BASE_URL;return}
   const el=e.target.closest('[data-act]'); if(!el) return;
   const id=+el.dataset.id, a=el.dataset.act;
+  if(ROLE_ACTS[a]){if(ROLE_ACTS[a](el,id)!==false)render();return}
   if(a==='hero'){heroCtl(el.dataset.to);return}
   if(a==='push-test'){pushTest();return}
   if(a==='pv-send'){pvSend(el.dataset.pv,el.closest('[data-pv-box]'));return}
@@ -2314,6 +2499,7 @@ document.addEventListener('change',e=>{
   if(e.target.type==='file'){showPicked(e.target);return}
   if(e.target.dataset.sort!==undefined){S.sort=e.target.value;render();return}
   if(e.target.dataset.filter){S.f[e.target.dataset.filter]=e.target.value;render()}
+  if(e.target.dataset.st){S[e.target.dataset.st]=e.target.type==='date'?e.target.value:+e.target.value;render()}
 });
 document.addEventListener('input',e=>{
   if(e.target.dataset.evalq!==undefined){S.evalQ=e.target.value;applyEvalQ();return}
@@ -2375,7 +2561,7 @@ document.addEventListener('submit',e=>{
     if(API.on){const b=f.querySelector('button.btn');b.disabled=true;apiLogin(loginId,fd.get('pw')||'',AppBridge.inApp||!!fd.get('remember'));return}
     const acc=S.accounts.find(a=>a.loginId===loginId&&a.status!=='deleted');
     if(acc&&acc.status==='suspended'){S.loginErr='이용이 정지된 계정이에요. 고객센터로 문의해 주세요.';render();return}
-    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~17, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
+    if(!acc){S.loginErr=`'${loginId||' '}' 계정이 없어요. 원장1~4, 강사1~17, 지점관리자1~2, 학생1~3, 학부모1~2, 관리자1, 운영담당1 중 하나를 입력해 주세요.`;render();return}
     enterAs(acc);
   }
   else if(k==='req'){const no=Math.max(0,...S.requests.map(r=>r.no))+1;S.requests.push({id:no,no,academyId:S.user.academyId,subject:fd.get('subject'),grade:fd.get('grade'),count:+fd.get('count')||1,start:fd.get('start'),pay:fd.get('pay')||'협의',hours:fd.get('hours')||'협의',extra:fd.get('extra')||'',status:'등록'});log(actor(),`채용요청 #${no} 등록`);S.flash=`채용요청 #${no}을 등록했습니다.`}
