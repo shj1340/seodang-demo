@@ -57,6 +57,32 @@ svg.lucide{width:18px;height:18px;stroke-width:2;flex:none}
 .attl .seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font:inherit;font-weight:600;color:var(--sub);cursor:pointer}.attl .seg button.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(25,31,40,.12)}
 table.sched td{vertical-align:top;min-width:96px}.slot{display:block;margin:2px 0;padding:4px 6px;border-radius:8px;background:var(--accent-soft);color:var(--accent-d);font-size:12px;font-weight:700}.slot em{display:block;font-style:normal;font-weight:500;color:var(--sub)}.slot.wait{background:var(--warn-soft);color:var(--warn-text)}
 p .slot{display:inline-block}
+.calbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}.calbar .calmode{flex:none}
+.calbar .seg button,.attl .seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font:inherit;font-weight:600;color:var(--sub);cursor:pointer}.calbar .seg button.on{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(25,31,40,.12)}
+.calnav{display:flex;align-items:center;gap:2px;margin:0 auto 0 4px}.calnav b{min-width:150px;text-align:center;font-size:15px}
+.calwrap{max-height:600px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm);overscroll-behavior:contain}
+table.calday{border-collapse:separate;border-spacing:0;width:100%;min-width:calc(64px + var(--n) * 140px);table-layout:fixed}
+.calday th,.calday td{height:28px;padding:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:12px}
+.calday tr.h0 td{border-bottom:1px dashed var(--line)}
+.calday thead th{position:sticky;top:0;z-index:3;background:var(--bg);padding:8px 6px;height:auto;font-size:13px;text-align:center;border-bottom:1px solid var(--line)}
+.calday thead th small{display:block;font-weight:500;color:var(--mute);font-size:11px}
+.calday th.t{position:sticky;left:0;z-index:2;width:64px;background:var(--surface);color:var(--mute);font-weight:600;text-align:right;padding:0 8px;vertical-align:top;line-height:1}
+.calday thead th.t{z-index:4;vertical-align:middle}
+.calday td.past{background:var(--surface)}
+.calday button.pick{display:block;width:100%;height:27px;border:0;background:none;cursor:pointer;border-radius:0}.calday button.pick:hover,.calday button.pick:focus-visible{background:var(--accent-soft);outline:none}
+.calday td.bk{padding:2px 3px;vertical-align:top}
+.blk{display:block;box-sizing:border-box;border-radius:8px;padding:4px 7px;background:var(--accent-soft);color:var(--accent-d);font-size:12px;line-height:1.35;overflow:hidden;border-left:3px solid var(--accent)}
+.blk b{display:block}.blk span{display:block;color:var(--ink)}.blk em{display:block;font-style:normal;color:var(--sub)}
+.blk.wait{background:var(--warn-soft);color:var(--warn-text);border-left-color:var(--warn)}.blk.other{background:var(--surface);color:var(--mute);border-left-color:var(--icon)}.blk.other span{color:var(--mute)}
+.blk.lg{display:inline-block;padding:1px 8px;vertical-align:middle}
+.calnote{margin:10px 0 0}
+table.sched th.tday,table.sched th.tday .lnk{color:var(--accent);font-weight:800}.slot.other{background:var(--surface);color:var(--mute)}
+.calmon{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.calmon>div{background:var(--bg);min-height:104px;padding:6px;font-size:12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.calmon>div:hover{background:var(--accent-soft)}.calmon>.hd{min-height:0;cursor:default;text-align:center;font-weight:700;background:var(--surface);padding:6px 0}.calmon>.hd:hover{background:var(--surface)}
+.calmon>.out{background:var(--surface);color:var(--mute)}.calmon b.d{font-size:13px}.calmon .today b.d{align-self:flex-start;background:var(--accent);color:#fff;border-radius:999px;padding:0 7px}
+.calmon .mcnt{font-size:11px;color:var(--mute)}.calmon .c{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:4px;padding:1px 4px;background:var(--accent-soft);color:var(--accent-d)}.calmon .c.wait{background:var(--warn-soft);color:var(--warn-text)}.calmon .more{color:var(--mute);font-size:11px}
+@media(max-width:820px){.calnav{margin:0;order:3;width:100%;justify-content:space-between}.calwrap{max-height:520px}.calmon>div{min-height:64px;padding:4px}.calmon .c{font-size:10px;padding:0 2px}.calmon .mcnt{display:none}}
 .mhome .hcar{padding-top:0}.mhome .psec:first-of-type{margin-top:0}
 .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .qgrid button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;border:0;border-radius:var(--r-md);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font:inherit;color:var(--ink)}
@@ -672,7 +698,7 @@ const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flas
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v11';
+const STORE_KEY='sdh-toss-sample-v12';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub,
@@ -934,7 +960,7 @@ function localAccountFor(me){
 }
 // 로그인 직후 공통 처리 (샘플·서버 로그인 모두)
 function enterAs(acc){
-  S.user={...acc};S.pub='home';
+  S.user={...acc};S.pub='home';S.calDate=null;S.calMode='day';S.bkPre=null;S.calKey=null;
   S.tab=TABS[acc.role][0][0];S.selT=null;S.f={subject:'',grade:'',region:'',paid:''};log(actor(),'로그인');
   // 메인의 '서당 클럽'에서 들어온 경우 클럽 탭으로
   if(S.next){const w=S.next;S.next='';
@@ -1118,7 +1144,7 @@ function render(){
   // 모바일에서 표를 카드처럼 보이게: 셀 내용을 한 덩어리로 감싼다 (td::before 에 라벨)
   app.querySelectorAll('table.rt td').forEach(td=>{const v=document.createElement('div');v.className='v';while(td.firstChild)v.appendChild(td.firstChild);td.appendChild(v)});
   document.body.classList.toggle('has-bnav',tabs.length>1&&!inFlow);
-  syncRoute(); save(); icons(); initWidget();
+  syncRoute(); save(); icons(); initWidget(); calScroll();
   if(S.tab==='eval') applyEvalQ();
   if(S.noti) (document.querySelector('.noti-panel li button')||document.querySelector('.noti-head .ib'))?.focus();
 }
@@ -1344,6 +1370,12 @@ function seedRoles(){
   S.bookings=[B(1,2,'강사1',0,'17:00','18:30','중2 수학 개념 소그룹 (정규 수업)','확정'),B(2,1,'강사6',0,'18:00','19:30','중등 영어 서술형 대비 (정규 수업)','확정'),
    B(3,3,'강사9',1,'19:00','21:00','고등 수학 1:1 보강','요청'),B(4,2,'강사12',2,'15:00','17:00','중등 심화반 특강','요청'),
    B(5,1,'강사1',3,'16:00','17:00','학부모 상담','확정'),B(6,4,'강사5',1,'19:00','21:00','고등 수학 소그룹','요청')];
+  // 정규 수업(요일 반복)을 4주 전~4주 뒤까지 확정 예약으로 채운다 → 주간·월간에서 한눈에 보이게
+  const WD={일:0,월:1,화:2,수:3,목:4,금:5,토:6};
+  for(let d=-28;d<=28;d++){const dt=addDays(t0,d),wd=new Date(dt+'T00:00:00Z').getUTCDay();
+   S.classes.forEach(c=>{if(!c.days.split('·').some(x=>WD[x]===wd))return;const[a,b]=c.time.split('~');
+    if(S.bookings.some(x=>x.roomId===c.roomId&&x.date===dt&&x.start<b&&a<x.end))return;
+    S.bookings.push({id:S.bookings.length+1,roomId:c.roomId,loginId:tLogin(c.tid),date:dt,start:a,end:b,purpose:c.title+' (정규 수업)',status:'확정'})})}
   S.attendance={};
   [[1,[[-7,{1:'출석',3:'출석',5:'지각'}],[-5,{1:'출석',3:'결석',5:'출석'}],[-2,{1:'지각',3:'출석',5:'출석'}]]],
    [2,[[-6,{1:'출석',4:'출석'}],[-1,{1:'출석',4:'결석'}]]],[3,[[-3,{2:'출석'}]]]].forEach(([c,L])=>L.forEach(([d,v])=>S.attendance[c+'|'+addDays(t0,d)]=v));
@@ -1379,6 +1411,78 @@ function attBoard(){
     <div class="seg sm">${['출석','지각','결석'].map(x=>`<button class="${v===x?'on':''}" data-act="att-set" data-sid="${id}" data-v="${x}">${x}</button>`).join('')}</div></li>`}).join('')}</ul>
    <p class="muted">기록하면 학생·학부모의 '출결' 화면에 바로 보여요. 결석은 알림으로도 보내요.</p></div>`;
 }
+// ---------- 강의실 일정표: 일간(행 30분 단위 00:00~24:00 × 열 강의실) · 주간 · 월간 ----------
+const CAL_ROW=28, toSlot=t=>{const[h,m]=t.split(':');return Math.round((+h*60+ +m)/30)}, slotT=s=>`${String(Math.floor(s/2)).padStart(2,'0')}:${s%2?'30':'00'}`;
+const wkStart=d=>{const x=new Date(d+'T00:00:00Z');return addDays(d,-((x.getUTCDay()+6)%7))};
+const calLive=b=>b.status==='요청'||b.status==='확정';
+// mgr: 지점 관리자(모든 예약 내용 보임) · 아니면 강사(내 예약만 내용, 다른 예약은 '예약됨')
+function calBlk(b,mgr,len){
+  const own=b.loginId===S.user.loginId, show=mgr||own, cls=b.status==='요청'?'wait':'', who=show?esc(b.loginId):'';
+  return `<div class="blk ${cls} ${show?'':'other'}" style="height:${len*CAL_ROW-5}px" title="${b.start}~${b.end} ${show?esc(b.purpose):'예약됨'}"><b>${b.start}~${b.end}</b>${show?`<span>${esc(b.purpose)}</span><em>${who}${b.status==='요청'?' · 승인 대기':''}</em>`:'<span>예약됨</span>'}</div>`;
+}
+function calDay(rooms,mgr){
+  const d=S.calDate, bk=S.bookings.filter(b=>b.date===d&&calLive(b)&&rooms.some(r=>r.id===b.roomId));
+  const now=new Date(), nowS=d<today()?48:d>today()?-1:Math.floor((now.getHours()*60+now.getMinutes())/30);
+  const skip={}, rows=[];
+  for(let s=0;s<48;s++){
+    let tds='';
+    rooms.forEach(r=>{
+      if(skip[r.id+'|'+s]) return;
+      const b=bk.find(x=>x.roomId===r.id&&toSlot(x.start)===s);
+      if(b){const len=Math.max(1,Math.min(48,toSlot(b.end))-s);for(let k=1;k<len;k++)skip[r.id+'|'+(s+k)]=1;tds+=`<td class="bk" rowspan="${len}">${calBlk(b,mgr,len)}</td>`;return}
+      const past=s<nowS;
+      tds+=`<td class="${past?'past':''}">${past?'':`<button class="pick" data-act="cal-pick" data-room="${r.id}" data-t="${slotT(s)}" aria-label="${esc(r.name)} ${slotT(s)} 예약"></button>`}</td>`;
+    });
+    rows.push(`<tr class="${s%2?'hh':'h0'}"><th class="t">${s%2?'':slotT(s)}</th>${tds}</tr>`);
+  }
+  return `<div class="calwrap" data-key="${d}"><table class="calday" style="--n:${rooms.length}"><thead><tr><th class="t">시간</th>${rooms.map(r=>`<th>${esc(r.name)}<small>${r.seats}석 · ${won(r.price)}/시간</small></th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
+  <p class="muted calnote">빈 칸을 누르면 그 시간으로 ${mgr?'지점 일정을 등록':'예약을 요청'}할 수 있어요. <span class="blk lg">확정</span> <span class="blk lg wait">승인 대기</span>${mgr?'':' <span class="blk lg other">다른 예약</span>'}</p>`;
+}
+function calWeek(rooms,mgr){
+  const st=wkStart(S.calDate), days=[...Array(7)].map((_,i)=>addDays(st,i)), t=today();
+  return `<div class="tablewrap"><table class="wide sched"><tr><th>강의실</th>${days.map(d=>`<th class="${d===t?'tday':''}"><button class="lnk" data-act="cal-go" data-d="${d}">${kDate(d).replace(/^\d+월 /,'')}</button></th>`).join('')}</tr>
+   ${rooms.map(r=>`<tr><td><b>${esc(r.name)}</b><br><span class="muted">${r.seats}석</span></td>${days.map(d=>{const L=S.bookings.filter(x=>x.roomId===r.id&&x.date===d&&calLive(x)).sort((a,b)=>a.start.localeCompare(b.start));
+     return `<td>${L.map(x=>`<span class="slot ${x.status==='요청'?'wait':''} ${mgr||x.loginId===S.user.loginId?'':'other'}">${x.start}~${x.end}<em>${mgr||x.loginId===S.user.loginId?esc(x.loginId):'예약됨'}</em></span>`).join('')||'<span class="muted">-</span>'}</td>`}).join('')}</tr>`).join('')}</table></div>
+   <p class="muted calnote">날짜를 누르면 그날의 30분 단위 일정표로 이동해요.</p>`;
+}
+function calMonth(rooms,mgr){
+  const ym=S.calDate.slice(0,7), first=ym+'-01', st=wkStart(first), t=today(), ids=rooms.map(r=>r.id);
+  const nx=new Date(Date.UTC(+ym.slice(0,4),+ym.slice(5,7),1)).toISOString().slice(0,10), last=addDays(wkStart(addDays(nx,-1)),6), cells=[];for(let d=st;d<=last;d=addDays(d,1))cells.push(d);
+  return `<div class="calmon">${'월화수목금토일'.split('').map(x=>`<div class="hd">${x}</div>`).join('')}
+   ${cells.map(d=>{const L=S.bookings.filter(x=>x.date===d&&calLive(x)&&ids.includes(x.roomId)).sort((a,b)=>a.start.localeCompare(b.start));
+    return `<div class="${d.slice(0,7)!==ym?'out':''} ${d===t?'today':''}" data-act="cal-go" data-d="${d}" role="button" tabindex="0" aria-label="${kDate(d)} 예약 ${L.length}건"><b class="d">${+d.slice(8)}</b>${L.length?`<span class="mcnt">${L.length}건</span>`:''}
+     ${L.slice(0,3).map(x=>`<span class="c ${x.status==='요청'?'wait':''}">${x.start} ${esc((roomOf(x.roomId)||{}).name.split(' ')[0])}</span>`).join('')}${L.length>3?`<span class="more">+${L.length-3}</span>`:''}</div>`}).join('')}</div>
+   <p class="muted calnote">날짜를 누르면 그날의 일정표로 이동해요.</p>`;
+}
+function calTitle(){const d=S.calDate,m=S.calMode;
+  if(m==='month') return `${d.slice(0,4)}년 ${+d.slice(5,7)}월`;
+  if(m==='week'){const s=wkStart(d),e=addDays(s,6);return `${kDate(s)} ~ ${kDate(e).replace(/^\d+월 /,'')}`}
+  return kDate(d)+(d===today()?' · 오늘':'');}
+function roomCal(rooms,mgr,extra=''){
+  S.calMode=S.calMode||'day'; S.calDate=S.calDate||today();
+  return `<div class="card"><div class="calbar">
+    <div class="seg sm calmode">${[['day','일간'],['week','주간'],['month','월간']].map(([k,t])=>`<button class="${S.calMode===k?'on':''}" data-act="cal-mode" data-v="${k}">${t}</button>`).join('')}</div>
+    ${extra}
+    <div class="calnav"><button class="ib" data-act="cal-nav" data-v="-1" aria-label="이전">${ic('chevron-left')}</button><b>${calTitle()}</b><button class="ib" data-act="cal-nav" data-v="1" aria-label="다음">${ic('chevron-right')}</button></div>
+    <button class="btn sec sm" data-act="cal-today">오늘</button><input type="date" data-st="calDate" value="${S.calDate}" aria-label="날짜 선택" style="width:auto"></div>
+   ${S.calMode==='week'?calWeek(rooms,mgr):S.calMode==='month'?calMonth(rooms,mgr):calDay(rooms,mgr)}</div>`;
+}
+// 예약 폼: 일정표 빈 칸을 누르면 강의실·날짜·시작 시간이 채워진다. 지점 관리자는 바로 확정(지점 일정)
+function bookForm(mgr){
+  const p=S.bkPre||{}, rooms=mgr?myRooms():S.rooms, st=p.start||'18:00', en=p.start?slotT(Math.min(47,toSlot(p.start)+2)):'20:00';
+  if(mgr&&!p.room) return '';
+  return `<div class="card" id="bk-form"><h3>${mgr?'지점 일정 등록':'강의실 빌리기'}${p.room?` <button class="lnk" data-act="cal-clear">선택 해제</button>`:''}</h3><form data-form="booking"><div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${rooms.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${mgr?'':esc(brOf(r.branchId).name)+' · '}${esc(r.name)} (${r.seats}석 · ${won(r.price)}/시간)</option>`).join('')}</select></div>
+     <div><label>날짜</label><input type="date" name="date" min="${today()}" value="${p.date||addDays(today(),1)}" required></div><div><label>시작</label><input type="time" name="start" value="${st}" step="1800" required></div><div><label>끝</label><input type="time" name="end" value="${en}" step="1800" required></div></div>
+     <label>용도</label><input type="text" name="purpose" required placeholder="${mgr?'예: 지점 설명회, 시설 점검':'예: 중2 수학 보강'}"><button class="btn" style="margin-top:12px">${mgr?'일정 등록':'예약 요청'}</button><p class="muted">${mgr?'지점 관리자가 등록한 일정은 바로 확정돼요.':'지점 관리자가 승인하면 확정돼요.'} 겹치는 시간은 등록할 수 없어요.</p></form></div>`;
+}
+function calScroll(){
+  const w=document.querySelector('.calwrap'); if(!w) return;
+  const k=w.dataset.key+'|'+S.calMode;
+  if(S.calKey===k&&S.calTop!=null){w.scrollTop=S.calTop;return}
+  S.calKey=k; const first=[...w.querySelectorAll('td.bk')][0], tr=first&&first.closest('tr');
+  const s=Math.min(16,tr?[...tr.parentNode.children].indexOf(tr)-1:16); w.scrollTop=Math.max(0,s)*CAL_ROW; S.calTop=w.scrollTop;
+}
+document.addEventListener('scroll',e=>{if(e.target.classList&&e.target.classList.contains('calwrap'))S.calTop=e.target.scrollTop},true);
 const ROLE_VIEWS={
 'branch:dash':()=>{const b=myBranch(),bk=brBookings(),t=today();
   const pend=bk.filter(x=>x.status==='요청'), todays=bk.filter(x=>x.date===t&&x.status==='확정'), cls=S.classes.filter(c=>c.branchId===b.id);
@@ -1388,12 +1492,10 @@ const ROLE_VIEWS={
    <div class="stat"><b>${myRooms().length}</b><span>강의실</span></div><div class="stat"><b>${absent}</b><span>오늘 결석</span></div></div>
   <div class="card"><h3>승인 대기 예약 ${pend.length}</h3>${bookTable(pend,true)}</div>
   <div class="card"><h3>오늘 일정 · ${kDate(t)}</h3>${todays.length?`<ul class="plain hlist">${todays.map(x=>`<li><button data-act="tab" data-tab="room"><span class="b info">${x.start}~${x.end}</span><b>${esc((roomOf(x.roomId)||{}).name)} · ${esc(x.purpose)}</b><span class="muted">${esc(x.loginId)}</span></button></li>`).join('')}</ul>`:'<p class="muted">오늘 확정된 예약이 없어요.</p>'}</div>`},
-'branch:room':()=>{S.bkSeg=S.bkSeg||'week';const bk=brBookings(),t=today(),days=[...Array(7)].map((_,i)=>addDays(t,i));
-  return `<h2>강의실 예약</h2><p class="lead">강사의 대여 요청을 승인하고, 강의실별 일정을 관리해요. 이용료는 시간당 요금 기준(샘플)이에요.</p>
-  ${seg('bkSeg',[['week','이번 주 일정'],['req','예약 요청',bk.filter(x=>x.status==='요청').length],['all','전체 예약',bk.length],['rooms','강의실 관리',myRooms().length]])}
-  ${S.bkSeg==='week'?`<div class="card"><div class="tablewrap"><table class="wide sched"><tr><th>강의실</th>${days.map(d=>`<th>${kDate(d).replace(/^\d+월 /,'')}</th>`).join('')}</tr>
-    ${myRooms().map(r=>`<tr><td><b>${esc(r.name)}</b><br><span class="muted">${r.seats}석</span></td>${days.map(d=>`<td>${bk.filter(x=>x.roomId===r.id&&x.date===d&&x.status!=='거절'&&x.status!=='취소').map(x=>`<span class="slot ${x.status==='요청'?'wait':''}">${x.start}~${x.end}<em>${esc(x.loginId)}</em></span>`).join('')||'<span class="muted">-</span>'}</td>`).join('')}</tr>`).join('')}</table></div>
-    <p class="muted"><span class="slot">확정</span> <span class="slot wait">승인 대기</span></p></div>`
+'branch:room':()=>{if(!['cal','req','all','rooms'].includes(S.bkSeg))S.bkSeg='cal';const bk=brBookings();
+  return `<h2>강의실 예약</h2><p class="lead">일간은 30분 단위(00:00~24:00) 강의실별 일정, 주간·월간은 한눈에 보는 일정이에요. 강사의 대여 요청을 승인하고 지점 일정을 등록해요.</p>
+  ${seg('bkSeg',[['cal','예약 현황'],['req','예약 요청',bk.filter(x=>x.status==='요청').length],['all','전체 예약',bk.length],['rooms','강의실 관리',myRooms().length]])}
+  ${S.bkSeg==='cal'?roomCal(myRooms(),true)+bookForm(true)
   :S.bkSeg==='req'?`<div class="card">${bookTable(bk.filter(x=>x.status==='요청'),true)}</div>`
   :S.bkSeg==='all'?`<div class="card">${bookTable(bk,true)}</div>`
   :`<div class="cands">${myRooms().map(r=>`<article class="card"><h3>${esc(r.name)}</h3><p class="muted">${r.seats}석 · ${esc(r.equip)}</p><p><b>${won(r.price)}</b> / 시간</p></article>`).join('')}</div>
@@ -1406,9 +1508,7 @@ const ROLE_VIEWS={
   ${S.tSeg==='req'?(L.length?`<div class="cands">${L.map(r=>{const k=sOf(r.sid)||{};return `<article class="card"><div class="row">${badge(r.status)}<span class="b mute">${r.tid?'나에게 요청':'과목 공개 요청'}</span></div>
      <h3>${esc(r.grade)} ${esc(r.subject)} · ${esc(r.mode)}</h3><p class="muted">${esc(k.grade||'')} 학생 · ${esc(r.region)} · ${esc(r.time)}</p>${r.note?`<p>${esc(r.note)}</p>`:''}
      ${r.status==='요청'?`<div class="row"><button class="btn sm" data-act="lr-accept" data-id="${r.id}">수락</button><button class="btn sm sec" data-act="lr-decline" data-id="${r.id}">거절</button></div>`:r.status==='강사 수락'?'<p class="muted">학생·학부모가 수업을 확정하면 연락처가 서로 공개돼요.</p>':''}</article>`}).join('')}</div>`:empty('inbox','받은 수업 요청이 없어요','내 과목의 공개 요청과 나를 지정한 요청이 여기에 모여요.'))
-  :S.tSeg==='room'?`<div class="card"><h3>강의실 빌리기</h3><form data-form="booking"><div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${S.rooms.map(r=>`<option value="${r.id}">${esc(brOf(r.branchId).name)} · ${esc(r.name)} (${r.seats}석 · ${won(r.price)}/시간)</option>`).join('')}</select></div>
-     <div><label>날짜</label><input type="date" name="date" min="${today()}" value="${addDays(today(),1)}" required></div><div><label>시작</label><input type="time" name="start" value="18:00" step="1800" required></div><div><label>끝</label><input type="time" name="end" value="20:00" step="1800" required></div></div>
-     <label>용도</label><input type="text" name="purpose" required placeholder="예: 중2 수학 보강"><button class="btn" style="margin-top:12px">예약 요청</button><p class="muted">지점 관리자가 승인하면 확정돼요. 겹치는 시간은 요청할 수 없어요.</p></form></div>
+  :S.tSeg==='room'?`${(()=>{S.calBr=S.calBr||1;return roomCal(S.rooms.filter(r=>r.branchId===S.calBr),false,`<select data-st="calBr" aria-label="지점" style="width:auto">${S.branches.map(b=>`<option value="${b.id}" ${b.id===S.calBr?'selected':''}>${esc(b.name)}</option>`).join('')}</select>`)})()}${bookForm(false)}
     <div class="card"><h3>내 예약 ${mine.length}</h3>${bookTable(mine,false)}</div>`
   :(cls.length?`<div class="cands">${cls.map(c=>`<article class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(brOf(c.branchId).name)} · ${esc((roomOf(c.roomId)||{}).name)} · ${c.days} ${c.time}</p>
      <ul class="plain">${c.students.map(id=>{const r=attRate(attOf(c.id,id));return `<li>${esc(sOf(id).name)} <span class="muted">${esc(sOf(id).grade)}</span> · 출석률 <b>${r==null?'-':r+'%'}</b></li>`}).join('')}</ul></article>`).join('')}</div>`:empty('book-open','진행 중인 수업이 없어요'))}`},
@@ -1435,6 +1535,12 @@ const ROLE_VIEWS={
 const overlap=(r,d,a,b,skip,only)=>S.bookings.some(x=>x.id!==skip&&x.roomId===r&&x.date===d&&(only?x.status===only:(x.status==='요청'||x.status==='확정'))&&x.start<b&&a<x.end);
 const ROLE_ACTS={
  seg:el=>{S[el.dataset.k]=el.dataset.v},
+ 'cal-mode':el=>{S.calMode=el.dataset.v},
+ 'cal-nav':el=>{const v=+el.dataset.v,m=S.calMode;if(m==='month'){const y=+S.calDate.slice(0,4),mo=+S.calDate.slice(5,7)-1+v,x=new Date(Date.UTC(y,mo,1));S.calDate=x.toISOString().slice(0,10)}else S.calDate=addDays(S.calDate,m==='week'?7*v:v)},
+ 'cal-today':()=>{S.calDate=today()},
+ 'cal-go':el=>{S.calDate=el.dataset.d;S.calMode='day'},
+ 'cal-pick':el=>{S.bkPre={room:+el.dataset.room,date:S.calDate,start:el.dataset.t};render();document.getElementById('bk-form')?.scrollIntoView({behavior:'smooth',block:'center'});document.querySelector('#bk-form input[name=purpose]')?.focus({preventScroll:true});return false},
+ 'cal-clear':()=>{S.bkPre=null},
  'bk-ok':(el,id)=>{const b=S.bookings.find(x=>x.id===id);
   if(overlap(b.roomId,b.date,b.start,b.end,b.id,'확정')){S.flash='같은 시간에 확정된 예약이 있어 승인할 수 없어요.';S.flashType='err';return}
   b.status='확정';log(actor(),`강의실 예약 승인 #${b.id} ${roomOf(b.roomId).name} ${b.date} ${b.start}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 확정됐어요',body:`${roomOf(b.roomId).name} · ${b.date} ${b.start}~${b.end}`,route:'/lesson'});S.flash='예약을 승인했어요.'},
@@ -1453,7 +1559,8 @@ const ROLE_SUBMITS={
  booking:(f,fd)=>{const r=+fd.get('room'),d=fd.get('date'),a=fd.get('start'),b=fd.get('end');
   if(b<=a){S.flash='끝 시간이 시작보다 늦어야 해요.';S.flashType='err';render();return}
   if(overlap(r,d,a,b)){S.flash='그 시간에 이미 예약(또는 승인 대기)이 있어요. 다른 시간을 골라 주세요.';S.flashType='err';render();return}
-  const id=Math.max(0,...S.bookings.map(x=>x.id))+1;S.bookings.push({id,roomId:r,loginId:S.user.loginId,date:d,start:a,end:b,purpose:fd.get('purpose').trim(),status:'요청'});
+  const mgr=S.user.role==='branch',id=Math.max(0,...S.bookings.map(x=>x.id))+1;S.bookings.push({id,roomId:r,loginId:S.user.loginId,date:d,start:a,end:b,purpose:fd.get('purpose').trim(),status:mgr?'확정':'요청'});S.bkPre=null;S.calDate=d;S.calMode='day';
+  if(mgr){log(actor(),`지점 일정 등록 #${id}`);S.flash='지점 일정을 등록했어요.';render();return}
   const br=roomOf(r).branchId;notify({to:S.accounts.filter(x=>x.role==='branch'&&x.branchId===br).map(x=>x.loginId),kind:'notice',title:'강의실 예약 요청',body:`${S.user.loginId} · ${roomOf(r).name} ${d} ${a}~${b}`,route:'/room'});
   log(actor(),`강의실 예약 요청 #${id}`);S.flash='예약을 요청했어요. 지점 관리자가 승인하면 알려 드려요.';render()},
  'lesson-req':(f,fd)=>{const id=Math.max(0,...S.lessonReqs.map(x=>x.id))+1,tid=+fd.get('tid')||null,k=sOf(+fd.get('sid'));
