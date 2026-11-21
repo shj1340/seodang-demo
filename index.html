@@ -723,7 +723,7 @@ const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flas
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v13';
+const STORE_KEY='sdh-toss-sample-v14';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub,
@@ -1400,6 +1400,22 @@ function seedRoles(){
    S.classes.forEach(c=>{if(!c.days.split('·').some(x=>WD[x]===wd))return;const[a,b]=c.time.split('~');
     if(S.bookings.some(x=>x.roomId===c.roomId&&x.date===dt&&x.start<b&&a<x.end))return;
     S.bookings.push({id:S.bookings.length+1,roomId:c.roomId,loginId:tLogin(c.tid),date:dt,start:a,end:b,purpose:c.title+' (정규 수업)',status:'확정'})})}
+  // 날짜별 예약 수를 다양하게: 봉담점(3실 × 9교시 = 27칸)에 1건인 날부터 27칸이 꽉 찬 날까지 하루씩.
+  // +1·+2일은 여러 교시 예약 시드가 있어 제외, +3일이 꽉 찬 날. 생성 예약은 모두 1교시짜리라 'N건' = 사용 교시 수
+  let seedN=7; const rnd=()=>(seedN=(seedN*48271)%2147483647)/2147483647;
+  const TL=['강사1','강사2','강사6','강사7','강사8','강사9','강사11','강사12','강사17'], WHAT=['보강','소그룹 수업','1:1 수업','특강','시험 대비','학부모 상담','모의고사 풀이'];
+  const offs=[...Array(10)].map((_,i)=>i-10).concat([0],[...Array(16)].map((_,i)=>i+3));
+  const lv=[...Array(27)].map((_,i)=>i+1).filter(n=>n!==27).sort(()=>rnd()-.5);
+  const busyB=(rid,dt,i)=>S.bookings.some(x=>x.roomId===rid&&x.date===dt&&calLive(x)&&x.start<PERIODS[i][1]&&PERIODS[i][0]<x.end);
+  const addB=(rid,dt,i)=>{const lg=TL[Math.floor(rnd()*TL.length)],t=tOf(+lg.replace('강사','')),st=dt<t0?'확정':rnd()<.12?'요청':'확정';
+    S.bookings.push({id:S.bookings.length+1,roomId:rid,loginId:lg,date:dt,start:PERIODS[i][0],end:PERIODS[i][1],purpose:`${t.grade} ${t.subject} ${WHAT[Math.floor(rnd()*WHAT.length)]}`,status:st})};
+  offs.forEach(o=>{const dt=addDays(t0,o),N=o===3?27:lv.pop();
+    const free=[];[1,2,3].forEach(r=>PERIODS.forEach((_,i)=>{if(!busyB(r,dt,i))free.push([r,i])}));
+    free.sort(()=>rnd()-.5);
+    let have=S.bookings.filter(x=>x.date===dt&&calLive(x)&&[1,2,3].includes(x.roomId)).length;
+    while(have<N&&free.length){const[r,i]=free.pop();addB(r,dt,i);have++}});
+  // 병점점(201호)도 앞뒤 2주에 0~6건씩
+  for(let o=-7;o<=14;o++){const dt=addDays(t0,o),n=Math.floor(rnd()*7);const fr=PERIODS.map((_,i)=>i).filter(i=>!busyB(4,dt,i)).sort(()=>rnd()-.5);fr.slice(0,n).forEach(i=>addB(4,dt,i))}
   S.attendance={};
   [[1,[[-7,{1:'출석',3:'출석',5:'지각'}],[-5,{1:'출석',3:'결석',5:'출석'}],[-2,{1:'지각',3:'출석',5:'출석'}]]],
    [2,[[-6,{1:'출석',4:'출석'}],[-1,{1:'출석',4:'결석'}]]],[3,[[-3,{2:'출석'}]]]].forEach(([c,L])=>L.forEach(([d,v])=>S.attendance[c+'|'+addDays(t0,d)]=v));
