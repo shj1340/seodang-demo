@@ -1432,12 +1432,14 @@ const kidCls=sid=>S.classes.filter(c=>c.students.includes(sid));
 const attOf=(cid,sid)=>Object.entries(S.attendance).filter(([k])=>k.startsWith(cid+'|')).map(([k,v])=>({date:k.split('|')[1],st:v[sid]})).filter(x=>x.st).sort((a,b)=>b.date.localeCompare(a.date));
 const attRate=L=>L.length?Math.round(L.filter(x=>x.st!=='결석').length/L.length*100):null;
 const tLogin=tid=>'강사'+tid;
+// 이용료: 교시 단위로 받는다 (교시당 = 시간당 요금 × 1.5시간, 원 단위 반올림). 쉬는 시간 5분은 청구하지 않음
+const perP=r=>Math.round(r.price*1.5), feeOf=b=>{const r=roomOf(b.roomId)||{price:0};return perP(r)*(pLast(b.end)-pFirst(b.start)+1)};
 const hrs=(a,b)=>{const m=x=>{const[h,mm]=x.split(':');return +h*60+ +mm};return Math.max(0,(m(b)-m(a))/60)};
 const lrMine=()=>S.lessonReqs.filter(r=>r.loginId===S.user.loginId||(S.user.role==='parent'&&myKids().some(k=>k.id===r.sid))||(S.user.role==='student'&&r.sid===S.user.studentId));
 const tReqs=t=>S.lessonReqs.filter(r=>(r.tid===t.id||(!r.tid&&r.subject===t.subject&&!(r.passed||[]).includes(t.id)))&&r.status!=='취소');
 const seg=(key,items)=>`<div class="chips chiprow" style="margin-bottom:16px">${items.map(([k,t,n])=>`<button class="fchip ${S[key]===k?'on':''}" data-act="seg" data-k="${key}" data-v="${k}">${t}${n?` <span>${n}</span>`:''}</button>`).join('')}</div>`;
 const bookRow=(b,mgr)=>{const r=roomOf(b.roomId)||{};return `<tr><td data-label="날짜"><b>${kDate(b.date)}</b><br><span class="muted">${b.start}~${b.end}</span></td><td data-label="강의실">${esc(r.name||'')}${mgr?'':`<br><span class="muted">${esc((brOf(r.branchId)||{}).name||'')}</span>`}</td>
-  <td data-label="${mgr?'예약자':'용도'}">${mgr?`<b>${esc(b.loginId)}</b> ${esc((tOf(+b.loginId.replace('강사',''))||{}).name||'')}<br><span class="muted">${esc(b.purpose)}</span>`:esc(b.purpose)}</td><td data-label="이용료">${won(r.price*hrs(b.start,b.end))}</td>
+  <td data-label="${mgr?'예약자':'용도'}">${mgr?`<b>${esc(b.loginId)}</b> ${esc((tOf(+b.loginId.replace('강사',''))||{}).name||'')}<br><span class="muted">${esc(b.purpose)}</span>`:esc(b.purpose)}</td><td data-label="이용료">${won(feeOf(b))}</td>
   <td data-label="상태"><div class="row">${badge(b.status)}${mgr&&b.status==='요청'?`<button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button>`:''}${!mgr&&(b.status==='요청'||b.status==='확정')&&b.date>=today()?`<button class="btn sm sec" data-act="bk-cancel" data-id="${b.id}">취소</button>`:''}</div></td></tr>`};
 const bookTable=(L,mgr)=>L.length?`<div class="tablewrap"><table class="rt"><tr><th>날짜</th><th>강의실</th><th>${mgr?'예약자':'용도'}</th><th>이용료</th><th>상태</th></tr>${L.map(b=>bookRow(b,mgr)).join('')}</table></div>`:'<p class="muted">예약이 없어요.</p>';
 function attBoard(){
@@ -1478,7 +1480,7 @@ function calDay(rooms,mgr){
     });
     rows.push(`<tr><th class="t"><b>${i+1}교시</b><span>${ps}~${pe}</span></th>${tds}</tr>`);
   });
-  return `<div class="m-only">${calDayM(rooms,mgr)}</div><div class="d-only"><div class="calwrap"><table class="calday" style="--n:${rooms.length}"><thead><tr><th class="t">교시</th>${rooms.map(r=>`<th>${esc(r.name)}<small>${r.seats}석 · ${won(Math.round(r.price*1.5))}/교시</small></th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
+  return `<div class="m-only">${calDayM(rooms,mgr)}</div><div class="d-only"><div class="calwrap"><table class="calday" style="--n:${rooms.length}"><thead><tr><th class="t">교시</th>${rooms.map(r=>`<th>${esc(r.name)}<small>${r.seats}석 · ${won(perP(r))}/교시</small></th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
   <p class="muted calnote">빈 칸을 누르면 그 교시로 ${mgr?'지점 일정을 등록':'예약을 요청'}할 수 있어요. 수업 90분 · 쉬는 시간 5분. <span class="blk lg">확정</span> <span class="blk lg wait">승인 대기</span>${mgr?'':' <span class="blk lg other">다른 예약</span>'}</p></div>`;
 }
 // 모바일 일간: 날짜 띠(2주) → 강의실 칩 → 교시 카드 목록. 빈 교시를 누르면 바텀시트로 예약
@@ -1498,7 +1500,7 @@ function calDayM(rooms,mgr){
     if(b){const show=mgr||b.loginId===S.user.loginId, first=pFirst(b.start)===i;
       return `<li class="${first?'':'cont'}">${tm}<div class="mp-b ${b.status==='요청'?'wait':''} ${show?'':'other'}">${first?`<b>${pName(b)}</b><span>${show?esc(b.purpose):'예약됨'}</span>${show?`<em>${esc(b.loginId)}${b.status==='요청'?' · 승인 대기':''}</em>`:''}${mgr&&b.status==='요청'?`<div class="row"><button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button></div>`:''}`:`<span>↑ ${pName(b)} 이어서 사용</span>`}</div></li>`}
     return `<li class="${past?'past':''}">${tm}${past?'<div class="mp-x">지난 교시</div>':`<button class="mp-free" data-act="cal-pick" data-m="1" data-room="${S.calRoom}" data-p="${i}">${ic('plus')}<span>예약 가능</span></button>`}</li>`}).join('');
-  return `${strip}${chips}<p class="mroom-info">${esc(room.name)} · ${room.seats}석 · ${esc(room.equip||'')} · ${won(Math.round(room.price*1.5))}/교시</p><ul class="plain mper">${rows}</ul>`;
+  return `${strip}${chips}<p class="mroom-info">${esc(room.name)} · ${room.seats}석 · ${esc(room.equip||'')} · ${won(perP(room))}/교시</p><ul class="plain mper">${rows}</ul>`;
 }
 function bookSheet(){const mgr=S.user.role==='branch';
   return `<div class="noti-dim" data-act="bk-close"></div><section class="noti-panel sheet" role="dialog" aria-label="${mgr?'지점 일정 등록':'강의실 예약'}"><div class="noti-head"><b>${mgr?'지점 일정 등록':'강의실 예약'}</b><button class="ib" data-act="bk-close" aria-label="닫기">${ic('x')}</button></div>
@@ -1539,7 +1541,7 @@ function roomCal(rooms,mgr,extra=''){
 function bookFormInner(mgr,sheet){
   const p=S.bkPre||{}, rooms=mgr?myRooms():S.rooms, sp=p.p!=null?p.p:6;
   const popt=(sel,end)=>PERIODS.map(([a,b],i)=>`<option value="${i}" ${i===sel?'selected':''}>${i+1}교시 (${end?'~'+b:a+'~'})</option>`).join('');
-  return `<form data-form="booking">${sheet?`<p class="muted" style="margin-top:0">${esc((roomOf(p.room)||{}).name||'')} · ${p.date?kDate(p.date):''}</p>`:''}<div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${rooms.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${mgr?'':esc(brOf(r.branchId).name)+' · '}${esc(r.name)} (${r.seats}석 · ${won(Math.round(r.price*1.5))}/교시)</option>`).join('')}</select></div>
+  return `<form data-form="booking">${sheet?`<p class="muted" style="margin-top:0">${esc((roomOf(p.room)||{}).name||'')} · ${p.date?kDate(p.date):''}</p>`:''}<div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${rooms.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${mgr?'':esc(brOf(r.branchId).name)+' · '}${esc(r.name)} (${r.seats}석 · ${won(perP(r))}/교시)</option>`).join('')}</select></div>
      <div><label>날짜</label><input type="date" name="date" min="${today()}" value="${p.date||addDays(today(),1)}" required></div><div><label>시작 교시</label><select name="sp">${popt(sp,false)}</select></div><div><label>끝 교시</label><select name="ep">${popt(sp,true)}</select></div></div>
      <label>용도</label><input type="text" name="purpose" required placeholder="${mgr?'예: 지점 설명회, 시설 점검':'예: 중2 수학 보강'}"><button class="btn" style="margin-top:12px">${mgr?'일정 등록':'예약 요청'}</button><p class="muted">교시 단위(90분 수업 · 5분 쉬는 시간)로 예약해요. 연속 교시를 묶을 수 있어요. ${mgr?'지점 관리자가 등록한 일정은 바로 확정돼요.':'지점 관리자가 승인하면 확정돼요.'} 겹치는 교시는 등록할 수 없어요.</p></form>`;
 }
@@ -1564,7 +1566,7 @@ const ROLE_VIEWS={
   ${S.bkSeg==='cal'?roomCal(myRooms(),true)+bookForm(true)
   :S.bkSeg==='req'?`<div class="card">${bookTable(bk.filter(x=>x.status==='요청'),true)}</div>`
   :S.bkSeg==='all'?`<div class="card">${bookTable(bk,true)}</div>`
-  :`<div class="cands">${myRooms().map(r=>`<article class="card"><h3>${esc(r.name)}</h3><p class="muted">${r.seats}석 · ${esc(r.equip)}</p><p><b>${won(r.price)}</b> / 시간</p></article>`).join('')}</div>
+  :`<div class="cands">${myRooms().map(r=>`<article class="card"><h3>${esc(r.name)}</h3><p class="muted">${r.seats}석 · ${esc(r.equip)}</p><p><b>${won(perP(r))}</b> / 교시 <span class="muted">(시간당 ${won(r.price)})</span></p></article>`).join('')}</div>
    <div class="card"><h3>강의실 추가</h3><form data-form="room-new"><div class="grid g4 tight one-m"><div><label>이름</label><input type="text" name="name" required placeholder="예: 104호 강의실"></div><div><label>좌석</label><input type="number" name="seats" min="1" value="8" required></div><div><label>시간당 이용료(원)</label><input type="number" name="price" min="0" step="1000" value="12000" required></div><div><label>시설</label><input type="text" name="equip" placeholder="예: 전자칠판"></div></div><button class="btn" style="margin-top:12px">추가</button></form></div>`}`},
 'branch:att':()=>`<h2>출결 관리</h2><p class="lead">지점에서 진행하는 수업의 학생 출결을 기록해요. 학생·학부모 화면에 바로 반영돼요.</p>${attBoard()}`,
 'teacher:lesson':()=>{S.tSeg=S.tSeg||'req';const t=me(),L=tReqs(t);
