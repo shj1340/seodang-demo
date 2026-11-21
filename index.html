@@ -723,7 +723,7 @@ const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flas
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v14';
+const STORE_KEY='sdh-toss-sample-v15';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub,
@@ -1398,7 +1398,7 @@ function seedRoles(){
   const WD={일:0,월:1,화:2,수:3,목:4,금:5,토:6};
   for(let d=-28;d<=28;d++){const dt=addDays(t0,d),wd=new Date(dt+'T00:00:00Z').getUTCDay();
    S.classes.forEach(c=>{if(!c.days.split('·').some(x=>WD[x]===wd))return;const[a,b]=c.time.split('~');
-    if(S.bookings.some(x=>x.roomId===c.roomId&&x.date===dt&&x.start<b&&a<x.end))return;
+    if(S.bookings.some(x=>(x.roomId===c.roomId||x.loginId===tLogin(c.tid))&&x.date===dt&&x.start<b&&a<x.end))return;
     S.bookings.push({id:S.bookings.length+1,roomId:c.roomId,loginId:tLogin(c.tid),date:dt,start:a,end:b,purpose:c.title+' (정규 수업)',status:'확정'})})}
   // 날짜별 예약 수를 다양하게: 봉담점(3실 × 9교시 = 27칸)에 1건인 날부터 27칸이 꽉 찬 날까지 하루씩.
   // +1·+2일은 여러 교시 예약 시드가 있어 제외, +3일이 꽉 찬 날. 생성 예약은 모두 1교시짜리라 'N건' = 사용 교시 수
@@ -1407,13 +1407,13 @@ function seedRoles(){
   const offs=[...Array(10)].map((_,i)=>i-10).concat([0],[...Array(16)].map((_,i)=>i+3));
   const lv=[...Array(27)].map((_,i)=>i+1).filter(n=>n!==27).sort(()=>rnd()-.5);
   const busyB=(rid,dt,i)=>S.bookings.some(x=>x.roomId===rid&&x.date===dt&&calLive(x)&&x.start<PERIODS[i][1]&&PERIODS[i][0]<x.end);
-  const addB=(rid,dt,i)=>{const lg=TL[Math.floor(rnd()*TL.length)],t=tOf(+lg.replace('강사','')),st=dt<t0?'확정':rnd()<.12?'요청':'확정';
+  const addB=(rid,dt,i)=>{const lg=TL.slice().sort(()=>rnd()-.5).find(l=>!tClash(l,dt,PERIODS[i][0],PERIODS[i][1]));if(!lg)return false;const t=tOf(+lg.replace('강사','')),st=dt<t0?'확정':rnd()<.12?'요청':'확정';
     S.bookings.push({id:S.bookings.length+1,roomId:rid,loginId:lg,date:dt,start:PERIODS[i][0],end:PERIODS[i][1],purpose:`${t.grade} ${t.subject} ${WHAT[Math.floor(rnd()*WHAT.length)]}`,status:st})};
   offs.forEach(o=>{const dt=addDays(t0,o),N=o===3?27:lv.pop();
     const free=[];[1,2,3].forEach(r=>PERIODS.forEach((_,i)=>{if(!busyB(r,dt,i))free.push([r,i])}));
     free.sort(()=>rnd()-.5);
     let have=S.bookings.filter(x=>x.date===dt&&calLive(x)&&[1,2,3].includes(x.roomId)).length;
-    while(have<N&&free.length){const[r,i]=free.pop();addB(r,dt,i);have++}});
+    while(have<N&&free.length){const[r,i]=free.pop();if(addB(r,dt,i)!==false)have++}});
   // 병점점(201호)도 앞뒤 2주에 0~6건씩
   for(let o=-7;o<=14;o++){const dt=addDays(t0,o),n=Math.floor(rnd()*7);const fr=PERIODS.map((_,i)=>i).filter(i=>!busyB(4,dt,i)).sort(()=>rnd()-.5);fr.slice(0,n).forEach(i=>addB(4,dt,i))}
   S.attendance={};
@@ -1600,6 +1600,8 @@ const ROLE_VIEWS={
   return `<h2>출결</h2><p class="lead">서당 지점에서 기록한 출결이에요. 결석이 기록되면 알림으로 알려 드려요.</p>
   ${kids.map(k=>`<div class="card"><h3>${esc(k.name)} <span class="muted">${esc(k.grade)}</span></h3>${kidCls(k.id).map(c=>{const L=attOf(c.id,k.id),r=attRate(L);return `<h4>${esc(c.title)} · 출석률 ${r==null?'-':r+'%'}</h4>${L.length?`<ul class="plain hlist">${L.map(x=>`<li><button>${badge(x.st)}<b>${kDate(x.date)}</b><span class="muted">${c.time}</span></button></li>`).join('')}</ul>`:'<p class="muted">아직 기록이 없어요.</p>'}`}).join('')||'<p class="muted">진행 중인 수업이 없어요.</p>'}</div>`).join('')}`}
 };
+// 같은 강사가 같은 시간에 다른 강의실(다른 지점 포함)을 잡았는지
+const tClash=(login,d,a,b,skip,only)=>S.bookings.find(x=>x.id!==skip&&x.loginId===login&&x.date===d&&(only?x.status===only:(x.status==='요청'||x.status==='확정'))&&x.start<b&&a<x.end);
 const overlap=(r,d,a,b,skip,only)=>S.bookings.some(x=>x.id!==skip&&x.roomId===r&&x.date===d&&(only?x.status===only:(x.status==='요청'||x.status==='확정'))&&x.start<b&&a<x.end);
 const ROLE_ACTS={
  seg:el=>{S[el.dataset.k]=el.dataset.v},
@@ -1614,6 +1616,7 @@ const ROLE_ACTS={
  'cal-room':(el,id)=>{S.calRoom=id},
  'bk-ok':(el,id)=>{const b=S.bookings.find(x=>x.id===id);
   if(overlap(b.roomId,b.date,b.start,b.end,b.id,'확정')){S.flash='같은 시간에 확정된 예약이 있어 승인할 수 없어요.';S.flashType='err';return}
+  const tc=tClash(b.loginId,b.date,b.start,b.end,b.id,'확정');if(tc){const rr=roomOf(tc.roomId);S.flash=`${b.loginId}은(는) 같은 시간에 ${brOf(rr.branchId).name} ${rr.name} 예약이 이미 확정돼 있어 승인할 수 없어요.`;S.flashType='err';return}
   b.status='확정';log(actor(),`강의실 예약 승인 #${b.id} ${roomOf(b.roomId).name} ${b.date} ${b.start}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 확정됐어요',body:`${roomOf(b.roomId).name} · ${b.date} ${b.start}~${b.end}`,route:'/lesson'});S.flash='예약을 승인했어요.'},
  'bk-no':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='거절';log(actor(),`강의실 예약 거절 #${b.id}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 거절됐어요',body:`${roomOf(b.roomId).name} · ${b.date}`,route:'/lesson'});S.flash='예약을 거절했어요.'},
  'bk-cancel':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='취소';log(actor(),`강의실 예약 취소 #${b.id}`);S.flash='예약을 취소했어요.'},
@@ -1630,6 +1633,7 @@ const ROLE_SUBMITS={
  booking:(f,fd)=>{const r=+fd.get('room'),d=fd.get('date'),sp=+fd.get('sp'),ep=+fd.get('ep'),a=PERIODS[sp][0],b=PERIODS[Math.max(sp,ep)][1];
   if(ep<sp){S.flash='끝 교시가 시작 교시보다 앞설 수 없어요.';S.flashType='err';render();return}
   if(overlap(r,d,a,b)){S.flash='그 교시에 이미 예약(또는 승인 대기)이 있어요. 다른 교시를 골라 주세요.';S.flashType='err';render();return}
+  const tc=S.user.role!=='branch'&&tClash(S.user.loginId,d,a,b);if(tc){const rr=roomOf(tc.roomId);S.flash=`같은 시간에 이미 ${brOf(rr.branchId).name} ${rr.name}(${pName(tc)} ${tc.start}~${tc.end}, ${tc.status})을 예약했어요. 한 강사는 같은 시간에 한 강의실만 예약할 수 있어요.`;S.flashType='err';render();return}
   const mgr=S.user.role==='branch',id=Math.max(0,...S.bookings.map(x=>x.id))+1;S.bookings.push({id,roomId:r,loginId:S.user.loginId,date:d,start:a,end:b,purpose:fd.get('purpose').trim(),status:mgr?'확정':'요청'});S.bkPre=null;S.bkSheet=false;S.calDate=d;S.calMode='day';
   if(mgr){log(actor(),`지점 일정 등록 #${id}`);S.flash='지점 일정을 등록했어요.';render();return}
   const br=roomOf(r).branchId;notify({to:S.accounts.filter(x=>x.role==='branch'&&x.branchId===br).map(x=>x.loginId),kind:'notice',title:'강의실 예약 요청',body:`${S.user.loginId} · ${roomOf(r).name} ${d} ${a}~${b}`,route:'/room'});
