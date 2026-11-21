@@ -73,6 +73,8 @@ table.calday{border-collapse:separate;border-spacing:0;width:100%;min-width:calc
 .blk{display:block;box-sizing:border-box;border-radius:8px;padding:4px 7px;background:var(--accent-soft);color:var(--accent-d);font-size:12px;line-height:1.35;overflow:hidden;border-left:3px solid var(--accent)}
 .blk b{display:block}.blk span{display:block;color:var(--ink)}.blk em{display:block;font-style:normal;color:var(--sub)}
 .blk.wait{background:var(--warn-soft);color:var(--warn-text);border-left-color:var(--warn)}.blk.other{background:var(--surface);color:var(--mute);border-left-color:var(--icon)}.blk.other span{color:var(--mute)}
+.blk-x{display:inline-block;margin-top:4px;padding:2px 8px;border:1px solid currentColor;border-radius:999px;background:var(--bg);font:inherit;font-size:11px;font-weight:700;color:var(--sub);cursor:pointer}.blk-x:hover{color:var(--bad-text)}
+.mag-x{grid-column:1/-1;justify-self:start;font-size:12px}
 .blk.lg{display:inline-block;padding:1px 8px;vertical-align:middle}
 .calnote{margin:10px 0 0}
 table.sched th.tday,table.sched th.tday .lnk{color:var(--accent);font-weight:800}.slot.other{background:var(--surface);color:var(--mute)}
@@ -1440,7 +1442,7 @@ const tReqs=t=>S.lessonReqs.filter(r=>(r.tid===t.id||(!r.tid&&r.subject===t.subj
 const seg=(key,items)=>`<div class="chips chiprow" style="margin-bottom:16px">${items.map(([k,t,n])=>`<button class="fchip ${S[key]===k?'on':''}" data-act="seg" data-k="${key}" data-v="${k}">${t}${n?` <span>${n}</span>`:''}</button>`).join('')}</div>`;
 const bookRow=(b,mgr)=>{const r=roomOf(b.roomId)||{};return `<tr><td data-label="날짜"><b>${kDate(b.date)}</b><br><span class="muted">${b.start}~${b.end}</span></td><td data-label="강의실">${esc(r.name||'')}${mgr?'':`<br><span class="muted">${esc((brOf(r.branchId)||{}).name||'')}</span>`}</td>
   <td data-label="${mgr?'예약자':'용도'}">${mgr?`<b>${esc(b.loginId)}</b> ${esc((tOf(+b.loginId.replace('강사',''))||{}).name||'')}<br><span class="muted">${esc(b.purpose)}</span>`:esc(b.purpose)}</td><td data-label="이용료">${won(feeOf(b))}</td>
-  <td data-label="상태"><div class="row">${badge(b.status)}${mgr&&b.status==='요청'?`<button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button>`:''}${!mgr&&(b.status==='요청'||b.status==='확정')&&b.date>=today()?`<button class="btn sm sec" data-act="bk-cancel" data-id="${b.id}">취소</button>`:''}</div></td></tr>`};
+  <td data-label="상태"><div class="row">${badge(b.status)}${mgr&&b.status==='요청'?`<button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button>`:''}${!mgr?cancelBtn(b,'btn sm sec'):''}</div></td></tr>`};
 const bookTable=(L,mgr)=>L.length?`<div class="tablewrap"><table class="rt"><tr><th>날짜</th><th>강의실</th><th>${mgr?'예약자':'용도'}</th><th>이용료</th><th>상태</th></tr>${L.map(b=>bookRow(b,mgr)).join('')}</table></div>`:'<p class="muted">예약이 없어요.</p>';
 function attBoard(){
   const cls=S.classes.filter(c=>c.branchId===S.user.branchId); if(!cls.length) return empty('clipboard-list','이 지점에 등록된 수업이 없어요');
@@ -1461,9 +1463,12 @@ const pName=b=>{const a=pFirst(b.start)+1,z=pLast(b.end)+1;return a===z?`${a}교
 const wkStart=d=>{const x=new Date(d+'T00:00:00Z');return addDays(d,-((x.getUTCDay()+6)%7))};
 const calLive=b=>b.status==='요청'||b.status==='확정';
 // mgr: 지점 관리자(모든 예약 내용 보임) · 아니면 강사(내 예약만 내용, 다른 예약은 '예약됨')
+// 내 예약(승인 대기·확정)이고 아직 시작 전이면 취소할 수 있다
+const canCancel=b=>b.loginId===S.user.loginId&&calLive(b)&&(b.date>today()||(b.date===today()&&b.start>new Date().toTimeString().slice(0,5)));
+const cancelBtn=(b,cls='blk-x')=>canCancel(b)?`<button class="${cls}" data-act="bk-cancel" data-id="${b.id}">${b.status==='요청'?'요청 취소':'예약 취소'}</button>`:'';
 function calBlk(b,mgr,len){
   const own=b.loginId===S.user.loginId, show=mgr||own, cls=b.status==='요청'?'wait':'', who=show?esc(b.loginId):'';
-  return `<div class="blk ${cls} ${show?'':'other'}" style="height:${len*CAL_ROW-5}px" title="${b.start}~${b.end} ${show?esc(b.purpose):'예약됨'}"><b>${pName(b)} · ${b.start}~${b.end}</b>${show?`<span>${esc(b.purpose)}</span><em>${who}${b.status==='요청'?' · 승인 대기':''}</em>`:'<span>예약됨</span>'}</div>`;
+  return `<div class="blk ${cls} ${show?'':'other'}" style="height:${len*CAL_ROW-5}px" title="${b.start}~${b.end} ${show?esc(b.purpose):'예약됨'}"><b>${pName(b)} · ${b.start}~${b.end}</b>${show?`<span>${esc(b.purpose)}</span><em>${who}${b.status==='요청'?' · 승인 대기':''}</em>${cancelBtn(b)}`:'<span>예약됨</span>'}</div>`;
 }
 function calDay(rooms,mgr){
   const d=S.calDate, bk=S.bookings.filter(b=>b.date===d&&calLive(b)&&rooms.some(r=>r.id===b.roomId));
@@ -1498,7 +1503,7 @@ function calDayM(rooms,mgr){
     const b=bk.find(x=>pFirst(x.start)<=i&&i<=pLast(x.end)), past=d<t||(d===t&&ps<now);
     const tm=`<div class="mp-t"><b>${i+1}교시</b><span>${ps}</span><span>${pe}</span></div>`;
     if(b){const show=mgr||b.loginId===S.user.loginId, first=pFirst(b.start)===i;
-      return `<li class="${first?'':'cont'}">${tm}<div class="mp-b ${b.status==='요청'?'wait':''} ${show?'':'other'}">${first?`<b>${pName(b)}</b><span>${show?esc(b.purpose):'예약됨'}</span>${show?`<em>${esc(b.loginId)}${b.status==='요청'?' · 승인 대기':''}</em>`:''}${mgr&&b.status==='요청'?`<div class="row"><button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button></div>`:''}`:`<span>↑ ${pName(b)} 이어서 사용</span>`}</div></li>`}
+      return `<li class="${first?'':'cont'}">${tm}<div class="mp-b ${b.status==='요청'?'wait':''} ${show?'':'other'}">${first?`<b>${pName(b)}</b><span>${show?esc(b.purpose):'예약됨'}</span>${show?`<em>${esc(b.loginId)}${b.status==='요청'?' · 승인 대기':''}</em>`:''}${mgr&&b.status==='요청'?`<div class="row"><button class="btn sm" data-act="bk-ok" data-id="${b.id}">승인</button><button class="btn sm sec" data-act="bk-no" data-id="${b.id}">거절</button></div>`:''}${canCancel(b)?`<div class="row">${cancelBtn(b,'btn sm sec')}</div>`:''}`:`<span>↑ ${pName(b)} 이어서 사용</span>`}</div></li>`}
     return `<li class="${past?'past':''}">${tm}${past?'<div class="mp-x">지난 교시</div>':`<button class="mp-free" data-act="cal-pick" data-m="1" data-room="${S.calRoom}" data-p="${i}">${ic('plus')}<span>예약 가능</span></button>`}</li>`}).join('');
   return `${strip}${chips}<p class="mroom-info">${esc(room.name)} · ${room.seats}석 · ${esc(room.equip||'')} · ${won(perP(room))}/교시</p><ul class="plain mper">${rows}</ul>`;
 }
@@ -1509,7 +1514,7 @@ function calWeek(rooms,mgr){
   const st=wkStart(S.calDate), days=[...Array(7)].map((_,i)=>addDays(st,i)), t=today(), ids=rooms.map(r=>r.id);
   const agenda=`<ul class="plain magenda">${days.map(d=>{const L=S.bookings.filter(x=>x.date===d&&calLive(x)&&ids.includes(x.roomId)).sort((a,b)=>a.start.localeCompare(b.start));
     return `<li><button class="mag-d ${d===t?'today':''}" data-act="cal-go" data-d="${d}"><b>${kDate(d)}</b><span>${L.length?L.length+'건':'예약 없음'}</span>${ic('chevron-right')}</button>
-     ${L.map(x=>{const show=mgr||x.loginId===S.user.loginId;return `<div class="mag-i ${x.status==='요청'?'wait':''} ${show?'':'other'}"><b>${pName(x)}</b><span>${esc((roomOf(x.roomId)||{}).name)} · ${x.start}~${x.end}</span><em>${show?esc(x.purpose)+' · '+esc(x.loginId):'예약됨'}</em>${x.status==='요청'?'<i>승인 대기</i>':''}</div>`}).join('')}</li>`}).join('')}</ul>`;
+     ${L.map(x=>{const show=mgr||x.loginId===S.user.loginId;return `<div class="mag-i ${x.status==='요청'?'wait':''} ${show?'':'other'}"><b>${pName(x)}</b><span>${esc((roomOf(x.roomId)||{}).name)} · ${x.start}~${x.end}</span><em>${show?esc(x.purpose)+' · '+esc(x.loginId):'예약됨'}</em>${x.status==='요청'?'<i>승인 대기</i>':''}${cancelBtn(x,'lnk mag-x')}</div>`}).join('')}</li>`}).join('')}</ul>`;
   return `<div class="m-only">${agenda}</div><div class="d-only"><div class="tablewrap"><table class="wide sched"><tr><th>강의실</th>${days.map(d=>`<th class="${d===t?'tday':''}"><button class="lnk" data-act="cal-go" data-d="${d}">${kDate(d).replace(/^\d+월 /,'')}</button></th>`).join('')}</tr>
    ${rooms.map(r=>`<tr><td><b>${esc(r.name)}</b><br><span class="muted">${r.seats}석</span></td>${days.map(d=>{const L=S.bookings.filter(x=>x.roomId===r.id&&x.date===d&&calLive(x)).sort((a,b)=>a.start.localeCompare(b.start));
      return `<td>${L.map(x=>`<span class="slot ${x.status==='요청'?'wait':''} ${mgr||x.loginId===S.user.loginId?'':'other'}">${pName(x)}<em>${x.start}~${x.end} · ${mgr||x.loginId===S.user.loginId?esc(x.loginId):'예약됨'}</em></span>`).join('')||'<span class="muted">-</span>'}</td>`}).join('')}</tr>`).join('')}</table></div>
@@ -1619,7 +1624,12 @@ const ROLE_ACTS={
   const tc=tClash(b.loginId,b.date,b.start,b.end,b.id,'확정');if(tc){const rr=roomOf(tc.roomId);S.flash=`${b.loginId}은(는) 같은 시간에 ${brOf(rr.branchId).name} ${rr.name} 예약이 이미 확정돼 있어 승인할 수 없어요.`;S.flashType='err';return}
   b.status='확정';log(actor(),`강의실 예약 승인 #${b.id} ${roomOf(b.roomId).name} ${b.date} ${b.start}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 확정됐어요',body:`${roomOf(b.roomId).name} · ${b.date} ${b.start}~${b.end}`,route:'/lesson'});S.flash='예약을 승인했어요.'},
  'bk-no':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='거절';log(actor(),`강의실 예약 거절 #${b.id}`);notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 거절됐어요',body:`${roomOf(b.roomId).name} · ${b.date}`,route:'/lesson'});S.flash='예약을 거절했어요.'},
- 'bk-cancel':(el,id)=>{const b=S.bookings.find(x=>x.id===id);b.status='취소';log(actor(),`강의실 예약 취소 #${b.id}`);S.flash='예약을 취소했어요.'},
+ 'bk-cancel':(el,id)=>{const b=S.bookings.find(x=>x.id===id),r=roomOf(b.roomId),req=b.status==='요청';
+  if(!canCancel(b))return;
+  if(!confirm(`${brOf(r.branchId).name} ${r.name} · ${kDate(b.date)} ${pName(b)} ${req?'예약 요청을':'확정된 예약을'} 취소할까요?`))return false;
+  b.status='취소';b.canceledAt=new Date().toISOString();log(actor(),`강의실 ${req?'예약 요청':'예약'} 취소 #${b.id} ${r.name} ${b.date} ${b.start}`);
+  notify({to:S.accounts.filter(x=>x.role==='branch'&&x.branchId===r.branchId).map(x=>x.loginId),kind:'notice',title:req?'강의실 예약 요청이 취소됐어요':'확정된 강의실 예약이 취소됐어요',body:`${b.loginId} · ${r.name} ${b.date} ${b.start}~${b.end}`,route:'/room'});
+  S.flash=req?'예약 요청을 취소했어요.':'예약을 취소했어요. 지점 관리자에게 알렸어요.'},
  'att-set':el=>{const k=S.attCls+'|'+S.attDate,sid=+el.dataset.sid,v=el.dataset.v;S.attendance[k]=S.attendance[k]||{};S.attendance[k][sid]=v;log(actor(),`출결 기록: ${sOf(sid).name} ${S.attDate} ${v}`);
   const st=sOf(sid);if(v==='결석')notify({to:[st.parent,(S.accounts.find(a=>a.studentId===sid)||{}).loginId].filter(Boolean),kind:'notice',title:'결석이 기록됐어요',body:`${st.name} · ${clsOf(S.attCls).title} · ${S.attDate}`,route:'/att'})},
  'lr-accept':(el,id)=>{const r=S.lessonReqs.find(x=>x.id===id);r.tid=me().id;r.status='강사 수락';log(actor(),`수업 요청 수락 #${r.id}`);notify({to:[r.loginId],kind:'match',title:'강사가 수업 요청을 수락했어요',body:`${r.grade} ${r.subject} · 내 수업에서 확정해 주세요`,route:'/lesson'});S.flash='수락했어요. 학생·학부모가 확정하면 연락처가 공개돼요.'},
