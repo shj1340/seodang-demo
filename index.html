@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="서당 동행">
-<meta name="description" content="검증된 강사와 학원을 연결하고 30일 정착까지 돕는 서당 동행 샘플 화면">
+<meta name="description" content="시범강의 평가와 근무조건 확인을 거쳐 학원과 강사를 연결하고 30일 정착 점검까지 함께하는 서당 동행 샘플 화면">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -110,6 +110,14 @@ ul.magenda>li{padding:0;border-bottom:1px solid var(--line)}ul.magenda>li:last-c
  .calmon .c{font-size:0;width:6px;height:6px;padding:0;border-radius:50%;background:var(--accent);flex:none}.calmon .c.wait{background:var(--warn)}.calmon .more{font-size:10px;line-height:6px}
  .calnote{font-size:12px}
 }
+button.mk{border:0;padding:0;cursor:pointer;font:inherit}
+.rubric summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none}.rubric summary::-webkit-details-marker{display:none}.rubric summary .muted{margin-left:auto;font-size:13px}
+ul.rb li{display:flex;gap:6px;align-items:flex-start;padding:3px 0;border:0}ul.rb .b{flex:none}
+h4.grp{display:flex;align-items:center;gap:6px;margin:14px 4px 6px;font-size:13px;color:var(--sub)}h4.grp svg{width:14px;height:14px}h4.grp span{color:var(--mute);font-weight:500}
+li.evs{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.evsf{gap:6px;flex-wrap:wrap}
+ul.studl>li{padding:0;border-bottom:1px solid var(--line)}ul.studl summary{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;padding:12px 0;cursor:pointer;list-style:none}ul.studl summary::-webkit-details-marker{display:none}
+ul.glist li{display:block;padding:8px 0;border-bottom:1px dashed var(--line)}ul.glist li p{margin:4px 0 0;color:var(--sub)}.gform{background:var(--surface);border-radius:var(--r-sm);padding:12px;margin:8px 0 12px}
+.mag-i.ev{background:var(--ok-soft);border-left-color:var(--ok)}.mag-i.ev b{color:var(--ok-text)}
 .mhome .hcar{padding-top:0}.mhome .psec:first-of-type{margin-top:0}
 .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .qgrid button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 8px;border:0;border-radius:var(--r-md);background:var(--bg);box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;font:inherit;color:var(--ink)}
@@ -664,9 +672,23 @@ ul.toggles li{padding:10px 0;border-bottom:1px solid var(--line)}ul.toggles li:l
 .nf{text-align:center;padding:48px 24px}.nf>svg{width:44px;height:44px;color:var(--mute)}
 .noti-panel li.read button{opacity:.6}.noti-panel li:not(.read) button b::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--bad);margin-left:6px;vertical-align:middle}
 .noti-head .lnk{margin-left:auto;font-size:13px}.noti-head .ib+.ib{margin-left:0}
+.gfoot .gdisc{font-size:12px;color:var(--mute);margin:6px 0 0}
 .gfoot .flinks{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 6px}.gfoot .flinks .lnk{font-size:13px;color:var(--sub)}.gfoot .flinks .lnk.strong{font-weight:800;color:var(--ink)}
 .gfoot .bizinfo{font-size:12px;color:var(--mute);line-height:1.7;margin:0 0 6px}
 button.gacct{border:0;background:none;cursor:pointer;font:inherit;text-align:left;border-radius:var(--r-sm);padding:4px 8px}button.gacct:hover,button.gacct.on{background:var(--surface)}
+/* 인쇄: 지점 강의실 일정 (PC 표로, 가로 A4) */
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body{background:#fff}
+ .gbar,.appbar,.bnav,.gfoot,.chips,.calbar,#bk-form,.flash,.noti-panel,.noti-dim,main>h2,main>.lead,.calnote,.offline,.blk-x{display:none!important}
+ .m-only{display:none!important}.d-only{display:block!important}
+ body::before{content:attr(data-print-title);display:block;font-size:14px;font-weight:800;margin:0 0 8px}
+ main{padding:0!important;max-width:none!important}.card{box-shadow:none!important;border:0!important;padding:0!important;margin:0!important}
+ .calwrap{overflow:visible!important;border:1px solid #ccc}table.calday{min-width:0!important}.calday th,.calday td{height:44px}.calday thead th{position:static}.calday th.t{position:static}
+ .blk{height:auto!important;max-height:none}.calday button.pick{display:none}
+ .calmon>div{min-height:80px}.calmon .c{font-size:10px!important;width:auto!important;height:auto!important;padding:1px 3px!important;border-radius:3px!important}
+ .tablewrap{overflow:visible}
+}
 </style>
 <script src="https://js.tosspayments.com/v2/standard"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -710,12 +732,12 @@ const TABS = {
   // 운영담당: 매칭·평가를 함께 맡고, 권한·로그만 관리자 전용
   manager:[['dash','대시보드'],['eval','강사 검증'],['match','매칭·상담'],['check','정착·민원']],
   // 지점 관리자: 서당 지점의 강의실 대여·일정, 학생 출결
-  branch:[['dash','대시보드'],['room','강의실 예약'],['att','출결 관리']],
+  branch:[['dash','대시보드'],['room','강의실 예약'],['att','출결 관리'],['mem','강사·학생']],
   // 학생·학부모: 수업할 강사 찾기, 내 수업, 출결 확인
-  student:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결']],
-  parent:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결']]
+  student:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결·성적']],
+  parent:[['home','홈'],['tfind','강사 찾기'],['lesson','내 수업'],['att','출결·성적']]
 };
-const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',room:'door-open',att:'clipboard-list',tfind:'search',lesson:'book-open-check',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'settings',club:'crown'};
+const TAB_ICON = {home:'house',req:'file-plus',find:'search',prog:'activity',pay:'receipt',prof:'user-round',ver:'badge-check',dash:'layout-dashboard',room:'door-open',att:'clipboard-list',mem:'users',tfind:'search',lesson:'book-open-check',eval:'clipboard-check',match:'handshake',check:'calendar-check',audit:'settings',club:'crown'};
 const ic = (n,extra='') => `<i data-lucide="${n}" ${extra}></i>`;
 
 const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flash:'', flashType:'', f:{subject:'',grade:'',region:''}, selT:null,
@@ -725,11 +747,11 @@ const S = { loginErr:'', user:null, pub:'home', suRole:'academy', tab:null, flas
 const BASE_URL = location.href.split(/[?#]/)[0]; // 결제 후 돌아올 주소(이 페이지)
 
 // ---------- 저장(결제창에서 돌아와도 화면 상태 유지) ----------
-const STORE_KEY='sdh-toss-sample-v17';
+const STORE_KEY='sdh-toss-sample-v18';
 function save(){try{sessionStorage.setItem(STORE_KEY,JSON.stringify({user:S.user,tab:S.tab,f:S.f,customerKey:S.customerKey,
   academies:S.academies,accounts:S.accounts,workLogs:S.workLogs,
   teachers:S.teachers.map(t=>({...t,docs:(t.docs||[]).map(d=>({...d,url:''}))})),requests:S.requests,matches:S.matches,complaints:S.complaints,logs:S.logs,purchases:S.purchases,memberships:S.memberships,clubEvents:S.clubEvents,clubApply:S.clubApply,cm:S.cm,notices:S.notices,inquiries:S.inquiries,notiRead:S.notiRead,sub:S.sub,
-  branches:S.branches,rooms:S.rooms,bookings:S.bookings,classes:S.classes,students:S.students,attendance:S.attendance,lessonReqs:S.lessonReqs}))}catch(e){}}
+  branches:S.branches,rooms:S.rooms,bookings:S.bookings,classes:S.classes,students:S.students,attendance:S.attendance,lessonReqs:S.lessonReqs,branchMembers:S.branchMembers,grades:S.grades}))}catch(e){}}
 function load(){try{const raw=sessionStorage.getItem(STORE_KEY);if(!raw)return false;Object.assign(S,JSON.parse(raw));return true}catch(e){return false}}
 
 // ---------- 유틸 ----------
@@ -876,7 +898,7 @@ function seed(){
 // 메인(로그인 전)에는 소개만 공개한다. 가격·프로그램은 샘플.
 const CLUBS={
  teacher:{name:'서당 강사 클럽',icon:'graduation-cap',who:'강사',cta:'강사로 이용하기',price:9900,
-  tagline:'강사의 수업 전문성과 취업 경쟁력을 높여주는 회원제',
+  tagline:'강사의 수업 전문성과 경력 개발을 돕는 회원제',
   benefits:[['presentation','수업 교육','학생 수준별 지도법, 수업 구성'],['video','시범강의 클리닉','실제 수업을 시연하고 피드백 받기'],['users','강사 교류 모임','과목별 수업 사례·교재 활용법 공유'],
    ['folder-open','실무 자료','학부모 상담 예시, 시험 대비 운영법'],['briefcase','경력 개발','수업 포트폴리오·강의 소개자료 제작'],['ticket-percent','회원 혜택','교육 프로그램 할인, 모임 우선 신청']],
   signature:['서당 수업 클리닉','수학 강사들이 모여 ‘아무리 설명해도 이해하지 못하는 학생을 어떻게 지도할까?’ 같은 주제로 실제 수업을 시연하고 서로 피드백하는 프로그램이에요.'],
@@ -925,7 +947,8 @@ function clubView(k){
    <div class="card club-lock"><div class="cl-h"><span class="b ${m?'warn':'mute'}">${ic('lock')}${m?'이용 기간이 끝났어요':'유료 회원 전용'}</span>
     <div class="cl-p"><b>${won(c.price)}</b><span>/ ${CLUB_DAYS}일 · 샘플 가격</span></div></div>
     <p>${m?`${m.until}에 이용 기간이 끝났어요. 다시 결제하면 바로 이어서 이용할 수 있어요.`:`${c.who} 계정 중 결제한 회원만 프로그램 신청, 자료실, 회원 혜택을 이용할 수 있어요.`}</p>
-    <button class="btn block-m" data-act="club-join">${ic('crown')}${m?'다시 가입하기':'클럽 가입하기'}</button></div>
+    <button class="btn block-m" data-act="club-join">${ic('crown')}${m?'다시 가입하기':'클럽 가입하기'}</button>
+    <p class="muted" style="margin:10px 0 0">클럽 가입·참여 여부는 ${k==='teacher'?'강사 추천과 채용':'후보 추천'}에 영향을 주지 않아요.</p></div>
    <div class="card"><h3>회원이 되면 받는 혜택</h3><ul class="cbens">${c.benefits.map(([i,t,x])=>`<li>${ic(i)}<div><b>${t}</b><span>${x}</span></div></li>`).join('')}</ul>${clubSig(c)}</div>
    <div class="card"><h3>이달의 프로그램 미리보기</h3>${memberEvents(k).length?`<ul class="plain cevents locked">${memberEvents(k).map(e=>`<li><div class="ce-m"><span class="b info">${esc(e.type)}</span><b>${esc(e.title)}</b><span class="muted">${ic('calendar')}${kDate(e.date)} · ${ic('lock')}장소·신청은 회원 공개</span></div></li>`).join('')}</ul>`:'<p class="muted">다가오는 프로그램을 준비 중이에요.</p>'}</div>`;
   const left=Math.round((new Date(m.until)-new Date(today()))/864e5);
@@ -1160,7 +1183,7 @@ function render(){
   app.innerHTML=`<div class="shell ${inFlow?'flow':''}">
   ${gbar()}
   <header class="appbar">
-    ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:sp?`<button class="ib" data-act="sub" data-to="${sp.startsWith('me-')||['notice','inquiry','terms'].includes(sp)?'me':''}" aria-label="뒤로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
+    ${inFlow?`<button class="ib" data-act="pay-cancel" aria-label="뒤로">${ic('chevron-left')}</button>`:sp?`<button class="ib" data-act="sub" data-to="${sp.startsWith('me-')||['notice','inquiry','terms'].includes(sp)?'me':''}" aria-label="뒤로">${ic('chevron-left')}</button>`:`<button class="mk" data-act="tab" data-tab="${tabs[0][0]}" aria-label="첫 화면으로"><img src="logo.svg" alt="서당 동행"></button>`}
     <div class="ttl"><b>${esc(title)}</b><span>${esc(sub)} · ${esc(S.user.loginId)}</span></div>
     ${inFlow?'':bell(nc)}<button class="ib ${sp==='me'?'on':''}" data-act="sub" data-to="me" aria-label="내 정보">${ic('circle-user-round')}</button>
   </header>
@@ -1215,7 +1238,7 @@ function loginView(){
   const acc=S.accounts;
   const row=(a,sub)=>`<li><code>${esc(a.loginId)}</code><span>${esc(sub)}${isMember(a.loginId)?' · 클럽 회원':''}</span></li>`;
   return pubPage(`<form class="card auth" data-form="login">
-    <span class="b info">${ic('shield-check')}검증된 강사 · 확인된 근무조건</span>
+    <span class="b info">${ic('shield-check')}시범강의 평가 · 근무조건 확인</span>
     <h2>로그인</h2><p class="lead">아이디에 따라 학원·강사·운영 화면이 열려요.</p>
     ${err}
     <label for="login-id">아이디</label><input id="login-id" type="text" name="id" enterkeyhint="next" required placeholder="예: 원장1, 강사1, 지점관리자1, 학부모1" autocomplete="username" autocapitalize="off" autofocus>
@@ -1264,8 +1287,8 @@ function gbar(){
 // 모바일 공개 화면 앱바: 로그인 후 앱바와 같은 모양 (메인은 로고, 로그인·가입은 뒤로 가기)
 function pubAppbar(){
   const sub=S.pub!=='home';
-  return `<header class="appbar">${sub?`<button class="ib" data-act="pub" data-to="home" aria-label="메인으로">${ic('chevron-left')}</button>`:`<div class="mk"><img src="logo.svg" alt="서당 동행"></div>`}
-   <div class="ttl"><b>${sub?(PUB_TITLE[S.pub]||'서당 동행'):'서당 동행'}</b><span>${sub?'서당 동행':'검증된 강사 매칭 · 봉담·화성'}</span></div>
+  return `<header class="appbar">${sub?`<button class="ib" data-act="pub" data-to="home" aria-label="메인으로">${ic('chevron-left')}</button>`:`<button class="mk" data-act="pub" data-to="home" aria-label="첫 화면으로"><img src="logo.svg" alt="서당 동행"></button>`}
+   <div class="ttl"><b>${sub?(PUB_TITLE[S.pub]||'서당 동행'):'서당 동행'}</b><span>${sub?'서당 동행':'시범강의 평가 기반 매칭 · 봉담·화성'}</span></div>
    ${sub?'':`<button class="btn sm" data-act="pub" data-to="login">로그인</button>`}</header>`;
 }
 function pubBnav(){
@@ -1273,7 +1296,8 @@ function pubBnav(){
   const items=[['top','홈','house'],['jobs','구인 학원','briefcase'],['teachers','강사','users'],['clubs','클럽','crown']];
   return `<nav class="bnav" style="--n:5">${items.map(([id,n,i],x)=>`<button data-act="pubscroll" data-target="${id}" class="${x?'':'on'}">${ic(i)}<span>${n}</span></button>`).join('')}<button data-act="pub" data-to="login">${ic('log-in')}<span>로그인</span></button></nav>`;
 }
-const siteFoot=()=>`<footer class="gfoot"><div><b>서당 동행</b>검증된 강사와 확인된 근무조건으로 학원과 강사를 연결합니다 · 봉담·화성</div>
+const siteFoot=()=>`<footer class="gfoot"><div><b>서당 동행</b>시범강의 평가와 근무조건 확인을 거쳐 학원과 강사를 연결합니다 · 봉담·화성</div>
+ <p class="gdisc">서당의 검증은 제출 자료와 시범강의를 정해진 기준으로 확인하는 과정이며, 자격·채용 성사·근무 지속·학습 성과를 보증하지 않아요.</p>
  <nav class="flinks"><button class="lnk" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="terms">이용약관</button><button class="lnk strong" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="privacy">개인정보처리방침</button><button class="lnk" data-act="${S.user?'sub':'pub'}" data-to="terms" data-terms="refund">환불 정책</button><button class="lnk" data-act="cs" data-k="notice">고객센터</button></nav>
  <p class="bizinfo">${BIZINFO.name} · 대표 ${BIZINFO.ceo} · 사업자등록번호 ${BIZINFO.bizNo} · 통신판매업 ${BIZINFO.mailOrder}<br>${BIZINFO.addr} · ${BIZINFO.cs} · ${BIZINFO.email} · ${BIZINFO.privacy}</p>
  <p>샘플 화면 · 가상 데이터 · 토스페이먼츠 테스트 결제(실제 청구 없음) · <a href="#" class="reset">처음 상태로 초기화</a></p></footer>`;
@@ -1308,8 +1332,8 @@ function liveBox(st){
 function heroSlides(st){
   return [
    {label:'서당 동행 소개',html:`<div class="hcopy"><span class="eyebrow"><i></i>지금 ${st.consult+st.settling}건의 매칭이 진행 중이에요</span>
-    <h1>이력서로는 알 수 없던 강사,<br><em>검증된 정보</em>로 만나세요.</h1>
-    <p>시범강의로 검증한 강사와 근무조건을 확인한 학원만 연결해요. 입사 후 30일까지 서당이 함께 점검합니다.</p>
+    <h1>이력서로는 알 수 없던 강사,<br><em>확인한 정보</em>로 만나세요.</h1>
+    <p>시범강의로 평가한 강사와 근무조건을 확인한 학원을 연결해요. 입사 후 30일까지 서당이 함께 점검합니다.</p>
     <div class="cta"><button class="btn" data-act="pub" data-to="signup" data-role="academy">${ic('school')}학원으로 시작하기</button>
      <button class="btn sec" data-act="pub" data-to="signup" data-role="teacher">${ic('graduation-cap')}강사로 시작하기</button></div></div>
     <div class="hvis d-only">${liveBox(st)}</div>`},
@@ -1418,6 +1442,16 @@ function seedRoles(){
     while(have<N&&free.length){const[r,i]=free.pop();if(addB(r,dt,i)!==false)have++}});
   // 병점점(201호)도 앞뒤 2주에 0~6건씩
   for(let o=-7;o<=14;o++){const dt=addDays(t0,o),n=Math.floor(rnd()*7);const fr=PERIODS.map((_,i)=>i).filter(i=>!busyB(4,dt,i)).sort(()=>rnd()-.5);fr.slice(0,n).forEach(i=>addB(4,dt,i))}
+  // 지점 소속(승인된 강사만 그 지점 강의실 예약). 봉담점·병점점 모두 승인된 강사들 + 신청 대기 2명
+  S.branchMembers=[];['강사1','강사2','강사6','강사7','강사8','강사9','강사11','강사12','강사17'].forEach((l,i)=>[1,2].forEach(b=>S.branchMembers.push({loginId:l,branchId:b,status:'승인',at:ago(40-i),decidedAt:ago(39-i)})));
+  S.branchMembers.push({loginId:'강사5',branchId:2,status:'승인',at:ago(20),decidedAt:ago(19)},{loginId:'강사10',branchId:1,status:'신청',at:ago(1)},{loginId:'강사13',branchId:2,status:'신청',at:ago(2)});
+  // 시범강의 평가 일정 (평가예정 강사)
+  tOf(3).evalAt={date:addDays(t0,2),p:4,branchId:1,by:'운영담당1'};tOf(14).evalAt={date:addDays(t0,5),p:2,branchId:1,by:'운영담당1'};
+  // 성적·피드백 (강사가 입력)
+  S.grades=[{id:1,sid:1,cid:1,date:addDays(t0,-5),title:'일차방정식 단원평가',score:82,max:100,feedback:'풀이 과정은 좋아요. 이항할 때 부호 실수를 줄여 봐요.',by:'강사1'},
+   {id:2,sid:3,cid:1,date:addDays(t0,-5),title:'일차방정식 단원평가',score:74,max:100,feedback:'개념은 이해했어요. 응용 문제 연습이 더 필요해요.',by:'강사1'},
+   {id:3,sid:1,cid:2,date:addDays(t0,-1),title:'서술형 쪽지시험',score:7,max:10,feedback:'문장 구조가 좋아졌어요. 시제 일치를 확인해요.',by:'강사6'},
+   {id:4,sid:2,cid:3,date:addDays(t0,-3),title:'파닉스 확인',score:null,max:100,feedback:'단모음 소리를 정확히 구분해요. 이중자음을 다음 시간에 연습해요.',by:'강사11'}];
   S.attendance={};
   [[1,[[-7,{1:'출석',3:'출석',5:'지각'}],[-5,{1:'출석',3:'결석',5:'출석'}],[-2,{1:'지각',3:'출석',5:'출석'}]]],
    [2,[[-6,{1:'출석',4:'출석'}],[-1,{1:'출석',4:'결석'}]]],[3,[[-3,{2:'출석'}]]]].forEach(([c,L])=>L.forEach(([d,v])=>S.attendance[c+'|'+addDays(t0,d)]=v));
@@ -1544,7 +1578,7 @@ function roomCal(rooms,mgr,extra=''){
 }
 // 예약 폼: 일정표 빈 칸을 누르면 강의실·날짜·시작 시간이 채워진다. 지점 관리자는 바로 확정(지점 일정)
 function bookFormInner(mgr,sheet){
-  const p=S.bkPre||{}, rooms=mgr?myRooms():S.rooms, sp=p.p!=null?p.p:6;
+  const p=S.bkPre||{}, rooms=mgr?myRooms():S.rooms.filter(r=>myBranchIds().includes(r.branchId)), sp=p.p!=null?p.p:6;
   const popt=(sel,end)=>PERIODS.map(([a,b],i)=>`<option value="${i}" ${i===sel?'selected':''}>${i+1}교시 (${end?'~'+b:a+'~'})</option>`).join('');
   return `<form data-form="booking">${sheet?`<p class="muted" style="margin-top:0">${esc((roomOf(p.room)||{}).name||'')} · ${p.date?kDate(p.date):''}</p>`:''}<div class="grid g4 tight one-m"><div><label>강의실</label><select name="room" required>${rooms.map(r=>`<option value="${r.id}" ${p.room===r.id?'selected':''}>${mgr?'':esc(brOf(r.branchId).name)+' · '}${esc(r.name)} (${r.seats}석 · ${won(perP(r))}/교시)</option>`).join('')}</select></div>
      <div><label>날짜</label><input type="date" name="date" min="${today()}" value="${p.date||addDays(today(),1)}" required></div><div><label>시작 교시</label><select name="sp">${popt(sp,false)}</select></div><div><label>끝 교시</label><select name="ep">${popt(sp,true)}</select></div></div>
@@ -1556,6 +1590,96 @@ function bookForm(mgr){
   return `<div class="card" id="bk-form"><h3>${mgr?'지점 일정 등록':'강의실 빌리기'}${p.room?` <button class="lnk" data-act="cal-clear">선택 해제</button>`:''}</h3>${bookFormInner(mgr,false)}</div>`;
 }
 function calScroll(){}
+// =====================================================================
+// 2026-11-25 클라이언트 피드백: 지점 소속 강사만 강의실 예약(폐쇄형), 일정 인쇄·내보내기,
+//   평가자 지역별 목록·평가 기준·평가 일정, 강사 학생 관리·내 일정·강의 실적, 학생 일정·성적
+// =====================================================================
+// 지점 소속: 강사가 신청하고 지점 관리자가 승인해야 그 지점 강의실을 보고 예약할 수 있다
+const myBranchIds=()=>(S.branchMembers||[]).filter(m=>m.loginId===S.user.loginId&&m.status==='승인').map(m=>m.branchId);
+const brMembers=bid=>(S.branchMembers||[]).filter(m=>m.branchId===bid);
+// 평가 기준 (시범강의 평가표 v1, PRD §4)
+const RUBRIC=[
+ ['과목 이해도',25,'개념 정확성, 학년별 교육과정 이해, 심화 질문 대응',[[22,'개념 설명이 정확하고 심화 질문에도 근거를 들어 답함'],[15,'대체로 정확하나 일부 개념 설명이 불완전함'],[0,'개념 오류가 반복되거나 질문에 답하지 못함']]],
+ ['수업 전달력',25,'설명 구조와 속도, 판서·자료 활용, 시간 배분',[[22,'도입-전개-정리가 분명하고 속도가 학생 수준에 맞음'],[15,'전달은 되나 구조나 속도 조절이 아쉬움'],[0,'설명 흐름이 끊기거나 시간 배분이 크게 어긋남']]],
+ ['학생 수준별 대응',20,'오답 반복, 기초 부족, 동기 저하 상황 문항 대응',[[17,'상황별로 다른 설명·과제를 제시함'],[11,'일반적인 대응은 하나 수준 차이 반영이 약함'],[0,'같은 설명을 반복하거나 상황을 놓침']]],
+ ['소통·피드백 수용',15,'질문 확인, 피드백 방식, 평가자 의견 수용',[[13,'학생 질문을 확인하고 구체적으로 피드백함'],[8,'피드백은 하나 일반적·형식적임'],[0,'질문을 확인하지 않거나 의견을 받아들이지 않음']]],
+ ['업무 수행 준비도',15,'수업안·자료 준비, 시간 준수, 직무윤리',[[13,'수업안·자료가 완비되고 시간을 지킴'],[8,'준비는 했으나 빠진 자료가 있음'],[0,'준비가 부족하거나 시간을 지키지 않음']]]];
+const rubricCard=()=>`<details class="card rubric"><summary>${ic('list-checks')}<b>평가 기준 보기</b><span class="muted">100점 · 추천 검토 ${PASS_SCORE}점 이상</span></summary>
+  <div class="tablewrap"><table class="wide"><tr><th>항목 (배점)</th><th>무엇을 보나</th><th>점수 기준</th></tr>${RUBRIC.map(([n,mx,w,b])=>`<tr><td><b>${n}</b><br><span class="muted">${mx}점</span></td><td>${w}</td><td><ul class="plain rb">${b.map(([s,t],i)=>`<li><span class="b ${i===0?'ok':i===1?'warn':'bad'}">${i===0?s+'~'+mx:i===1?s+'~'+(b[0][0]-1):'~'+(b[1][0]-1)}점</span>${t}</li>`).join('')}</ul></td></tr>`).join('')}</table></div>
+  <p class="muted">결과: ${PASS_SCORE}점 이상 '추천 검토', 그 아래는 '보완교육' 또는 '보류'. 검증은 정해진 기준으로 확인하는 과정이며 자격이나 성과를 보증하지 않아요.</p></details>`;
+// 평가 일정 (평가자 = 운영담당·관리자)
+const evalSlot=t=>t.evalAt?`${kDate(t.evalAt.date)} ${t.evalAt.p+1}교시 (${PERIODS[t.evalAt.p][0]}~${PERIODS[t.evalAt.p][1]}) · ${esc((brOf(t.evalAt.branchId)||{}).name||'')}`:'';
+function evalSchedView(){
+  const t0=today(), up=S.teachers.filter(t=>t.evalAt&&t.status==='평가예정').sort((a,b)=>(a.evalAt.date+a.evalAt.p).localeCompare(b.evalAt.date+b.evalAt.p)), todo=S.teachers.filter(t=>t.status==='신청');
+  const days=[...new Set(up.map(t=>t.evalAt.date))];
+  return `<div class="card"><h3>배정할 강사 ${todo.length}</h3>${todo.length?`<ul class="plain">${todo.map(t=>`<li class="evs"><div><b>${esc(t.name)}</b> <span class="muted">강사${t.id} · ${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)}</span></div>${evalSchedForm(t)}</li>`).join('')}</ul>`:'<p class="muted">일정을 배정할 강사가 없어요.</p>'}</div>
+  <div class="card"><h3>다가오는 평가 ${up.length}</h3>${days.length?days.map(d=>`<h4 class="${d===t0?'tday':''}">${kDate(d)}${d===t0?' · 오늘':''}</h4><ul class="plain hlist">${up.filter(t=>t.evalAt.date===d).map(t=>`<li><button data-act="eval-open2" data-id="${t.id}"><span class="b info">${t.evalAt.p+1}교시</span><b>${esc(t.name)} · ${esc(t.grade)} ${esc(t.subject)}</b><span class="muted">${esc((brOf(t.evalAt.branchId)||{}).name)} · ${esc(t.region)}</span></button></li>`).join('')}</ul>`).join(''):'<p class="muted">배정된 평가가 없어요.</p>'}</div>`;
+}
+const evalSchedForm=t=>`<form data-form="eval-sched" data-id="${t.id}" class="row evsf"><input type="date" name="date" min="${today()}" value="${t.evalAt?t.evalAt.date:addDays(today(),3)}" required style="width:auto">
+  <select name="p" style="width:auto">${PERIODS.map(([a],i)=>`<option value="${i}" ${t.evalAt&&t.evalAt.p===i?'selected':''}>${i+1}교시 ${a}</option>`).join('')}</select>
+  <select name="br" style="width:auto">${S.branches.map(b=>`<option value="${b.id}" ${t.evalAt&&t.evalAt.branchId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select><button class="btn sm">${t.evalAt?'일정 변경':'일정 배정'}</button></form>`;
+// 강사 실적·일정
+function tStats(login){const b=S.bookings.filter(x=>x.loginId===login&&x.status==='확정'&&(x.date<today()||(x.date===today()&&x.end<=new Date().toTimeString().slice(0,5))));
+  const per=x=>pLast(x.end)-pFirst(x.start)+1, ym=today().slice(0,7), P=b.reduce((n,x)=>n+per(x),0), Pm=b.filter(x=>x.date.slice(0,7)===ym).reduce((n,x)=>n+per(x),0);
+  return {periods:P,hours:P*1.5,monthHours:Pm*1.5,days:new Set(b.map(x=>x.date)).size,first:b.length?b.map(x=>x.date).sort()[0]:''}}
+function tAgenda(login,tid,days=14){const t0=today(),out=[];
+  for(let i=0;i<days;i++){const d=addDays(t0,i),L=S.bookings.filter(x=>x.loginId===login&&x.date===d&&calLive(x)).map(x=>({t:x.start,e:x.end,k:x.status==='요청'?'예약 요청':'수업·강의실',w:`${pName(x)} · ${esc((brOf(roomOf(x.roomId).branchId)||{}).name)} ${esc(roomOf(x.roomId).name)}`,s:esc(x.purpose),wait:x.status==='요청'}));
+    const tt=tOf(tid);if(tt&&tt.evalAt&&tt.status==='평가예정'&&tt.evalAt.date===d){const[a,b]=PERIODS[tt.evalAt.p];L.push({t:a,e:b,k:'시범강의 평가',w:`${tt.evalAt.p+1}교시 · ${esc(brOf(tt.evalAt.branchId).name)}`,s:'서당 평가자와 시범강의',ev:true})}
+    if(L.length)out.push([d,L.sort((a,b)=>a.t.localeCompare(b.t))])}
+  return out.length?`<ul class="plain magenda">${out.map(([d,L])=>`<li><div class="mag-d ${d===t0?'today':''}"><b>${kDate(d)}</b><span>${L.length}건</span></div>${L.map(x=>`<div class="mag-i ${x.wait?'wait':''} ${x.ev?'ev':''}"><b>${x.t}~${x.e}</b><span>${x.k} · ${x.w}</span><em>${x.s}</em></div>`).join('')}</li>`).join('')}</ul>`:'<p class="muted">앞으로 2주 동안 일정이 없어요.</p>'}
+// 학생 성적·피드백 (강사가 입력, 학생·학부모가 확인)
+const gradesOf=sid=>(S.grades||[]).filter(g=>g.sid===sid).sort((a,b)=>b.date.localeCompare(a.date));
+// 학생 시간표: 수업 요일로 앞으로 2주
+function kidAgenda(k){const t0=today(),WD={일:0,월:1,화:2,수:3,목:4,금:5,토:6},out=[];
+  for(let i=0;i<14;i++){const d=addDays(t0,i),wd=new Date(d+'T00:00:00Z').getUTCDay(),L=kidCls(k.id).filter(c=>c.days.split('·').some(x=>WD[x]===wd));if(L.length)out.push([d,L])}
+  return out.length?`<ul class="plain magenda">${out.map(([d,L])=>`<li><div class="mag-d ${d===t0?'today':''}"><b>${kDate(d)}</b><span>${L.length}개 수업</span></div>${L.map(c=>`<div class="mag-i"><b>${c.time}</b><span>${esc(c.title)}</span><em>${esc(tOf(c.tid).name)} 강사 · ${esc(brOf(c.branchId).name)} ${esc(roomOf(c.roomId).name)}</em></div>`).join('')}</li>`).join('')}</ul>`:'<p class="muted">앞으로 2주 동안 수업이 없어요.</p>'}
+// 지점 일정 인쇄·내보내기
+function calRange(){const d=S.calDate,m=S.calMode;if(m==='week'){const s=wkStart(d);return [s,addDays(s,6)]}if(m==='month'){const s=d.slice(0,8)+'01',n=new Date(Date.UTC(+d.slice(0,4),+d.slice(5,7),1)).toISOString().slice(0,10);return [s,addDays(n,-1)]}return [d,d]}
+function exportCsv(){const[a,b]=calRange(),ids=myRooms().map(r=>r.id),L=S.bookings.filter(x=>ids.includes(x.roomId)&&x.date>=a&&x.date<=b&&calLive(x)).sort((x,y)=>(x.date+x.start+x.roomId).localeCompare(y.date+y.start+y.roomId));
+  const q=v=>`"${String(v).replace(/"/g,'""')}"`, rows=[['날짜','교시','시간','강의실','예약자','강사','용도','상태','이용료(원)'],...L.map(x=>[x.date,pName(x),x.start+'~'+x.end,roomOf(x.roomId).name,x.loginId,(tOf(+x.loginId.replace('강사',''))||{}).name||'',x.purpose,x.status,feeOf(x)])];
+  const blob=new Blob(['﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(blob),el=document.createElement('a');
+  el.href=u;el.download=`${myBranch().name}_강의실예약_${a}${a===b?'':'_'+b}.csv`;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+  log(actor(),`강의실 일정 내보내기 ${a}~${b} (${L.length}건)`);S.flash=`${L.length}건을 CSV(엑셀)로 내보냈어요.`;render()}
+function printCal(){document.body.dataset.printTitle=`${myBranch().name} 강의실 예약 · ${calTitle()} · 출력 ${new Date().toLocaleString('ko-KR')}`;log(actor(),`강의실 일정 인쇄 ${calTitle()}`);window.print()}
+const FB_VIEWS={
+'branch:mem':()=>{const b=myBranch(),M=brMembers(b.id),wait=M.filter(m=>m.status==='신청'),ok=M.filter(m=>m.status==='승인');
+  const sts=[...new Set(S.classes.filter(c=>c.branchId===b.id).flatMap(c=>c.students))].map(sOf);
+  S.mSeg=S.mSeg||'tch';
+  return `<h2>강사·학생</h2><p class="lead">${esc(b.name)}에 소속된 강사와 학생이에요. 승인한 강사만 이 지점의 강의실 일정을 보고 예약할 수 있어요.</p>
+  ${seg('mSeg',[['tch','소속 강사',ok.length],['wait','소속 신청',wait.length],['std','학생',sts.length]])}
+  ${S.mSeg==='wait'?`<div class="card">${wait.length?`<ul class="plain">${wait.map(m=>{const t=tOf(+m.loginId.replace('강사',''));return `<li class="evs"><div><b>${esc(t.name)}</b> <span class="muted">${esc(m.loginId)} · ${esc(t.grade)} ${esc(t.subject)} · ${t.result?esc(t.result):esc(t.status)} · ${kAt(m.at)} 신청</span></div><div class="row"><button class="btn sm" data-act="mem-ok" data-id2="${m.loginId}">승인</button><button class="btn sm sec" data-act="mem-no" data-id2="${m.loginId}">거절</button></div></li>`}).join('')}</ul>`:'<p class="muted">소속 신청이 없어요.</p>'}</div>`
+  :S.mSeg==='std'?`<div class="card"><div class="tablewrap"><table class="rt"><tr><th>학생</th><th>학년·학교</th><th>수업</th><th>출석률</th><th>학부모</th></tr>${sts.map(s=>{const cs=kidCls(s.id).filter(c=>c.branchId===b.id),L=cs.flatMap(c=>attOf(c.id,s.id)),r=attRate(L);
+     return `<tr><td data-label="학생"><b>${esc(s.name)}</b></td><td data-label="학년·학교">${esc(s.grade)} · ${esc(s.school)}</td><td data-label="수업">${cs.map(c=>esc(c.title)).join('<br>')}</td><td data-label="출석률">${r==null?'-':r+'%'} <span class="muted">(${L.filter(x=>x.st==='결석').length}회 결석)</span></td><td data-label="학부모">${s.parent?'연결됨':'<span class="muted">없음</span>'}</td></tr>`}).join('')}</table></div></div>`
+  :`<div class="card">${ok.length?`<div class="tablewrap"><table class="rt"><tr><th>강사</th><th>과목</th><th>이번 달 강의</th><th>승인일</th><th></th></tr>${ok.map(m=>{const t=tOf(+m.loginId.replace('강사','')),st=tStats(m.loginId);
+     return `<tr><td data-label="강사"><b>${esc(t.name)}</b> <span class="muted">${esc(m.loginId)}</span></td><td data-label="과목">${esc(t.grade)} ${esc(t.subject)}</td><td data-label="이번 달 강의">${st.monthHours}시간</td><td data-label="승인일">${m.decidedAt?kAt(m.decidedAt):'-'}</td><td><button class="btn sm sec" data-act="mem-off" data-id2="${m.loginId}">소속 해제</button></td></tr>`}).join('')}</table></div>`:'<p class="muted">소속 강사가 없어요.</p>'}</div>`}`}
+};
+const FB_ACTS={
+ 'cal-print':()=>{printCal();return false},
+ 'cal-csv':()=>{exportCsv();return false},
+ 'mem-apply':el=>{const bid=+document.querySelector('[name=memBr]').value,ex=(S.branchMembers||[]).find(m=>m.loginId===S.user.loginId&&m.branchId===bid);
+  if(ex&&ex.status!=='거절'){S.flash=ex.status==='승인'?'이미 소속된 지점이에요.':'이미 신청했어요. 지점 관리자의 승인을 기다려 주세요.';S.flashType='err';return}
+  if(ex){ex.status='신청';ex.at=new Date().toISOString()}else S.branchMembers.push({loginId:S.user.loginId,branchId:bid,status:'신청',at:new Date().toISOString()});
+  notify({to:S.accounts.filter(x=>x.role==='branch'&&x.branchId===bid).map(x=>x.loginId),kind:'notice',title:'지점 소속 신청',body:`${S.user.loginId} ${S.user.name}`,route:'/mem'});
+  log(actor(),`지점 소속 신청: ${brOf(bid).name}`);S.flash=`${brOf(bid).name}에 소속을 신청했어요. 승인되면 강의실 일정이 열려요.`},
+ 'mem-ok':el=>{const m=brMembers(S.user.branchId).find(x=>x.loginId===el.dataset.id2);if(!m||m.status!=='신청'){S.flash='이미 처리된 신청이에요.';S.flashType='err';return}m.status='승인';m.decidedAt=new Date().toISOString();
+  notify({to:[m.loginId],kind:'notice',title:'지점 소속이 승인됐어요',body:`${myBranch().name} 강의실을 예약할 수 있어요`,route:'/lesson'});log(actor(),`지점 소속 승인: ${m.loginId}`);S.flash='소속을 승인했어요.'},
+ 'mem-no':el=>{const m=brMembers(S.user.branchId).find(x=>x.loginId===el.dataset.id2);if(!m||m.status!=='신청'){S.flash='이미 처리된 신청이에요.';S.flashType='err';return}m.status='거절';m.decidedAt=new Date().toISOString();
+  notify({to:[m.loginId],kind:'notice',title:'지점 소속 신청이 거절됐어요',body:myBranch().name,route:'/lesson'});log(actor(),`지점 소속 거절: ${m.loginId}`);S.flash='소속 신청을 거절했어요.'},
+ 'mem-off':el=>{const m=brMembers(S.user.branchId).find(x=>x.loginId===el.dataset.id2);const fut=S.bookings.filter(x=>x.loginId===m.loginId&&x.date>=today()&&calLive(x)&&roomOf(x.roomId).branchId===m.branchId).length;
+  if(!confirm(`${m.loginId}의 ${myBranch().name} 소속을 해제할까요?${fut?`\n앞으로 잡힌 예약 ${fut}건은 그대로 남아요.`:''}`))return false;m.status='해제';m.decidedAt=new Date().toISOString();log(actor(),`지점 소속 해제: ${m.loginId}`);S.flash='소속을 해제했어요.'},
+ 'eval-open2':(el,id)=>{S.evSeg='do';S.selT=id},
+ 'grade-del':el=>{S.grades=S.grades.filter(g=>g.id!==+el.dataset.id);S.flash='기록을 지웠어요.'}
+};
+const FB_SUBMITS={
+ 'eval-sched':(f,fd)=>{const t=tOf(+f.dataset.id),d=fd.get('date'),p=+fd.get('p'),br=+fd.get('br'),[a,b]=PERIODS[p];
+  const tc=tClash(teacherLogin(t.id),d,a,b);if(tc){S.flash=`${t.name} 강사는 그 시간에 강의실 예약(${pName(tc)})이 있어요. 다른 교시를 골라 주세요.`;S.flashType='err';render();return}
+  const dup=S.teachers.find(x=>x.id!==t.id&&x.status==='평가예정'&&x.evalAt&&x.evalAt.date===d&&x.evalAt.p===p&&x.evalAt.branchId===br);if(dup){S.flash=`그 교시에는 ${dup.name} 강사 평가가 이미 잡혀 있어요.`;S.flashType='err';render();return}
+  const was=!!t.evalAt;t.evalAt={date:d,p,branchId:br,by:S.user.loginId};t.status='평가예정';log(actor(),`${t.name} 강사 시범강의 ${was?'일정 변경':'일정 배정'}: ${d} ${p+1}교시`);
+  notify({to:[teacherLogin(t.id)],kind:'eval',title:was?'시범강의 평가 일정이 바뀌었어요':'시범강의 평가 일정이 배정됐어요',body:`${d} ${p+1}교시 · ${brOf(br).name}`,route:'/ver'});S.flash=`${t.name} 강사 평가를 ${kDate(d)} ${p+1}교시로 ${was?'바꿨어요':'배정했어요'}.`;render()},
+ grade:(f,fd)=>{S.grades=S.grades||[];const id=Math.max(0,...S.grades.map(g=>g.id))+1;S.grades.push({id,sid:+f.dataset.sid,cid:+f.dataset.cid,date:today(),title:fd.get('title').trim(),score:fd.get('score')===''?null:+fd.get('score'),max:+fd.get('max')||100,feedback:(fd.get('fb')||'').trim(),by:S.user.loginId});
+  const s=sOf(+f.dataset.sid);notify({to:[s.parent,(S.accounts.find(a=>a.studentId===s.id)||{}).loginId].filter(Boolean),kind:'notice',title:'새 성적·피드백이 등록됐어요',body:`${s.name} · ${fd.get('title')}`,route:'/att'});
+  log(actor(),`성적·피드백 등록: ${s.name} ${fd.get('title')}`);S.flash='성적·피드백을 등록했어요. 학생·학부모 화면에 바로 보여요.';render()}
+};
 const ROLE_VIEWS={
 'branch:dash':()=>{const b=myBranch(),bk=brBookings(),t=today();
   const pend=bk.filter(x=>x.status==='요청'), todays=bk.filter(x=>x.date===t&&x.status==='확정'), cls=S.classes.filter(c=>c.branchId===b.id);
@@ -1568,7 +1692,7 @@ const ROLE_VIEWS={
 'branch:room':()=>{if(!['cal','req','all','rooms'].includes(S.bkSeg))S.bkSeg='cal';const bk=brBookings();
   return `<h2>강의실 예약</h2><p class="lead">일간은 교시별(1~9교시, 07:50~22:00) 강의실 일정, 주간·월간은 한눈에 보는 일정이에요. 강사의 대여 요청을 승인하고 지점 일정을 등록해요.</p>
   ${seg('bkSeg',[['cal','예약 현황'],['req','예약 요청',bk.filter(x=>x.status==='요청').length],['all','전체 예약',bk.length],['rooms','강의실 관리',myRooms().length]])}
-  ${S.bkSeg==='cal'?roomCal(myRooms(),true)+bookForm(true)
+  ${S.bkSeg==='cal'?roomCal(myRooms(),true,`<button class="btn sec sm" data-act="cal-print">${ic('printer')}인쇄</button><button class="btn sec sm" data-act="cal-csv">${ic('file-spreadsheet')}엑셀(CSV)</button>`)+bookForm(true)
   :S.bkSeg==='req'?`<div class="card">${bookTable(bk.filter(x=>x.status==='요청'),true)}</div>`
   :S.bkSeg==='all'?`<div class="card">${bookTable(bk,true)}</div>`
   :`<div class="cands">${myRooms().map(r=>`<article class="card"><h3>${esc(r.name)}</h3><p class="muted">${r.seats}석 · ${esc(r.equip)}</p><p><b>${won(perP(r))}</b> / 교시 <span class="muted">(시간당 ${won(r.price)})</span></p></article>`).join('')}</div>
@@ -1577,16 +1701,30 @@ const ROLE_VIEWS={
 'teacher:lesson':()=>{S.tSeg=S.tSeg||'req';const t=me(),L=tReqs(t);
   const mine=S.bookings.filter(b=>b.loginId===S.user.loginId).sort((a,b)=>(b.date+b.start).localeCompare(a.date+a.start)), cls=S.classes.filter(c=>c.tid===t.id);
   return `<h2>수업·강의실</h2><p class="lead">학생·학부모의 수업 요청에 답하고, 서당 지점 강의실을 빌려 수업해요.</p>
-  ${seg('tSeg',[['req','학생 요청',L.filter(r=>r.status==='요청').length],['room','강의실 예약',mine.filter(b=>b.status==='요청').length],['cls','내 수업',cls.length]])}
+  ${seg('tSeg',[['req','학생 요청',L.filter(r=>r.status==='요청').length],['room','강의실 예약',mine.filter(b=>b.status==='요청').length],['cls','내 수업·학생',cls.length],['sched','내 일정'],['stat','강의 실적']])}
   ${S.tSeg==='req'?(L.length?`<div class="cands">${L.map(r=>{const k=sOf(r.sid)||{};return `<article class="card"><div class="row">${badge(r.status)}<span class="b mute">${r.tid?'나에게 요청':'과목 공개 요청'}</span></div>
      <h3>${esc(r.grade)} ${esc(r.subject)} · ${esc(r.mode)}</h3><p class="muted">${esc(k.grade||'')} 학생 · ${esc(r.region)} · ${esc(r.time)}</p>${r.note?`<p>${esc(r.note)}</p>`:''}
      ${r.status==='요청'?`<div class="row"><button class="btn sm" data-act="lr-accept" data-id="${r.id}">수락</button><button class="btn sm sec" data-act="lr-decline" data-id="${r.id}">거절</button></div>`:r.status==='강사 수락'?'<p class="muted">학생·학부모가 수업을 확정하면 연락처가 서로 공개돼요.</p>':''}</article>`}).join('')}</div>`:empty('inbox','받은 수업 요청이 없어요','내 과목의 공개 요청과 나를 지정한 요청이 여기에 모여요.'))
-  :S.tSeg==='room'?`${(()=>{S.calBr=S.calBr||1;return roomCal(S.rooms.filter(r=>r.branchId===S.calBr),false,`<select data-st="calBr" aria-label="지점" style="width:auto">${S.branches.map(b=>`<option value="${b.id}" ${b.id===S.calBr?'selected':''}>${esc(b.name)}</option>`).join('')}</select>`)})()}${bookForm(false)}
-    <div class="card"><h3>내 예약 ${mine.length}</h3>${bookTable(mine,false)}</div>`
-  :(cls.length?`<div class="cands">${cls.map(c=>`<article class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(brOf(c.branchId).name)} · ${esc((roomOf(c.roomId)||{}).name)} · ${c.days} ${c.time}</p>
-     <ul class="plain">${c.students.map(id=>{const r=attRate(attOf(c.id,id));return `<li>${esc(sOf(id).name)} <span class="muted">${esc(sOf(id).grade)}</span> · 출석률 <b>${r==null?'-':r+'%'}</b></li>`}).join('')}</ul></article>`).join('')}</div>`:empty('book-open','진행 중인 수업이 없어요'))}`},
+  :S.tSeg==='room'?(()=>{const my=myBranchIds(),others=S.branches.filter(b=>!my.includes(b.id)),M=S.branchMembers.filter(m=>m.loginId===S.user.loginId);
+    const join=others.length?`<div class="card"><h3>${my.length?'다른 지점 소속 신청':'지점 소속 신청'}</h3><p class="muted">강의실 일정은 지점 관리자가 소속을 승인한 강사에게만 보여요.</p>
+     ${M.filter(m=>m.status!=='승인'&&m.status!=='해제').map(m=>`<p>${badge(m.status==='신청'?'검토 중':m.status)} ${esc(brOf(m.branchId).name)} · ${kAt(m.at)} 신청</p>`).join('')}
+     <div class="row"><select name="memBr" style="width:auto">${others.map(b=>`<option value="${b.id}">${esc(b.name)}</option>`).join('')}</select><button class="btn sm" data-act="mem-apply">소속 신청</button></div></div>`:'';
+    if(!my.length) return `<div class="card empty">${ic('lock')}<b>소속 지점이 승인되면 강의실을 예약할 수 있어요</b><span>서당 지점 강의실은 지점 관리자가 승인한 소속 강사만 이용해요.</span></div>${join}`;
+    if(!my.includes(S.calBr)) S.calBr=my[0];
+    return `${roomCal(S.rooms.filter(r=>r.branchId===S.calBr),false,`<select data-st="calBr" aria-label="지점" style="width:auto">${S.branches.filter(b=>my.includes(b.id)).map(b=>`<option value="${b.id}" ${b.id===S.calBr?'selected':''}>${esc(b.name)}</option>`).join('')}</select>`)}${bookForm(false)}
+    <div class="card"><h3>내 예약 ${mine.length}</h3>${bookTable(mine,false)}</div>${join}`})()
+  :S.tSeg==='sched'?`<div class="card"><h3>앞으로 2주 일정</h3><p class="muted">강의실 예약(확정·요청)과 시범강의 평가 일정을 모았어요.</p>${tAgenda(S.user.loginId,t.id)}</div>`
+  :S.tSeg==='stat'?(()=>{const st=tStats(S.user.loginId),studs=new Set(cls.flatMap(c=>c.students)).size,att=cls.flatMap(c=>c.students.flatMap(id=>attOf(c.id,id))),ar=attRate(att);
+    return `<div class="grid g4 stats" style="margin-bottom:16px"><div class="stat"><b>${st.hours}</b><span>총 강의 시간</span></div><div class="stat"><b>${st.monthHours}</b><span>이번 달 강의 시간</span></div><div class="stat"><b>${st.periods}</b><span>총 강의 교시</span></div><div class="stat"><b>${studs}</b><span>지도 중인 학생</span></div></div>
+     <div class="card"><h3>실적 요약</h3><ul class="plain cperks"><li>${ic('calendar-check')}강의한 날 ${st.days}일${st.first?` · 첫 강의 ${kDate(st.first)}`:''}</li><li>${ic('book-open')}진행 중인 수업 ${cls.length}개</li><li>${ic('clipboard-list')}내 수업 평균 출석률 ${ar==null?'-':ar+'%'}</li><li>${ic('star')}서당 시범강의 평가 ${t.scores?total(t)+'점 · '+esc(t.result||''):'아직 없음'}</li></ul>
+     <p class="muted">강의 시간은 지난 확정 예약 기준(1교시 = 1.5시간)이에요. 취소·거절된 예약은 빼요.</p></div>`})()
+  :(cls.length?cls.map(c=>`<div class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(brOf(c.branchId).name)} · ${esc((roomOf(c.roomId)||{}).name)} · ${c.days} ${c.time} · 학생 ${c.students.length}명</p>
+     <ul class="plain studl">${c.students.map(id=>{const s=sOf(id),L=attOf(c.id,id),r=attRate(L),g=gradesOf(id).filter(x=>x.cid===c.id);return `<li><details><summary><b>${esc(s.name)}</b><span class="muted">${esc(s.grade)} · ${esc(s.school)}</span><span>출석률 <b>${r==null?'-':r+'%'}</b></span><span class="muted">${g[0]?`최근 ${esc(g[0].title)} ${g[0].score==null?'':g[0].score+'/'+g[0].max}`:'성적 기록 없음'}</span></summary>
+      ${g.length?`<ul class="plain glist">${g.map(x=>`<li><b>${esc(x.title)}</b> ${x.score==null?'':`<span class="b info">${x.score}/${x.max}</span>`} <span class="muted">${kDate(x.date)}</span>${x.feedback?`<p>${esc(x.feedback)}</p>`:''}${x.by===S.user.loginId?`<button class="lnk" data-act="grade-del" data-id="${x.id}">지우기</button>`:''}</li>`).join('')}</ul>`:''}
+      <form data-form="grade" data-sid="${id}" data-cid="${c.id}" class="gform"><div class="grid g3 tight one-m"><div><label>시험·과제</label><input type="text" name="title" required maxlength="30" placeholder="예: 3단원 확인 평가"></div><div><label>점수 (선택)</label><input type="number" name="score" min="0" placeholder="예: 85"></div><div><label>만점</label><input type="number" name="max" min="1" value="100"></div></div>
+       <label>피드백</label><input type="text" name="fb" maxlength="120" placeholder="잘한 점, 다음에 공부할 순서"><button class="btn sm" style="margin-top:8px">학생·학부모에게 공유</button></form></details></li>`}).join('')}</ul></div>`).join(''):empty('book-open','진행 중인 수업이 없어요'))}`},
 'family:tfind':()=>{const f=S.f,L=S.teachers.filter(t=>t.result==='추천 검토'&&(!f.subject||t.subject===f.subject)&&(!f.grade||t.grade===f.grade)&&(!f.region||t.region===f.region)).sort((a,b)=>total(b)-total(a)),kids=myKids();
-  return `<h2>강사 찾기</h2><p class="lead">서당이 시범강의로 직접 평가한 강사만 보여요. 연락처는 수업이 확정된 뒤 공개돼요.</p>
+  return `<h2>강사 찾기</h2><p class="lead">서당이 시범강의로 직접 평가한 강사만 보여요. 연락처는 수업이 확정된 뒤 공개돼요. 서당은 성적 향상이나 입시 결과, 특정 강사 연결을 약속하지 않아요.</p>
   <div class="filters"><select data-filter="subject" class="${f.subject?'on':''}" aria-label="과목">${opts(SUBJ,f.subject,'과목 전체')}</select><select data-filter="grade" class="${f.grade?'on':''}" aria-label="학년">${opts(GRADE,f.grade,'학년 전체')}</select><select data-filter="region" class="${f.region?'on':''}" aria-label="지역">${opts(REGION,f.region,'지역 전체')}</select></div>
   <div class="card" id="lr-form"><h3>수업 요청하기</h3><form data-form="lesson-req"><div class="grid g3 tight one-m">
    <div><label>학생</label><select name="sid">${kids.map(k=>`<option value="${k.id}">${esc(k.name)} (${esc(k.grade)})</option>`).join('')}</select></div>
@@ -1597,12 +1735,14 @@ const ROLE_VIEWS={
   ${L.length?`<div class="cands">${L.map(t=>`<article class="card cand"><div class="top"><div class="av">${esc(t.name[0])}</div><div class="nm"><div class="row"><b>${esc(maskName(t.name))} 강사</b><span class="b ok">${ic('badge-check')}시범강의 통과</span></div><p>${esc(t.grade)} ${esc(t.subject)} · ${esc(t.region)} · ${careerYears(t)}</p></div><div class="score"><b>${total(t)}<small>/100</small></b><span>서당 평가</span></div></div>
     <p>${esc(t.strength)}</p><button class="btn sec sm" data-act="lr-pick" data-id="${t.id}">${ic('send')}이 강사에게 요청</button></article>`).join('')}</div>`:empty('search-x','조건에 맞는 강사가 없어요','필터를 바꾸거나 서당에 추천을 요청해 보세요.')}`},
 'family:lesson':()=>{const kids=myKids(),L=lrMine().sort((a,b)=>b.at.localeCompare(a.at));
-  return `<h2>내 수업</h2><p class="lead">${S.user.role==='parent'?'자녀의':'나의'} 수업 요청과 진행 중인 수업이에요.</p>
+  return `<h2>내 수업</h2><p class="lead">${S.user.role==='parent'?'자녀의':'나의'} 시간표와 수업 요청이에요.</p>
+  ${kids.map(k=>`<div class="card"><h3>${kids.length>1?esc(k.name)+' · ':''}앞으로 2주 시간표</h3>${kidAgenda(k)}</div>`).join('')}
   <div class="card"><h3>수업 요청 ${L.length}</h3>${L.length?`<ul class="plain notices">${L.map(r=>{const t=r.tid&&tOf(r.tid);return `<li><details ${r.status==='강사 수락'?'open':''}><summary>${badge(r.status)}<b>${esc((sOf(r.sid)||{}).name||'')} · ${esc(r.grade)} ${esc(r.subject)} ${esc(r.mode)}</b><span class="muted">${t?esc(r.status==='수업 확정'?t.name:maskName(t.name))+' 강사':'서당 추천 대기'}</span></summary>
     <p>${esc(r.time)} · ${esc(r.region)}${r.note?' · '+esc(r.note):''}</p>${r.status==='강사 수락'?`<p><button class="btn sm" data-act="lr-confirm" data-id="${r.id}">수업 확정</button> <button class="btn sm sec" data-act="lr-cancel" data-id="${r.id}">요청 취소</button></p>`:r.status==='요청'?`<p><button class="btn sm sec" data-act="lr-cancel" data-id="${r.id}">요청 취소</button></p>`:r.status==='수업 확정'&&t?`<p>${ic('phone')} 강사 연락처 <b>${esc(t.contact)}</b></p>`:''}</details></li>`}).join('')}</ul>`:'<p class="muted">보낸 요청이 없어요. 강사 찾기에서 요청해 보세요.</p>'}</div>
   ${kids.map(k=>`<div class="card"><h3>${esc(k.name)} · 진행 중인 수업</h3>${kidCls(k.id).length?`<ul class="plain hlist">${kidCls(k.id).map(c=>`<li><button data-act="tab" data-tab="att"><span class="b info">${c.days}</span><b>${esc(c.title)}</b><span class="muted">${c.time} · ${esc(brOf(c.branchId).name)} ${esc((roomOf(c.roomId)||{}).name)}</span></button></li>`).join('')}</ul>`:'<p class="muted">진행 중인 수업이 없어요.</p>'}</div>`).join('')}`},
 'family:att':()=>{const kids=myKids();
-  return `<h2>출결</h2><p class="lead">서당 지점에서 기록한 출결이에요. 결석이 기록되면 알림으로 알려 드려요.</p>
+  return `<h2>출결·성적</h2><p class="lead">지점에서 기록한 출결과 강사가 남긴 성적·피드백이에요. 결석이나 새 기록이 생기면 알림으로 알려 드려요.</p>
+  ${kids.map(k=>{const g=gradesOf(k.id);return `<div class="card"><h3>${esc(k.name)} · 성적·피드백 ${g.length}</h3>${g.length?`<ul class="plain glist">${g.map(x=>`<li><b>${esc(x.title)}</b> ${x.score==null?'':`<span class="b info">${x.score}/${x.max}</span>`} <span class="muted">${kDate(x.date)} · ${esc((clsOf(x.cid)||{}).title||'')} · ${esc((tOf(+x.by.replace('강사',''))||{}).name||'')} 강사</span>${x.feedback?`<p>${esc(x.feedback)}</p>`:''}</li>`).join('')}</ul>`:'<p class="muted">아직 기록이 없어요.</p>'}</div>`}).join('')}
   ${kids.map(k=>`<div class="card"><h3>${esc(k.name)} <span class="muted">${esc(k.grade)}</span></h3>${kidCls(k.id).map(c=>{const L=attOf(c.id,k.id),r=attRate(L);return `<h4>${esc(c.title)} · 출석률 ${r==null?'-':r+'%'}</h4>${L.length?`<ul class="plain hlist">${L.map(x=>`<li><button>${badge(x.st)}<b>${kDate(x.date)}</b><span class="muted">${c.time}</span></button></li>`).join('')}</ul>`:'<p class="muted">아직 기록이 없어요.</p>'}`}).join('')||'<p class="muted">진행 중인 수업이 없어요.</p>'}</div>`).join('')}`}
 };
 // 같은 강사가 같은 시간에 다른 강의실(다른 지점 포함)을 잡았는지
@@ -1643,6 +1783,8 @@ notify({to:[b.loginId],kind:'notice',title:'강의실 예약이 확정됐어요'
 const ROLE_SUBMITS={
  'room-new':(f,fd)=>{const id=Math.max(0,...S.rooms.map(r=>r.id))+1;S.rooms.push({id,branchId:S.user.branchId,name:fd.get('name').trim(),seats:+fd.get('seats'),price:+fd.get('price'),equip:(fd.get('equip')||'').trim()||'-'});log(actor(),`강의실 추가: ${fd.get('name')}`);S.flash='강의실을 추가했어요.';render()},
  booking:(f,fd)=>{const r=+fd.get('room'),d=fd.get('date'),sp=+fd.get('sp'),ep=+fd.get('ep'),a=PERIODS[sp][0],b=PERIODS[Math.max(sp,ep)][1];
+  if(S.user.role==='teacher'&&!myBranchIds().includes(roomOf(r).branchId)){S.flash='소속이 승인된 지점의 강의실만 예약할 수 있어요.';S.flashType='err';render();return}
+  if(S.user.role==='teacher'){const ev=me().evalAt;if(ev&&me().status==='평가예정'&&ev.date===d&&PERIODS[ev.p][0]<b&&a<PERIODS[ev.p][1]){S.flash=`그 시간에는 시범강의 평가(${ev.p+1}교시)가 잡혀 있어요.`;S.flashType='err';render();return}}
   if(ep<sp){S.flash='끝 교시가 시작 교시보다 앞설 수 없어요.';S.flashType='err';render();return}
   if(overlap(r,d,a,b,null,'확정')){S.flash='그 교시에는 이미 확정된 예약이 있어요. 다른 교시나 강의실을 골라 주세요.';S.flashType='err';render();return}
   if(overlap(r,d,a,b)){S.flash=S.user.role==='branch'?'그 교시에 승인 대기 중인 강사 요청이 있어요. 요청을 먼저 승인하거나 거절해 주세요.':'그 교시에는 이미 다른 예약 요청이 있어 신청할 수 없어요. 다른 교시나 강의실을 골라 주세요.';S.flashType='err';render();return}
@@ -1656,7 +1798,9 @@ const ROLE_SUBMITS={
   S.lessonReqs.push(r);S.lrT=null;notify(tid?{to:[tLogin(tid)],kind:'match',title:'새 수업 요청',body:`${r.grade} ${r.subject} ${r.mode} · ${r.time}`,route:'/lesson'}:{toRoles:['manager'],kind:'match',title:'강사 추천 요청',body:`${r.grade} ${r.subject} · ${r.region}`,route:'/match'});
   log(actor(),`수업 요청 #${id} (${tid?'강사 지정':'추천 요청'})`);S.flash=tid?'강사에게 요청을 보냈어요. 답이 오면 알려 드려요.':'서당에 추천을 요청했어요. 같은 과목 강사들에게도 공개돼요.';S.tab='lesson';render()}
 };
+Object.assign(ROLE_ACTS,FB_ACTS);Object.assign(ROLE_SUBMITS,FB_SUBMITS);
 function roleNotis(u,add){
+  if(u.role==='branch'){const w=brMembers(u.branchId).filter(m=>m.status==='신청');if(w.length)add('user-plus',`지점 소속 신청 ${w.length}건`,w.map(m=>m.loginId).join(', '),'mem')}
   if(u.role==='branch'){const p=brBookings().filter(x=>x.status==='요청');if(p.length)add('door-open',`강의실 예약 요청 ${p.length}건`,p.slice(0,2).map(x=>`${x.loginId} ${x.date} ${x.start}`).join(' · '),'room')}
   if(u.role==='teacher'){const t=me();
    tReqs(t).filter(r=>r.status==='요청').forEach(r=>add('book-open-check',r.tid?'나에게 수업 요청이 왔어요':'내 과목 수업 요청',`${r.grade} ${r.subject} ${r.mode} · ${r.time}`,'lesson'));
@@ -1670,12 +1814,12 @@ function memberSlides(st){
   const u=S.user, ac=u.role==='academy', fam=VIEW_ROLE[u.role]==='family', club=CLUBS[u.role], who=ac?(myAcademy()||{}).name:u.name;
   const ad=heroSlides(st).filter(x=>x.ad);
   const hello=fam?{label:'환영해요',html:`<div class="hcopy"><span class="eyebrow"><i></i>${esc(who||'')}님, 반가워요</span>
-    <h1>시범강의로 검증한 강사에게<br><em>수업을 요청하세요.</em></h1>
+    <h1>시범강의 평가를 거친 강사에게<br><em>수업을 요청하세요.</em></h1>
     <p>서당이 직접 평가한 강사 ${st.verified.length}명 중에서 과목·학년·지역에 맞는 강사를 찾을 수 있어요. 수업은 서당 지점 강의실에서 하고 출결도 바로 확인해요.</p>
     <div class="cta"><button class="btn" data-act="tab" data-tab="tfind">${ic('search')}강사 찾기</button>
      <button class="btn sec" data-act="tab" data-tab="att">${ic('clipboard-list')}출결 보기</button></div></div>
     <div class="hvis d-only">${liveBox(st)}</div>`}:{label:'환영해요',html:`<div class="hcopy"><span class="eyebrow"><i></i>${esc(who||'')}${ac?'':' 강사'}님, 반가워요</span>
-    <h1>${ac?'검증된 강사를<br><em>추천받아 보세요.</em>':'근무조건이 확인된 학원이<br><em>기다리고 있어요.</em>'}</h1>
+    <h1>${ac?'시범강의 평가를 거친 강사를<br><em>추천받아 보세요.</em>':'근무조건이 확인된 학원이<br><em>기다리고 있어요.</em>'}</h1>
     <p>${ac?`지금 시범강의 평가를 통과한 강사 ${st.verified.length}명이 추천을 기다리고 있어요.`:`지금 근무조건 확인을 마친 학원 ${st.open.length}곳이 강사를 찾고 있어요.`}</p>
     <div class="cta"><button class="btn" data-act="tab" data-tab="${ac?'find':'prof'}">${ic(ac?'search':'user-round')}${ac?'후보 찾기':'내 프로필'}</button>
      <button class="btn sec" data-act="tab" data-tab="dash">${ic('layout-dashboard')}대시보드</button></div></div>
@@ -1746,7 +1890,7 @@ function landingView(){
     <div><small>03</small><b>적합성 매칭</b><span>조건에 맞는 강사를 추천하고, 강사가 동의해야 연결돼요</span><em>진행 ${st.consult}건</em></div>
     <div><small>04</small><b>30일 정착</b><span>입사 7·14·30일에 학원·강사 모두에게 확인해요</span><em>점검 ${st.settling}명</em></div></div></section>
 
-  <section class="pband"><div><h2>검증된 강사, 확인된 근무조건</h2><p>가입은 1분이면 끝나요. 샘플 계정으로 먼저 둘러봐도 좋아요.</p></div>
+  <section class="pband"><div><h2>시범강의 평가, 근무조건 확인</h2><p>가입은 1분이면 끝나요. 샘플 계정으로 먼저 둘러봐도 좋아요.</p></div>
    <div class="cta" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="pub" data-to="signup">회원가입</button><button class="btn sec" data-act="pub" data-to="login">로그인</button></div></section>
   `);
 }
@@ -1825,13 +1969,14 @@ const isStaffRole = r => ['admin','manager'].includes(r);
 const VIEWS = {
 'family:home':()=>memberHome(),
 ...ROLE_VIEWS,
+...FB_VIEWS,
 'academy:home':()=>memberHome(),
 'teacher:home':()=>memberHome(),
 // ===== 학원 =====
 'academy:dash':()=>{
   const ms=myMatches(), a=myAcademy();
   const next=ms.flatMap(m=>m.checks.filter(c=>c.status==='응답 대기'&&!c.academyReply).map(c=>({m,c})));
-  return `<h2>${esc(a.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 검증된 정보로 만나 보세요.</p>
+  return `<h2>${esc(a.name)}</h2><p class="lead">이력서만으로 판단하기 어려운 강사를, 시범강의 평가와 확인한 자료로 만나 보세요.</p>
   ${a.status==='확인서 작성 전'?`<button class="todo" data-act="tab" data-tab="req">${ic('file-pen')}<div><b>근무조건 확인서를 작성해 주세요</b><span>서당이 확인서를 검토해 제휴를 승인하면 채용요청과 매칭 신청을 할 수 있어요</span></div>${ic('chevron-right')}</button>`:''}
   ${a.status==='검토 중'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--warn-soft);color:#7A5A12">${ic('hourglass')}<div><b>서당이 근무조건 확인서를 검토하고 있어요</b><span>제휴 승인 후 채용요청과 매칭 신청을 할 수 있습니다 · 확인서 보기</span></div>${ic('chevron-right')}</button>`:''}
   ${a.status==='보류'?`<button class="todo" data-act="tab" data-tab="req" style="background:var(--bad-soft);color:var(--bad-text)">${ic('circle-alert')}<div><b>제휴가 보류됐어요</b><span>${esc(a.holdReason||'')} · 확인서를 고쳐 다시 제출해 주세요</span></div>${ic('chevron-right')}</button>`:''}
@@ -1942,7 +2087,7 @@ const VIEWS = {
   let body='';
   if(t.status==='미신청') body=`<p>아직 검증을 신청하지 않았습니다. 프로필을 저장한 뒤 신청해 주세요.</p><button class="btn block-m" data-act="verify-apply">검증 신청</button>`;
   else if(t.status==='신청') body=`<p>검증 신청이 접수되었습니다. 관리자가 시범강의 일정을 배정합니다.</p>`;
-  else if(t.status==='평가예정') body=`<p>시범강의 평가 일정이 배정되었습니다. 평가 후 결과가 이곳에 표시됩니다.</p>`;
+  else if(t.status==='평가예정') body=`<p>시범강의 평가 일정이 배정되었습니다.${t.evalAt?` <b>${evalSlot(t)}</b>`:''} 평가 후 결과가 이곳에 표시됩니다.</p>${rubricCard()}`;
   else body=`<div class="scorehead">${badge(t.result)}<b class="big">${total(t)}<small>/100</small></b><span class="muted">기준 ${PASS_SCORE}점</span></div>
     ${scoreBars(t)}
     <dl class="kv" style="margin-top:18px"><dt>확인 사실</dt><dd>${esc(t.facts)||'-'}</dd><dt>평가자 관찰</dt><dd>${esc(t.basis)||'-'}</dd><dt>당사자 설명</dt><dd>${esc(t.statement)||'-'}</dd><dt>미확인 사항</dt><dd>${esc(t.unverified)||'-'}</dd></dl>
@@ -1983,12 +2128,16 @@ const VIEWS = {
   <div class="card"><h3>최근 활동</h3>${logTable(6)}</div>`;
 },
 'admin:eval':()=>{
-  const t=tOf(S.selT);
-  return `<h2>강사 검증</h2><p class="lead">시범강의 평가를 입력하고 승인합니다. 학원에는 <b>추천 검토</b> 결과만 후보로 노출됩니다.</p>
+  const t=tOf(S.selT); S.evSeg=S.evSeg||'do';
+  const evTop=`<h2>강사 검증</h2><p class="lead">시범강의 평가를 입력하고 승인합니다. 학원에는 <b>추천 검토</b> 결과만 후보로 노출됩니다.</p>
+  ${seg('evSeg',[['do','평가하기'],['sched','평가 일정',S.teachers.filter(x=>x.status==='신청').length]])}`;
+  if(S.evSeg==='sched') return evTop+evalSchedView();
+  let lastR='';
+  return `${evTop}
   <div class="split ${t?'has-sel':''}"><div class="list">
    <input type="search" class="q" placeholder="이름·과목·지역 검색" value="${esc(S.evalQ||'')}" data-evalq aria-label="강사 검색">
    <div class="chiprow">${EVAL_FILTERS.map(([k,l])=>`<button class="fchip ${(S.evalF||'all')===k?'on':''}" data-act="evalf" data-k="${k}">${l} <span>${S.teachers.filter(EVAL_PRED[k]).length}</span></button>`).join('')}</div>
-   <p class="muted" id="evalEmpty" style="padding:12px 4px" ${evalList().length?'hidden':''}>조건에 맞는 강사가 없어요.</p>${evalList().map(x=>`<button class="item ${x.id===S.selT?'on':''}" data-act="eval-open" data-id="${x.id}" data-search="${esc([x.name,x.subject,x.grade,x.region,'강사'+x.id].join(' '))}">
+   <p class="muted" id="evalEmpty" style="padding:12px 4px" ${evalList().length?'hidden':''}>조건에 맞는 강사가 없어요.</p>${evalList().sort((a,b)=>REGION.indexOf(a.region)-REGION.indexOf(b.region)).map(x=>`${x.region!==lastR?`<h4 class="grp">${ic('map-pin')}${esc(lastR=x.region)} <span>${evalList().filter(y=>y.region===x.region).length}명</span></h4>`:''}<button class="item ${x.id===S.selT?'on':''}" data-act="eval-open" data-id="${x.id}" data-search="${esc([x.name,x.subject,x.grade,x.region,'강사'+x.id].join(' '))}">
     <div class="row" style="justify-content:space-between;gap:6px"><b>${esc(x.name)} <span class="muted">강사${x.id}</span></b>${x.scores?`<b class="sc">${total(x)}</b>`:''}</div>
     <span class="muted">${esc(x.grade)} ${esc(x.subject)} · ${esc(x.region)}</span><div class="row">${badge(x.status)}${x.result?badge(x.result):''}${x.corr?'<span class="b bad">정정 요청</span>':''}</div></button>`).join('')}</div>
   <div class="detail">${t?`<button class="back m-only" data-act="eval-close">${ic('chevron-left')}강사 목록</button>${evalForm(t)}`:empty('mouse-pointer-click','강사를 선택하세요','목록에서 강사를 누르면 평가표가 열려요.')}</div></div>`;
@@ -2193,7 +2342,8 @@ function evalForm(t){
   <p class="muted">강사${t.id} · ${esc(t.career)}</p>${dis}
   ${t.corr?`<div class="note"><b>강사 정정 요청</b><br>${esc(t.corr)}</div>`:''}
   <h3 style="margin-top:18px">제출 서류 <span class="cnt">${(t.docs||[]).length}</span></h3>${docList(t)}
-  ${t.status==='신청'?(canSched?`<button class="btn block-m" style="margin-top:12px" data-act="eval-sched" data-id="${t.id}">${ic('calendar-plus')}시범강의 일정 배정</button>`:''):''}
+  ${(t.status==='신청'||t.status==='평가예정')&&canSched?`<h3 style="margin-top:18px">시범강의 일정</h3>${t.evalAt?`<p>${ic('calendar-clock')} ${evalSlot(t)}</p>`:'<p class="muted">아직 배정 전이에요.</p>'}${evalSchedForm(t)}`:''}
+  ${(t.status==='평가예정'||t.status==='승인')?rubricCard():''}
   ${(t.status==='평가예정'||t.status==='승인')?`<form data-form="eval" data-id="${t.id}" style="margin-top:18px">
    <div class="scores">${ITEMS.map((it,i)=>`<label class="sc-row"><span>${it[0]} <em>${it[1]}점</em></span><input type="number" name="s${i}" min="0" max="${it[1]}" value="${sc[i]}" inputmode="numeric"></label>`).join('')}
    <div class="sc-row sum"><span>합계</span><b><span id="evTotal">${sc.reduce((a,b)=>a+b,0)}</span> / 100</b></div>
@@ -2251,6 +2401,9 @@ const BIZINFO={name:'서당 동행 (상호 등록 예정)',ceo:'(대표자)',biz
 const NOTIFY_KINDS=[['match','매칭·상담','매칭 신청·수락·상담 시작·채용 확정'],['check','정착 점검·민원','7·14·30일 점검, 민원 처리'],['eval','검증·평가','시범강의 일정, 평가 결과'],['club','서당 클럽','프로그램 신청 확정·반려·취소'],['notice','공지·문의 답변','서비스 공지, 1:1 문의 답변']];
 const INQ_CATS=['계정','결제·환불','매칭','검증','클럽','기타'];
 const FAQS=[
+ ['검증 통과는 무엇을 뜻하나요?','제출한 자료와 시범강의를 서당이 정한 기준으로 확인했다는 뜻이에요. 자격이나 수업 성과, 채용을 보증하는 표시는 아니에요. 확인하지 못한 내용은 프로필에 따로 적어 두어요.'],
+ ['채용이나 성적 향상을 보장하나요?','아니요. 서당은 조건이 맞는 학원·강사·학생을 연결하고 정착을 함께 점검하지만, 채용 성사나 근무 지속, 성적·입시 결과, 특정 강사 연결은 약속하지 않아요.'],
+ ['클럽에 가입하면 추천에 유리한가요?','아니요. 클럽 가입·참여 여부는 강사 추천과 채용에 영향을 주지 않아요. 클럽은 교육·모임·자료를 위한 별도 회원제예요.'],
  ['아이디를 잊었어요','로그인 화면의 [아이디 찾기]에서 가입할 때 인증한 휴대폰으로 본인인증하면 아이디를 알려 드려요.'],
  ['비밀번호를 5번 틀려 로그인이 안 돼요','보안을 위해 10분 동안 잠겨요. 기다리거나 [비밀번호 찾기]로 새 비밀번호를 만들면 바로 풀려요.'],
  ['프로필 열람권을 환불할 수 있나요?','열람권은 결제 즉시 상세 프로필이 열리는 디지털 상품이라, 열람한 뒤에는 청약철회가 제한돼요. 잘못 결제했거나 열람하지 않았다면 결제 내역에서 환불을 요청해 주세요.'],
@@ -2260,8 +2413,8 @@ const FAQS=[
 const TERMS_DOCS={
  terms:['서비스 이용약관',[
   ['제1조 (목적)','이 약관은 서당 동행(이하 "서당")이 제공하는 학원·강사 매칭 서비스와 서당 클럽의 이용 조건과 절차, 서당과 회원의 권리·의무를 정합니다.'],
-  ['제2조 (회원)','회원은 학원 원장(학원 회원)과 강사(강사 회원)로 나뉘며, 만 14세 이상이고 휴대폰 본인인증을 마친 사람만 가입할 수 있습니다. 한 사람은 하나의 계정만 만들 수 있습니다.'],
-  ['제3조 (서비스)','서당은 강사 검증(시범강의 평가), 근무조건 확인, 후보 추천과 상담, 입사 후 7·14·30일 정착 점검, 유료 회원제(서당 클럽)를 제공합니다. 채용 계약은 학원과 강사가 직접 맺으며, 서당은 계약 당사자가 아닙니다.'],
+  ['제2조 (회원)','회원은 학원 원장, 강사, 학생·학부모로 나뉘며, 휴대폰 본인인증을 마친 사람만 가입할 수 있습니다. 만 14세 미만 학생은 법정대리인(학부모)의 동의를 받아 학부모 계정에 연결합니다. 한 사람은 하나의 계정만 만들 수 있습니다.'],
+  ['제3조 (서비스)','서당은 강사 검증(시범강의 평가), 근무조건 확인, 후보 추천과 상담, 입사 후 7·14·30일 정착 점검, 유료 회원제(서당 클럽)를 제공합니다. 채용 계약은 학원과 강사가 직접 맺으며, 서당은 계약 당사자가 아닙니다. 서당의 검증은 제출 자료와 시범강의를 정해진 기준으로 확인하는 과정이며, 자격·채용 성사·근무 지속·학습 성과를 보증하지 않습니다.'],
   ['제4조 (유료 서비스와 환불)','프로필 열람권과 클럽 이용권은 유료입니다. 결제·청약철회·환불은 [환불 정책]을 따릅니다.'],
   ['제5조 (금지 행위)','다른 사람의 정보 도용, 허위 근무조건·경력 등록, 경쟁 학원의 학생 정보 공유나 수강료 담합, 서비스 밖 직거래로 수수료를 피하는 행위를 금지하며, 위반하면 이용을 정지할 수 있습니다.'],
   ['제6조 (탈퇴와 이용 정지)','회원은 언제든 내 정보에서 탈퇴할 수 있습니다. 서당은 약관을 위반한 회원의 이용을 정지할 수 있으며, 정지 사유를 알립니다.']]],
